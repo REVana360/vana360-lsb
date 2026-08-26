@@ -140,4 +140,5 @@ GP_CLI_PACKET(GP_CLI_COMMAND_ACTION,
                   ACTIONBUF_MOUNT         Mount;
                   uint32_t                ActionBuf[4]; // PS2: ActionBuf
               }; // Other actions don't use the array or have fixed values only.
-);
+
+              static constexpr size_t getMinSize() { return 16; });

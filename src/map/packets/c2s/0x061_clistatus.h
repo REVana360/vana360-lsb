@@ -29,4 +29,5 @@ GP_CLI_PACKET(GP_CLI_COMMAND_CLISTATUS,
               uint8_t  unknown00; // PS2: (New; did not exist.)
               uint8_t  padding00; // PS2: (New; did not exist.)
               uint16_t padding01; // PS2: (New; did not exist.)
-);
+
+              static constexpr size_t getMinSize() { return sizeof(GP_CLI_HEADER); });

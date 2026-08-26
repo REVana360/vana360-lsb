@@ -12,17 +12,17 @@ xi.settings = xi.settings or {}
 xi.settings.main =
 {
     -- Server name (not longer than 15 characters)
-    SERVER_NAME = 'Nameless',
+    SERVER_NAME = 'Vana360',
 
     SERVER_MESSAGE =
-        'Please visit https://github.com/LandSandBoat/server for the latest information on the project.\n' ..
-        'Thank you, and we hope you enjoy sailing the sands!',
+        'Please visit https://github.com/REVana360/vana360-lsb for project information.\n' ..
+        'Thank you, and we hope you enjoy Vana360!',
 
     -- Setting to lock content more accurately to the expansions defined below.
     -- This generally results in a more accurate presentation of your selected expansions,
     -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded).
     -- This feature correlates to the content_tag column in the SQL files.
-    RESTRICT_CONTENT = 0,
+    RESTRICT_CONTENT = 1,
 
     -- Enable Expansion (1 = Enabled, 0 = Disabled)
     ENABLE_ROTZ      = 1,
@@ -31,40 +31,40 @@ xi.settings.main =
     ENABLE_WOTG      = 1,
     ENABLE_ACP       = 1,
     ENABLE_AMK       = 1,
-    ENABLE_ASA       = 1,
-    ENABLE_ABYSSEA   = 1,
-    ENABLE_SOA       = 1,
-    ENABLE_ROV       = 1,
-    ENABLE_TVR       = 1,
-    ENABLE_VOIDWATCH = 1, -- Not an expansion, but has its own storyline. (Not Implemented)
+    ENABLE_ASA       = 0,
+    ENABLE_ABYSSEA   = 0,
+    ENABLE_SOA       = 0,
+    ENABLE_ROV       = 0,
+    ENABLE_TVR       = 0,
+    ENABLE_VOIDWATCH = 0, -- Not an expansion, but has its own storyline. (Not Implemented)
 
     -- MOG HOUSE
-    ENABLE_MOG_HOUSE_2F = 1, -- Enables Access to Mog House 2F / Mog Safe 2.
-    ENABLE_MOG_GARDEN   = 1, -- Enables Access to Mog Garden, will send player to the area they entered from if disabled.
+    ENABLE_MOG_HOUSE_2F = 0, -- Enables Access to Mog House 2F / Mog Safe 2.
+    ENABLE_MOG_GARDEN   = 0, -- Enables Access to Mog Garden, will send player to the area they entered from if disabled.
 
     -- FIELDS OF VALOR/Grounds of Valor settings
     ENABLE_FIELD_MANUALS  = 1, -- Enables Fields of Valor
-    ENABLE_GROUNDS_TOMES  = 1, -- Enables Grounds of Valor
-    ENABLE_SURVIVAL_GUIDE = 1, -- Enables Survival Guides (Not Implemented)
+    ENABLE_GROUNDS_TOMES  = 0, -- Enables Grounds of Valor
+    ENABLE_SURVIVAL_GUIDE = 0, -- Enables Survival Guides (Not Implemented)
     REGIME_WAIT           = 1, -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
     FOV_REWARD_ALLIANCE   = 0, -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
     GOV_REWARD_ALLIANCE   = 1, -- Allow Grounds of Valor rewards while being a member of an alliance. (default retail behavior: 1)
 
     -- Daily points / Gobbie mystery box.
-    ENABLE_DAILY_TALLY = 1,  -- Allows acquisition of daily points for gobbie mystery box.
+    ENABLE_DAILY_TALLY = 0,  -- Allows acquisition of daily points for gobbie mystery box.
     DAILY_TALLY_AMOUNT = 10,
     DAILY_TALLY_LIMIT  = 50000,
     GOBBIE_BOX_MIN_AGE = 45, -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 
     -- A.M.A.N.
-    ASSIST_CHANNEL_ENABLED            = true, -- Enable Assist Channel
+    ASSIST_CHANNEL_ENABLED            = false, -- Enable Assist Channel
     ASSIST_CHANNEL_MEMBERSHIP_LENGTH  = 240,  -- How long returnees and new players will have access to the assist channel, in playtime hours.
     ASSIST_CHANNEL_RETURNEE_LOGIN_GAP =  48,  -- How many days must have elapsed before returnees are added to the assist channel.
 
     -- Records of Eminence
-    ENABLE_ROE            = 1, -- Enable Records of Eminence
-    ENABLE_ROE_TIMED      = 1, -- Enable 4-hour timed records
-    ENABLE_EXCHANGE_LIMIT = 1, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
+    ENABLE_ROE            = 0, -- Enable Records of Eminence
+    ENABLE_ROE_TIMED      = 0, -- Enable 4-hour timed records
+    ENABLE_EXCHANGE_LIMIT = 0, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
 
     WEEKLY_EXCHANGE_LIMIT = 100000, -- Maximum amount of sparks/accolades that can be spent per week (default retail value: 100000)
 
@@ -75,13 +75,13 @@ xi.settings.main =
     CAP_CURRENCY_VALOR     = 50000,
 
     -- Magian Trials
-    ENABLE_MAGIAN_TRIALS = 1,
+    ENABLE_MAGIAN_TRIALS = 0,
 
     -- VoidWalker
-    ENABLE_VOIDWALKER = 1,
+    ENABLE_VOIDWALKER = 0,
 
     -- Moblin Maze Mongers
-    ENABLE_MMM = 0,
+    ENABLE_MMM = 1,
 
     -- Monstrosity (Heavily in development, use at your own risk!)
     ENABLE_MONSTROSITY               = 0,
@@ -108,7 +108,7 @@ xi.settings.main =
 
     -- CHARACTER CONFIG
     INITIAL_LEVEL_CAP              = 50, -- The initial level cap for new players.  There seems to be a hardcap of 255.
-    MAX_LEVEL                      = 99, -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
+    MAX_LEVEL                      = 75, -- Level max of the server, lowers the attainable cap by disabling Limit Break quests.
     NORMAL_MOB_MAX_LEVEL_RANGE_MIN = 0,  -- Lower Bound of Max Level Range for Normal Mobs (0 = Uncapped)
     NORMAL_MOB_MAX_LEVEL_RANGE_MAX = 0,  -- Upper Bound of Max Level Range for Normal Mobs (0 = Uncapped)
     START_GIL                      = 10, -- Amount of gil given to newly created characters.
@@ -136,7 +136,7 @@ xi.settings.main =
     DARK_POWER          = 1.000, -- Multiplies amount drained by Dark Magic.
     ITEM_POWER          = 1.000, -- Multiplies the effect of items such as Potions and Ethers.
     WEAPON_SKILL_POWER  = 1.000, -- Multiplies damage dealt by Weapon Skills.
-    DELAY_REDUCTION_CAP = 0.80,  -- Set the cap for melee swing haste effect. (0.80 = 80% retail delay reduction max, 0.93 = 93% ToAU delay reduction max)
+    DELAY_REDUCTION_CAP = 0.93,  -- Set the cap for melee swing haste effect. (0.80 = 80% retail delay reduction max, 0.93 = 93% ToAU delay reduction max)
 
     -- STR:ATT/RATT ratios. For players only. Mobs are hardcoded to 0.5
     TWO_HANDED_STR_ATTACK_MULTIPLIER         = 1.0,  -- 1.0: 1 STR = 1 Attack. This has been 0.5 and 0.75 in previous eras
@@ -158,15 +158,15 @@ xi.settings.main =
     PLAYER_ALLIES_VIT_DEF_MULTIPLIER = 1.5, -- 1.5: 1 VIT = 1.5 DEF. This has been 0.5 in previous eras.
 
     -- Ranged Attack Free Phase Delay (in milliseconds) - The delay before a ranged attack can be executed after the player puts away their weapon. Default is 500 milliseconds. (Use 1200 for pre-2012 setting)
-    RANGED_ATTACK_FREE_PHASE_DELAY = 500,
+    RANGED_ATTACK_FREE_PHASE_DELAY = 1200,
 
-    USE_ADOULIN_WEAPON_SKILL_CHANGES = true,  -- true/false. Change to toggle new Adoulin weapon skill damage calculations
-    ENABLE_IMMUNOBREAK               = true,  -- true/false. Allow/Disallow immunobreaks to happen.
-    ENABLE_SMN_MAGIC_CAST_TIME_MERIT = true,  -- true/false. If false, the Summoning Magic Casting Time merit has no effect on cast time (pre-2012 behavior).
+    USE_ADOULIN_WEAPON_SKILL_CHANGES = false, -- true/false. Change to toggle new Adoulin weapon skill damage calculations
+    ENABLE_IMMUNOBREAK               = false, -- true/false. Allow/Disallow immunobreaks to happen.
+    ENABLE_SMN_MAGIC_CAST_TIME_MERIT = false, -- true/false. If false, the Summoning Magic Casting Time merit has no effect on cast time (pre-2012 behavior).
 
     -- TRUSTS
-    ENABLE_TRUST_CASTING           = 1,
-    ENABLE_TRUST_QUESTS            = 1,
+    ENABLE_TRUST_CASTING           = 0,
+    ENABLE_TRUST_QUESTS            = 0,
     ENABLE_TRUST_CUSTOM_ENGAGEMENT = 0,
 
     ENABLE_LIMITED_TIME_TRUST = 0, -- 0 = disabled, 1 = Cornelia, 2 = Matsui-P, will get automatically added to players trust list if the player has a trust permit KI.
@@ -233,10 +233,10 @@ xi.settings.main =
     AF1_QUEST_LEVEL = 40,    -- Minimum level to start AF1 quest
     AF2_QUEST_LEVEL = 50,    -- Minimum level to start AF2 quest
     AF3_QUEST_LEVEL = 50,    -- Minimum level to start AF3 quest
-    OLDSCHOOL_G1    = false, -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
-    OLDSCHOOL_G2    = false, -- Set true to require the NMs for 'Atop the Highest Mountains' be dead to get KI like before SE changed it.
+    OLDSCHOOL_G1    = true,  -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
+    OLDSCHOOL_G2    = true,  -- Set true to require the NMs for 'Atop the Highest Mountains' be dead to get KI like before SE changed it.
     FRIGICITE_TIME  = 30,    -- When OLDSCHOOL_G2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the '???' target.
-    ASSAULT_MINIMUM = 1,     -- Minimum amount of people needed to start an assault mission. TOAU era is 3, Default is 1.
+    ASSAULT_MINIMUM = 3,     -- Minimum amount of people needed to start an assault mission. TOAU era is 3, Default is 1.
 
     -- SPELL SPECIFIC SETTINGS
     STONESKIN_CAP                   = 350,   -- Soft cap for hp absorbed by stoneskin
@@ -300,7 +300,7 @@ xi.settings.main =
 
     -- CHOCOBO RAISING (HEAVILY-IN-DEVELOPMENT, USE AT YOUR OWN RISK)
     -- GM command: `!chocoboraising`
-    ENABLE_CHOCOBO_RAISING              = false, -- true/false. Enable Chocobo Raising features.
+    ENABLE_CHOCOBO_RAISING              = true,  -- true/false. Enable Chocobo Raising features.
     DEBUG_CHOCOBO_RAISING               = false, -- true/false. Enable verbose debug logging for Chocobo Raising (visible by players).
     CHOCOBO_RAISING_STAT_POS_MULTIPLIER = 1.0,   -- float. Multiplier for positive stat changes. Default 1.0.
     CHOCOBO_RAISING_STAT_NEG_MULTIPLIER = 1.0,   -- float. Multiplier for negative stat changes. Default 1.0.
@@ -318,7 +318,7 @@ xi.settings.main =
     ALLOW_MULTIPLE_EXP_RINGS     = 0,     -- Set to 1 to remove ownership restrictions on the Chariot/Empress/Emperor Band trio.
     BYPASS_EXP_RING_ONE_PER_WEEK = 0,     -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
     NUMBER_OF_DM_EARRINGS        = 1,     -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
-    HOMEPOINT_TELEPORT           = 1,     -- Enables the homepoint teleport system
+    HOMEPOINT_TELEPORT           = 0,     -- Enables the homepoint teleport system
     DIG_FATIGUE                  = 100,   -- Allowed succesful digs per day. Set to 0 to disable Dig Fatigue
     DIG_GRANT_BURROW             = 0,     -- Set to 1 to grant burrow ability
     DIG_GRANT_BORE               = 0,     -- Set to 1 to grant bore ability

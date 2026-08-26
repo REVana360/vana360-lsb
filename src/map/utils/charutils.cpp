@@ -1475,26 +1475,28 @@ void SendPartialQuestLog(CCharEntity* PChar, const QuestLog log, const bool comp
 
 void SendRecordsOfEminenceLog(CCharEntity* PChar)
 {
+    if (!settings::get<bool>("main.ENABLE_ROE"))
+    {
+        return;
+    }
+
     // Send spark updates
     PChar->pushPacket<GP_SERV_COMMAND_UNITY>(PChar);
 
-    if (settings::get<bool>("main.ENABLE_ROE"))
+    // Current RoE quests
+    PChar->pushPacket<GP_SERV_COMMAND_ROE_ACTIVELOG>(PChar);
+
+    // Players logging in to a new timed record get one-time message
+    if (PChar->m_eminenceCache.notifyTimedRecord)
     {
-        // Current RoE quests
-        PChar->pushPacket<GP_SERV_COMMAND_ROE_ACTIVELOG>(PChar);
+        PChar->m_eminenceCache.notifyTimedRecord = false;
+        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, roeutils::GetActiveTimedRecord(), 0, MsgBasic::ROETimed);
+    }
 
-        // Players logging in to a new timed record get one-time message
-        if (PChar->m_eminenceCache.notifyTimedRecord)
-        {
-            PChar->m_eminenceCache.notifyTimedRecord = false;
-            PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, roeutils::GetActiveTimedRecord(), 0, MsgBasic::ROETimed);
-        }
-
-        // 4-part Eminence Completion bitmap
-        for (int i = 0; i < 4; i++)
-        {
-            PChar->pushPacket<GP_SERV_COMMAND_ROE_LOG>(PChar, i);
-        }
+    // 4-part Eminence Completion bitmap
+    for (int i = 0; i < 4; i++)
+    {
+        PChar->pushPacket<GP_SERV_COMMAND_ROE_LOG>(PChar, i);
     }
 }
 

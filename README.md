@@ -3,6 +3,12 @@
     <h1 align="center">LandSandBoat</h1>
 </p>
 
+> [!NOTE]
+> This is the Vana360 server fork for the supported Xbox 360 client.
+> `vana360-lsb` contains the maintained product changes; `base` remains an
+> unmodified mirror of upstream LandSandBoat. See
+> [Vana360 server profile](documentation/VANA360.md).
+
 <p align="center">
 An open-source server emulator for FFXI.
 </p>

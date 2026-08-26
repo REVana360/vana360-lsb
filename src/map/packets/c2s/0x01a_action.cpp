@@ -56,6 +56,12 @@ const auto actionToStr = [](const GP_CLI_COMMAND_ACTION_ACTIONID actionIn)
 
 auto GP_CLI_COMMAND_ACTION::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    if (header.size * 4U < sizeof(GP_CLI_COMMAND_ACTION) &&
+        ActionID != GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy)
+    {
+        return PacketValidationResult{}.addError("Legacy short action packet is only valid for SendResRdy.");
+    }
+
     return PacketValidator(PChar)
         .oneOf<GP_CLI_COMMAND_ACTION_ACTIONID>(this->ActionID)
         .custom(

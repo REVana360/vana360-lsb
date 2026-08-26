@@ -25,6 +25,11 @@
 
 auto GP_CLI_COMMAND_CLISTATUS::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    if (header.size * 4U == sizeof(GP_CLI_HEADER))
+    {
+        return {};
+    }
+
     return PacketValidator(PChar)
         .range("unknown00", this->unknown00, 0, 1);
 }

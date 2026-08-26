@@ -41,7 +41,7 @@ xi.settings.map =
     LEAK_EXT_DATA_ON_ITEM_MOVE = true,
 
     -- Enable or disable Recycle Bin (Set to false for items to be dropped immediately)
-    ENABLE_ITEM_RECYCLE_BIN = true,
+    ENABLE_ITEM_RECYCLE_BIN = false,
 
     -- Self-unstuck feature (sends player to homepoint via Help Desk command)
     SELF_UNSTUCK_ENABLED  = false,
@@ -70,16 +70,16 @@ xi.settings.map =
     EXP_LOSS_RATE           = 1.0,
 
     -- Capacity Point Settings
-    CAPACITY_RATE = 1.0,
+    CAPACITY_RATE = 0.0,
 
     -- Percentage of experience normally lost to keep upon death. 0 means full loss, where 1 means no loss.
     EXP_RETAIN = 0,
 
     -- Minimum level at which experience points can be lost
-    EXP_LOSS_LEVEL = 31,
+    EXP_LOSS_LEVEL = 4,
 
     -- Enable/Disable pre-Abyssea experience point loss tiers. set true with EXP_LOSS_LEVEL = 4, for pre-Abyssea experience point loss behavior. https://wiki.ffo.jp/html/15196.html
-    USE_PRE_ABYSSEA_EXP_LOSS_TIERS = false,
+    USE_PRE_ABYSSEA_EXP_LOSS_TIERS = true,
 
     -- Minimum level at which regional influence is lost in conquest when a player dies
     -- Level 5 and below don't lose influence: http://wiki.ffo.jp/html/498.html
@@ -92,7 +92,7 @@ xi.settings.map =
     DISABLE_GEAR_SCALING = false,
 
     -- Disables Treasure Hunter procs (Era behavior wants this true)
-    DISABLE_TREASURE_HUNTER_PROCS = false,
+    DISABLE_TREASURE_HUNTER_PROCS = true,
 
     -- Enable auto attack damage calculations in Lua
     ENABLE_AUTO_ATTACK_LUA = false,
@@ -104,7 +104,7 @@ xi.settings.map =
     WS_POINTS_SKILLCHAIN = 2,
 
     -- Enable/disable jobs other than BST and RNG having widescan
-    ALL_JOBS_WIDESCAN = true,
+    ALL_JOBS_WIDESCAN = false,
 
     -- Base player movement speed
     BASE_SPEED = 50,
@@ -137,10 +137,10 @@ xi.settings.map =
     GARDEN_MH_AURA_MATTERS   = false,
 
     -- Use current retail skill up rates and margins (Retail = High Skill-Up rate; Skill-Up when at or under 10 levels above synth recipe level.)
-    CRAFT_MODERN_SYSTEM = true,
+    CRAFT_MODERN_SYSTEM = false,
 
     -- Craft level limit from witch specialization points beginning to count. (Retail = 700; Level 75 era:600)
-    CRAFT_COMMON_CAP = 700,
+    CRAFT_COMMON_CAP = 600,
 
     -- Amount of points allowed in crafts over the level defined above. Points are shared across all crafting skills. (Retail = 400; All skills can go to max = 3200)
     CRAFT_SPECIALIZATION_POINTS = 400,
@@ -203,7 +203,7 @@ xi.settings.map =
     ABILITY_RECAST_MULTIPLIER = 1.0,
 
     -- Maximum spell recast reduction percentage. Current retail is 80. Older eras used 50.
-    SPELL_RECAST_REDUCTION_CAP = 80,
+    SPELL_RECAST_REDUCTION_CAP = 50,
 
     -- Enable/disable shared blood pact timer
     BLOOD_PACT_SHARED_TIMER = false,
@@ -228,7 +228,7 @@ xi.settings.map =
 
     -- Allows parry, block, and guard to skill up regardless of the action occuring.
     -- This did not happen in previous eras
-    DEFENSIVE_OLD_SKILLUP_STYLE = false,
+    DEFENSIVE_OLD_SKILLUP_STYLE = true,
 
     -- Globally adjusts ALL battlefield level caps by this many levels.
     BATTLE_CAP_TWEAK = 0,
@@ -242,7 +242,7 @@ xi.settings.map =
     -- Max allowed merits points players can hold
     -- 10 classic
     -- 30 abyssea
-    MAX_MERIT_POINTS = 30,
+    MAX_MERIT_POINTS = 10,
 
     -- Minimum time between uses of yell command (in seconds).
     YELL_COOLDOWN = 30,

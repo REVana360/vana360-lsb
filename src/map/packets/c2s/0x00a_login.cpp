@@ -34,11 +34,34 @@
 #include "utils/gardenutils.h"
 #include "utils/zoneutils.h"
 
+namespace
+{
+
+auto isXboxSecondaryHandshake(const GP_CLI_COMMAND_LOGIN& packet, const MapSession* PSession, const CCharEntity* PChar) -> bool
+{
+    return PSession->blowfish.status == BLOWFISH_ACCEPTED &&
+           PChar->status == xi::Status::Normal &&
+           PSession->hasDecryptedPacket &&
+           packet.unknown00 == 1 &&
+           packet.unknown01 == 0 &&
+           packet.dammyArea == UINT16_MAX;
+}
+
+} // namespace
+
 auto GP_CLI_COMMAND_LOGIN::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    const bool isSecondaryHandshake = isXboxSecondaryHandshake(*this, PSession, PChar);
+
     return PacketValidator(PChar)
         .mustEqual(PChar->id, this->UniqueNo, "Player ID mismatch")
-        .mustNotEqual(PSession->blowfish.status == BLOWFISH_ACCEPTED && PChar->status == xi::Status::Normal && PSession->hasDecryptedPacket, true, "Player already logged in.");
+        .mustNotEqual(
+            PSession->blowfish.status == BLOWFISH_ACCEPTED &&
+                PChar->status == xi::Status::Normal &&
+                PSession->hasDecryptedPacket &&
+                !isSecondaryHandshake,
+            true,
+            "Player already logged in.");
 }
 
 void GP_CLI_COMMAND_LOGIN::process(MapSession* PSession, CCharEntity* PChar) const
@@ -47,6 +70,12 @@ void GP_CLI_COMMAND_LOGIN::process(MapSession* PSession, CCharEntity* PChar) con
     {
         ShowError("GP_CLI_COMMAND_LOGIN: PChar is null for player");
         return;
+    }
+
+    const bool isSecondaryHandshake = isXboxSecondaryHandshake(*this, PSession, PChar);
+    if (isSecondaryHandshake)
+    {
+        PChar->clearPacketList();
     }
 
     //
@@ -149,6 +178,9 @@ void GP_CLI_COMMAND_LOGIN::process(MapSession* PSession, CCharEntity* PChar) con
             }
         }
         PChar->status = xi::Status::Normal;
-        PChar->PAI->QueueAction(queueAction_t(4000ms, false, zoneutils::AfterZoneIn));
+        if (!isSecondaryHandshake)
+        {
+            PChar->PAI->QueueAction(queueAction_t(4000ms, false, zoneutils::AfterZoneIn));
+        }
     }
 }
