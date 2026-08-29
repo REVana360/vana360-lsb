@@ -1128,19 +1128,6 @@ npcs:
     status:   cutscene_only
     widescan: true
 
-  17441104:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-68.364, 0.000, -18.744]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17441105:
     script:       HomePoint#1
     display_name: 'Home Point #1'

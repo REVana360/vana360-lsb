@@ -130,7 +130,7 @@ public:
     bool IsAsleep();
     bool HasPreventActionEffect(bool ignoreCharm = false); // checks if owner has an effect that prevents actions, like stun, petrify, sleep etc
 
-    uint16 GetConfrontationEffect();                        // gets confrontation number (bcnm, confrontation, campaign, reive mark)
+    uint16 GetConfrontationEffect();                        // gets confrontation number (bcnm, confrontation, campaign)
     auto   GetConfrontationSubPower() const -> uint16;      // Fenced content GateId
     void   CopyConfrontationEffect(CBattleEntity* PEntity); // copies confrontation status (pet summoning, etc)
 

@@ -2378,21 +2378,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17797259:
-    script:       Proto-Waypoint
-    display_name: Proto-Waypoint
-    at:           [42.230, -16.050, 84.700, 78]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17797260:
     script: blank
     render:
@@ -2535,20 +2520,6 @@ npcs:
     status:   normal
     widescan: true
 
-  17797271:
-    script:       Ambuscade_Tome
-    display_name: Ambuscade Tome
-    at:           [-28.030, -15.500, 52.280, 102]
-    render:
-      look:
-        type:  standard
-        model: 2290
-      name_vis:   112
-      moving:   32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17797272:
     script:       Layer_Reserve
     display_name: Layer Reserve
@@ -2572,29 +2543,6 @@ npcs:
       name_vis: 112
       moving:     1
     widescan: true
-
-  17797274:
-    script:       Gorpa-Masorpa
-    display_name: Gorpa-Masorpa
-    at:           [-27.584, -15.998, 52.565, 104]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  4
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:        8
-    status:   normal
-    widescan: true
-    content:  soa
 
   17797275:
     script:       Debug_Book

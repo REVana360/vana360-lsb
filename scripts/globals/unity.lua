@@ -10,7 +10,6 @@ local zoneEventIds =
     [xi.zone.SOUTHERN_SAN_DORIA] = { 3528, 3525, 3526, 3529 },
     [xi.zone.BASTOK_MARKETS    ] = {  597,  594,  595,  598 },
     [xi.zone.WINDURST_WOODS    ] = {  878,  875,  876,  879 },
-    [xi.zone.WESTERN_ADOULIN   ] = { 5148, 5145, 5146, 5149 },
 }
 
 -- Table Format: X, Y, Z, Rot, Zone ID

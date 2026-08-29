@@ -1428,19 +1428,6 @@ npcs:
     animation_speed: 40
     widescan:        true
 
-  17396255:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-130.954, 0.122, -20.926]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17396256:
     script: blank
     render:

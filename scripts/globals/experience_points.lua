@@ -108,10 +108,7 @@ end
 -----------------------------------
 local function handleDedicationBonus(member, exp, regionId)
     local dedication = member:getStatusEffect(xi.effect.DEDICATION)
-    if
-        not dedication or
-        regionId == xi.region.ABYSSEA
-    then
+    if not dedication then
         return 0
     end
 

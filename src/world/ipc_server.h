@@ -113,7 +113,6 @@ public:
     void handleMessage_ConquestEvent(const IPP& ipp, const ipc::ConquestEvent& message);
     void handleMessage_BesiegedEvent(const IPP& ipp, const ipc::BesiegedEvent& message);
     void handleMessage_CampaignEvent(const IPP& ipp, const ipc::CampaignEvent& message);
-    void handleMessage_ColonizationEvent(const IPP& ipp, const ipc::ColonizationEvent& message);
     void handleMessage_EntityInformationRequest(const IPP& ipp, const ipc::EntityInformationRequest& message);
     void handleMessage_EntityInformationResponse(const IPP& ipp, const ipc::EntityInformationResponse& message);
     void handleMessage_SendPlayerToLocation(const IPP& ipp, const ipc::SendPlayerToLocation& message);

@@ -1,4 +1,3 @@
-require('scripts/globals/abyssea')
 require('scripts/globals/gear_sets')
 require('scripts/globals/quests')
 require('scripts/globals/teleports')
@@ -111,10 +110,6 @@ xi.player.charCreate = function(player)
         for i = xi.ki.MAP_OF_RALA_WATERWAYS_U, xi.ki.MAP_OF_RAKAZNAR_U do
             player:addKeyItem(i)
         end
-
-        for i = xi.ki.MAP_OF_ESCHA_ZITAH, xi.ki.MAP_OF_REISENJIMA do
-            player:addKeyItem(i)
-        end
     end
 
     -- set initial level cap
@@ -160,19 +155,6 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         if firstLogin then
             xi.player.charCreate(player)
         end
-    else
-        -- things checked ONLY during zone in go here
-        if
-            player:getLocalVar('gameLogin') == 1 and
-            xi.abyssea.isInAbysseaZone(player) and
-            not player:hasStatusEffect(xi.effect.VISITANT)
-        then
-            local zoneID = player:getZoneID()
-            local ID = zones[zoneID]
-
-            player:messageSpecial(ID.text.ABYSSEA_TIME_OFFSET + 8)
-            player:setPos(unpack(xi.abyssea.exitPositions[zoneID]))
-        end
     end
 
     local zoneID    = player:getZoneID()
@@ -182,22 +164,6 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         if value ~= zoneID then
             player:setCharVar(tag, 0)
         end
-    end
-
-    -- Abyssea starting quest should be flagged when expansion is active
-    if
-        xi.settings.main.ENABLE_ABYSSEA == 1 and
-        player:getQuestStatus(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_JOURNEY_BEGINS) == xi.questStatus.QUEST_AVAILABLE
-    then
-        player:addQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_JOURNEY_BEGINS)
-    end
-
-    -- This is for migration safety only, and should be removed at a later date
-    if
-        player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_JOURNEY_BEGINS) and
-        player:getTraverserEpoch() == 0
-    then
-        player:setTraverserEpoch()
     end
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
@@ -252,7 +218,6 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
     end)
 
     -- Enforce that gameLogin is always set to 0 once this method exits
-    -- This assists with ensuring Abyssea visitant status is handled properly on logins
     player:setLocalVar('gameLogin', 0)
 end
 

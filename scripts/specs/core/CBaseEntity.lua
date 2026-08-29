@@ -2230,16 +2230,6 @@ end
 
 ---@nodiscard
 ---@return integer
-function CBaseEntity:getDeathType()
-end
-
----@param value integer
----@return nil
-function CBaseEntity:setDeathType(value)
-end
-
----@nodiscard
----@return integer
 function CBaseEntity:getMP()
 end
 
@@ -2787,11 +2777,6 @@ end
 ---@param targetID integer
 ---@return CBaseEntity?
 function CBaseEntity:getEntity(targetID)
-end
-
----@nodiscard
----@return boolean
-function CBaseEntity:canChangeState()
 end
 
 ---@return nil
@@ -4130,12 +4115,6 @@ end
 function CBaseEntity:weaknessTrigger(level)
 end
 
----@param PLuaBaseEntity CBaseEntity
----@param restoreType integer
----@return nil
-function CBaseEntity:restoreFromChest(PLuaBaseEntity, restoreType)
-end
-
 ---@nodiscard
 ---@return boolean
 function CBaseEntity:hasPreventActionEffect()
@@ -4218,35 +4197,6 @@ end
 ---@param newLevel integer
 ---@return nil
 function CBaseEntity:setTHlevel(newLevel)
-end
-
----@nodiscard
----@return integer
-function CBaseEntity:getAvailableTraverserStones()
-end
-
----@nodiscard
----@return integer
-function CBaseEntity:getTraverserEpoch()
-end
-
----@return nil
-function CBaseEntity:setTraverserEpoch()
-end
-
----@nodiscard
----@return integer
-function CBaseEntity:getClaimedTraverserStones()
-end
-
----@param numStones integer
----@return nil
-function CBaseEntity:addClaimedTraverserStones(numStones)
-end
-
----@param totalStones integer
----@return nil
-function CBaseEntity:setClaimedTraverserStones(totalStones)
 end
 
 ---@nodiscard

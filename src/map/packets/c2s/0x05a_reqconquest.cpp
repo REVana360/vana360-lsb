@@ -23,7 +23,6 @@
 
 #include "entities/char_entity.h"
 #include "packets/s2c/0x05e_conquest.h"
-#include "packets/s2c/0x071_influence_colonization.h"
 
 auto GP_CLI_COMMAND_REQCONQUEST::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
@@ -40,5 +39,4 @@ void GP_CLI_COMMAND_REQCONQUEST::process(MapSession* PSession, CCharEntity* PCha
     // CampaignState state = campaign::GetCampaignState();
     // PChar->pushPacket<GP_SERV_COMMAND_INFLUENCE::CAMPAIGN>(PChar, state, 0);
     // PChar->pushPacket<GP_SERV_COMMAND_INFLUENCE::CAMPAIGN>(PChar, state, 1);
-    PChar->pushPacket<GP_SERV_COMMAND_INFLUENCE::COLONIZATION>(PChar);
 }

@@ -163,29 +163,6 @@ end
 
 xi.roe.initialize()
 
-local function isRepeatItemRewardException(items)
-    local itemExceptionsMap =
-    {
-        [xi.item.SILT_POUCH] = true, -- Escha Bead/Silt rewards are always rewarded
-        [xi.item.BEAD_POUCH] = true, -- Escha Bead/Silt rewards are always rewarded
-    }
-
-    -- clone of npcUtil.giveItem logic
-    if type(items) == 'table' then
-        for _, v in pairs(items) do
-            if type(v) == 'number' then
-                if itemExceptionsMap[v] == nil then
-                    return false -- if any item in the rewards list doesn't match, bail out
-                end
-            end
-        end
-    elseif type(items) == 'number' then
-        return itemExceptionsMap[items] ~= nil -- If the input is only an integer, then just check the map
-    end
-
-    return true
-end
-
 --[[ --------------------------------------------------------------------------
     Complete a record of eminence. This is for internal roe use only.
     For external calls use onRecordTrigger below. (see healing.lua for example)
@@ -208,7 +185,7 @@ local function completeRecord(player, record)
     local recordEntry   = xi.roe.records[record]
     local recordFlags   = recordEntry.flags
     local rewards       = recordEntry.reward
-    local canRewardItem = rewards['item'] and (not player:getEminenceCompleted(record) or isRepeatItemRewardException(rewards['item']))
+    local canRewardItem = rewards['item'] and not player:getEminenceCompleted(record)
 
     if canRewardItem then
         if not npcUtil.giveItem(player, rewards['item'], { silent = true }) then

@@ -74,7 +74,7 @@ struct campaignzone_t
 };
 
 // https://github.com/atom0s/XiPackets/tree/main/world/server/0x0071
-// This packet is sent by the server to inform the client of the campaign and colonization map information.
+// This packet is sent by the server to inform the client of campaign map information.
 namespace GP_SERV_COMMAND_INFLUENCE
 {
 

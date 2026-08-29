@@ -690,19 +690,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  16798151:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [58.442, -199.381, 177.396]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   16798152:
     script:       HomePoint#1
     display_name: 'Home Point #1'

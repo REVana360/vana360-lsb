@@ -2558,7 +2558,7 @@ npcs:
   17760396:
     script:       HomePoint#1
     display_name: 'Home Point #1'
-    at:           [-188.000, -4.000, 101.000, 192]
+    at:           [-67.980, -4.000, 110.675, 192] # https://forum.square-enix.com/ffxi/threads/49065
     render:
       look:
         type:  standard
@@ -3584,52 +3584,6 @@ npcs:
     widescan: true
     content:  wotg
 
-  17760464:
-    script:       Fabricius
-    display_name: Fabricius
-    at:           [161.072, -3.893, 131.474, 63]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  5
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       21
-    status:   normal
-    widescan: true
-    content:  abyssea
-
-  17760465:
-    script:       Willis
-    display_name: Willis
-    at:           [159.233, -3.926, 131.421, 56]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  9
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       14
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17760466:
     script:       Porter_Moogle
     display_name: Porter Moogle
@@ -4098,40 +4052,6 @@ npcs:
         model: 52
       entity_flags: 2051
 
-  17760505:
-    script:       Suspicious_Tarutaru
-    display_name: Suspicious Tarutaru
-    at:           [221.286, -12.000, 225.311, 128]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  30
-        head:  4221
-        body:  8238
-        hands: 12334
-        legs:  16585
-        feet:  20681
-        main:  24576
-        sub:   28672
-      moving: 14
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17760506:
-    script:       Odyssean_Passage
-    display_name: Odyssean Passage
-    at:           [221.107, -12.000, 223.535, 128]
-    render:
-      look:
-        type:  standard
-        model: 2421
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17760507:
     script:       Mimble-Pimble
     display_name: Mimble-Pimble
@@ -4168,34 +4088,6 @@ npcs:
       moving:        1
     widescan: true
     content:  tvr
-
-  17760509:
-    script:       Mog_Dinghy
-    display_name: Mog Dinghy
-    at:           [-196.752, -0.300, 69.810]
-    render:
-      look:
-        type:  standard
-        model: 2784
-      name_vis:    96
-      moving:   32769
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17760510:
-    script:       Skipper_Moogle
-    display_name: Skipper Moogle
-    at:           [-194.050, -2.000, 67.008, 209]
-    render:
-      look:
-        type:  standard
-        model: 2361
-      entity_flags: 259
-      moving:        14
-    status:   normal
-    widescan: true
-    content:  soa
 
   17760511:
     script:       Achieve_Master

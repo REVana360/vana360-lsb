@@ -2198,7 +2198,7 @@ templates:
         - chance: common
           item:   noritsune_kote
         - chance: common
-          item:   criers_gaiters
+          item:   heralds_gaiters # https://forum.square-enix.com/ffxi/threads/46531
         - chance: very_common
           one_of:
             wyrm_horn:    75

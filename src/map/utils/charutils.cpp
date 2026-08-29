@@ -4747,8 +4747,7 @@ void DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob)
 {
     TracyZoneScoped;
 
-    // TODO: Capacity Points cannot be gained in Abyssea or Reives.  In addition, Gates areas,
-    //       Ra'Kaznar, Escha, and Reisenjima reduce party penalty for capacity points earned.
+    // TODO: Capacity Points cannot be gained in Abyssea.
     xi::ZoneId zone     = PChar->loc.zone->GetID();
     uint8      mobLevel = PMob->GetMLevel();
 
@@ -4824,7 +4823,7 @@ uint16 AddCapacityBonus(CCharEntity* PChar, uint16 capacityPoints)
 
     // COMMITMENT from Capacity Bands
 
-    if (PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Commitment) && PChar->loc.zone->GetRegionID() != REGION_TYPE::ABYSSEA)
+    if (PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Commitment))
     {
         CStatusEffect* commitment = PChar->StatusEffectContainer->GetStatusEffect(xi::StatusEffect::Commitment);
         int16          percentage = commitment->GetPower();
@@ -5160,27 +5159,6 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
         }
 
         // TODO: WOTG Expansion Sigil
-
-        // Cruor Drops in Abyssea zones.
-        const auto Pzone = PChar->getZone();
-        if (zoneutils::GetCurrentRegion(Pzone) == REGION_TYPE::ABYSSEA)
-        {
-            uint16 TextID = luautils::GetTextIDVariable(Pzone, "CRUOR_OBTAINED");
-            // uint32 Total  = charutils::GetPoints(PChar, "cruor");
-            // uint32 Cruor  = 0; // Need to work out how to do cruor chains, until then no cruor will drop unless this line is customized for non retail play.
-
-            if (TextID == 0)
-            {
-                ShowWarning("Failed to fetch Cruor Message ID for zone: %i", Pzone);
-            }
-
-            // TODO: Implement this once formula for Cruor attainment is implemented
-            // if (Cruor >= 1)
-            // {
-            //     PChar->pushPacket<CMessageSpecialPacket>(PChar, TextID, Cruor, Total + Cruor, 0, 0);
-            //     charutils::AddPoints(PChar, "cruor", Cruor);
-            // }
-        }
     }
 
     PChar->PAI->EventHandler.triggerListener("EXPERIENCE_POINTS", PChar, PMob, exp);
@@ -7179,54 +7157,6 @@ void SendTimerPacket(CCharEntity* PChar, timer::duration dur)
 void SendClearTimerPacket(CCharEntity* PChar)
 {
     PChar->pushPacket<GP_SERV_COMMAND_BATTLEFIELD>();
-}
-
-earth_time::time_point getTraverserEpoch(CCharEntity* PChar)
-{
-    TracyZoneScoped;
-
-    const auto rset = db::preparedStmt("SELECT UNIX_TIMESTAMP(traverser_start) AS start FROM char_unlocks WHERE charid = ? LIMIT 1", PChar->id);
-    FOR_DB_SINGLE_RESULT(rset)
-    {
-        return earth_time::time_point(std::chrono::seconds(rset->getOrDefault<uint32>("start", 0)));
-    }
-
-    return earth_time::time_point(std::chrono::seconds(0));
-}
-
-// TODO: Perhaps allow for optional argument to support GM Commands
-void setTraverserEpoch(CCharEntity* PChar)
-{
-    TracyZoneScoped;
-
-    db::preparedStmt("UPDATE char_unlocks SET traverser_start = CURRENT_TIMESTAMP() WHERE charid = ?", PChar->id);
-}
-
-uint32 getClaimedTraverserStones(CCharEntity* PChar)
-{
-    TracyZoneScoped;
-
-    const auto rset = db::preparedStmt("SELECT traverser_claimed FROM char_unlocks WHERE charid = ? LIMIT 1", PChar->id);
-    FOR_DB_SINGLE_RESULT(rset)
-    {
-        return rset->get<uint32>("traverser_claimed");
-    }
-
-    return 0;
-}
-
-void addClaimedTraverserStones(CCharEntity* PChar, uint16 numStones)
-{
-    TracyZoneScoped;
-
-    db::preparedStmt("UPDATE char_unlocks SET traverser_claimed = traverser_claimed + ? WHERE charid = ?", numStones, PChar->id);
-}
-
-void setClaimedTraverserStones(CCharEntity* PChar, uint16 stoneTotal)
-{
-    TracyZoneScoped;
-
-    db::preparedStmt("UPDATE char_unlocks SET traverser_claimed = ? WHERE charid = ?", stoneTotal, PChar->id);
 }
 
 uint32 getAvailableTraverserStones(CCharEntity* PChar)

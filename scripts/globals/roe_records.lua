@@ -7,19 +7,6 @@ require('scripts/globals/quests')
 xi = xi or {}
 xi.roe = xi.roe or {}
 
-local abysseaZones = set{
-    xi.zone.ABYSSEA_KONSCHTAT,
-    xi.zone.ABYSSEA_TAHRONGI,
-    xi.zone.ABYSSEA_LA_THEINE,
-    xi.zone.ABYSSEA_ATTOHWA,
-    xi.zone.ABYSSEA_MISAREAUX,
-    xi.zone.ABYSSEA_VUNKERL,
-    xi.zone.ABYSSEA_ALTEPA,
-    xi.zone.ABYSSEA_ULEGUERAND,
-    xi.zone.ABYSSEA_GRAUBERG,
-    xi.zone.ABYSSEA_EMPYREAL_PARADOX,
-}
-
 -- NOTE: This file calls the roe global init function at the end to populate default
 -- values that may be missing.  This same behavior happens in the roe global as well
 -- to ensure that whichever is loaded last will always have accurate information.
@@ -487,22 +474,6 @@ xi.roe.records =
     { -- Obtain Job: Scholar
         trigger = xi.roeTrigger.COMPLETE_QUEST,
         reqs = { questComplete = { xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.A_LITTLE_KNOWLEDGE } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [524] =
-    { -- Obtain Job: Geomancer
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.DANCES_WITH_LUOPANS } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [525] =
-    { -- Obtain Job: Runefencer
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.CHILDREN_OF_THE_RUNE } },
         flags = set { 'retro' },
         reward = { sparks = 100, exp = 300 },
     },
@@ -995,54 +966,6 @@ xi.roe.records =
     { -- SCH Artifact Quest III
         trigger = xi.roeTrigger.COMPLETE_QUEST,
         reqs = { questComplete = { xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.SEEING_BLOOD_RED } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [689] =
-    { -- GEO Artifact Quest I
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.FOR_WHOM_THE_BELL_TOLLS } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [690] =
-    { -- GEO Artifact Quest II
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.THE_BLOODLINE_OF_ZACARIAH } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [691] =
-    { -- GEO Artifact Quest III
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.THE_COMMUNION } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [692] =
-    { -- RUN Artifact Quest I
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.FORGING_NEW_BONDS } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [693] =
-    { -- RUN Artifact Quest II
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.LEGACIES_LOST_AND_FOUND } },
-        flags = set { 'retro' },
-        reward = { sparks = 100, exp = 300 },
-    },
-
-    [694] =
-    { -- RUN Artifact Quest III
-        trigger = xi.roeTrigger.COMPLETE_QUEST,
-        reqs = { questComplete = { xi.questLog.ADOULIN, xi.quest.id.adoulin.DESTINYS_DEVICE } },
         flags = set { 'retro' },
         reward = { sparks = 100, exp = 300 },
     },
@@ -1850,42 +1773,6 @@ xi.roe.records =
     },
 
     -----------------------------------
-    -- Tutorial -> Missions (Rhapsodies of Vana'diel)
-    -----------------------------------
-
-    [1373] =
-    { -- Rhapsodies of Vana'diel 1-1 +
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.ROV, xi.mission.id.rov.FLAMES_OF_PRAYER } },
-        flags = set { 'retro' },
-        reward = { item = { { xi.item.COPPER_AMAN_VOUCHER, 2 } }, sparks = 300, exp = 500 },
-    },
-
-    [1374] =
-    { -- Rhapsodies of Vana'diel 1-2 +
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.ROV, xi.mission.id.rov.A_LAND_AFTER_TIME } },
-        flags = set { 'retro' },
-        reward = { item = { { xi.item.COPPER_AMAN_VOUCHER, 2 } }, sparks = 300, exp = 500 },
-    },
-
-    [1375] =
-    { -- Rhapsodies of Vana'diel 1-3 +
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.ROV, xi.mission.id.rov.SET_FREE } },
-        flags = set { 'retro' },
-        reward = { item = { { xi.item.COPPER_AMAN_VOUCHER, 2 } }, sparks = 300, exp = 500 },
-    },
-
-    [1416] =
-    { -- Rhapsodies of Vana'diel 2-1
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.ROV, xi.mission.id.rov.CRASHING_WAVES } },
-        flags = set { 'retro' },
-        reward = { item = { { xi.item.COPPER_AMAN_VOUCHER, 2 } }, sparks = 300, exp = 500 },
-    },
-
-    -----------------------------------
     -- Tutorial -> Missions (Zilart)
     -----------------------------------
 
@@ -2172,82 +2059,6 @@ xi.roe.records =
     { -- Wings of the Goddess 4
         trigger = xi.roeTrigger.COMPLETE_MISSION,
         reqs = { missionComplete = { xi.mission.log_id.WOTG, xi.mission.id.wotg.CROSSROADS_OF_TIME } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1406] =
-    { -- Wings of the Goddess 5
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.WOTG, xi.mission.id.wotg.FATE_IN_HAZE } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1407] =
-    { -- Wings of the Goddess 6
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.WOTG, xi.mission.id.wotg.ADIEU_LILISETTE } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1408] =
-    { -- Wings of the Goddess 7
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.WOTG, xi.mission.id.wotg.GLIMMER_OF_LIFE } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1409] =
-    { -- Wings of the Goddess 8
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.WOTG, xi.mission.id.wotg.A_TOKEN_OF_TROTH } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    -----------------------------------
-    -- Tutorial -> Missions (Adoulin)
-    -----------------------------------
-
-    [1426] =
-    { -- Seekers of Adoulin Chapter 1
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.SOA, xi.mission.id.soa.ARCIELA_APPEARS_AGAIN } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1427] =
-    { -- Seekers of Adoulin Chapter 2
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.SOA, xi.mission.id.soa.YGGDRASIL } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1428] =
-    { -- Seekers of Adoulin Chapter 3
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.SOA, xi.mission.id.soa.GLIMMER_OF_PORTENT } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1429] =
-    { -- Seekers of Adoulin Chapter 4
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.SOA, xi.mission.id.soa.ROYAL_BLESSINGS } },
-        flags = set { 'retro' },
-        reward = { sparks = 300, exp = 500 },
-    },
-
-    [1430] =
-    { -- Seekers of Adoulin Chapter 5
-        trigger = xi.roeTrigger.COMPLETE_MISSION,
-        reqs = { missionComplete = { xi.mission.log_id.SOA, xi.mission.id.soa.UNDYING_LIGHT } },
         flags = set { 'retro' },
         reward = { sparks = 300, exp = 500 },
     },
@@ -3813,419 +3624,6 @@ xi.roe.records =
     },
 
     -----------------------------------
-    -- Combat (Region) - Adoulin 1
-    -----------------------------------
-
-    [310] =
-    { -- Conflict: Rala Waterways I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Spoutdrenched_Toad' }, zone = set { xi.zone.RALA_WATERWAYS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [311] =
-    { -- Conflict: Rala Waterways II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Stillwater_Funguar' }, zone = set { xi.zone.RALA_WATERWAYS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [312] =
-    { -- Conflict: Rala Waterways III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Pewter_Diremite' }, zone = set { xi.zone.RALA_WATERWAYS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [313] =
-    { -- Conflict: Ceizak Battlegrounds I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Blanched_Mandragora' }, zone = set { xi.zone.CEIZAK_BATTLEGROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [314] =
-    { -- Conflict: Ceizak Battlegrounds II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Careening_Twitherym' }, zone = set { xi.zone.CEIZAK_BATTLEGROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [315] =
-    { -- Conflict: Ceizak Battlegrounds III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Resplendent_Luckybug' }, zone = set { xi.zone.CEIZAK_BATTLEGROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [316] =
-    { -- Conflict: Yahse Hunting Grounds I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Calfcleaving_Chapuli' }, zone = set { xi.zone.YAHSE_HUNTING_GROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [317] =
-    { -- Conflict: Yahse Hunting Grounds II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Twitherym_Infestation' }, zone = set { xi.zone.YAHSE_HUNTING_GROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [318] =
-    { -- Conflict: Yahse Hunting Grounds III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Nettled_Wasp' }, zone = set { xi.zone.YAHSE_HUNTING_GROUNDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, capacity = 100, accolades = 10 },
-    },
-
-    [319] =
-    { -- Conflict: Foret de Hennitiel I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Perfidious_Crab' }, zone = set { xi.zone.FORET_DE_HENNETIEL } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [320] =
-    { -- Conflict: Foret de Hennitiel II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Scummy_Slug' }, zone = set { xi.zone.FORET_DE_HENNETIEL } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [321] =
-    { -- Conflict: Foret de Hennitiel III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Vorst_Gnat' }, zone = set { xi.zone.FORET_DE_HENNETIEL } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [322] =
-    { -- Conflict: Morimar Basalt Fields I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Sinewy_Matamata' }, zone = set { xi.zone.MORIMAR_BASALT_FIELDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [323] =
-    { -- Conflict: Morimar Basalt Fields II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Tephra_Lizard' }, zone = set { xi.zone.MORIMAR_BASALT_FIELDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [324] =
-    { -- Conflict: Morimar Basalt Fields III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Maca_Maca' }, zone = set { xi.zone.MORIMAR_BASALT_FIELDS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 110, exp = 500, capacity = 100, accolades = 11 },
-    },
-
-    [325] =
-    { -- Conflict: Yorcia Weald I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Snapweed' }, zone = set { xi.zone.YORCIA_WEALD } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    [326] =
-    { -- Conflict: Yorcia Weald II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Cheeky_Opo-opo' }, zone = set { xi.zone.YORCIA_WEALD } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    [327] =
-    { -- Conflict: Yorcia Weald III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Bronzecap' }, zone = set { xi.zone.YORCIA_WEALD } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    [328] =
-    { -- Conflict: Marjami Ravine I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Vinelash_Vulture' }, zone = set { xi.zone.MARJAMI_RAVINE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    [329] =
-    { -- Conflict: Marjami Ravine II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Stryx' }, zone = set { xi.zone.MARJAMI_RAVINE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    [330] =
-    { -- Conflict: Marjami Ravine III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Lapinion' }, zone = set { xi.zone.MARJAMI_RAVINE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 120, exp = 500, capacity = 100, accolades = 12 },
-    },
-
-    -----------------------------------
-    -- Combat (Region) - Adoulin 2
-    -----------------------------------
-
-    [331] =
-    { -- Conflict: Kamihr Drifts I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Snowpelt_Rabbit' }, zone = set { xi.zone.KAMIHR_DRIFTS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 130, exp = 500, capacity = 100, accolades = 13 },
-    },
-
-    [332] =
-    { -- Conflict: Kamihr Drifts II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Cicatricose_Raaz' }, zone = set { xi.zone.KAMIHR_DRIFTS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 130, exp = 500, capacity = 100, accolades = 13 },
-    },
-
-    [333] =
-    { -- Conflict: Kamihr Drifts III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Shaggy_Ovim' }, zone = set { xi.zone.KAMIHR_DRIFTS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 130, exp = 500, capacity = 100, accolades = 13 },
-    },
-
-    [334] =
-    { -- Conflict: Sih Gates I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Bonaria' }, zone = set { xi.zone.SIH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [335] =
-    { -- Conflict: Sih Gates II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Loathsome_Obdella' }, zone = set { xi.zone.SIH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [336] =
-    { -- Conflict: Sih Gates III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Ferocious_Funguar' }, zone = set { xi.zone.SIH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [337] =
-    { -- Conflict: Moh Gates I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Conflagrant_Eruca' }, zone = set { xi.zone.MOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [338] =
-    { -- Conflict: Moh Gates II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Erythemic_Eft' }, zone = set { xi.zone.MOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [339] =
-    { -- Conflict: Moh Gates III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Ferocious_Funguar' }, zone = set { xi.zone.MOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [340] =
-    { -- Conflict: Cirdas Caverns I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Subterrane_Spider' }, zone = set { xi.zone.CIRDAS_CAVERNS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [341] =
-    { -- Conflict: Cirdas Caverns II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Livid_Umbril' }, zone = set { xi.zone.CIRDAS_CAVERNS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [342] =
-    { -- Conflict: Cirdas Caverns III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Flatus_Acuex' }, zone = set { xi.zone.CIRDAS_CAVERNS } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [343] =
-    { -- Conflict: Dho Gates I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Velkk_Magus' }, zone = set { xi.zone.DHO_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [344] =
-    { -- Conflict: Dho Gates II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Ripsaw_Jagil' }, zone = set { xi.zone.DHO_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [345] =
-    { -- Conflict: Dho Gates III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Unyielding_Tarichuk' }, zone = set { xi.zone.DHO_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [346] =
-    { -- Conflict: Woh Gates I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Metalcruncher_Worm' }, zone = set { xi.zone.WOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [347] =
-    { -- Conflict: Woh Gates II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Drusy_Twitherym' }, zone = set { xi.zone.WOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [348] =
-    { -- Conflict: Woh Gates III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Wheezing_Acuex' }, zone = set { xi.zone.WOH_GATES } },
-        flags = set { 'repeat' },
-        reward = { sparks = 160, exp = 500, capacity = 100, accolades = 16 },
-    },
-
-    [494] =
-    { -- Conflict: Outer Ra'Kaznar I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Restless_Twitherym' }, zone = set { xi.zone.OUTER_RAKAZNAR } },
-        flags = set { 'repeat' },
-        reward = { sparks = 170, exp = 500, capacity = 100, accolades = 17 },
-    },
-
-    [495] =
-    { -- Conflict: Outer Ra'Kaznar II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Bristlehair_Bat' }, zone = set { xi.zone.OUTER_RAKAZNAR } },
-        flags = set { 'repeat' },
-        reward = { sparks = 170, exp = 500, capacity = 100, accolades = 17 },
-    },
-
-    [496] =
-    { -- Conflict: Outer Ra'Kaznar III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Astringent_Acuex' }, zone = set { xi.zone.OUTER_RAKAZNAR } },
-        flags = set { 'repeat' },
-        reward = { sparks = 170, exp = 500, capacity = 100, accolades = 17 },
-    },
-
-    [762] =
-    { -- Conflict: Ra'Kaznar Inner Court I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Bilespouting_Acuex' }, zone = set { xi.zone.RAKAZNAR_INNER_COURT } },
-        flags = set { 'repeat' },
-        reward = { sparks = 180, exp = 600, capacity = 100, accolades = 18 },
-    },
-
-    [763] =
-    { -- Conflict: Ra'Kaznar Inner Court II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Scowling_Vodoriga' }, zone = set { xi.zone.RAKAZNAR_INNER_COURT } },
-        flags = set { 'repeat' },
-        reward = { sparks = 180, exp = 600, capacity = 100, accolades = 18 },
-    },
-
-    [764] =
-    { -- Conflict: Ra'Kaznar Inner Court III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 5,
-        reqs = { mobName = set { 'Unrepentant_Byrgen' }, zone = set { xi.zone.RAKAZNAR_INNER_COURT } },
-        flags = set { 'repeat' },
-        reward = { sparks = 180, exp = 600, capacity = 100, accolades = 18 },
-    },
-
-    -----------------------------------
     -- Combat (Region) - Zilart 1
     -----------------------------------
 
@@ -4892,367 +4290,7 @@ xi.roe.records =
         reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.ACHERON_SHIELD } },
     },
 
-    [593] =
-    { -- Conflict: Castle Zvahl Baileys [S]
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.CASTLE_ZVAHL_BAILEYS_S } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.OROCHI_NODOWA } },
-    },
-
-    [595] =
-    { -- Conflict: Castle Zvahl Keep [S]
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.CASTLE_ZVAHL_KEEP_S } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.CERBERUS_RING } },
-    },
-
     -----------------------------------
-    -- Combat (Region) - Abyssea 1
-    -----------------------------------
-
-    [613] =
-    { -- Conflict: Abyssea - La Theine
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_LA_THEINE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.MUZZLING_COLLAR } },
-    },
-
-    [614] =
-    { -- Conflict: Abyssea - Konschtat
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_KONSCHTAT } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.AL_ZAHBI_SASH } },
-    },
-
-    [615] =
-    { -- Conflict: Abyssea - Tahrongi
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_TAHRONGI } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.SANCTUARY_OBI } },
-    },
-
-    [616] =
-    { -- Conflict: Abyssea - Attohwa
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_ATTOHWA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.BEIR_BELT } },
-    },
-
-    [617] =
-    { -- Conflict: Abyssea - Misareaux
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_MISAREAUX } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.AISANCE_MANTLE } },
-    },
-
-    [618] =
-    { -- Conflict: Abyssea - Vunkerl
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_VUNKERL } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.ELOQUENCE_CAPE } },
-    },
-
-    [619] =
-    { -- Conflict: Abyssea - Altepa
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_ALTEPA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.VIGILANCE_MANTLE } },
-    },
-
-    [620] =
-    { -- Conflict: Abyssea - Uleguerand
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_ULEGUERAND } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.AREWE_RING } },
-    },
-
-    [621] =
-    { -- Conflict: Abyssea - Grauberg
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 30,
-        reqs = { zone = set { xi.zone.ABYSSEA_GRAUBERG } },
-        flags = set { 'repeat' },
-        reward = { sparks = 80, exp = 900, accolades = 8, item = { xi.item.AREWE_RING } },
-    },
-
-    -----------------------------------
-    -- Combat (Region) - Escha 1
-    -----------------------------------
-    [885] =
-    { -- Conflict: Escha - Zi'Tah I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Yztarg' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [886] =
-    { -- Conflict: Escha - Zi'Tah II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Bugard' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [887] =
-    { -- Conflict: Escha - Zi'Tah III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Tarichuk' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [888] =
-    { -- Conflict: Escha - Zi'Tah IV
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Shadow_Dragon' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [889] =
-    { -- Conflict: Escha - Zi'Tah V
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Mosquito' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [901] =
-    { -- Conflict: Escha - Zi'Tah VI
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Puk' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [902] =
-    { -- Conflict: Escha - Zi'Tah VII
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Opo-opo' }, zone = set { xi.zone.ESCHA_ZITAH } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [903] =
-    { -- Conflict: Escha - Ru'Aun I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Ilaern' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [904] =
-    { -- Conflict: Escha - Ru'Aun II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Phuabo' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [905] =
-    { -- Conflict: Escha - Ru'Aun III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Euvhi' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [906] =
-    { -- Conflict: Escha - Ru'Aun IV
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Clionid' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [907] =
-    { -- Conflict: Escha - Ru'Aun V
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Hpemde' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [908] =
-    { -- Conflict: Escha - Ru'Aun VI
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Amoeban' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [909] =
-    { -- Conflict: Escha - Ru'Aun VII
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Xzomit' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [910] =
-    { -- Conflict: Escha - Ru'Aun VIII
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Murex' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [911] =
-    { -- Conflict: Escha - Ru'Aun IX
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Ghrah' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [912] =
-    { -- Conflict: Escha - Ru'Aun X
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Eschan_Limule' }, zone = set { xi.zone.ESCHA_RUAUN } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    -----------------------------------
-    -- Combat (Region) - Escha 2
-    -----------------------------------
-    [943] =
-    { -- Conflict: Reisenjima I
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Obstreperous_Panopt' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [944] =
-    { -- Conflict: Reisenjima II
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Snaggletoothed_Tiger' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [945] =
-    { -- Conflict: Reisenjima III
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Agitated_Chapuli' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [946] =
-    { -- Conflict: Reisenjima IV
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Indomitable_Faaz' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [947] =
-    { -- Conflict: Reisenjima V
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Territorial_Mantis' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [948] =
-    { -- Conflict: Reisenjima VI
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Devouring_Mosquito' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [949] =
-    { -- Conflict: Reisenjima VII
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Lentic_Toad' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [950] =
-    { -- Conflict: Reisenjima VIII
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Quarrelsome_Hippogryph' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [951] =
-    { -- Conflict: Reisenjima IX
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Rampaging_Beetle' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.BEAD_POUCH } },
-    },
-
-    [952] =
-    { -- Conflict: Reisenjima X
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Glowering_Ladybug' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
-    [953] =
-    { -- Conflict: Reisenjima XI
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { mobName = set { 'Lucani' }, zone = set { xi.zone.REISENJIMA } },
-        flags = set { 'repeat' },
-        reward = { sparks = 300, exp = 900, capacity = 150, accolades = 30, item = { xi.item.SILT_POUCH } },
-    },
-
     -----------------------------------
     -- Harvesting - Original Areas
     -----------------------------------
@@ -5364,10 +4402,6 @@ xi.roe.records =
         flags = set { 'repeat' },
         reward = { sparks = 100, exp = 500, accolades = 10, item = { { xi.item.PICKAXE, 12 } } },
     },
-
-    -----------------------------------
-    -- Harvesting - Adoulin 1
-    -----------------------------------
 
     -----------------------------------
     -- Harvesting - Zilart
@@ -7457,15 +6491,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3489] =
-    { -- Conflict: Rala Waterways (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.RALA_WATERWAYS }, unityLeader = xi.unityLeader.PIEUJE },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3490] =
     { -- Vanquish Rabbits (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -7689,15 +6714,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3514] =
-    { -- Conflict: Yahse Hunting Grounds (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.YAHSE_HUNTING_GROUNDS }, unityLeader = xi.unityLeader.AYAME },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3515] =
     { -- Vanquish Cockatrices (UC)
       -- TODO: Does this include Ziz?
@@ -7911,15 +6927,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.GREAT_AXE, unityLeader = xi.unityLeader.INVINCIBLE_SHIELD },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3539] =
-    { -- Conflict: Ceizak Battlegrounds (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.CEIZAK_BATTLEGROUNDS }, unityLeader = xi.unityLeader.INVINCIBLE_SHIELD },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     [3540] =
@@ -8144,15 +7151,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3564] =
-    { -- Conflict: Foret de Hennetiel (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.FORET_DE_HENNETIEL }, unityLeader = xi.unityLeader.APURURU },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3565] =
     { -- Vanquish Mandragoras (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -8190,15 +7188,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.HAND_TO_HAND, unityLeader = xi.unityLeader.MAAT },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3569] =
-    { -- Conflict: Yorcia Weald (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.YORCIA_WEALD }, unityLeader = xi.unityLeader.MAAT },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     [3570] =
@@ -8423,15 +7412,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3594] =
-    { -- Conflict: Morimar Basalt Fields (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.MORIMAR_BASALT_FIELDS }, unityLeader = xi.unityLeader.ALDO },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3595] =
     { -- Vanquish Dolls (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -8644,15 +7624,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.ARCHERY, unityLeader = xi.unityLeader.JAKOH_WAHCONDALO },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3619] =
-    { -- Conflict: Marjami Ravine (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.MARJAMI_RAVINE }, unityLeader = xi.unityLeader.JAKOH_WAHCONDALO },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     [3620] =
@@ -8878,15 +7849,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3644] =
-    { -- Conflict: Kamihr Drifts (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.KAMIHR_DRIFTS }, unityLeader = xi.unityLeader.NAJA_SALAHEEM },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3645] =
     { -- Vanquish Dhalmel (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -8924,15 +7886,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.POLEARM, unityLeader = xi.unityLeader.FLAVIRIA },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3649] =
-    { -- Conflict: Cirdas Caverns (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.CIRDAS_CAVERNS }, unityLeader = xi.unityLeader.FLAVIRIA },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     [3650] =
@@ -9061,15 +8014,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3664] =
-    { -- Conflict: Woh Gates (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.WOH_GATES }, unityLeader = xi.unityLeader.FLAVIRIA },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3665] =
     { -- Vanquish Skeletons (UC)
       -- TODO: Does this include Draugr?
@@ -9158,15 +8102,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3674] =
-    { -- Conflict: Moh Gates (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.MOH_GATES }, unityLeader = xi.unityLeader.YORAN_ORAN },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3675] =
     { -- Vanquish Antica (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -9245,15 +8180,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3684] =
-    { -- Conflict: Outer Ra'Kaznar (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.OUTER_RAKAZNAR }, unityLeader = xi.unityLeader.YORAN_ORAN },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3685] =
     { -- Vanquish Dullahan (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -9291,15 +8217,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.CLUB, unityLeader = xi.unityLeader.SYLVIE },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3689] =
-    { -- Conflict: Sih Gates (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.SIH_GATES }, unityLeader = xi.unityLeader.SYLVIE },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     --[[
@@ -9380,15 +8297,6 @@ xi.roe.records =
         reqs = { skillType = xi.skill.STAFF, unityLeader = xi.unityLeader.SYLVIE },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3699] =
-    { -- Conflict: Dho Gates (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.DHO_GATES }, unityLeader = xi.unityLeader.SYLVIE },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
     },
 
     [3700] =
@@ -9514,7 +8422,7 @@ xi.roe.records =
     { -- Vanquish Aquans
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.AQUAN } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.AQUAN } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9523,7 +8431,7 @@ xi.roe.records =
     { -- Vanquish Beasts
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.BEAST } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.BEAST } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9532,7 +8440,7 @@ xi.roe.records =
     { -- Vanquish Plantoids
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.PLANTOID } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.PLANTOID } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9541,7 +8449,7 @@ xi.roe.records =
     { -- Vanquish Lizards
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.LIZARD } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.LIZARD } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9550,7 +8458,7 @@ xi.roe.records =
     { -- Vanquish Vermin
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.VERMIN } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.VERMIN } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9585,7 +8493,7 @@ xi.roe.records =
     { -- Vanquish Birds
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.BIRD } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.BIRD } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9594,7 +8502,7 @@ xi.roe.records =
     { -- Vanquish Amorphs
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.AMORPH } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.AMORPH } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9603,7 +8511,7 @@ xi.roe.records =
     { -- Vanquish Undead
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.UNDEAD } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.UNDEAD } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },
@@ -9612,7 +8520,7 @@ xi.roe.records =
     { -- Vanquish Arcana
         trigger = xi.roeTrigger.DEFEAT_MOB,
         goal = 20,
-        reqs = { mobXP = true, zoneNot = abysseaZones, mobSystem = set { xi.ecosystem.ARCANA } },
+        reqs = { mobXP = true, mobSystem = set { xi.ecosystem.ARCANA } },
         flags = set { 'timed', 'repeat' },
         reward = { sparks = 300, exp = 1500, accolades = 300, item = { xi.item.COPPER_AMAN_VOUCHER } },
     },

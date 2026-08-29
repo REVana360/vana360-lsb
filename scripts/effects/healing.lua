@@ -2,30 +2,11 @@
 -- xi.effect.HEALING
 -- Activated through the /heal command
 -----------------------------------
-require('scripts/quests/adoulin/Dances_with_Luopans')
------------------------------------
-
 ---@type TEffect
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     target:setAnimation(xi.animation.HEALING)
-
-    -- Abyssea Lights and time remaining check
-    if
-        target:isPC() and
-        xi.abyssea.isInAbysseaZone(target)
-    then
-        local visitantEffect = target:getStatusEffect(xi.effect.VISITANT)
-
-        if visitantEffect and visitantEffect:getIcon() == xi.effect.VISITANT then
-            xi.abyssea.displayTimeRemaining(target)
-            xi.abyssea.displayAbysseaLights(target)
-        end
-    end
-
-    -- Dances with Luopans: charge the luopan while resting at an Ergon Locus
-    xi.dancesWithLuopans.onHealing(target)
 
     if target:getObjType() == xi.objType.PC then
         xi.voidwalker.onHealing(target)
@@ -101,9 +82,6 @@ end
 effectObject.onEffectLose = function(target, effect)
     target:setAnimation(xi.animation.NONE)
     target:delStatusEffectSilent(xi.effect.LEAVEGAME)
-
-    -- Dances with Luopans: stopping the rest cancels the luopan charge
-    xi.dancesWithLuopans.onEffectLose(target)
 end
 
 return effectObject

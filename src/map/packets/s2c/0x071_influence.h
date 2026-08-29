@@ -25,6 +25,5 @@
 
 enum class GP_SERV_COMMAND_INFLUENCE_MODE : uint8_t
 {
-    Campaign     = 2,
-    Colonization = 3,
+    Campaign = 2,
 };

@@ -639,19 +639,6 @@ npcs:
     animation_speed: 40
     widescan:        true
 
-  17363380:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [294.324, -17.043, 99.687]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17363381:
     script:       HomePoint#1
     display_name: 'Home Point #1'

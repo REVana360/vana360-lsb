@@ -62,8 +62,6 @@ auto GetMogHouseModelID(const CCharEntity* PChar) -> uint16
                 return PChar->profile.nation == NATION_WINDURST ? 0x0123 : 0x0120;
             case REGION_TYPE::JEUNO:
                 return 0x0100;
-            case REGION_TYPE::ADOULIN_ISLANDS:
-                return 0x0124;
             default:
                 ShowWarning("Default case reached for GetMogHouseID by %s (%u)", PChar->getName(), PChar->getZone());
                 return 0x0100;
@@ -75,8 +73,6 @@ auto GetMogHouseLeavingFlag(const CCharEntity* PChar) -> uint8
 {
     switch (zoneutils::GetCurrentRegion(PChar->getZone()))
     {
-        case REGION_TYPE::ADOULIN_ISLANDS:
-            return 9; // Adoulin MH exit is always enabled
         case REGION_TYPE::WEST_AHT_URHGAN:
             if (PChar->profile.mhflag & 0x10)
             {
@@ -230,13 +226,6 @@ GP_SERV_COMMAND_LOGIN::GP_SERV_COMMAND_LOGIN(CCharEntity* PChar, const EventInfo
     if (PChar->GetMJob() == xi::Job::MON)
     {
         monstrosity::ReadMonstrosityData(PChar);
-    }
-
-    if (PChar->loc.zone->GetID() == xi::ZoneId::Feretory)
-    {
-        // This disables the zone model, but also disables abilities etc.
-        packet.LoginState      = SAVE_LOGIN_STATE::SAVE_LOGIN_STATE_MYROOM;
-        packet.MyroomMapNumber = 0x02D9; // 729
     }
 
     if (PChar->m_PMonstrosity != nullptr)

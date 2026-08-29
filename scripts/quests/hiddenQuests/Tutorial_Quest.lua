@@ -458,18 +458,6 @@ quest.sections =
             },
         },
 
-        [xi.zone.EASTERN_ADOULIN] =
-        {
-            ['Auction_Counter'] =
-            {
-                onTrigger = function(player, npc)
-                    quest:setVar(player, 'Option', 1)
-                    player:sendMenu(xi.menuType.AUCTION)
-                    return quest:noAction()
-                end,
-            },
-        },
-
         [xi.zone.LOWER_JEUNO] =
         {
             ['Auction_Counter'] =
@@ -534,18 +522,6 @@ quest.sections =
                     npcUtil.giveKeyItem(player, xi.ki.CONQUEST_PROMOTION_VOUCHER)
                     quest:setVar(player, 'Prog', 7)
                     quest:setVar(player, 'Option', 0)
-                end,
-            },
-        },
-
-        [xi.zone.WESTERN_ADOULIN] =
-        {
-            ['Auction_Counter'] =
-            {
-                onTrigger = function(player, npc)
-                    quest:setVar(player, 'Option', 1)
-                    player:sendMenu(xi.menuType.AUCTION)
-                    return quest:noAction()
                 end,
             },
         },

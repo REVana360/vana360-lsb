@@ -524,8 +524,6 @@ public:
     void  delHP(int32 delAmt);                                                                                                                     // Decrease hp of Entity
     void  takeDamage(int32 damage, const sol::object& attacker, const sol::object& atkType, const sol::object& dmgType, const sol::object& flags); // Takes damage from the provided attacker
     void  hideHP(bool value);
-    int32 getDeathType();            // Returns Death Type (for Abyssea)
-    void  setDeathType(int32 value); // Sets Death Type (for Abyssea)
 
     int32 getMP();
     uint8 getMPP();
@@ -658,7 +656,6 @@ public:
     bool hasListener(const std::string& eventName);
 
     auto getEntity(uint16 targetID) -> CBaseEntity*;
-    bool canChangeState();
 
     void wakeUp();
 
@@ -946,7 +943,6 @@ public:
     void drawIn(const sol::variadic_args& va) const; // Forces a mob to draw-in the specified target, or its current target with no args
 
     void weaknessTrigger(uint8 level);
-    void restoreFromChest(CLuaBaseEntity* PLuaBaseEntity, uint32 restoreType);
     bool hasPreventActionEffect();
     void stun(uint32 milliseconds);
     void untargetableAndUnactionable(uint32 milliseconds);
@@ -964,13 +960,6 @@ public:
     void   itemDespoiled(bool despoiled);   // sets mob's ItemDespoiled var
     int16  getTHlevel();                    // Returns the Monster's current Treasure Hunter Tier
     void   setTHlevel(int16 newLevel);      // Sets the Monster's current Treasure Hunter Tier
-
-    uint32 getAvailableTraverserStones();
-    uint32 getTraverserEpoch();
-    void   setTraverserEpoch();
-    uint32 getClaimedTraverserStones();
-    void   addClaimedTraverserStones(uint16 numStones);
-    void   setClaimedTraverserStones(uint16 totalStones);
 
     uint32 getHistory(uint8 index);
 

@@ -839,17 +839,6 @@ survival.survivalGuides =
         posZ = 232.59,
         posRot = 192
     },
-    [96] =
-    {
-        zoneId = xi.zone.CASTLE_ZVAHL_BAILEYS_S,
-        group = 3,
-        groupMask = 2^12,
-        groupIndex = 13,
-        posX = 372,
-        posY = -12.05,
-        posZ = -23.78,
-        posRot = 64
-    },
     [94] =
     {
         zoneId = xi.zone.GARLAIGE_CITADEL_S,
@@ -1070,17 +1059,6 @@ survival.survivalGuides =
         posZ = 5.81,
         posRot = 192
     },
-    [97] =
-    {
-        zoneId = xi.zone.EASTERN_ADOULIN,
-        group = 4,
-        groupMask = 2^1,
-        groupIndex = 2,
-        posX = -53.5,
-        posY = 0.15,
-        posZ = -116.93,
-        posRot = 64
-    }
 }
 
 survival.zoneIdToGuideIdMap =
@@ -1181,8 +1159,6 @@ survival.zoneIdToGuideIdMap =
     [xi.zone.SAUROMUGUE_CHAMPAIGN_S] = 93,
     [xi.zone.GARLAIGE_CITADEL_S] = 94,
     [xi.zone.BEAUCEDINE_GLACIER_S] = 95,
-    [xi.zone.CASTLE_ZVAHL_BAILEYS_S] = 96,
-    [xi.zone.EASTERN_ADOULIN] = 97
 }
 
 return survival

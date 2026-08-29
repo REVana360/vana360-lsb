@@ -273,12 +273,6 @@ struct CampaignEvent
     std::vector<uint8> payload{};
 };
 
-struct ColonizationEvent
-{
-    ColonizationMessage type{};
-    std::vector<uint8>  payload{};
-};
-
 struct EntityInformationRequest
 {
     uint32 requesterId{};

@@ -673,7 +673,6 @@ void CLatentEffectContainer::CheckLatentsZone()
                 case xi::Latent::Zone:
                 case xi::Latent::InAssault:
                 case xi::Latent::InDynamis:
-                case xi::Latent::InAdoulin:
                 case xi::Latent::WeatherCondition:
                 case xi::Latent::WeatherElement:
                 case xi::Latent::NationControl:
@@ -1214,9 +1213,6 @@ auto CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect, bo
             break;
         case xi::Latent::InAssault:
             expression = m_POwner->isInAssault();
-            break;
-        case xi::Latent::InAdoulin:
-            expression = m_POwner->isInAdoulin();
             break;
         case xi::Latent::InGarrison:
             expression = m_POwner->isInGarrison() && m_POwner->GetMLevel() >= latentEffect.GetConditionsValue();

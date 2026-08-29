@@ -19,4 +19,14 @@ describe('Patrolling mobs', function()
 
         assert(not mob:hasStatusEffect(xi.effect.MINNE), 'patrolling mob has not gained Minne')
     end)
+
+    it('keeps disabled spell lists empty and addressable', function()
+        local player = xi.test.world:spawnPlayer({ zone = xi.zone.CASTLE_OZTROJA })
+        local mob    = player.entities:moveTo('Yagudo_Conductor')
+
+        mob:setSpellList(53)
+
+        assert(mob:getSpellListId() == 53, 'disabled spell list remains addressable')
+        assert(not mob:hasSpellList(), 'disabled spell list has no active spells')
+    end)
 end)

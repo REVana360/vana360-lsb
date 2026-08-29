@@ -91,7 +91,7 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
     const auto isMogHouseExit = rectView == "zmrq"; // universal Mog House exit zoneline
 
     const std::string_view mogEntrancePrefix  = rectView.substr(0, 3);
-    const auto             isMogHouseEntrance = mogEntrancePrefix == "zmr" || mogEntrancePrefix == "zms"; // zmr* classic cities; zms* WoTG [S] + Adoulin
+    const auto             isMogHouseEntrance = mogEntrancePrefix == "zmr" || mogEntrancePrefix == "zms"; // zmr* classic cities; zms* WoTG [S]
 
     if (PChar->status == xi::Status::Normal)
     {
@@ -105,13 +105,9 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
 
             auto exitDestination = static_cast<GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE>(this->MyRoomExitMode);
 
-            if (!settings::get<bool>("main.ENABLE_MOG_GARDEN"))
+            if (exitDestination == GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::MogGarden)
             {
-                // If Mog Garden is disabled, send the request as a regular mog house exit.
-                if (exitDestination == GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::MogGarden)
-                {
-                    exitDestination = GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom;
-                }
+                exitDestination = GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom;
             }
 
             switch (exitDestination)
@@ -142,9 +138,6 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
                                                   ? offsetZone(xi::ZoneId::AlZahbi, this->MyRoomExitMode - 1)
                                                   : offsetZone(xi::ZoneId::AhtUrhganWhitegate, this->MyRoomExitMode - 2);
                             break;
-                        case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::Adoulin:
-                            destinationZone = this->MyRoomExitMode == 2 ? xi::ZoneId::EasternAdoulin : xi::ZoneId::WesternAdoulin;
-                            break;
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::RonfaureFront:
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::GustabergFront:
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::SarutaFront:
@@ -158,9 +151,6 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
                 case GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::Mog2F:
                     destinationZone = PChar->getZone();
                     break;
-                case GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::MogGarden:
-                    destinationZone = xi::ZoneId::MogGarden;
-                    break;
             }
 
             bool moghouseExitRegular          = exitDestination == GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom && PChar->inMogHouse();
@@ -168,7 +158,7 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
             bool moghouse2FUnlocked           = (PChar->profile.mhflag & 0x20) && settings::get<bool>("main.ENABLE_MOG_HOUSE_2F");
             auto startingRegion               = zoneutils::GetCurrentRegion(startingZone);
             auto destinationRegion            = zoneutils::GetCurrentRegion(destinationZone);
-            auto moghouseExitRegions          = { REGION_TYPE::SANDORIA, REGION_TYPE::BASTOK, REGION_TYPE::WINDURST, REGION_TYPE::JEUNO, REGION_TYPE::WEST_AHT_URHGAN, REGION_TYPE::ADOULIN_ISLANDS };
+            auto moghouseExitRegions          = { REGION_TYPE::SANDORIA, REGION_TYPE::BASTOK, REGION_TYPE::WINDURST, REGION_TYPE::JEUNO, REGION_TYPE::WEST_AHT_URHGAN };
             auto moghouseSameRegion           = std::ranges::any_of(moghouseExitRegions,
                                                                     [&destinationRegion](const REGION_TYPE acceptedReg)
                                                                     {
@@ -176,22 +166,14 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
                                                                     });
             auto moghouseQuestComplete        = PChar->profile.mhflag & (this->MyRoomExitBit ? 0x01 << (this->MyRoomExitBit - 1) : 0);
 
-            if (startingRegion == REGION_TYPE::ADOULIN_ISLANDS)
-            {
-                // Adoulin back-alley exits are always available.
-                moghouseQuestComplete = true;
-            }
-
             bool moghouseExitQuestZoneline = moghouseQuestComplete &&
                                              startingRegion == destinationRegion &&
                                              PChar->inMogHouse() &&
                                              moghouseSameRegion &&
                                              !requestedMoghouseFloorChange;
 
-            bool moghouseExitMogGardenZoneline = destinationZone == xi::ZoneId::MogGarden && PChar->inMogHouse();
-
             // Validate travel
-            if (moghouseExitRegular || moghouseExitQuestZoneline || moghouseExitMogGardenZoneline)
+            if (moghouseExitRegular || moghouseExitQuestZoneline)
             {
                 PChar->m_moghouseID    = 0;
                 PChar->loc.destination = destinationZone;

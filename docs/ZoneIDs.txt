@@ -186,7 +186,7 @@ List of known zones
   180 -  B4 - La'Loff Amphitheater
   181 -  B5 - The Celestial Nexus
   182 -  B6 - Walk of Echoes
-  183 -  B7 - Maquette Abdhaljs-LegionA (Formerly "The Last Stand")
+  183 -  B7 - The Last Stand (unused in the selected July 2009 client)
   184 -  B8 - Lower Delkfutt's Tower
   185 -  B9 - Dynamis - San d'Oria
   186 -  BA - Dynamis - Bastok

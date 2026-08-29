@@ -855,19 +855,6 @@ npcs:
     widescan: true
     content:  grounds_tomes
 
-  17580420:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-79.402, -27.000, 439.370]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17580421:
     script:       Geomantic_Reservoir
     display_name: Geomantic Reservoir

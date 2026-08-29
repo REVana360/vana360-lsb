@@ -594,7 +594,6 @@ local optionToItem =
         [14] = { amount = 1000, name = 'mweya_plasm'            },
         [15] = { amount = 1000, name = 'ballista_point'         },
         [16] = { amount = 1000, name = 'unity_accolades'        },
-        [17] = { amount = 1000, name = 'escha_silt'             }, -- Not Implemented
         [18] = { amount = 1000, name = 'resistance_credit'      },
     },
 }

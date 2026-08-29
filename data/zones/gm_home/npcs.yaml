@@ -270,14 +270,6 @@ npcs:
         type:  standard
         model: 50
 
-  17637411:
-    script:       Abyssea
-    display_name: Abyssea
-    render:
-      look:
-        type:  standard
-        model: 50
-
   17637412:
     script:       Mogsack_Moogle
     display_name: Mogsack Moogle
@@ -297,22 +289,6 @@ npcs:
   17637414:
     script:       L
     display_name: L
-    render:
-      look:
-        type:  standard
-        model: 50
-
-  17637415:
-    script:       Adoulin
-    display_name: Adoulin
-    render:
-      look:
-        type:  standard
-        model: 50
-
-  17637416:
-    script:       Adoulin_Fame
-    display_name: Adoulin Fame
     render:
       look:
         type:  standard
@@ -1924,14 +1900,6 @@ npcs:
         type:  standard
         model: 50
 
-  17637620:
-    script:       Abyssea_Campaign
-    display_name: Abyssea Campaign
-    render:
-      look:
-        type:  standard
-        model: 50
-
   17637621:
     script:       Garden_Inviter
     display_name: Garden Inviter
@@ -1959,14 +1927,6 @@ npcs:
   17637624:
     script:       Unity_Master
     display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 50
-
-  17637625:
-    script:       Mog_garden
-    display_name: Mog garden
     render:
       look:
         type:  standard

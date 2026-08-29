@@ -3670,21 +3670,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17780960:
-    script:       Waypoint
-    display_name: Waypoint
-    at:           [-34.922, 0.000, -30.966, 18]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17780961:
     script: blank
     render:

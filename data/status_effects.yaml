@@ -4462,20 +4462,6 @@ status_effects:
     flags:
       - death
 
-  reive_mark:
-    id: 511
-    flags:
-      - death
-      - confrontation
-      - no_cancel
-      - hide_timer
-
-  ionis:
-    id: 512
-    flags:
-      - no_cancel
-      - influence
-
   # NONE                      = 514,
   bolster:
     id: 513

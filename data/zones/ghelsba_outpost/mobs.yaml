@@ -172,7 +172,8 @@ templates:
       spawn:
         type: [scripted]
       stats:
-        hp: 1000
+        # https://forum.square-enix.com/ffxi/threads/7257
+        hp: 2700
 
   Cyranuce_M_Cutauleon:
     id:            884
@@ -2818,7 +2819,7 @@ spawns:
   17350928:
     template: Cyranuce_M_Cutauleon
     at:       [-189.000, -10.000, 45.000, 95]
-    level:    [20, 20]
+    level:    [32, 32]                        # https://forum.square-enix.com/ffxi/threads/7257
   17350929:
     template: Colo-colo
     at:       [-188.970, -10.580, 46.150, 112]

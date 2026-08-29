@@ -54,7 +54,6 @@ IPC_STRUCT_NAMES = [
     "ConquestEvent",
     "BesiegedEvent",
     "CampaignEvent",
-    "ColonizationEvent",
 
     "EntityInformationRequest",
     "EntityInformationResponse",

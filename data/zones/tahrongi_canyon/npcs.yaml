@@ -1630,21 +1630,6 @@ npcs:
       moving: 1
     status: normal
 
-  17257077:
-    script:       Cavernous_Maw
-    display_name: Cavernous Maw
-    at:           [-28.597, 46.056, -685.754, 192]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17257078:
     script:       Luck_Rune
     display_name: Luck Rune
@@ -2265,19 +2250,6 @@ npcs:
       entity_flags: 27
       name_prefix:  32
     status: cutscene_only
-
-  17257121:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [128.307, -10.104, -177.120]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
 
   17257122:
     script:       Ergon_Locus

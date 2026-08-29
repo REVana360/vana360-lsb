@@ -1233,12 +1233,6 @@ void CMobEntity::DropItems(CCharEntity* PChar)
                     requiredEffect = xi::StatusEffect::Sigil;
                     break;
 
-                // Ionis Regions
-                case REGION_TYPE::ADOULIN_ISLANDS:
-                case REGION_TYPE::EAST_ULBUKA:
-                    requiredEffect = xi::StatusEffect::Ionis;
-                    break;
-
                 // Signet Regions
                 default:
                     if (regionID < REGION_TYPE::TAVNAZIA && conquest::GetRegionOwner(regionID) != NATION_BEASTMEN)

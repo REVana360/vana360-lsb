@@ -84,10 +84,16 @@ void LoadMobSpellList()
         const auto spellId     = rset->get<uint16>("spell_id");
         const auto minLvl      = rset->get<uint16>("min_level");
         const auto maxLvl      = rset->get<uint16>("max_level");
+        const auto contentTag  = rset->getOrDefault<std::string>("content_tag", "");
 
         if (!PMobSpellList.contains(spellListId))
         {
             PMobSpellList.emplace(spellListId, std::make_unique<CMobSpellList>(spellListId));
+        }
+
+        if (!luautils::IsContentEnabled(contentTag))
+        {
+            continue;
         }
 
         PMobSpellList[spellListId]->AddSpell(static_cast<SpellID>(spellId), minLvl, maxLvl);

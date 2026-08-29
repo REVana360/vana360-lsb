@@ -1532,19 +1532,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17596866:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-156.374, 0.000, 237.283]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17596867:
     script:       Geomantic_Reservoir
     display_name: Geomantic Reservoir

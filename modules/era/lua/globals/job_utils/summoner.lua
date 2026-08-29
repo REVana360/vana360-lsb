@@ -5,7 +5,7 @@
 -----------------------------------
 require('modules/module_utils')
 -----------------------------------
-local m = Module:new('era_job_utils_summoner')
+local m = Module:new('era_job_utils_summoner', xi.pre(xi.expansion.ABYSSEA))
 
 -- Perpetuation cost breakpoints for elemental spirits, in ascending level order.
 -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update

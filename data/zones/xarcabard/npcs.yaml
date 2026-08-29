@@ -1180,21 +1180,6 @@ npcs:
     status:   normal
     widescan: true
 
-  17236347:
-    script:       Cavernous_Maw
-    display_name: Cavernous Maw
-    at:           [270.000, -9.000, -70.000, 64]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17236348:
     script:       qm9
     display_name: ???

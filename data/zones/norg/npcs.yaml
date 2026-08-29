@@ -2229,21 +2229,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17809536:
-    script:       Proto-Waypoint
-    display_name: Proto-Waypoint
-    at:           [-79.652, -1.313, 40.287, 1]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17809537:
     script:       Achieve_Master
     display_name: Achieve Master
@@ -2452,30 +2437,6 @@ npcs:
       animation_sub:  1
       name_prefix:   32
       moving:         1
-    status:   normal
-    widescan: true
-    content:  tvr
-
-  17809552:
-    script:       Zurim
-    display_name: Zurim
-    at:           [19.520, -0.230, 23.410, 123]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  9
-        head:  4096
-        body:  8294
-        hands: 12288
-        legs:  16391
-        feet:  20482
-        main:  24576
-        sub:   28672
-      entity_flags:  27
-      animation_sub:  1
-      name_prefix:   32
-      moving:        21
     status:   normal
     widescan: true
     content:  tvr

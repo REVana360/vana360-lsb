@@ -2048,22 +2048,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Achuka',461,3023);
 INSERT INTO `mob_skill_lists` VALUES ('Achuka',461,3024);
 INSERT INTO `mob_skill_lists` VALUES ('Achuka',461,3025);
 INSERT INTO `mob_skill_lists` VALUES ('Achuka',461,3026);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2515);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2839);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2840);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2841);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2842);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2843);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2844);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2852);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2853);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2854);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2856);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2857);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2858);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2859);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2860);
-INSERT INTO `mob_skill_lists` VALUES ('Provenance_watcher',462,2861);
 INSERT INTO `mob_skill_lists` VALUES ('Panopt',463,3030);
 INSERT INTO `mob_skill_lists` VALUES ('Panopt',463,3031);
 INSERT INTO `mob_skill_lists` VALUES ('Panopt',463,3032);
@@ -4407,14 +4391,3 @@ INSERT INTO `mob_skill_lists` VALUES ('Jack_Cardian',2109,683); -- bludgeon
 INSERT INTO `mob_skill_lists` VALUES ('Jack_Cardian',2109,684); -- deal_out
 
 -- Next ID : 2110
--- ------------------------------------------------------------
--- Start of Ambuscade section
--- NOTE: The mobs are changed every update in the DATs, so using out-of-date
---       mob entries will result in the current update's names being shown.
-
--- April 2021 V1: Meebles
-INSERT INTO `mob_skill_lists` VALUES ('Bozzetto_Breadwinner',30000,3974); -- thrashing_assault
-INSERT INTO `mob_skill_lists` VALUES ('Bozzetto_Breadwinner',30000,3975); -- drill_claw
-
--- End of Ambuscade section
--- ------------------------------------------------------------

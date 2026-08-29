@@ -53,8 +53,5 @@ INSERT INTO `campaign_map` VALUES (19,99,0,8,0,0,0,0,0,0,0,0,0);
 INSERT INTO `campaign_map` VALUES (20,164,0,8,0,0,0,0,0,0,0,0,0);
 INSERT INTO `campaign_map` VALUES (21,136,0,8,0,0,0,0,0,0,0,0,0);
 INSERT INTO `campaign_map` VALUES (22,137,0,8,0,0,0,0,0,0,0,0,0);
-INSERT INTO `campaign_map` VALUES (23,138,0,8,0,0,0,0,0,0,0,0,0);
-INSERT INTO `campaign_map` VALUES (24,155,0,8,0,0,0,0,0,0,0,0,0);
-INSERT INTO `campaign_map` VALUES (25,156,0,8,0,0,0,0,0,0,0,0,0);
 
 -- Dump completed on 2018-06-09 16:59:58

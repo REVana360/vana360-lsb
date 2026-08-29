@@ -170,8 +170,6 @@ set(PACKET_S2C_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x071_influence.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x071_influence_campaign.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x071_influence_campaign.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x071_influence_colonization.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x071_influence_colonization.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x073_chocobo_toteboard.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x073_chocobo_toteboard.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x074_chocobo_list.h

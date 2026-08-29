@@ -848,7 +848,8 @@ templates:
       spawn:
         type: [scripted]
       stats:
-        hp: 400
+        # https://forum.square-enix.com/ffxi/threads/7257
+        hp: 900
 
   Kraken_fished:
     id:            6029
@@ -3129,15 +3130,15 @@ spawns:
   17486187:
     template: Korroloka_Leech
     at:       [-212.000, -9.000, 179.000, 247]
-    level:    [15, 15]
+    level:    [32, 32]                         # https://forum.square-enix.com/ffxi/threads/7257
   17486188:
     template: Korroloka_Leech
     at:       [-209.000, -9.000, 172.000, 246]
-    level:    [15, 15]
+    level:    [32, 32]
   17486189:
     template: Korroloka_Leech
     at:       [-215.000, -10.000, 167.000, 114]
-    level:    [15, 15]
+    level:    [32, 32]
   17486190:
     template: Morion_Worm
     at:       [255.652, -6.039, 20.878]

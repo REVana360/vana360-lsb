@@ -6,8 +6,6 @@ set(SOURCES
     campaign_system.h
     character_cache.cpp
     character_cache.h
-    colonization_system.cpp
-    colonization_system.h
     conquest_system.cpp
     conquest_system.h
     daily_tally.h

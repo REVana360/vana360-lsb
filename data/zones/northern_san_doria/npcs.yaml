@@ -6940,40 +6940,6 @@ npcs:
     status:   cutscene_only
     widescan: true
 
-  17723817:
-    script:       Suspicious_Elvaan
-    display_name: Suspicious Elvaan
-    at:           [82.217, -0.199, 42.682, 122]
-    render:
-      look:
-        type:  equipped
-        race:  3
-        face:  30
-        head:  4221
-        body:  8238
-        hands: 12334
-        legs:  16585
-        feet:  20681
-        main:  24576
-        sub:   28672
-      moving: 14
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17723818:
-    script:       Odyssean_Passage
-    display_name: Odyssean Passage
-    at:           [82.273, -0.199, 41.176, 124]
-    render:
-      look:
-        type:  standard
-        model: 2421
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17723819:
     script:       Trisvain
     display_name: Trisvain

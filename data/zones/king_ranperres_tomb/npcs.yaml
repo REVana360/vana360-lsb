@@ -819,19 +819,6 @@ npcs:
     widescan: true
     content:  grounds_tomes
 
-  17556031:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [223.312, -0.261, 175.141]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17556032:
     script: blank
     render:

@@ -156,30 +156,6 @@ INSERT INTO `instance_list` VALUES (9301,'fire_in_the_hole',93,88,NULL,0,156.000
 -- GHOYUS_REVERIE (zoneID: 129, starting id: 12900)
 INSERT INTO `instance_list` VALUES (12900,'doomvoid',129,84,NULL,0,382.000,0.000,-191.000,74,NULL,NULL,NULL,NULL);
 
--- MAQUETTE_ABDHALJS_LEGION_A (zoneID: 183, starting id: 18300)
-
--- RALA_WATERWAYS_U (zoneID: 259, starting id: 25900)
-INSERT INTO `instance_list` VALUES (25900,'behind_the_sluices',259,258,NULL,0,-153.000,-5.700,-380.000,0,NULL,NULL,NULL,NULL);
-
--- YORCIA_WEALD_U (zoneID: 264, starting id: 26400)
-
--- CIRDAS_CAVERNS_U (zoneID: 271, starting id: 27100)
-
--- OUTER_RAKAZNAR_U (zoneID: 275, starting id: 27500)
-
--- MAQUETTE_ABDHALJS_LEGION_B (zoneID: 287, starting id: 28700)
-
--- DYNAMIS_SAN_DORIA_D (zoneID: 294, starting id: 29400)
-
--- DYNAMIS_BASTOK_D (zoneID: 295, starting id: 29500)
-
--- DYNAMIS_WINDURST_D (zoneID: 296, starting id: 29600)
-
--- DYNAMIS_JEUNO_D (zoneID: 297, starting id: 29700)
-
--- MAQUETTE_ABDHALJS_LEGION_B (zoneID: 287, starting id: 30000)
-INSERT INTO `instance_list` VALUES (30000,'ambuscade',287,249,NULL,30,137.000,12.500,-137.000,32,NULL,NULL,NULL,NULL);
-
 /*!40000 ALTER TABLE `instance_list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

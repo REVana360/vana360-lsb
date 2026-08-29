@@ -10684,16 +10684,6 @@ void CLuaBaseEntity::hideHP(bool value)
     m_PBaseEntity->updatemask |= UPDATE_HP;
 }
 
-int32 CLuaBaseEntity::getDeathType()
-{
-    return static_cast<CMobEntity*>(m_PBaseEntity)->GetDeathType();
-}
-
-void CLuaBaseEntity::setDeathType(int32 value)
-{
-    ((CMobEntity*)m_PBaseEntity)->SetDeathType(value);
-}
-
 /************************************************************************
  *  Function: getMP()
  *  Purpose : Returns the current Mana Points of an entity
@@ -13310,18 +13300,6 @@ bool CLuaBaseEntity::hasListener(const std::string& eventName)
 auto CLuaBaseEntity::getEntity(uint16 targetID) -> CBaseEntity*
 {
     return m_PBaseEntity->GetEntity(targetID);
-}
-
-/************************************************************************
- *  Function: canChangeState()
- *  Purpose : Returns true if a mob isn't even in it's final form, bro
- *  Example : if mob:canChangeState() then
- *  Notes   : Only used in scripts/mixins/abyssea_nm.lua currently
- ************************************************************************/
-
-bool CLuaBaseEntity::canChangeState()
-{
-    return m_PBaseEntity->PAI->CanChangeState();
 }
 
 /************************************************************************
@@ -19495,7 +19473,7 @@ void CLuaBaseEntity::drawIn(const sol::variadic_args& va) const
  *  Function: weaknessTrigger()
  *  Purpose : Triggers the weakness of a mob to an active state
  *  Example : mob:weaknessTrigger(1)
- *  Notes   : Used in scripts/mixins/abyssea_nm.lua
+ *  Notes   : Used by Dynamis stagger handling
  ************************************************************************/
 
 void CLuaBaseEntity::weaknessTrigger(uint8 level)
@@ -19507,71 +19485,6 @@ void CLuaBaseEntity::weaknessTrigger(uint8 level)
     }
 
     mobutils::WeaknessTrigger(m_PBaseEntity, static_cast<WeaknessType>(level));
-}
-
-/************************************************************************
- *  Function: restoreFromChest()
- *  Purpose : adding effects for restore chests in abyssea
- *  Example : player:restoreFromChest(npc,0)
- *  1 = restore HP effect, 2 = restore MP effect
- ************************************************************************/
-
-void CLuaBaseEntity::restoreFromChest(CLuaBaseEntity* PLuaBaseEntity, uint32 restoreType)
-{
-    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
-
-    if (PLuaBaseEntity != nullptr)
-    {
-        CBaseEntity* PTarget = PLuaBaseEntity->GetBaseEntity();
-
-        ActionAnimation animationID  = ActionAnimation::None;
-        int             messageParam = 0;
-        MsgBasic        messageID    = MsgBasic::None;
-        int             addedHP      = 0;
-        int             addedMP      = 0;
-
-        if (PChar->animation != xi::Animation::Death)
-        {
-            addedHP = PChar->GetMaxHP() - PChar->health.hp;
-            addedMP = PChar->GetMaxMP() - PChar->health.mp;
-
-            switch (restoreType)
-            {
-                case 1:
-                    messageParam = addedHP;
-                    messageID    = MsgBasic::TargetRegainsHP;
-                    animationID  = ActionAnimation::RegainHP;
-                    break;
-                case 2:
-                    messageParam = addedMP;
-                    messageID    = MsgBasic::TargetRegainsMP;
-                    animationID  = ActionAnimation::RegainMP;
-                    break;
-            }
-
-            auto Action = action_t{
-                .actorId    = PTarget->id,
-                .actiontype = ActionCategory::MobSkillFinish,
-                .targets    = {
-                    {
-                        .actorId = PChar->id,
-                        .results = {
-                            {
-                                .animation = animationID,
-                                .param     = messageParam,
-                                .messageID = messageID,
-                            },
-                        },
-                    },
-                },
-            };
-
-            if (PTarget->loc.zone)
-            {
-                PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_BATTLE2>(Action));
-            }
-        }
-    }
 }
 
 /************************************************************************
@@ -19909,103 +19822,6 @@ void CLuaBaseEntity::setTHlevel(int16 newLevel)
         CMobEntity* PMob = static_cast<CMobEntity*>(m_PBaseEntity);
         PMob->m_THLvl    = newLevel;
     }
-}
-
-/************************************************************************
- *  Function: getAvailableTraverserStones()
- *  Purpose : Returns the number of Traverser Stones available for claim
- *  Note: Does not yet account for KI reduction
- ************************************************************************/
-
-uint32 CLuaBaseEntity::getAvailableTraverserStones()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return 0;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return charutils::getAvailableTraverserStones(PChar);
-}
-
-/************************************************************************
- *  Function: getTraverserEpoch()
- *  Purpose : Returns the number of Traverser Stones claimed by the player
- ************************************************************************/
-
-uint32 CLuaBaseEntity::getTraverserEpoch()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return 0;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return earth_time::timestamp(charutils::getTraverserEpoch(PChar));
-}
-
-/************************************************************************
- *  Function: setTraverserEpoch()
- *  Purpose : Returns the number of Traverser Stones claimed by the player
- ************************************************************************/
-
-void CLuaBaseEntity::setTraverserEpoch()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    charutils::setTraverserEpoch(PChar);
-}
-
-/************************************************************************
- *  Function: getClaimedTraverserStones()
- *  Purpose : Returns the number of Traverser Stones claimed by the player
- ************************************************************************/
-
-uint32 CLuaBaseEntity::getClaimedTraverserStones()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return 0;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return charutils::getClaimedTraverserStones(PChar);
-}
-
-/************************************************************************
- *  Function: addClaimedTraverserStones()
- *  Purpose : Increments number of Traverser Stones claimed by the player
- ************************************************************************/
-
-void CLuaBaseEntity::addClaimedTraverserStones(uint16 numStones)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    charutils::addClaimedTraverserStones(PChar, numStones);
-}
-
-/************************************************************************
- *  Function: setClaimedTraverserStones()
- *  Purpose : Sets number of Traverser Stones claimed by the player.
- ************************************************************************/
-
-void CLuaBaseEntity::setClaimedTraverserStones(uint16 totalStones)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    charutils::setClaimedTraverserStones(PChar, totalStones);
 }
 
 /************************************************************************
@@ -20916,9 +20732,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("delHP", CLuaBaseEntity::delHP);
     SOL_REGISTER("takeDamage", CLuaBaseEntity::takeDamage);
     SOL_REGISTER("hideHP", CLuaBaseEntity::hideHP);
-    SOL_REGISTER("getDeathType", CLuaBaseEntity::getDeathType);
-    SOL_REGISTER("setDeathType", CLuaBaseEntity::setDeathType);
-
     SOL_REGISTER("getMP", CLuaBaseEntity::getMP);
     SOL_REGISTER("getMPP", CLuaBaseEntity::getMPP);
     SOL_REGISTER("getMaxMP", CLuaBaseEntity::getMaxMP);
@@ -21047,8 +20860,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("hasListener", CLuaBaseEntity::hasListener);
 
     SOL_REGISTER("getEntity", CLuaBaseEntity::getEntity);
-    SOL_REGISTER("canChangeState", CLuaBaseEntity::canChangeState);
-
     SOL_REGISTER("wakeUp", CLuaBaseEntity::wakeUp);
 
     SOL_REGISTER("setBattleID", CLuaBaseEntity::setBattleID);
@@ -21337,7 +21148,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("drawIn", CLuaBaseEntity::drawIn);
 
     SOL_REGISTER("weaknessTrigger", CLuaBaseEntity::weaknessTrigger);
-    SOL_REGISTER("restoreFromChest", CLuaBaseEntity::restoreFromChest);
     SOL_REGISTER("hasPreventActionEffect", CLuaBaseEntity::hasPreventActionEffect);
     SOL_REGISTER("stun", CLuaBaseEntity::stun);
     SOL_REGISTER("untargetableAndUnactionable", CLuaBaseEntity::untargetableAndUnactionable);
@@ -21366,14 +21176,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("sendEntityUpdateToPlayer", CLuaBaseEntity::sendEntityUpdateToPlayer);
     SOL_REGISTER("sendEmptyEntityUpdateToPlayer", CLuaBaseEntity::sendEmptyEntityUpdateToPlayer);
     SOL_REGISTER("forceRezone", CLuaBaseEntity::forceRezone);
-
-    // Abyssea
-    SOL_REGISTER("getAvailableTraverserStones", CLuaBaseEntity::getAvailableTraverserStones);
-    SOL_REGISTER("getTraverserEpoch", CLuaBaseEntity::getTraverserEpoch);
-    SOL_REGISTER("setTraverserEpoch", CLuaBaseEntity::setTraverserEpoch);
-    SOL_REGISTER("getClaimedTraverserStones", CLuaBaseEntity::getClaimedTraverserStones);
-    SOL_REGISTER("addClaimedTraverserStones", CLuaBaseEntity::addClaimedTraverserStones);
-    SOL_REGISTER("setClaimedTraverserStones", CLuaBaseEntity::setClaimedTraverserStones);
 
     SOL_REGISTER("getHistory", CLuaBaseEntity::getHistory);
 

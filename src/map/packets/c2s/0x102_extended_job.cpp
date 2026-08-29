@@ -49,42 +49,6 @@ auto GP_CLI_COMMAND_EXTENDED_JOB::validate(MapSession* PSession, const CCharEnti
         pv.mustEqual(dynamic_cast<CAutomatonEntity*>(PChar->PPet), nullptr, "Player has a deployed automaton.");
         // TODO: Check if they own the attachments they are trying to equip.
     }
-    else if (PChar->loc.zone->GetID() == xi::ZoneId::Feretory && PChar->m_PMonstrosity != nullptr)
-    {
-        // Case 3: Monstrosity equipment change
-        if (this->Data.monData.Flags0.SpeciesFlag)
-        {
-            // Player requesting a species change
-            // TODO: Capture actual accepted IDs in a vector in a namespace
-            pv.range("SpeciesIndex", this->Data.monData.SpeciesIndex, 1, 511);
-        }
-
-        if (this->Data.monData.Flags0.InstinctFlag)
-        {
-            // Player requesting an instinct change
-            for (std::size_t idx = 0; idx < 12; ++idx)
-            {
-                // Ignore instincts being unequipped or unset
-                if (this->Data.monData.Slots[idx] != 0xFFFF && this->Data.monData.Slots[idx] != 0x0)
-                {
-                    // TODO: Capture actual range in a vector in a namespace
-                    pv.range("Slots", this->Data.monData.Slots[idx], 3, 799);
-                }
-            }
-        }
-
-        if (this->Data.monData.Flags0.Descriptor1Flag)
-        {
-            // 0 to unset. Last entry has ID 248.
-            pv.range("Descriptor1Index", this->Data.monData.Descriptor1Index, 0, 248);
-        }
-
-        if (this->Data.monData.Flags0.Descriptor2Flag)
-        {
-            // 0 to unset. Last entry has ID 248.
-            pv.range("Descriptor2Index", this->Data.monData.Descriptor2Index, 0, 248);
-        }
-    }
     else
     {
         return PacketValidationResult().addError("Did not match any of the extended job system.");
@@ -245,9 +209,5 @@ void GP_CLI_COMMAND_EXTENDED_JOB::process(MapSession* PSession, CCharEntity* PCh
         petutils::CalculateAutomatonStats(PChar, PChar->PPet);
         charutils::SendExtendedJobPackets(PChar);
         puppetutils::SaveAutomaton(PChar);
-    }
-    else if (PChar->loc.zone->GetID() == xi::ZoneId::Feretory && PChar->m_PMonstrosity != nullptr)
-    {
-        monstrosity::HandleEquipChangePacket(PChar, this->Data.monData);
     }
 }

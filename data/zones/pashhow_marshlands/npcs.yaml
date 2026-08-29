@@ -2109,40 +2109,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17224377:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [209.581, 25.000, 148.673]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17224378:
-    script:       Suspicious_Hume
-    display_name: Suspicious Hume
-    at:           [-491.817, 24.988, -618.552, 147]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  30
-        head:  4221
-        body:  8238
-        hands: 12334
-        legs:  16585
-        feet:  20681
-        main:  24576
-        sub:   28672
-      moving: 7
-    status:   normal
-    widescan: true
-    content:  soa
-
   17224379:
     script: blank
     render:
@@ -2150,19 +2116,6 @@ npcs:
         type:  standard
         model: 52
     status: cutscene_only
-
-  17224380:
-    script:       Odyssean_Passage
-    display_name: Odyssean Passage
-    at:           [-492.344, 24.999, -620.325, 144]
-    render:
-      look:
-        type:  standard
-        model: 2421
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
 
   17224381:
     script:       Survival_Guide

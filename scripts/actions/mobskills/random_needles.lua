@@ -26,10 +26,6 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     params.guaranteedFirstHit = true
     params.skipPDIF           = true
 
-    if mob:getID() == zones[xi.zone.ABYSSEA_ALTEPA].mob.CUIJATENDER then
-        params.baseDamage = math.randomInt(15000, 55000) / skill:getTotalTargets()
-    end
-
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then

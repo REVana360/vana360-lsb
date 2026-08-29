@@ -1857,21 +1857,6 @@ npcs:
         model: 50
     widescan: true
 
-  17199772:
-    script:       Cavernous_Maw
-    display_name: Cavernous Maw
-    at:           [368.980, -0.443, -119.874, 132]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  wotg
-
   17199773:
     script:       Survival_Guide
     display_name: Survival Guide

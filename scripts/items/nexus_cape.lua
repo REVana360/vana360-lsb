@@ -107,16 +107,6 @@ itemObject.onItemCheck = function(target, item, caster)
                 xi.zone.XARCABARD_S,
                 -- xi.zone.METALWORKS,
                 -- xi.zone.HEAVENS_TOWER,
-                -- xi.zone.WESTERN_ADOULIN,
-                -- xi.zone.EASTERN_ADOULIN,
-                -- xi.zone.YAHSE_HUNTING_GROUNDS,
-                -- xi.zone.CEIZAK_BATTLEGROUNDS,
-                -- xi.zone.FORET_DE_HENNETIEL,
-                -- xi.zone.YORCIA_WEALD,
-                -- xi.zone.MORIMAR_BASALT_FIELDS,
-                -- xi.zone.MARJAMI_RAVINE,
-                -- xi.zone.KAMIHR_DRIFTS,
-                -- xi.zone.LEAFALLIA,
             }
 
             -- Make sure we can actually tele to that zone..

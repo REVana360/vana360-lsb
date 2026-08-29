@@ -1080,19 +1080,6 @@ npcs:
     status:  normal
     content: soa
 
-  16880000:
-    script:       Undulating_Confluence
-    display_name: Undulating Confluence
-    at:           [-48.977, -23.309, 572.489, 12]
-    render:
-      look:
-        type:  standard
-        model: 2490
-      moving: 22
-    status:   normal
-    widescan: true
-    content:  rov
-
   16880001:
     script: blank
     render:

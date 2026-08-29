@@ -21,10 +21,6 @@ local trustMemory = function(player)
         memories = memories + 8
     end
 
-    if player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.BLOOD_OF_HEROES) then
-        memories = memories + 16
-    end
-
     return memories
 end
 

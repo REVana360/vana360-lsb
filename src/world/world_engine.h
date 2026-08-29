@@ -38,7 +38,6 @@ class PartySystem;
 class ConquestSystem;
 class BesiegedSystem;
 class CampaignSystem;
-class ColonizationSystem;
 
 class WorldEngine final : public Engine
 {
@@ -55,10 +54,9 @@ public:
 
     std::unique_ptr<PartySystem> partySystem_;
 
-    std::unique_ptr<ConquestSystem>     conquestSystem_;
-    std::unique_ptr<BesiegedSystem>     besiegedSystem_;
-    std::unique_ptr<CampaignSystem>     campaignSystem_;
-    std::unique_ptr<ColonizationSystem> colonizationSystem_;
+    std::unique_ptr<ConquestSystem> conquestSystem_;
+    std::unique_ptr<BesiegedSystem> besiegedSystem_;
+    std::unique_ptr<CampaignSystem> campaignSystem_;
 
     std::unique_ptr<HTTPServer> httpServer_;
 

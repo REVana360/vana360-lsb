@@ -1796,21 +1796,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17793139:
-    script:       Proto-Waypoint
-    display_name: Proto-Waypoint
-    at:           [-31.376, -0.777, -29.603, 171]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17793140:
     script:       Achieve_Master
     display_name: Achieve Master

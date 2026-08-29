@@ -2,7 +2,7 @@
 -- Handles the zones in which level correction still happens.
 -- As a general rule:
 -- Any zone in which contains a mob over lvl 99, level correction is deactivated.
--- Adoulin zones, zones with Apex or Locus mobs, etc...
+-- Zones with Apex or Locus mobs, etc.
 -----------------------------------
 xi = xi or {}
 xi.data = xi.data or {}
@@ -24,7 +24,6 @@ set{
     xi.zone.NEWTON_MOVALPOLOS,
     xi.zone.MINE_SHAFT_2716,
     xi.zone.HALL_OF_TRANSFERENCE,
-    xi.zone.ABYSSEA_KONSCHTAT,
     xi.zone.SPIRE_OF_HOLLA,
     xi.zone.SPIRE_OF_DEM,
     xi.zone.SPIRE_OF_MEA,
@@ -50,7 +49,6 @@ set{
     xi.zone.DYNAMIS_TAVNAZIA,
     xi.zone.DIORAMA_ABDHALJS_GHELSBA,
     xi.zone.ABDHALJS_ISLE_PURGONORGO,
-    xi.zone.ABYSSEA_TAHRONGI,
     xi.zone.OPEN_SEA_ROUTE_TO_AL_ZAHBI,
     xi.zone.OPEN_SEA_ROUTE_TO_MHAURA,
     xi.zone.AL_ZAHBI,
@@ -130,12 +128,10 @@ set{
     xi.zone.VALLEY_OF_SORROWS,
     xi.zone.GHOYUS_REVERIE,
     xi.zone.RUAUN_GARDENS,
-    xi.zone.ABYSSEA_LA_THEINE,
     xi.zone.DYNAMIS_BEAUCEDINE,
     xi.zone.DYNAMIS_XARCABARD,
     xi.zone.BEAUCEDINE_GLACIER_S,
     xi.zone.XARCABARD_S,
-    xi.zone.CASTLE_ZVAHL_BAILEYS_S,
     xi.zone.HORLAIS_PEAK,
     xi.zone.GHELSBA_OUTPOST,
     xi.zone.FORT_GHELSBA,
@@ -152,8 +148,6 @@ set{
     xi.zone.ALTAR_ROOM,
     xi.zone.THE_BOYAHDA_TREE,
     xi.zone.DRAGONS_AERY,
-    xi.zone.CASTLE_ZVAHL_KEEP_S,
-    xi.zone.THRONE_ROOM_S,
     xi.zone.MIDDLE_DELKFUTTS_TOWER,
     xi.zone.UPPER_DELKFUTTS_TOWER,
     xi.zone.TEMPLE_OF_UGGALEPIH,
@@ -177,8 +171,6 @@ set{
     xi.zone.THE_SHRINE_OF_RUAVITAU,
     xi.zone.LALOFF_AMPHITHEATER,
     xi.zone.THE_CELESTIAL_NEXUS,
-    xi.zone.WALK_OF_ECHOES,
-    xi.zone.MAQUETTE_ABDHALJS_LEGION_A,
     xi.zone.LOWER_DELKFUTTS_TOWER,
     xi.zone.DYNAMIS_SAN_DORIA,
     xi.zone.DYNAMIS_BASTOK,
@@ -205,28 +197,14 @@ set{
     xi.zone.CLOISTER_OF_TIDES,
     xi.zone.GUSTAV_TUNNEL,
     xi.zone.LABYRINTH_OF_ONZOZO,
-    xi.zone.ABYSSEA_ATTOHWA,
-    xi.zone.ABYSSEA_MISAREAUX,
-    xi.zone.ABYSSEA_VUNKERL,
-    xi.zone.ABYSSEA_ALTEPA,
     xi.zone.SHIP_BOUND_FOR_SELBINA,
     xi.zone.SHIP_BOUND_FOR_MHAURA,
-    xi.zone.PROVENANCE,
     xi.zone.SAN_DORIA_JEUNO_AIRSHIP,
     xi.zone.BASTOK_JEUNO_AIRSHIP,
     xi.zone.WINDURST_JEUNO_AIRSHIP,
     xi.zone.KAZHAM_JEUNO_AIRSHIP,
     xi.zone.SHIP_BOUND_FOR_SELBINA_PIRATES,
-    xi.zone.SHIP_BOUND_FOR_MHAURA_PIRATES,
-    xi.zone.ABYSSEA_ULEGUERAND,
-    xi.zone.ABYSSEA_GRAUBERG,
-    xi.zone.ABYSSEA_EMPYREAL_PARADOX,
-    xi.zone.WALK_OF_ECHOES_P2,
-    xi.zone.DYNAMIS_SAN_DORIA_D,
-    xi.zone.DYNAMIS_BASTOK_D,
-    xi.zone.DYNAMIS_WINDURST_D,
-    xi.zone.DYNAMIS_JEUNO_D,
-    xi.zone.WALK_OF_ECHOES_P1
+    xi.zone.SHIP_BOUND_FOR_MHAURA_PIRATES
 }
 
 -- Meant to be called from a master function and fed to corresponding calculation.

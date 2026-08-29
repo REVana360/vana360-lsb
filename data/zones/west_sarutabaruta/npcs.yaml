@@ -2045,19 +2045,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17248920:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-267.979, -18.967, 660.177]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17248921:
     script:       Survival_Guide
     display_name: Survival Guide

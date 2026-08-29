@@ -1534,21 +1534,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17789018:
-    script:       Proto-Waypoint
-    display_name: Proto-Waypoint
-    at:           [15.927, 7.999, 11.150, 43]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  soa
-
   17789019:
     script: blank
     render:

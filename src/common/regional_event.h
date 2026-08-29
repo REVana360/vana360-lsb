@@ -115,13 +115,3 @@ enum CampaignMessage : uint8
 };
 
 DECLARE_FORMAT_AS_UNDERLYING(CampaignMessage);
-
-//
-// Colonization
-//
-
-enum ColonizationMessage : uint8
-{
-};
-
-DECLARE_FORMAT_AS_UNDERLYING(ColonizationMessage);

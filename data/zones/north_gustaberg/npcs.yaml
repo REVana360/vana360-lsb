@@ -1339,21 +1339,6 @@ npcs:
     widescan: true
     content:  wotg
 
-  17212109:
-    script:       Cavernous_Maw_2
-    display_name: Cavernous Maw
-    at:           [-78.000, -0.500, 600.000]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17212110:
     script:       Field_Manual
     display_name: Field Manual
@@ -1801,16 +1786,3 @@ npcs:
         type:  standard
         model: 52
       entity_flags: 2051
-
-  17212148:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-676.965, 98.500, 356.421]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa

@@ -102,8 +102,6 @@ CBattleEntity::CBattleEntity()
     isCharmed    = false;
     m_unkillable = false;
 
-    m_DeathType = DEATH_TYPE::NONE;
-
     BattleHistory.lastHitTaken_atkType = xi::AttackType::None;
 }
 
@@ -160,26 +158,6 @@ bool CBattleEntity::isInAssault()
     {
         return (loc.zone->GetTypeMask() & xi::ZoneType::Instanced) != xi::ZoneType::Unknown &&
                (loc.zone->GetRegionID() >= REGION_TYPE::WEST_AHT_URHGAN && loc.zone->GetRegionID() <= REGION_TYPE::ALZADAAL);
-    }
-    return false;
-}
-
-bool CBattleEntity::isInAdoulin()
-{
-    if (loc.zone != nullptr)
-    {
-        xi::ZoneId zoneid = loc.zone->GetID();
-        switch (zoneid)
-        {
-            case xi::ZoneId::WesternAdoulin:
-            case xi::ZoneId::EasternAdoulin:
-            case xi::ZoneId::MogGarden:
-            case xi::ZoneId::SilverKnife:
-            case xi::ZoneId::CelenniaMemorialLibrary:
-                return true;
-            default:
-                break;
-        }
     }
     return false;
 }
@@ -1762,16 +1740,6 @@ void CBattleEntity::SetSLevel(uint8 slvl)
     {
         db::preparedStmt("UPDATE char_stats SET slvl = ? WHERE charid = ? LIMIT 1", m_slvl, this->id);
     }
-}
-
-void CBattleEntity::SetDeathType(uint8 type)
-{
-    m_DeathType = static_cast<DEATH_TYPE>(type);
-}
-
-uint8 CBattleEntity::GetDeathType()
-{
-    return static_cast<uint8>(m_DeathType);
 }
 
 /************************************************************************

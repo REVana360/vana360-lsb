@@ -61,7 +61,7 @@ enum class EMobDifficulty : uint8
 };
 
 // Capacity Bonuses applied based on RoE Completion
-// TODO: Add RoV Completion and Reive bonuses once implemented
+// TODO: Add RoV completion bonuses once implemented.
 const std::vector<std::pair<uint16, uint8>> roeCapacityBonusRecords = {
     { 1332, 10 }, // San d'Oria Missions (10%)
     { 1352, 10 }, // Bastok Missions (10%)
@@ -70,7 +70,6 @@ const std::vector<std::pair<uint16, uint8>> roeCapacityBonusRecords = {
     { 1400, 10 }, // Chains of Promathia Missions (10%)
     { 1409, 10 }, // Wings of the Goddess Missions (10%)
     { 1415, 10 }, // Treasures of Aht Urhgan Missions (10%)
-    { 1430, 10 }, // Seekers of Adoulin Missions (10%
 };
 
 namespace charutils
@@ -284,12 +283,7 @@ void SendTimerPacket(CCharEntity* PChar, uint32 seconds);
 void SendTimerPacket(CCharEntity* PChar, timer::duration dur);
 void SendClearTimerPacket(CCharEntity* PChar);
 
-earth_time::time_point getTraverserEpoch(CCharEntity* PChar);
-void                   setTraverserEpoch(CCharEntity* PChar);
-uint32                 getClaimedTraverserStones(CCharEntity* PChar);
-void                   addClaimedTraverserStones(CCharEntity* PChar, uint16 numStones);
-void                   setClaimedTraverserStones(CCharEntity* PChar, uint16 stoneTotal);
-uint32                 getAvailableTraverserStones(CCharEntity* PChar);
+uint32 getAvailableTraverserStones(CCharEntity* PChar);
 
 void ReadHistory(CCharEntity* PChar);
 void WriteHistory(const CCharEntity* PChar);

@@ -1965,22 +1965,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17293816:
-    script:       Transcendental_Radiance
-    display_name: Transcendental Radiance
-    at:           [-259.434, -21.581, 220.498, 24]
-    render:
-      look:
-        type:  standard
-        model: 1339
-      entity_flags:   515
-      name_vis:        96
-      name_prefix:      2
-      moving:       32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17293817:
     script: blank
     render:
@@ -2144,19 +2128,6 @@ npcs:
       entity_flags: 27
       name_prefix:  32
     status: cutscene_only
-
-  17293832:
-    script:       Undulating_Confluence
-    display_name: Undulating Confluence
-    at:           [-204.531, -20.027, 75.318, 88]
-    render:
-      look:
-        type:  standard
-        model: 2490
-      moving: 21
-    status:   normal
-    widescan: true
-    content:  rov
 
   17293833:
     script:       HomePoint#1

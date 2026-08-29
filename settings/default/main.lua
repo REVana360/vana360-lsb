@@ -40,7 +40,6 @@ xi.settings.main =
 
     -- MOG HOUSE
     ENABLE_MOG_HOUSE_2F = 0, -- Enables Access to Mog House 2F / Mog Safe 2.
-    ENABLE_MOG_GARDEN   = 0, -- Enables Access to Mog Garden, will send player to the area they entered from if disabled.
 
     -- FIELDS OF VALOR/Grounds of Valor settings
     ENABLE_FIELD_MANUALS  = 1, -- Enables Fields of Valor
@@ -84,11 +83,9 @@ xi.settings.main =
     ENABLE_MMM = 1,
 
     -- Monstrosity (Heavily in development, use at your own risk!)
-    ENABLE_MONSTROSITY               = 0,
-    MONSTROSITY_TELEPORT_TO_FERETORY = 0,   -- Return to Feretory instead of the zone where you entered Feretory when Relinquishing or after death.
-    MONSTROSITY_TRIGGER_NPCS         = 0,   -- Allow Monipulators to trigger NPCs outside of the Feretory.
-    MONSTROSITY_DONT_WIPE_BUFFS      = 0,   -- If set, buffs won't be wiped when changing species in the Feretory.
-    MONSTROSITY_PVP_ZONE_BYPASS = 0, -- Show the full zone teleport menu from Feretory while Belligerency is flagged.
+    ENABLE_MONSTROSITY          = 0,
+    MONSTROSITY_TRIGGER_NPCS    = 0, -- Allow Monipulators to trigger NPCs.
+    MONSTROSITY_DONT_WIPE_BUFFS = 0, -- If set, buffs won't be wiped when changing species.
 
     -- TREASURE CASKETS
     -- Retail droprate = 0.1 (10%) with no other effects active

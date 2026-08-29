@@ -25,7 +25,6 @@
 
 #include "besieged_system.h"
 #include "campaign_system.h"
-#include "colonization_system.h"
 #include "conquest_system.h"
 #include "http_server.h"
 #include "ipc_server.h"
@@ -39,7 +38,6 @@ WorldEngine::WorldEngine(Scheduler& scheduler, ZMQService& zmqService, EnableHTT
 , conquestSystem_(std::make_unique<ConquestSystem>(*this))
 , besiegedSystem_(std::make_unique<BesiegedSystem>(*this))
 , campaignSystem_(std::make_unique<CampaignSystem>(*this))
-, colonizationSystem_(std::make_unique<ColonizationSystem>(*this))
 , httpServer_(enableHTTPServer ? std::make_unique<HTTPServer>(scheduler_) : nullptr)
 {
     timeServerToken_ = scheduler_.intervalOnMainThread(

@@ -1327,42 +1327,10 @@ auto GetCurrentRegion(const xi::ZoneId zoneId) -> REGION_TYPE
         case xi::ZoneId::BeaucedineGlacierS:
             return REGION_TYPE::FAUREGANDI_FRONT;
         case xi::ZoneId::XarcabardS:
-        case xi::ZoneId::CastleZvahlBaileysS:
-        case xi::ZoneId::CastleZvahlKeepS:
-        case xi::ZoneId::ThroneRoomS:
             return REGION_TYPE::VALDEAUNIA_FRONT;
-        case xi::ZoneId::AbysseaAltepa:
-        case xi::ZoneId::AbysseaAttohwa:
-        case xi::ZoneId::AbysseaEmpyrealParadox:
-        case xi::ZoneId::AbysseaGrauberg:
-        case xi::ZoneId::AbysseaKonschtat:
-        case xi::ZoneId::AbysseaLaTheine:
-        case xi::ZoneId::AbysseaMisareaux:
-        case xi::ZoneId::AbysseaTahrongi:
-        case xi::ZoneId::AbysseaUleguerand:
-        case xi::ZoneId::AbysseaVunkerl:
-            return REGION_TYPE::ABYSSEA;
-        case xi::ZoneId::WalkOfEchoes:
-            return REGION_TYPE::THE_THRESHOLD;
         case xi::ZoneId::DioramaAbdhaljsGhelsba:
         case xi::ZoneId::AbdhaljsIslePurgonorgo:
-        case xi::ZoneId::MaquetteAbdhaljsLegionA:
-        case xi::ZoneId::MaquetteAbdhaljsLegionB:
             return REGION_TYPE::ABDHALJS;
-        case xi::ZoneId::WesternAdoulin:
-        case xi::ZoneId::EasternAdoulin:
-        case xi::ZoneId::RalaWaterways:
-        case xi::ZoneId::RalaWaterwaysU:
-            return REGION_TYPE::ADOULIN_ISLANDS;
-        case xi::ZoneId::CeizakBattlegrounds:
-        case xi::ZoneId::ForetDeHennetiel:
-        case xi::ZoneId::SihGates:
-        case xi::ZoneId::MohGates:
-        case xi::ZoneId::CirdasCaverns:
-        case xi::ZoneId::CirdasCavernsU:
-        case xi::ZoneId::YahseHuntingGrounds:
-        case xi::ZoneId::MorimarBasaltFields:
-            return REGION_TYPE::EAST_ULBUKA;
         default:
             break;
     }

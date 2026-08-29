@@ -1416,7 +1416,8 @@ templates:
       spawn:
         type: [scripted]
       stats:
-        hp: 900
+        # https://forum.square-enix.com/ffxi/threads/7257
+        hp: 2000
 
   Hell_Hound:
     id:            1926
@@ -2687,7 +2688,7 @@ spawns:
   17272838:
     template: Guardian_Treant
     at:       [642.317, -4.877, -149.643, 114]
-    level:    [20, 20]
+    level:    [32, 32]                         # https://forum.square-enix.com/ffxi/threads/7257
   17272839:
     template: Doomed_Pilgrims
     at:       [231.000, 0.100, 284.000, 15]

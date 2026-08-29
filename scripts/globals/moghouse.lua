@@ -41,8 +41,6 @@ xi.moghouse.moghouseZones =
     xi.zone.UPPER_JEUNO,          -- 244
     xi.zone.LOWER_JEUNO,          -- 245
     xi.zone.PORT_JEUNO,           -- 246
-    xi.zone.WESTERN_ADOULIN,      -- 256
-    xi.zone.EASTERN_ADOULIN,      -- 257
 }
 
 xi.moghouse.moghouse2FUnlockCSs =
@@ -87,8 +85,6 @@ xi.moghouse.exits =
     [xi.zone.UPPER_JEUNO]          = { [1] = {     47,     -5,  -79.3,  172, offsetAxis.R, 1.0 } },
     [xi.zone.LOWER_JEUNO]          = { [1] = {     42,     -5,     85,   85, offsetAxis.R, 1.0 } },
     [xi.zone.PORT_JEUNO]           = { [1] = {   -193,     -5,     -0,    0, offsetAxis.Z, 1.0 } },
-    [xi.zone.WESTERN_ADOULIN]      = { [1] = {      0,   0.75,   -142,  223, offsetAxis.R, 4.0 } },
-    [xi.zone.EASTERN_ADOULIN]      = { [1] = {    -56,  -0.15,   -127,  191, offsetAxis.X, 4.0 } },
 
     --- Multiple Exit Zones ----------------------------------------------------------------------
     [xi.zone.BASTOK_MARKETS_S]     = {
@@ -126,8 +122,6 @@ local moghouseZoneLines =
     [1970433402] = 1, -- (245) LOWER_JEUNO
     [2003987834] = 1, -- ( 48) AL_ZAHBI
     [2037542266] = 1, -- ( 50) AHT_URHGAN_WHITEGATE
-    [ 947088762] = 1, -- (256) WESTERN_ADOULIN
-    [1634954618] = 1, -- (257) EASTERN_ADOULIN
 }
 
 xi.moghouse.inMogHouseInHomeNation = function(player)

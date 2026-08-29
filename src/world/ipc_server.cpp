@@ -24,7 +24,6 @@
 #include "besieged_system.h"
 #include "campaign_system.h"
 #include "character_cache.h"
-#include "colonization_system.h"
 #include "conquest_system.h"
 
 #include <memory>
@@ -662,13 +661,6 @@ void IPCServer::handleMessage_CampaignEvent(const IPP& ipp, const ipc::CampaignE
     TracyZoneScoped;
 
     worldServer_.campaignSystem_->handleMessage(message.type, { ipp, message.payload });
-}
-
-void IPCServer::handleMessage_ColonizationEvent(const IPP& ipp, const ipc::ColonizationEvent& message)
-{
-    TracyZoneScoped;
-
-    worldServer_.colonizationSystem_->handleMessage(message.type, { ipp, message.payload });
 }
 
 void IPCServer::handleMessage_EntityInformationRequest(const IPP& ipp, const ipc::EntityInformationRequest& message)

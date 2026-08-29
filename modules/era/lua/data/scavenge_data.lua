@@ -187,10 +187,8 @@ local zonePoolMap =
     [xi.zone.GARLAIGE_CITADEL_S      ] = scavengePools.OUTDOOR_4,
 
     -- Northlands Path
-    [xi.zone.BEAUCEDINE_GLACIER_S   ] = scavengePools.NORTHLANDS_WOTG,
-    [xi.zone.XARCABARD_S            ] = scavengePools.NORTHLANDS_WOTG,
-    [xi.zone.CASTLE_ZVAHL_BAILEYS_S ] = scavengePools.NORTHLANDS_WOTG,
-    [xi.zone.CASTLE_ZVAHL_KEEP_S    ] = scavengePools.NORTHLANDS_WOTG,
+    [xi.zone.BEAUCEDINE_GLACIER_S] = scavengePools.NORTHLANDS_WOTG,
+    [xi.zone.XARCABARD_S         ] = scavengePools.NORTHLANDS_WOTG,
 }
 
 return

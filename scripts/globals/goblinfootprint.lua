@@ -65,22 +65,6 @@ local csReq = -- add checks to this table
             return player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.CHOCOBO_ON_THE_LOOSE)
         end,
 
-        [11] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_GOLDSTRUCK_GIGAS)
-        end,
-
-        [12] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_GOLDSTRUCK_GIGAS)
-        end,
-
-        [13] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.AN_OFFICER_AND_A_PIRATE)
-        end,
-
-        [14] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.TENUOUS_EXISTENCE)
-        end,
-
         -- Not Implemented Below (ROV)
         [15] = function(player)
             return false
@@ -156,13 +140,6 @@ local csReq = -- add checks to this table
                 player:hasItem(xi.item.APOCALYPSE_119_III)
         end,
 
-        [4] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.AN_ULCEROUS_URAGNITE)
-        end,
-
-        [5] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.AN_ULCEROUS_URAGNITE)
-        end,
     },
 
     [xi.zone.SOUTH_GUSTABERG] =
@@ -171,13 +148,6 @@ local csReq = -- add checks to this table
             return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.A_TRANSIENT_DREAM)
         end,
 
-        [2] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_BEAKED_BLUSTERER)
-        end,
-
-        [3] = function(player)
-            return player:hasCompletedQuest(xi.questLog.ABYSSEA, xi.quest.id.abyssea.A_BEAKED_BLUSTERER)
-        end,
     },
 
     [xi.zone.MERIPHATAUD_MOUNTAINS] =

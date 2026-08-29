@@ -4371,52 +4371,6 @@ npcs:
       name_prefix:  32
     status: cutscene_only
 
-  17772836:
-    script:       Fabien
-    display_name: Fabien
-    at:           [2.282, 0.000, -65.316, 191]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  7
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       21
-    status:   normal
-    widescan: true
-    content:  abyssea
-
-  17772837:
-    script:       Vincent
-    display_name: Vincent
-    at:           [4.043, 0.000, -65.351, 190]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  11
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       14
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17772838:
     script:       Voidwatch_Purveyor
     display_name: Voidwatch Purveyor
@@ -4492,21 +4446,6 @@ npcs:
       entity_flags: 27
       name_prefix:  32
       moving:        1
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17772844:
-    script:       Proto-Waypoint
-    display_name: Proto-Waypoint
-    at:           [-37.819, 0.000, -39.911, 14]
-    render:
-      look:
-        type:  standard
-        model: 2420
-      name_vis:       32
-      name_prefix:     2
-      moving:      32769
     status:   normal
     widescan: true
     content:  soa

@@ -1184,19 +1184,6 @@ npcs:
     widescan: true
     content:  grounds_tomes
 
-  17498668:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-59.830, 18.805, 92.782]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17498669:
     script:       Survival_Guide
     display_name: Survival Guide

@@ -1514,7 +1514,7 @@ npcs:
   17739860:
     script:       HomePoint#1
     display_name: 'Home Point #1'
-    at:           [-344.000, -10.000, -155.000, 160]
+    at:           [-293.791, -10.000, -102.539, 160] # https://forum.square-enix.com/ffxi/threads/49065
     render:
       look:
         type:  standard

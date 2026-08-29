@@ -2,7 +2,6 @@
 -- Zone: GM Home (210)
 --
 -- Some cs event info:
--- 0 = Abyssea Debug
 -- 1 = Mogsack Debug
 -- ...
 -- 139 = Janken challenges player to "Rock, Paper, Scissors"

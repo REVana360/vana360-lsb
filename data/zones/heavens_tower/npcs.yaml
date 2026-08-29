@@ -2049,52 +2049,6 @@ npcs:
         model: 52
     status: cutscene_only
 
-  17768567:
-    script:       Jerrett
-    display_name: Jerrett
-    at:           [-7.847, 0.500, -3.441, 236]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  4
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:        1
-    status:   normal
-    widescan: true
-    content:  abyssea
-
-  17768568:
-    script:       Kierron
-    display_name: Kierron
-    at:           [-7.154, 0.500, -4.474, 236]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  8
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       21
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17768569:
     script:       Achieve_Master
     display_name: Achieve Master

@@ -29,15 +29,3 @@ m:addOverride('xi.wotg.helpers.meetsMission15Reqs', function(player)
     -- Ignore the quest requirements, just return true
     return true
 end)
-
--- WOTG26: Fate in Haze
-m:addOverride('xi.wotg.helpers.meetsMission26Reqs', function(player)
-    -- Ignore the quest requirements, just return true
-    return true
-end)
-
--- WOTG38: Adieu, Lilisette
-m:addOverride('xi.wotg.helpers.meetsMission38Reqs', function(player)
-    -- Ignore the quest requirements, just return true
-    return true
-end)

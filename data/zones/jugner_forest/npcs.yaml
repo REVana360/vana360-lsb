@@ -2725,21 +2725,6 @@ npcs:
         type:  standard
         model: 52
 
-  17203935:
-    script:       Cavernous_Maw_2
-    display_name: Cavernous Maw
-    at:           [246.318, -0.709, 5.706, 160]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17203936:
     script: blank
     render:
@@ -2892,19 +2877,6 @@ npcs:
     status:   normal
     widescan: true
     content:  abyssea
-
-  17203946:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [-178.000, -4.206, 502.233]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
 
   17203947:
     script:       Survival_Guide

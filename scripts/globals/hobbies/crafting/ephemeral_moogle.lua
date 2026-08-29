@@ -6,7 +6,7 @@ require('scripts/globals/npc_util')
 xi = xi or {}
 xi.crafting = xi.crafting or {}
 
--- Event ID each moogle uses. TODO: Mog Garden moogle.
+-- Event ID each moogle uses.
 local moogleEventTable =
 {
     ['Ephemeral_Moogle_Wood'   ] = { trigger =  913, trade =  915, fail =  917 }, -- Northern San d'Oria
@@ -17,7 +17,6 @@ local moogleEventTable =
     ['Ephemeral_Moogle_Bone'   ] = { trigger =  895, trade =  897, fail =  899 }, -- Windurst Woods
     ['Ephemeral_Moogle_Alchemy'] = { trigger =  617, trade =  618, fail =  619 }, -- Bastok Mines
     ['Ephemeral_Moogle_Cook'   ] = { trigger = 1098, trade = 1099, fail = 1100 }, -- Windurst Waters
-    ['Ephemeral_Moogle_Garden' ] = { trigger =    0, trade =    0, fail =    0 }, -- Mog Garden
 }
 
 -- Information for crystal item IDs and currency.

@@ -5,14 +5,6 @@ xi = xi or {}
 xi.wotg = xi.wotg or {}
 xi.wotg.helpers = xi.wotg.helpers or {}
 
-local memoryFragments =
-{
-    xi.ki.LARGE_MEMORY_FRAGMENT1,
-    xi.ki.LARGE_MEMORY_FRAGMENT2,
-    xi.ki.LARGE_MEMORY_FRAGMENT3,
-    xi.ki.LARGE_MEMORY_FRAGMENT4,
-}
-
 -- NOTE: The naming convention here is: "meets requirements to complete mission X".
 --       meetsMission3Reqs = This function goes in Mission 3.
 --       I have completeted BURDEN_OF_SUSPICION or WRATH_OF_THE_GRIFFON
@@ -62,22 +54,6 @@ xi.wotg.helpers.meetsMission15Reqs = function(player)
         player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.THE_FORBIDDEN_PATH)
 end
 
--- WOTG26: Fate in Haze
-xi.wotg.helpers.meetsMission26Reqs = function(player)
-    -- TODO: Add one day wait
-    return player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.WHAT_PRICE_LOYALTY) or
-        player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.BLOOD_OF_HEROES) or
-        player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.HOWL_FROM_THE_HEAVENS)
-end
-
--- WOTG38: Adieu, Lilisette
-xi.wotg.helpers.meetsMission38Reqs = function(player)
-    -- TODO: Add one day wait
-    return player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.BONDS_OF_MYTHRIL) or
-        player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.FACE_OF_THE_FUTURE) or
-        player:hasCompletedQuest(xi.questLog.CRYSTAL_WAR, xi.quest.id.crystalWar.AT_JOURNEYS_END)
-end
-
 xi.wotg.helpers.helmTrade = function(player, helmType, broke)
     local wotgChance = 50
     local zoneId = player:getZoneID()
@@ -105,28 +81,4 @@ xi.wotg.helpers.helmTrade = function(player, helmType, broke)
     end
 
     return false
-end
-
-xi.wotg.helpers.checkMemoryFragments = function(player)
-    local ID = zones[player:getZoneID()]
-    local numFragments = 0
-
-    for _, keyItemId in ipairs(memoryFragments) do
-        if player:hasKeyItem(keyItemId) then
-            numFragments = numFragments + 1
-        end
-    end
-
-    if numFragments == 4 then
-        player:messageName(ID.text.REPORT_TO_CAIT_SITH, nil)
-
-        player:completeMission(xi.mission.log_id.WOTG, xi.mission.id.wotg.HER_MEMORIES)
-        player:addMission(xi.mission.log_id.WOTG, xi.mission.id.wotg.FORGET_ME_NOT)
-    end
-end
-
-xi.wotg.helpers.removeMemoryFragments = function(player)
-    for _, keyItemId in ipairs(memoryFragments) do
-        player:delKeyItem(keyItemId)
-    end
 end

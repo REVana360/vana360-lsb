@@ -3790,9 +3790,6 @@ INSERT INTO `item_latents` VALUES (27842,21,30,9,17); -- Alexander (Light)
 INSERT INTO `item_latents` VALUES (27842,22,30,9,18); -- Odin (Dark)
 INSERT INTO `item_latents` VALUES (27842,21,30,9,20); -- Cait Sith (Light)
 
--- Councilor's Garb
-INSERT INTO `item_latents` VALUES (27923,76,24,63,0);   -- While in Adoulin: MOVE_SPEED_GEAR_BONUS +25% (retail testing shows +24%)
-
 -- Hachiya Kyahan
 INSERT INTO `item_latents` VALUES (28235,76,24,26,2);   -- Dusk to dawn: MOVE_SPEED_GEAR_BONUS+25% (retail testing shows +24%)
 

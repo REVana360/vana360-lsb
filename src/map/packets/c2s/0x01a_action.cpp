@@ -247,10 +247,9 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
                 return;
             }
 
-            // MONs are allowed to use doors, but nothing else
+            // MONs are allowed to use doors, but nothing else.
             if (PChar->m_PMonstrosity != nullptr &&
                 PNpc->look.size != 0x02 &&
-                PChar->getZone() != xi::ZoneId::Feretory &&
                 !settings::get<bool>("main.MONSTROSITY_TRIGGER_NPCS"))
             {
                 PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Standard);

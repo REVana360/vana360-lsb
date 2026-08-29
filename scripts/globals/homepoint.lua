@@ -50,14 +50,6 @@ local homepointData =
     [ 41] = { group = 8, fee = 1, dest = {      -27,       0,     -47,   0, xi.zone.NORG                   } }, -- Norg #1
     [ 42] = { group = 9, fee = 1, dest = {      -29,       0,     -76,   0, xi.zone.RABAO                  } }, -- Rabao #1
     [ 43] = { group = 0, fee = 1, dest = {       36,     -11,      35,   0, xi.zone.SELBINA                } }, -- Selbina #1
-    [ 44] = { group = 5, fee = 1, dest = {      -84,       4,     -32, 128, xi.zone.WESTERN_ADOULIN        } }, -- Western Adoulin #1
-    [ 45] = { group = 5, fee = 1, dest = {      -51,       0,      59, 128, xi.zone.EASTERN_ADOULIN        } }, -- Eastern Adoulin #1
-    [ 46] = { group = 0, fee = 2, dest = {     -107,       3,     295, 128, xi.zone.CEIZAK_BATTLEGROUNDS   } }, -- Ceizak Battlegrounds #1
-    [ 47] = { group = 0, fee = 2, dest = {     -193,    -0.5,    -252, 128, xi.zone.FORET_DE_HENNETIEL     } }, -- Foret de Hennetiel #1
-    [ 48] = { group = 0, fee = 2, dest = {     -415,   -63.2,     409, 106, xi.zone.MORIMAR_BASALT_FIELDS  } }, -- Morimar Basalt Fields #1
-    [ 49] = { group = 0, fee = 2, dest = {     -420,       0,     -62,  64, xi.zone.YORCIA_WEALD           } }, -- Yorcia Weald #1
-    [ 50] = { group = 0, fee = 2, dest = {      -23,       0,     174,   0, xi.zone.MARJAMI_RAVINE         } }, -- Marjami Ravine #1
-    [ 51] = { group = 0, fee = 2, dest = {      210,  20.299,     315, 192, xi.zone.KAMIHR_DRIFTS          } }, -- Kamihr Drifts #1
     [ 52] = { group = 0, fee = 2, dest = {      434,     -40,     171,   0, xi.zone.YUGHOTT_GROTTO         } }, -- Yughott Grotto #1
     [ 53] = { group = 0, fee = 2, dest = {      109,     -38,    -147,   0, xi.zone.PALBOROUGH_MINES       } }, -- Palborough Mines #1
     [ 54] = { group = 0, fee = 2, dest = {     -132,      -3,    -303,   0, xi.zone.GIDDEUS                } }, -- Giddeus #1
@@ -115,14 +107,9 @@ local homepointData =
     [106] = { group = 7, fee = 1, dest = {      130,       0,     -16,   0, xi.zone.AHT_URHGAN_WHITEGATE   } }, -- Aht Urhgan Whitegate #2
     [107] = { group = 7, fee = 1, dest = {     -108,      -6,     108, 192, xi.zone.AHT_URHGAN_WHITEGATE   } }, -- Aht Urhgan Whitegate #3
     [108] = { group = 7, fee = 1, dest = {      -99,       0,     -68,   0, xi.zone.AHT_URHGAN_WHITEGATE   } }, -- Aht Urhgan Whitegate #4
-    [109] = { group = 5, fee = 1, dest = {       32,       0,    -164,  32, xi.zone.WESTERN_ADOULIN        } }, -- Western Adoulin #2
-    [110] = { group = 5, fee = 1, dest = {      -51,       0,     -96,  96, xi.zone.EASTERN_ADOULIN        } }, -- Eastern Adoulin #2
     [111] = { group = 0, fee = 2, dest = {      223,     -13,    -254,   0, xi.zone.XARCABARD_S            } }, -- Xarcabard [S] #1
-    [112] = { group = 0, fee = 2, dest = {    5.539,  -0.434,   8.133,  73, xi.zone.LEAFALLIA              } }, -- Leafallia #1
-    [113] = { group = 0, fee = 2, dest = {     -554,     -70,      66, 128, xi.zone.CASTLE_ZVAHL_KEEP_S    } }, -- Castle Zvahl Keep [S] #1
     [114] = { group = 0, fee = 1, dest = {     -212,     -21,      93,  64, xi.zone.QUFIM_ISLAND           } }, -- Qufim Island #1
     [115] = { group = 0, fee = 1, dest = {   -257.5,      24,      82, 192, xi.zone.TORAIMARAI_CANAL       } }, -- Toraimorai Canal #1
-    [116] = { group = 0, fee = 2, dest = {      757,     120,    17.5, 128, xi.zone.RAKAZNAR_INNER_COURT   } }, -- Ra'Kaznar Inner Court #1
     [117] = { group = 0, fee = 2, dest = {      -65,   -17.5,     563, 224, xi.zone.MISAREAUX_COAST        } }, -- Misareaux Coast #1
     [118] = { group = 3, fee = 1, dest = {      -92,      -2,      54, 155, xi.zone.WINDURST_WATERS        } }, -- Windurst Waters #4
     [119] = { group = 3, fee = 1, dest = {    -43.5,       0,    -145,   0, xi.zone.WINDURST_WOODS         } }, -- Windurst Woods #5

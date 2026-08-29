@@ -1018,18 +1018,6 @@ npcs:
       name_prefix:  32
     status: cutscene_only
 
-  16822552:
-    script:       Geomagnetic_Fount
-    display_name: Geomagnetic Fount
-    at:           [177.549, 7.378, -97.327]
-    render:
-      look:
-        type:  standard
-        model: 52
-      moving: 1
-    status:  normal
-    content: soa
-
   16822553:
     script:       Survival_Guide
     display_name: Survival Guide

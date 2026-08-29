@@ -31,7 +31,6 @@ local folders =
     'outlands',
     'ahtUrhgan',
     'hiddenQuests',
-    'abyssea',
     'adoulin',
 }
 

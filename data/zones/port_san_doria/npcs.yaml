@@ -1736,7 +1736,7 @@ npcs:
   17727574:
     script:       HomePoint#1
     display_name: 'Home Point #1'
-    at:           [-38.000, -4.000, -63.000, 192]
+    at:           [-66.077, 4.000, -104.948, 192] # https://forum.square-enix.com/ffxi/threads/49065
     render:
       look:
         type:  standard
@@ -2813,52 +2813,6 @@ npcs:
         model: 52
       entity_flags: 2051
 
-  17727653:
-    script:       Gilburt
-    display_name: Gilburt
-    at:           [7.072, -4.000, -65.116, 191]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  11
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       14
-    status:   normal
-    widescan: true
-    content:  abyssea
-
-  17727654:
-    script:       Ivan
-    display_name: Ivan
-    at:           [8.272, -4.000, -65.092, 191]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  1
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:        7
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17727655:
     script:       Greeter_Moogle
     display_name: Greeter Moogle
@@ -2868,34 +2822,6 @@ npcs:
         type:  standard
         model: 2419
       moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17727656:
-    script:       Mog_Dinghy
-    display_name: Mog Dinghy
-    at:           [22.346, 1.300, -51.170, 143]
-    render:
-      look:
-        type:  standard
-        model: 2784
-      name_vis:    96
-      moving:   32769
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17727657:
-    script:       Skipper_Moogle
-    display_name: Skipper Moogle
-    at:           [26.029, -1.000, -51.628, 64]
-    render:
-      look:
-        type:  standard
-        model: 2361
-      entity_flags: 259
-      moving:        14
     status:   normal
     widescan: true
     content:  soa

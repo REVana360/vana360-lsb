@@ -95,7 +95,7 @@ xi.survivalGuide.onTrigger = function(player)
     -- param 4 = zones unlocked (group 1), set to -1 to enable all zones in the group.
     -- param 5 = Zones unlocked (group 2), set to -1 to enable all zones in the group.
     -- param 6 = Zones unlocked (group 3), set to -1 to enable all zones in the group.
-    -- param 7 = zones unlocked (Zehrun mines and Eastern Adoulin), set to -1 to enable all zones in the group.
+    -- param 7 = zones unlocked (Zeruhn Mines), set to -1 to enable all zones in the group.
     -- param 8 = expansions available.
     player:startEvent(8500, 0, param, player:getGil(), g1, g2, g3, g4, expansions)
 end

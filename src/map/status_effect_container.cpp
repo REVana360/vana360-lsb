@@ -1591,12 +1591,6 @@ void CStatusEffectContainer::LoadStatusEffects()
             {
                 duration = endTime - currentTime;
             }
-            else if (effectID == xi::StatusEffect::Visitant)
-            {
-                // Visitant effect expired while offline, but there's other logic to handle.
-                // Set duration to 1 so that it expires after zoning in, and the player is ejected.
-                duration = 1s;
-            }
             else
             {
                 // Effect expired while offline

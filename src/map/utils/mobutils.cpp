@@ -242,17 +242,8 @@ uint16 GetBaseWeaponDamage(CMobEntity* PMob, uint16 slot)
             break;
 
         // Other
-        case REGION_TYPE::ABYSSEA:
-        case REGION_TYPE::THE_THRESHOLD:
         case REGION_TYPE::ABDHALJS: // TODO: Need data for ABDHALJS zones.
             offset       = 11;
-            rangedOffset = 13;
-            break;
-
-        // SOA Regions
-        case REGION_TYPE::ADOULIN_ISLANDS:
-        case REGION_TYPE::EAST_ULBUKA:
-            offset       = 11; // TODO: Need more data for Lvl 100+ mobs.
             rangedOffset = 13;
             break;
 

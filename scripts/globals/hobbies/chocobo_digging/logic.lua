@@ -64,13 +64,6 @@ set{
     -- xi.zone.VALLEY_OF_SORROWS,
     -- xi.zone.BEAUCEDINE_GLACIER_S,
     -- xi.zone.XARCABARD_S,
-    -- xi.zone.YAHSE_HUNTING_GROUNDS,
-    -- xi.zone.CEIZAK_BATTLEGROUNDS,
-    -- xi.zone.FORET_DE_HENNETIEL,
-    -- xi.zone.YORCIA_WEALD,
-    -- xi.zone.MORIMAR_BASALT_FIELDS,
-    -- xi.zone.MARJAMI_RAVINE,
-    -- xi.zone.KAMIHR_DRIFTS,
 }
 
 local elementalOreZoneTable =

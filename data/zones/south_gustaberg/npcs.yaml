@@ -1208,21 +1208,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17216200:
-    script:       Cavernous_Maw
-    display_name: Cavernous Maw
-    at:           [340.000, -0.500, -680.000, 192]
-    render:
-      look:
-        type:  standard
-        model: 2325
-      name_vis:       96
-      name_prefix:     2
-      moving:      32769
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17216201:
     script:       Summoner
     display_name: Summoner

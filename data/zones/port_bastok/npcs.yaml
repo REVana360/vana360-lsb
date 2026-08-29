@@ -1378,7 +1378,7 @@ npcs:
   17743944:
     script:       HomePoint#1
     display_name: 'Home Point #1'
-    at:           [126.000, 8.500, 8.000, 224]
+    at:           [53.645, 7.500, -28.682, 224] # https://forum.square-enix.com/ffxi/threads/49065
     render:
       look:
         type:  standard
@@ -3102,52 +3102,6 @@ npcs:
     widescan: true
     content:  wotg
 
-  17744055:
-    script:       Erich
-    display_name: Erich
-    at:           [85.450, 7.499, -177.733, 191]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  8
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:        1
-    status:   normal
-    widescan: true
-    content:  abyssea
-
-  17744056:
-    script:       Ernst
-    display_name: Ernst
-    at:           [86.809, 7.499, -177.898, 195]
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  5
-        head:  4096
-        body:  8452
-        hands: 12489
-        legs:  16569
-        feet:  20738
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       22
-    status:   normal
-    widescan: true
-    content:  abyssea
-
   17744057:
     script:       Voidwatch_Purveyor
     display_name: Voidwatch Purveyor
@@ -4611,40 +4565,6 @@ npcs:
       name_vis: 112
     status: cutscene_only
 
-  17744182:
-    script:       Suspicious_Galka
-    display_name: Suspicious Galka
-    at:           [81.610, 8.499, -229.065, 124]
-    render:
-      look:
-        type:  equipped
-        race:  8
-        face:  30
-        head:  4221
-        body:  8238
-        hands: 12334
-        legs:  16585
-        feet:  20681
-        main:  24576
-        sub:   28672
-      moving: 8
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17744183:
-    script:       Odyssean_Passage
-    display_name: Odyssean Passage
-    at:           [81.578, 8.499, -231.082, 141]
-    render:
-      look:
-        type:  standard
-        model: 2421
-      moving: 1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17744184:
     script:       Raving_Opossum
     display_name: Raving Opossum
@@ -4691,34 +4611,6 @@ npcs:
         type:  standard
         model: 2419
       moving: 15
-    widescan: true
-    content:  soa
-
-  17744187:
-    script:       Mog_Dinghy
-    display_name: Mog Dinghy
-    at:           [81.039, 9.500, -174.014, 187]
-    render:
-      look:
-        type:  standard
-        model: 2784
-      name_vis:    96
-      moving:   32769
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17744188:
-    script:       Skipper_Moogle
-    display_name: Skipper Moogle
-    at:           [75.313, 7.500, -176.879, 57]
-    render:
-      look:
-        type:  standard
-        model: 2361
-      entity_flags: 259
-      moving:         1
-    status:   normal
     widescan: true
     content:  soa
 

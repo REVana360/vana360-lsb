@@ -2564,25 +2564,6 @@ INSERT INTO `instance_entities` VALUES (9300,17158396); -- csnpc
 INSERT INTO `instance_entities` VALUES (9300,17158397); -- csnpc
 INSERT INTO `instance_entities` VALUES (9300,17158398); -- csnpc
 
--- ------------------------------------------------------------
--- Rala Waterways (Zone 258)
--- ------------------------------------------------------------
-
--- Behind the Sluices (25900)
-INSERT INTO `instance_entities` VALUES (25900,17838146); -- Arciela
-INSERT INTO `instance_entities` VALUES (25900,17838147); -- The Keeper
-INSERT INTO `instance_entities` VALUES (25900,17838148); -- Mistdagger
-INSERT INTO `instance_entities` VALUES (25900,17838149); -- The Briars (elv)
-INSERT INTO `instance_entities` VALUES (25900,17838150); -- The Briars (gal)
-
--- ------------------------------------------------------------
--- Ambuscade
--- ------------------------------------------------------------
-
--- Ambuscade
--- mobs
-INSERT INTO `instance_entities` VALUES (30000,17952867);
-
 /*!40000 ALTER TABLE `instance_entities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

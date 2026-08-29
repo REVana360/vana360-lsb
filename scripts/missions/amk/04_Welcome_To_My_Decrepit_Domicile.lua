@@ -10,7 +10,6 @@
 -- SAVORY_LAMB_ROAST         : !addkeyitem 1138
 --
 -- TODO: Refactor this to use ['Harvesting_Point'] onTrade
--- Like in: scripts\quests\adoulin\Flavors_of_Our_Lives.lua
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.AMK, xi.mission.id.amk.WELCOME_TO_MY_DECREPIT_DOMICILE)

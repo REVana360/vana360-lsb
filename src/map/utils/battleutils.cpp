@@ -4376,7 +4376,7 @@ void RelinquishClaim(CCharEntity* PChar)
 }
 
 // Checks to see if the mob has a damage cap value
-// This is used for instances like Suttung, Antaeus, Crustacean Conundrum bcnm, Colonization reives
+// This is used for instances like Suttung, Antaeus, and Crustacean Conundrum.
 int32 CheckAndApplyDamageCap(int32 damage, CBattleEntity* PDefender)
 {
     int32 damageCap     = PDefender->getMod(xi::Mod::RECEIVED_DAMAGE_CAP);     // The max damage cap

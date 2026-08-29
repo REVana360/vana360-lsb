@@ -465,17 +465,6 @@ namespace
 //     : already applied to the xiNavmeshes submodule repo.
 void applyZoneNavMeshOverrides(const xi::ZoneId zoneId, NavMeshConfig& config)
 {
-    // Ceizak Battlegrounds carries a small island of stray triangles parked around
-    // Z = -9932912, roughly ten million units outside a zone whose grid only covers
-    // +/- 640 x 600. Left in, it stretches the world bounds and with them the tile
-    // grid: 38x310421 tiles, nearly all empty, taking over three minutes to walk.
-    if (zoneId == xi::ZoneId::CeizakBattlegrounds && config.skipSpheres.empty())
-    {
-        config.skipSpheres = {
-            NavMeshSkipSphere{ .center = { -496.0f, -6.5f, -9932914.5f }, .radius = 100.0f },
-        };
-    }
-
     // An explicitly-supplied list (e.g. from !rebuildnavmesh) wins over the
     // per-zone defaults below.
     if (!config.ySkipPlanes.empty())
@@ -607,27 +596,6 @@ void CZone::LoadXiMesh()
     // TODO: Align ximesh filenames with zone_settings names so this isn't needed.
     auto meshName = std::string(getName());
 
-    // Rala_Waterways_U -> Rala_Waterways_[U]
-    // Yorcia_Weald_U -> Yorcia_Weald_[U]
-    // Cirdas_Caverns_U -> Cirdas_Caverns_[U]
-    if (meshName.size() >= 2 && meshName.substr(meshName.size() - 2) == "_U")
-    {
-        meshName.replace(meshName.size() - 2, 2, "_[U]");
-    }
-
-    // Escha_ZiTah -> Escha-ZiTah
-    // Escha_RuAun -> Escha-RuAun
-    if (meshName.starts_with("Escha_"))
-    {
-        meshName.replace(5, 1, "-");
-    }
-
-    // Desuetia_Empyreal_Paradox -> Desuetia-Empyreal_Paradox
-    if (meshName.starts_with("Desuetia_"))
-    {
-        meshName.replace(8, 1, "-");
-    }
-
     // Ship_bound_for_Selbina_Pirates -> Ship_bound_for_Selbina_ID-227, Ship_bound_for_Mhaura_Pirates -> Ship_bound_for_Mhaura_ID-228
     if (meshName == "Ship_bound_for_Selbina_Pirates")
     {
@@ -636,13 +604,6 @@ void CZone::LoadXiMesh()
     else if (meshName == "Ship_bound_for_Mhaura_Pirates")
     {
         meshName = "Ship_bound_for_Mhaura_ID-228";
-    }
-
-    // Maquette_Abdhaljs-Legion_A -> Maquette_Abdhaljs-LegionA
-    // Maquette_Abdhaljs-Legion_B -> Maquette_Abdhaljs-LegionB
-    if (meshName.starts_with("Maquette_Abdhaljs-Legion_"))
-    {
-        meshName.erase(meshName.size() - 2, 1);
     }
 
     const auto file = fmt::format("ximeshes/{}.ximesh", meshName);

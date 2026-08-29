@@ -45,16 +45,6 @@
 
 #include <map/entities/types/health.h>
 
-enum class DEATH_TYPE : uint8
-{
-    NONE        = 0,
-    PHYSICAL    = 1,
-    MAGICAL     = 2,
-    WS_PHYSICAL = 3,
-    WS_MAGICAL  = 4,
-};
-DECLARE_FORMAT_AS_UNDERLYING(DEATH_TYPE);
-
 #define MAX_JOBTYPE 24
 
 #define MAX_SKILLTYPE 64
@@ -190,7 +180,6 @@ public:
     auto isDead() const -> bool;
     bool isAlive();
     bool isFullyHealed();
-    bool isInAdoulin();
     bool isInAssault();
     bool isInDynamis();
     bool isInGarrison();
@@ -209,9 +198,6 @@ public:
     void SetSJob(uint8 sjob);
     void SetMLevel(uint8 mlvl);
     void SetSLevel(uint8 slvl);
-
-    void  SetDeathType(uint8 type);
-    uint8 GetDeathType();
 
     uint8 GetHPP() const;
     int32 GetMaxHP() const;
@@ -388,9 +374,7 @@ public:
     xi::Ecosystem   m_EcoSystem{};  // Entity eco system
     CItemEquipment* m_Weapons[4]{}; // Four main slots used to store weapons (weapons only)
     bool            m_dualWield;    // True/false depending on if the entity is using two weapons
-    DEATH_TYPE      m_DeathType;
-
-    TraitList_t TraitList;
+    TraitList_t     TraitList;
 
     EntityId m_OwnerID{}; // ID of the attacking entity (after death will store the ID of the entity that dealt the final blow)
 
