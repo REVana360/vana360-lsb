@@ -6,6 +6,10 @@
 -- _0gc : !pos 100.005 -3.028 -140.005 16
 -- _0k0 : !pos 260 -2.5 180 20
 -----------------------------------
+-- The quest and its Apocalypse Nigh follow-up open at JST midnight.
+-- Source: https://wiki.ffo.jp/html/5557.html
+-- Source: https://wiki.ffo.jp/html/7291.html
+-----------------------------------
 local ruludeID = zones[xi.zone.RULUDE_GARDENS]
 -----------------------------------
 
@@ -21,7 +25,7 @@ quest.sections =
                 player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) and
                 player:getCurrentMission(xi.mission.log_id.ZILART) == xi.mission.id.zilart.AWAKENING and
                 player:getMissionStatus(xi.mission.log_id.ZILART) == 3 and
-                VanadielUniqueDay() >= vars.Timer
+                GetSystemTime() >= vars.Timer
         end,
 
         [xi.zone.RULUDE_GARDENS] =
@@ -109,7 +113,7 @@ quest.sections =
 
                         player:messageSpecial(ruludeID.text.YOU_HAND_THE_THREE_SLIVERS)
 
-                        xi.quest.setVar(player, xi.questLog.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH, 'Timer', VanadielUniqueDay() + 1)
+                        xi.quest.setVar(player, xi.questLog.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH, 'Timer', JstMidnight())
                         xi.quest.setMustZone(player, xi.questLog.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH)
                     end
                 end,

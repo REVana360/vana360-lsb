@@ -5,6 +5,8 @@
 local effectObject = {}
 
 -- https://www.bg-wiki.com/ffxi/Spirit_Surge
+-- Haste and stat behavior source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
+-- Master attack and defense removal source: https://forum.square-enix.com/ffxi/threads/44090-Sep-9-2014-%28JST%29-Version-Update
 
 effectObject.onEffectGain = function(target, effect)
     -- The dragoon's MAX HP increases by % of wyvern MaxHP
@@ -17,16 +19,8 @@ effectObject.onEffectGain = function(target, effect)
     -- The dragoon gets a 50 Accuracy boost
     effect:addMod(xi.mod.ACC, 50)
 
-    -- Wyvern levelup bonuses appear to be transferred as if the wyvern was max level:
-    -- Does this also give the 10% all hits WSD and the 15% DA with job point gifts?
-    effect:addMod(xi.mod.ATTP, 25)
-    effect:addMod(xi.mod.DEFP, 25)
-
-    -- The dragoon gets 25% Haste (see http://wiki.bluegartr.com/bg/Job_Ability_Haste for haste calculation)
-    effect:addMod(xi.mod.HASTE_ABILITY, 2500)
-
-    -- DMG + 1 * JP
-    effect:addMod(xi.mod.MAIN_DMG_RATING, target:getJobPointLevel(xi.jp.SPIRIT_SURGE_EFFECT))
+    -- July 2009 uses magic haste, without master-stat or job-point bonuses.
+    effect:addMod(xi.mod.HASTE_MAGIC, 2500)
 end
 
 effectObject.onEffectTick = function(target, effect)

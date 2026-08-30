@@ -4,9 +4,13 @@
 -- Lathuya : !pos -95.081 -6.000 31.638 50
 -----------------------------------
 -- A commissioned piece is finished overnight: it is handed over once the Vana'diel day has changed since the fee was paid, and only after an area change.
--- Ordering the next piece needs a second day change and another area change.
+-- Ordering the next piece needs a JST midnight and another area change.
 -- The commission state stays in the [BLUAF] character variables.
 -- Transformations seeds [BLUAF]Remaining, so the container cannot own the naming.
+-----------------------------------
+-- Source: https://forum.square-enix.com/ffxi/threads/50759
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/5181.html
 -----------------------------------
 
 local quest = HiddenQuest:new('MagusArtifact')
@@ -124,6 +128,10 @@ local function onPieceReceived(player, csid, option, npc)
     else
         player:setCharVar('[BLUAF]RestingDay', VanadielUniqueDay())
         quest:setMustZone(player)
+
+        if player:getCharVar('[BLUAF]Remaining') ~= remainingBLUAF then
+            player:setCharVar('[BLUAF]RestingTimer', 1, JstMidnight())
+        end
     end
 
     player:delKeyItem(xi.ki.MAGUS_ORDER_SLIP)
@@ -176,7 +184,16 @@ quest.sections =
 
                     -- No order placed, and there is still a piece left to make.
                     if currentTask == 0 and totalCraftedPieces ~= 3 then
-                        -- The next order is taken a day later, after leaving the area.
+                        if totalCraftedPieces > 0 then
+                            -- The next order is taken after Japanese midnight, after leaving the area.
+                            if player:getCharVar('[BLUAF]RestingTimer') ~= 0 then
+                                return quest:event(737 + (artifactOffset - 8))
+                            end
+
+                            -- The base Vana'diel day timer no longer applies.
+                            player:setCharVar('[BLUAF]RestingDay', 0)
+                        end
+
                         if
                             VanadielUniqueDay() > player:getCharVar('[BLUAF]RestingDay') and
                             not quest:getMustZone(player)

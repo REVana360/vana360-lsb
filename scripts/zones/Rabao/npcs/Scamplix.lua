@@ -12,7 +12,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.STRIP_OF_MEAT_JERKY,         120 },
         { xi.item.LOAF_OF_GOBLIN_BREAD,        300 },
         { xi.item.CACTUS_ARM,                  800 },
-        { xi.item.RABAO_WAYSTONE,            10000 },
         { xi.item.ETHER,                      4832 },
         { xi.item.THUNDERMELON,                325 },
         { xi.item.WATERMELON,                  200 },

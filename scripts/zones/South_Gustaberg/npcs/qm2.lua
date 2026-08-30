@@ -20,9 +20,10 @@ entity.onTrade = function(player, npc, trade)
 
     player:tradeComplete()
 
-    -- The meat is done at the next Earth clock minute, not after a flat duration.
-    -- 2023-09-12 capture: traded at :35, still cooking at :58, done at :02.
-    player:setCharVar('SouthGustabergCampfire', (math.floor(GetSystemTime() / 60) + 1) * 60)
+    -- The wait was reduced from one Vana'diel day to one Earth minute in June 2016.
+    -- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+    -- Source: https://wiki.ffo.jp/html/8848.html
+    player:setCharVar('SouthGustabergCampfire', GetSystemTime() + xi.vanaTime.DAY)
 
     return player:messageSpecial(ID.text.FIRE_PUT, xi.item.SLICE_OF_GIANT_SHEEP_MEAT)
 end

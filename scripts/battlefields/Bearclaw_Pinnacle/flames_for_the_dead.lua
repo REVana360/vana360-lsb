@@ -12,7 +12,9 @@ local content = BattlefieldMission:new({
     canLoseExp     = false,
     cleanupDebuffs = true,
     maxPlayers     = 6,
-    levelCap       = 99,
+    -- CoP mission level caps were removed in June 2010.
+    -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(06/21/2010)
+    levelCap       = 60,
     timeLimit      = utils.minutes(30),
     index          = 0,
     entryNpc       = 'Wind_Pillar_1',

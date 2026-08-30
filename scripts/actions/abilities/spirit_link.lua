@@ -2,7 +2,7 @@
 -- Ability: Spirit Link
 -- Sacrifices own HP to heal Wyvern's HP.
 -- Obtained: Dragoon Level 25
--- Recast Time: 1:30
+-- Recast Time: 3:00
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

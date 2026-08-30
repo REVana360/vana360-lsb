@@ -75,29 +75,6 @@ UPDATE abilities SET recastTime = 300 WHERE name = 'yonin';
 UPDATE abilities SET recastTime = 300, recastId = 146 WHERE name = 'innin';
 
 -----------------------------------
--- Dragoon
--- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
------------------------------------
-
--- Jump: Revert recast from 1 minute to 1.5 minutes
-UPDATE abilities SET recastTime = 90 WHERE name = 'jump';
-
--- High Jump: Revert recast from 2 minutes to 3 minutes
-UPDATE abilities SET recastTime = 180 WHERE name = 'high_jump';
-
--- Super Jump: Revert range from 12.5 to 9.5 yalms
-UPDATE abilities SET `range` = 9.5 WHERE name = 'super_jump';
-
--- Spirit Link: Revert recast from 1.5 minutes to 3 minutes
-UPDATE abilities SET recastTime = 180 WHERE name = 'spirit_link';
-
--- Ancient Circle: Revert recast from 5 to 10 minutes
-UPDATE abilities SET recastTime = 600 WHERE name = 'ancient_circle';
-
--- Deep Breathing: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'deep_breathing';
-
------------------------------------
 -- Corsair
 -----------------------------------
 

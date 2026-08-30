@@ -1,5 +1,11 @@
 -----------------------------------
 -- Crafted Corsair Artifact (COR AF)
+-- July 2009 restores the JST midnight wait before a finished piece is handed over.
+-- The June 7, 2016 version update shortened the wait to one Vana'diel day.
+-----------------------------------
+-- Source: https://forum.square-enix.com/ffxi/threads/50759
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/5182.html
 -----------------------------------
 -- Leleroon                                 : !pos -14.687 0.000 25.114 53
 -- Raqtibahl  (San d'Oria - Corsair's Frac) : !pos -59.000 -4.000 -39.000 232
@@ -73,7 +79,14 @@ quest.sections =
                         elseif questProgress == 3 then
                             return quest:event(535)
                         elseif questProgress == 4 then
-                            -- The piece is handed over a day later, after leaving the area.
+                            -- The piece is handed over after Japanese midnight, after leaving the area.
+                            if quest:getVar(player, 'Wait') ~= 0 then
+                                return quest:event(523)
+                            end
+
+                            -- The base Vana'diel day timer no longer applies.
+                            quest:setVar(player, 'Timer', 0)
+
                             if
                                 quest:getVar(player, 'Timer') <= VanadielUniqueDay() and
                                 not quest:getMustZone(player)
@@ -110,6 +123,7 @@ quest.sections =
                     quest:setVar(player, 'Prog', 4)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
                     quest:setMustZone(player)
+                    quest:setTimedVar(player, 'Wait', JstMidnight())
                 end,
             },
         },
@@ -210,7 +224,14 @@ quest.sections =
                         elseif questProgress == 3 then
                             return quest:event(761)
                         elseif questProgress == 4 then
-                            -- The piece is handed over a day later, after leaving the area.
+                            -- The piece is handed over after Japanese midnight, after leaving the area.
+                            if quest:getVar(player, 'Wait') ~= 0 then
+                                return quest:event(757)
+                            end
+
+                            -- The base Vana'diel day timer no longer applies.
+                            quest:setVar(player, 'Timer', 0)
+
                             if
                                 quest:getVar(player, 'Timer') <= VanadielUniqueDay() and
                                 not quest:getMustZone(player)
@@ -249,6 +270,7 @@ quest.sections =
                     quest:setVar(player, 'Prog', 4)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
                     quest:setMustZone(player)
+                    quest:setTimedVar(player, 'Wait', JstMidnight())
                 end,
             },
         },
@@ -300,7 +322,14 @@ quest.sections =
                         elseif questProgress == 3 then
                             return quest:event(954)
                         elseif questProgress == 4 then
-                            -- The piece is handed over a day later, after leaving the area.
+                            -- The piece is handed over after Japanese midnight, after leaving the area.
+                            if quest:getVar(player, 'Wait') ~= 0 then
+                                return quest:event(945)
+                            end
+
+                            -- The base Vana'diel day timer no longer applies.
+                            quest:setVar(player, 'Timer', 0)
+
                             if
                                 quest:getVar(player, 'Timer') <= VanadielUniqueDay() and
                                 not quest:getMustZone(player)
@@ -337,6 +366,7 @@ quest.sections =
                     quest:setVar(player, 'Prog', 4)
                     quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
                     quest:setMustZone(player)
+                    quest:setTimedVar(player, 'Wait', JstMidnight())
                 end,
             },
         },

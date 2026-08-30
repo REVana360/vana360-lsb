@@ -5,6 +5,9 @@
 -- _0p2                  : !pos -259 -30 276 25
 -- Unstable_Displacement : !pos -612.800 1.750 693.190 29
 -----------------------------------
+-- Shadows of the Departed opens at JST midnight after completion.
+-- Source: https://wiki.ffo.jp/html/5557.html
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE)
 
@@ -113,7 +116,7 @@ quest.sections =
             {
                 [143] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        xi.quest.setVar(player, xi.questLog.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED, 'Timer', VanadielUniqueDay() + 1)
+                        xi.quest.setVar(player, xi.questLog.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED, 'Timer', JstMidnight())
                     end
                 end,
             },

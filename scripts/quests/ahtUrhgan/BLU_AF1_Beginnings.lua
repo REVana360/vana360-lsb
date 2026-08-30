@@ -9,8 +9,8 @@
 -- Nareema : !pos 518.387 -24.707 -467.297 79
 -- Waudeen : !pos 673.882 -23.995 367.604 61
 -----------------------------------
--- Omens opens one minute after this quest completes.
--- The June 7, 2016 version update shortened the wait from one Earth day.
+-- Omens opens at the next JST midnight after this quest completes.
+-- The June 7, 2016 version update shortened the wait to one minute.
 --
 -- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
 -----------------------------------
@@ -105,7 +105,7 @@ quest.sections =
                 [707] = function(player, csid, option, npc)
                     if quest:complete(player) then
                         xi.quest.setMustZone(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.OMENS)
-                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.OMENS, 'Timer', GetSystemTime() + 60) -- 1 minute wait time
+                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.OMENS, 'Timer', JstMidnight())
                     end
                 end,
             },

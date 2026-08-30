@@ -1712,6 +1712,8 @@ end
 -----------------------------------
 -- (PUBLIC) vendor
 -----------------------------------
+-- Conquest point payment for outpost teleportation was added in December 2011.
+-- Source: https://forum.square-enix.com/ffxi/threads/18132
 xi.conquest.vendorOnTrigger = function(player, vendorRegion, vendorEvent)
     local pNation = player:getNation()
     local owner   = GetRegionOwner(vendorRegion)
@@ -1724,13 +1726,19 @@ xi.conquest.vendorOnTrigger = function(player, vendorRegion, vendorEvent)
         nation = 2
     end
 
-    player:startEvent(vendorEvent, nation, fee, 0, fee / 10, player:getCP(), 0, 0, 0)
+    player:setLocalVar('outpostCpNoticeShown', 0)
+    player:startEvent(vendorEvent, nation, fee, 0, fee / 10, 0, 0, 0, 0)
 end
 
 xi.conquest.vendorOnEventUpdate = function(player, vendorRegion)
     local fee = xi.conquest.outpostFee(player, vendorRegion)
 
-    player:updateEvent(player:getGil(), fee, 0, fee / 10, player:getCP())
+    if player:getLocalVar('outpostCpNoticeShown') == 0 then
+        player:setLocalVar('outpostCpNoticeShown', 1)
+        player:printToPlayer('Conquest Point teleport payment is unavailable.', xi.msg.channel.SYSTEM_3)
+    end
+
+    player:updateEvent(player:getGil(), fee, 0, fee / 10, 0)
 end
 
 xi.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
@@ -1740,13 +1748,6 @@ xi.conquest.vendorOnEventFinish = function(player, option, vendorRegion)
         xi.shop.outpost(player)
     elseif option == 2 then
         if player:delGil(fee) then
-            player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.HOME_NATION, duration = 1, origin = player, icon = 0, subPower = vendorRegion })
-        end
-    elseif option == 6 then
-        local cpFee = fee / 10
-
-        if player:getCP() >= cpFee then
-            player:delCP(cpFee)
             player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.HOME_NATION, duration = 1, origin = player, icon = 0, subPower = vendorRegion })
         end
     end
@@ -1772,7 +1773,8 @@ xi.conquest.teleporterOnEventUpdate = function(player, csid, option, teleporterE
         local fee    = xi.conquest.outpostFee(player, region)
         local cpFee  = fee / 10
 
-        player:updateEvent(player:getGil(), fee, 0, cpFee, player:getCP())
+        player:printToPlayer('Conquest Point teleport payment is unavailable.', xi.msg.channel.SYSTEM_3)
+        player:updateEvent(player:getGil(), fee, 0, cpFee, 0)
     end
 end
 
@@ -1787,19 +1789,6 @@ xi.conquest.teleporterOnEventFinish = function(player, csid, option, teleporterE
                 xi.conquest.canTeleportToOutpost(player, region) and
                 player:delGil(fee)
             then
-                player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.OUTPOST, duration = 1, origin = player, icon = 0, subPower = region })
-            end
-
-        -- TELEPORT WITH CP
-        elseif option >= 1029 and option <= 1047 then
-            local region = option - 1029
-            local cpFee  = xi.conquest.outpostFee(player, region) / 10
-
-            if
-                xi.conquest.canTeleportToOutpost(player, region) and
-                player:getCP() >= cpFee
-            then
-                player:delCP(cpFee)
                 player:addStatusEffect(xi.effect.TELEPORT, { power = xi.teleport.id.OUTPOST, duration = 1, origin = player, icon = 0, subPower = region })
             end
         end

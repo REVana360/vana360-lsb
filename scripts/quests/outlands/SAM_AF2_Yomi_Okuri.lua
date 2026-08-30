@@ -7,6 +7,9 @@
 -- qm2 (Onzozo)    : !pos -176 10 -60 213
 -- qm3 (Valkurm)   : !pos -767 -4 192 103
 -----------------------------------
+-- The reward and follow-up quest each become available at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-----------------------------------
 local onzozoID  = zones[xi.zone.LABYRINTH_OF_ONZOZO]
 local valkurmID = zones[xi.zone.VALKURM_DUNES]
 -----------------------------------
@@ -179,7 +182,7 @@ quest.sections =
                     player:delKeyItem(xi.ki.YOMOTSU_FEATHER)
                     quest:setVar(player, 'Prog', 4)
                     quest:setMustZone(player)
-                    quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time
+                    quest:setVar(player, 'Wait', JstMidnight())
                 end,
 
                 [154] = function(player, csid, option, npc)
@@ -191,7 +194,7 @@ quest.sections =
                     if quest:complete(player) then
                         player:delKeyItem(xi.ki.FADED_YOMOTSU_HIRASAKA)
                         xi.quest.setMustZone(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.A_THIEF_IN_NORG)
-                        xi.quest.setVar(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.A_THIEF_IN_NORG, 'Timer', GetSystemTime() + 60) -- 1 minute wait time
+                        xi.quest.setVar(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.A_THIEF_IN_NORG, 'Timer', JstMidnight())
                     end
                 end,
             },

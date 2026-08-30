@@ -6,6 +6,10 @@
 -- Roberta    : !pos 21 -4 -157 241
 -- Hume Bones : !pos 299 0.1 19 195
 -----------------------------------
+-- Kerutoto returns the ribbon after JST midnight and a zone change.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/10406.html
+-----------------------------------
 local eldiemeID = zones[xi.zone.THE_ELDIEME_NECROPOLIS]
 -----------------------------------
 
@@ -56,7 +60,8 @@ quest.sections =
                     player:addGil(3600)
                     quest:begin(player)
                     quest:setVar(player, 'Prog', 0)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 60)
+                    quest:setVar(player, 'Timer', JstMidnight())
+                    quest:setMustZone(player)
                 end,
             },
         },
@@ -163,7 +168,10 @@ quest.sections =
                     local questProgress = quest:getVar(player, 'Prog')
 
                     if questProgress == 0 then
-                        if GetSystemTime() < quest:getVar(player, 'Timer') then
+                        if
+                            GetSystemTime() < quest:getVar(player, 'Timer') or
+                            quest:getMustZone(player)
+                        then
                             return quest:progressEvent(359)
                         else
                             return quest:progressEvent(360)
@@ -191,7 +199,8 @@ quest.sections =
                 [365] = function(player, csid, option, npc)
                     player:confirmTrade()
                     quest:setVar(player, 'Prog', 0)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 60)
+                    quest:setVar(player, 'Timer', JstMidnight())
+                    quest:setMustZone(player)
                 end,
 
                 [362] = function(player, csid, option, npc)

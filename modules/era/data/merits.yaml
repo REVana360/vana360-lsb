@@ -219,25 +219,6 @@ merits:
         blade_bash:
           value: 150
 
-    drg_group_1:
-      merits:
-        ancient_circle_recast:
-          value: 20
-        jump_recast:
-          value: 3
-        high_jump_recast:
-          value: 6
-        spirit_link_recast:
-          value: 6
-
-    drg_group_2:
-      max_upgrades: 10
-      merits:
-        deep_breathing:
-          value: 150
-        strafe_effect:
-          value: 5
-
     smn_group_2:
       max_upgrades: 10
 

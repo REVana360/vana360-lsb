@@ -3,10 +3,14 @@
 -----------------------------------
 -- Dhima Polevhia : !pos 67.802 -6.000 26.315 50
 -----------------------------------
--- Dhima finishes a piece overnight: it is handed over once the Vana'diel day has changed since the materials were traded.
+-- Dhima finishes a piece overnight: it is handed over after Japanese midnight.
 -- No area change is needed, and the next order can be placed straight away.
 -- The commission state stays in the [PUP] character variables.
 -- [AF]pupCrafted is shared with the artifact reset system, so the container cannot own the naming.
+-----------------------------------
+-- Source: https://forum.square-enix.com/ffxi/threads/50759
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/5183.html
 -----------------------------------
 
 local quest = HiddenQuest:new('PuppetryArtifact')
@@ -107,6 +111,14 @@ quest.sections =
 
                     -- Trade completed. Check time.
                     if orderStage == 2 then
+                        if player:getCharVar('[PUP]orderWait') ~= 0 then
+                            return quest:event(796) -- Order is not ready.
+                        end
+
+                        -- The base Vana'diel day timer no longer applies.
+                        player:setCharVar('[PUP]orderTime', 0)
+                        orderTime = 0
+
                         if VanadielUniqueDay() > orderTime then
                             if piecesNumber == 2 then
                                 return quest:progressEvent(793) -- Order is ready. Last time.
@@ -147,6 +159,8 @@ quest.sections =
                     player:tradeComplete()
                     player:setCharVar('[PUP]orderStage', 2)
                     player:setCharVar('[PUP]orderTime', VanadielUniqueDay())
+                    -- Work starts when the materials are traded.
+                    player:setCharVar('[PUP]orderWait', 1, JstMidnight())
                 end,
             },
         },

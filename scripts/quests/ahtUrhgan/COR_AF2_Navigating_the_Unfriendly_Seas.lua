@@ -7,6 +7,9 @@
 -- Leleroon         : !pos -14.687 0.000 25.114 53
 -- Leypoint         : !pos -200.027 -8.500 80.058 51
 -----------------------------------
+-- The Leypoint finishes measuring at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-----------------------------------
 local wajaomID = zones[xi.zone.WAJAOM_WOODLANDS]
 -----------------------------------
 
@@ -94,7 +97,7 @@ quest.sections =
                     then
                         player:confirmTrade()
                         quest:setVar(player, 'Prog', 2)
-                        quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time
+                        quest:setVar(player, 'Wait', JstMidnight())
                         return quest:messageSpecial(wajaomID.text.PLACE_HYDROGAUGE, xi.item.HYDROGAUGE)
                     end
                 end,

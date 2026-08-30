@@ -6,8 +6,16 @@ local ID = zones[xi.zone.ROMAEVE]
 ---@type TZone
 local zoneObject = {}
 
-local function handleFullMoon()
-    local shouldDoorsOpen = (getVanadielMoonCycle() == xi.moonCycle.FULL_MOON and (VanadielHour() >= 18 or VanadielHour() < 6))
+-- The Moongate opens only during a clear full moon from 00:00 through 02:59.
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-%28JST%29-Version-Update
+-- The wider 18:00-06:00 window was added on July 13, 2011.
+local function handleFullMoon(zone)
+    local validMoon    = getVanadielMoonCycle() == xi.moonCycle.FULL_MOON
+    local validHour    = VanadielHour() >= 0 and VanadielHour() < 3
+    local validWeather = zone:getWeather() == xi.weather.NONE or zone:getWeather() == xi.weather.SUNSHINE
+
+    local shouldDoorsOpen        = validMoon and validHour
+    local shouldFountainActivate = validMoon and validHour and validWeather
 
     -- Set targetable status.
     local moongate1 = GetNPCByID(ID.npc.MOONGATE_OFFSET)
@@ -21,12 +29,17 @@ local function handleFullMoon()
     end
 
     -- Determine what the animation/status of the NPCs should be.
-    local doorStatus = shouldDoorsOpen and xi.animation.OPEN_DOOR or xi.animation.CLOSE_DOOR
+    local doorStatus     = shouldDoorsOpen and xi.animation.OPEN_DOOR or xi.animation.CLOSE_DOOR
+    local fountainStatus = shouldFountainActivate and xi.animation.OPEN_DOOR or xi.animation.CLOSE_DOOR
 
     -- Loop over the affected NPCs: Moongates, bridges and fountain
     for i = ID.npc.MOONGATE_OFFSET, ID.npc.MOONGATE_OFFSET + 7 do
         local npc = GetNPCByID(i)
-        if npc and npc:getAnimation() ~= doorStatus then
+        if i == ID.npc.MOONGATE_OFFSET + 6 then
+            if npc and npc:getAnimation() ~= fountainStatus then
+                npc:setAnimation(fountainStatus)
+            end
+        elseif npc and npc:getAnimation() ~= doorStatus then
             npc:setAnimation(doorStatus)
         end
     end
@@ -56,7 +69,7 @@ local function handleBastokQM(onInitialize)
 end
 
 zoneObject.onInitialize = function(zone)
-    handleFullMoon()
+    handleFullMoon(zone)
     handleBastokQM(true)
 end
 
@@ -82,7 +95,7 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onGameHour = function(zone)
-    handleFullMoon()
+    handleFullMoon(zone)
     handleBastokQM(false)
 end
 

@@ -9,9 +9,11 @@ local ID = zones[xi.zone.CAEDARVA_MIRE]
 local entity = {}
 
 entity.onTrigger = function(player, npc)
-    if player:getCharVar('[TIMER]Lamian_Fang_Key') ~= VanadielUniqueDay() then
+    -- The key changed from conquest-tally to Vana'diel-day timing in March 2012.
+    -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(03/26/2012)
+    if player:getCharVar('[TIMER]Lamian_Fang_Key') == 0 then
         if npcUtil.giveItem(player, xi.item.LAMIAN_FANG_KEY) then
-            player:setCharVar('[TIMER]Lamian_Fang_Key', VanadielUniqueDay()) -- Can obtain key once per vanadiel day
+            player:setCharVar('[TIMER]Lamian_Fang_Key', 1, NextConquestTally())
         end
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)

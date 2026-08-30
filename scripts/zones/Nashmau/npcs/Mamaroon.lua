@@ -18,8 +18,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.SCROLL_OF_SHOCK_SPIKES,   9000 },
         { xi.item.WHITE_PUPPET_TURBAN,     29950 },
         { xi.item.BLACK_PUPPET_TURBAN,     29950 },
-        { xi.item.SCROLL_OF_ENLIGHT,      100800 },
-        { xi.item.SCROLL_OF_ENDARK,       100800 },
     }
 
     player:showText(npc, zones[xi.zone.NASHMAU].text.MAMAROON_SHOP_DIALOG)

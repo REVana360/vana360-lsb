@@ -4,13 +4,14 @@
 -- Log ID: 3, Quest ID: 24
 -- Radeivepart : !pos 5 9 -39 243
 -----------------------------------
+-- The November 5, 2013 update added gil and experience rewards.
+-- Source: https://forum.square-enix.com/ffxi/threads/38100
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.NORTHWARD)
 
 quest.reward =
 {
-    exp      = 2000,
-    gil      = 2000,
     keyItem  = xi.ki.MAP_OF_CASTLE_ZVAHL,
     title    = xi.title.ENVOY_TO_THE_NORTH,
 }

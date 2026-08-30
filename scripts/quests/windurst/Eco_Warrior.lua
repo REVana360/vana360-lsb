@@ -133,7 +133,9 @@ quest.sections =
                 [62] = function(player, csid, option, npc)
                     if option == 1 then
                         player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, {
-                            power    = 25,
+                            -- The Eco-Warrior cap increased from 20 to 25 in June 2015.
+                            -- Source: https://forum.square-enix.com/ffxi/threads/47481
+                            power    = 20,
                             subPower = 1, -- exp uses actual level and not the restricted level.
                             origin   = player,
                             flag     = xi.effectFlag.ON_ZONE

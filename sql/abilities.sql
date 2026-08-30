@@ -103,10 +103,12 @@ INSERT INTO `abilities` VALUES (63,'meditate',12,30,1,180,134,0,0,25,2000,0,6,0,
 -- Warding Circle's recast was reduced from 10 to 5 minutes in February 2012.
 -- Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
 INSERT INTO `abilities` VALUES (64,'warding_circle',12,5,1,600,135,148,0,31,2000,0,6,0,1,10,1,20,1090,0,NULL);
-INSERT INTO `abilities` VALUES (65,'ancient_circle',14,5,1,300,157,150,0,32,2000,0,6,0,1,10,1,20,1216,0,NULL);
-INSERT INTO `abilities` VALUES (66,'jump',14,10,4,60,158,110,0,204,2000,0,3,8,0,0,0,0,1218,0,NULL);
-INSERT INTO `abilities` VALUES (67,'high_jump',14,35,4,120,159,110,0,209,2000,0,3,10,0,0,0,0,1220,0,NULL);
-INSERT INTO `abilities` VALUES (68,'super_jump',14,50,4,180,160,110,0,214,2000,0,3,12,0,0,0,0,1222,0,NULL);
+-- July 2009 Dragoon recasts and Super Jump range.
+-- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
+INSERT INTO `abilities` VALUES (65,'ancient_circle',14,5,1,600,157,150,0,32,2000,0,6,0,1,10,1,20,1216,0,NULL);
+INSERT INTO `abilities` VALUES (66,'jump',14,10,4,90,158,110,0,204,2000,0,3,8,0,0,0,0,1218,0,NULL);
+INSERT INTO `abilities` VALUES (67,'high_jump',14,35,4,180,159,110,0,209,2000,0,3,10,0,0,0,0,1220,0,NULL);
+INSERT INTO `abilities` VALUES (68,'super_jump',14,50,4,180,160,110,0,214,2000,0,3,9.5,0,0,0,0,1222,0,NULL);
 INSERT INTO `abilities` VALUES (69,'fight',9,1,4,10,100,0,0,83,2000,0,6,16,0,0,0,0,0,192,NULL);
 INSERT INTO `abilities` VALUES (70,'heel',9,10,1,5,101,0,0,83,2000,0,6,0,0,0,1,300,0,192,NULL);
 INSERT INTO `abilities` VALUES (71,'leave',9,35,1,10,101,0,0,83,2000,0,6,0,0,0,1,300,0,192,NULL);
@@ -118,7 +120,7 @@ INSERT INTO `abilities` VALUES (76,'trick_attack',6,30,1,60,66,0,0,82,2000,0,6,0
 INSERT INTO `abilities` VALUES (77,'weapon_bash',8,20,4,180,88,110,0,201,2000,0,3,3,0,0,1,900,840,0,NULL);
 INSERT INTO `abilities` VALUES (78,'reward',9,12,257,90,103,102,0,84,2000,0,6,4,0,0,0,0,898,0,NULL);
 INSERT INTO `abilities` VALUES (79,'cover',7,35,2,180,76,0,0,86,2000,0,6,16,0,0,1,300,0,0,NULL);
-INSERT INTO `abilities` VALUES (80,'spirit_link',14,25,1,90,162,318,0,94,2000,0,6,0,0,0,0,0,1224,4,'ROTZ');
+INSERT INTO `abilities` VALUES (80,'spirit_link',14,25,1,180,162,318,0,94,2000,0,6,0,0,0,0,0,1224,4,'ROTZ');
 -- INSERT INTO `abilities` VALUES (81,'enrage',0,0,0,0,6,0,0,0,0,0,6,16,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (82,'chi_blast',2,41,4,180,18,110,0,92,2000,0,6,16,0,0,0,0,0,0,'ROTZ');
 INSERT INTO `abilities` VALUES (83,'convert',5,40,1,600,49,0,0,88,2000,0,6,0,0,0,1,80,640,0,'ROTZ');
@@ -174,7 +176,8 @@ INSERT INTO `abilities` VALUES (132,'dark_shot',17,40,4,1,195,0,0,124,2000,0,6,2
 INSERT INTO `abilities` VALUES (133,'random_deal',17,50,1,1200,196,0,0,131,2000,0,6,0,1,8,1,300,1414,0,'TOAU');
 INSERT INTO `abilities` VALUES (135,'overdrive',18,0,1,7200,0,0,0,143,2000,0,6,0,0,0,0,0,0,0,'TOAU');
 INSERT INTO `abilities` VALUES (136,'activate',18,1,1,1200,205,0,0,83,2000,0,6,0,0,0,1,80,1478,0,'TOAU');
-INSERT INTO `abilities` VALUES (137,'repair',18,15,1,90,206,102,0,83,2000,0,6,0,0,0,0,0,1480,0,'TOAU');
+-- Source: https://wiki.ffo.jp/html/954.html
+INSERT INTO `abilities` VALUES (137,'repair',18,15,1,180,206,102,0,83,2000,0,6,0,0,0,0,0,1480,0,'TOAU');
 INSERT INTO `abilities` VALUES (138,'deploy',18,1,4,10,207,0,0,83,2000,0,6,16,0,0,0,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (139,'deactivate',18,1,1,60,208,0,0,83,2000,0,6,0,0,0,0,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (140,'retrieve',18,10,1,10,209,0,0,83,2000,0,6,0,0,0,0,0,0,512,'TOAU');
@@ -216,7 +219,7 @@ INSERT INTO `abilities` VALUES (165,'stealth_shot',11,75,1,300,127,0,0,150,2000,
 INSERT INTO `abilities` VALUES (166,'flashy_shot',11,75,1,1200,128,0,0,151,2000,0,6,0,0,0,1,300,2690,1,'TOAU');
 INSERT INTO `abilities` VALUES (167,'shikikoyo',12,75,2,900,136,452,0,152,2000,0,6,10,0,0,1,300,2752,1,'TOAU');
 INSERT INTO `abilities` VALUES (168,'blade_bash',12,75,4,180,137,110,0,202,2000,0,3,3,0,0,1,900,2754,1,'TOAU');
-INSERT INTO `abilities` VALUES (169,'deep_breathing',14,75,1,300,164,0,0,153,2000,0,6,0,0,0,0,0,2880,1,'TOAU');
+INSERT INTO `abilities` VALUES (169,'deep_breathing',14,75,1,900,164,0,0,153,2000,0,6,0,0,0,0,0,2880,1,'TOAU');
 INSERT INTO `abilities` VALUES (170,'angon',14,75,4,180,165,127,0,245,2000,0,3,10,0,0,1,600,2882,1,'TOAU');
 INSERT INTO `abilities` VALUES (171,'sange',13,75,1,900,145,0,0,23,2000,0,6,0,0,0,1,0,2816,1,'TOAU');
 INSERT INTO `abilities` VALUES (172,'blood_pact_ward',15,1,1,60,174,0,0,0,2000,0,6,20,0,0,1,300,0,256,NULL); -- new windower states 969

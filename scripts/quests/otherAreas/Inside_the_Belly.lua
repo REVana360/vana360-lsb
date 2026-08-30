@@ -5,6 +5,10 @@
 -- !addquest 4 26
 -- Zaldon  : !pos -11.810 -7.287 -6.742 248
 -----------------------------------
+-- The selected client supports the original eighteen-fish trade list.
+-- Source: https://www.playonline.com/pcd/verup/ff11/detail/5053/detail.html
+-- Source: https://wiki.ffo.jp/html/1338.html
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.INSIDE_THE_BELLY)
 
@@ -500,6 +504,28 @@ local fishRewards =
     },
 }
 
+local julyFish =
+{
+    [xi.item.GIANT_CATFISH_1 ] = true,
+    [xi.item.DARK_BASS_1      ] = true,
+    [xi.item.OGRE_EEL_1       ] = true,
+    [xi.item.ZAFMLUG_BASS     ] = true,
+    [xi.item.GIANT_DONKO_1    ] = true,
+    [xi.item.BHEFHEL_MARLIN_1 ] = true,
+    [xi.item.JUNGLE_CATFISH   ] = true,
+    [xi.item.SILVER_SHARK     ] = true,
+    [xi.item.EMPEROR_FISH     ] = true,
+    [xi.item.TAKITARO         ] = true,
+    [xi.item.SEA_ZOMBIE       ] = true,
+    [xi.item.GIANT_CHIRAI     ] = true,
+    [xi.item.TITANICTUS       ] = true,
+    [xi.item.CAVE_CHERAX      ] = true,
+    [xi.item.TRICORN          ] = true,
+    [xi.item.RYUGU_TITAN      ] = true,
+    [xi.item.LIK              ] = true,
+    [xi.item.GUGRUSAURUS      ] = true,
+}
+
 local function tradeFish(player, fishId)
     quest:setLocalVar(player, 'fishId', fishId)
     quest:setLocalVar(player, 'itemIdx', 0)
@@ -557,7 +583,7 @@ local function zaldonOnTrade(player, npc, trade)
         local itemId = trade:getItemId(itemSlot)
 
         if
-            fishRewards[itemId] ~= nil and
+            julyFish[itemId] and
             npcUtil.tradeHasExactly(trade, itemId)
         then
             return tradeFish(player, itemId)
@@ -593,30 +619,30 @@ local function zaldonOnTrigger(player, npc)
             xi.item.ZAFMLUG_BASS,
             xi.item.GIANT_DONKO_1,
             xi.item.BHEFHEL_MARLIN_1,
-            xi.item.BLADEFISH_1,
+            xi.item.JUNGLE_CATFISH,
             xi.item.SILVER_SHARK,
         },
 
         {
             164,
             xi.item.JUNGLE_CATFISH,
-            xi.item.GAVIAL_FISH,
-            xi.item.PIRARUCU,
             xi.item.EMPEROR_FISH,
-            xi.item.MEGALODON,
-            xi.item.MORINABALIGI,
+            xi.item.SILVER_SHARK,
+            xi.item.TAKITARO,
+            xi.item.SEA_ZOMBIE,
+            xi.item.GIANT_CHIRAI,
         },
 
         {
             165,
-            xi.item.PTERYGOTUS,
-            xi.item.KALKANBALIGI,
             xi.item.TAKITARO,
             xi.item.SEA_ZOMBIE,
             xi.item.TITANICTUS,
-            xi.item.TURNABALIGI,
             xi.item.CAVE_CHERAX,
             xi.item.TRICORN,
+            xi.item.RYUGU_TITAN,
+            xi.item.LIK,
+            xi.item.GUGRUSAURUS,
         },
     }
 

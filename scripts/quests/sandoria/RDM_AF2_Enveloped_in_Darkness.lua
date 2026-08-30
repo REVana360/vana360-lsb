@@ -6,6 +6,9 @@
 -- Chateau d'Oraguille, Curilla,     !pos 27 0.1 0.1 233
 -- Northern San'doria,  Pagisalis,   !pos 97 0.1 113 231
 -----------------------------------
+-- The buried boots and blood are purified at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-(JST)-Version-Update
+-----------------------------------
 local crawlersID = zones[xi.zone.CRAWLERS_NEST]
 -----------------------------------
 
@@ -129,7 +132,7 @@ quest.sections =
                 [4] = function(player, csid, option, npc)
                     if option == 1 then
                         -- Set purification time.
-                        quest:setVar(player, 'Time', GetSystemTime() + 30)
+                        quest:setVar(player, 'Time', JstMidnight())
 
                         -- Delete Key items.
                         player:delKeyItem(xi.ki.CRAWLER_BLOOD)

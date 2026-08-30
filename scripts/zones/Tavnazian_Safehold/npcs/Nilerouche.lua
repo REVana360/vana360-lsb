@@ -16,9 +16,6 @@ entity.onTrigger = function(player, npc)
             { xi.item.ARROWWOOD_LOG,             20 },
             { xi.item.ELM_LOG,                 7800 },
             { xi.item.SCROLL_OF_BANISH_III,   66000 },
-            { xi.item.SAFEHOLD_WAYSTONE,      10000 },
-            { xi.item.SCROLL_OF_DISTRACT_II, 175827 },
-            { xi.item.SCROLL_OF_FRAZZLE_II,  217000 },
         }
     else
         stock =
@@ -27,9 +24,6 @@ entity.onTrigger = function(player, npc)
             { xi.item.CLOTHESPOLE,             2640 },
             { xi.item.ARROWWOOD_LOG,             20 },
             { xi.item.ELM_LOG,                 7800 },
-            { xi.item.SAFEHOLD_WAYSTONE,      10000 },
-            { xi.item.SCROLL_OF_DISTRACT_II, 175827 },
-            { xi.item.SCROLL_OF_FRAZZLE_II,  217000 },
         }
     end
 

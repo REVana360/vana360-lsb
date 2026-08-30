@@ -5,6 +5,10 @@
 -- Kurou-Morou : !pos -4 -6 -28 245
 -- Rockwell    : !pos -18 -13 181 198
 -----------------------------------
+-- The lens finishes soaking at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/5214.html
+-----------------------------------
 local mazeID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
 -----------------------------------
 
@@ -94,7 +98,7 @@ quest.sections =
                         if progress == 0 then
                             player:confirmTrade()
                             quest:setVar(player, 'Prog', 1)
-                            quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time
+                        quest:setVar(player, 'Wait', JstMidnight())
                             return quest:messageSpecial(mazeID.text.SUBMERGED_ITEM, xi.item.AHRIMAN_LENS)
                         elseif progress == 1 then
                             return quest:messageSpecial(mazeID.text.MORE_THAN_ONE, xi.item.AHRIMAN_LENS)

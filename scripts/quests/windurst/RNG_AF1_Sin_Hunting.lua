@@ -9,6 +9,8 @@
 -- qm2 (???)    : !pos -10.946 -1 313.810 104
 -----------------------------------
 -- The pinch of glittersand drops from the Evil Weapons around the Waters of Oblivion.
+-- The ??? can be examined only during a full moon.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-(JST)-Version-Update
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.WINDURST, xi.quest.id.windurst.SIN_HUNTING)
@@ -141,7 +143,10 @@ quest.sections =
             ['qm2'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 3 then
+                    if
+                        quest:getVar(player, 'Prog') == 3 and
+                        getVanadielMoonCycle() == xi.moonCycle.FULL_MOON
+                    then
                         return quest:progressEvent(13, 0, xi.item.PINCH_OF_GLITTERSAND)
                     end
                 end,

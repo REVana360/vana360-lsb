@@ -5,6 +5,9 @@
 -- Quelveuiat          : !pos -3.177 -22.750 -25.970 26
 -- qm_hard_days_knight : !pos -38.605 -9.022 -290.700 24
 -----------------------------------
+-- Temple Knight Key exchange was added after the selected client.
+-- Source: https://forum.square-enix.com/ffxi/threads/40059
+-----------------------------------
 local lufaiseID = zones[xi.zone.LUFAISE_MEADOWS]
 -----------------------------------
 
@@ -87,64 +90,6 @@ quest.sections =
                 onMobDeath = function(mob, player, optParams)
                     quest:setVar(player, 'Prog', 1)
                 end,
-            },
-        },
-    },
-
-    {
-        check = function(player, status, vars)
-            return status == xi.questStatus.QUEST_COMPLETED
-        end,
-
-        [xi.zone.TAVNAZIAN_SAFEHOLD] =
-        {
-            ['Quelveuiat'] =
-            {
-                onTrade = function(player, npc, trade)
-                    -- TODO: Needs verification for single-trade events
-                    if not player:hasKeyItem(xi.ki.TEMPLE_KNIGHT_KEY) then
-                        if
-                            npcUtil.tradeHasExactly(trade, xi.item.SEALION_CREST_KEY) or
-                            npcUtil.tradeHasExactly(trade, xi.item.CORAL_CREST_KEY)
-                        then
-                            return quest:progressEvent(631, trade:getItemId())
-                        elseif npcUtil.tradeHasExactly(trade, { xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY }) then
-                            quest:setVar(player, 'Prog', 2)
-                            return quest:progressEvent(631, xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY)
-                        end
-                    end
-                end,
-
-                onTrigger = function(player, npc)
-                    local itemCount = 0
-                    local itemTable = { 0, 0 }
-
-                    for itemId = xi.item.SEALION_CREST_KEY, xi.item.CORAL_CREST_KEY do
-                        if player:findItem(itemId) then
-                            itemCount = itemCount + 1
-                            itemTable[itemCount] = itemId
-                        end
-                    end
-
-                    return quest:progressEvent(631, itemTable[1], itemTable[2])
-                end,
-            },
-
-            onEventFinish =
-            {
-                [631] = function(player, csid, option, npc)
-                    if quest:getVar(player, 'Prog') == 2 then
-                        -- TODO: This is most likely not retail accurate, and need to check captures
-                        -- for forced zoning events.
-                        player:startEvent(632)
-                    end
-                end,
-
-                [632] = function(player, csid, option, npc)
-                    player:confirmTrade()
-                    quest:setVar(player, 'Prog', 0)
-                    npcUtil.giveKeyItem(player, xi.ki.TEMPLE_KNIGHT_KEY)
-                end
             },
         },
     },

@@ -5,6 +5,9 @@
 -- Koblakiq !pos -64.851 21.834 -117.521
 -- qm2      !pos 19.4 -24.141 19.185
 -----------------------------------
+-- Koblakiq finishes reading the demon pen at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-----------------------------------
 local zvahlID = zones[xi.zone.CASTLE_ZVAHL_BAILEYS]
 -----------------------------------
 
@@ -78,7 +81,7 @@ quest.sections =
                 [22] = function(player, csid, option, npc)
                     player:confirmTrade()
                     quest:setVar(player, 'Prog', 1)
-                    quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 Minute wait time
+                    quest:setVar(player, 'Wait', JstMidnight())
                 end,
 
                 [24] = function(player, csid, option, npc)

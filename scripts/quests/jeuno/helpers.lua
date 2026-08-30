@@ -13,6 +13,9 @@ xi.jeuno.helpers.GobbiebagQuest = {}
 setmetatable(xi.jeuno.helpers.GobbiebagQuest, { __index = Quest })
 xi.jeuno.helpers.GobbiebagQuest.__index = xi.jeuno.helpers.GobbiebagQuest
 
+-- The individual Gobbiebag quest files retain their original fame requirements.
+-- Source: https://wiki.ffo.jp/html/30645.html
+
 function xi.jeuno.helpers.GobbiebagQuest:new(params)
     local quest = Quest:new(xi.questLog.JEUNO, params.questId)
 

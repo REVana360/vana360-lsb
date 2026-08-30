@@ -6,6 +6,10 @@
 -- Aldo      : !pos 20 3 -58 245
 -- Gilgamesh : !pos 122.452 -9.009 -12.052 252
 -----------------------------------
+-- Quest gates and the post-battlefield reward wait use JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/58770
+-- Source: https://wiki.ffo.jp/html/7291.html
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH)
 
@@ -48,7 +52,7 @@ quest.sections =
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_AVAILABLE and
                 player:hasCompletedQuest(xi.questLog.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED) and
-                VanadielUniqueDay() >= vars.Timer and
+                GetSystemTime() >= vars.Timer and
                 not quest:getMustZone(player)
         end,
 
@@ -164,7 +168,7 @@ quest.sections =
                         quest:getVar(player, 'Prog') == 3
                     then
                         quest:setVar(player, 'Prog', 4)
-                        quest:setVar(player, 'Timer', VanadielUniqueDay() + 1)
+                        quest:setVar(player, 'Timer', JstMidnight())
                     end
                 end,
             },
@@ -203,7 +207,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if
                         quest:getVar(player, 'Prog') == 5 and
-                        quest:getVar(player, 'Timer') > VanadielUniqueDay()
+                        GetSystemTime() < quest:getVar(player, 'Timer')
                     then
                         return quest:progressEvent(235)
                     end
@@ -214,7 +218,7 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if
-                        VanadielUniqueDay() >= quest:getVar(player, 'Timer') and
+                        GetSystemTime() >= quest:getVar(player, 'Timer') and
                         not quest:getMustZone(player)
                     then
                         local questProgress = quest:getVar(player, 'Prog')

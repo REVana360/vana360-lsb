@@ -7,6 +7,9 @@
 -- Phoochuchu      : !pos -4 -4 69 249
 -- _6i8 (Door)     : !pos 70 7 2 234
 -----------------------------------
+-- Jaucribaix finishes repairing the charred helm at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-----------------------------------
 local waughroonID = zones[xi.zone.WAUGHROON_SHRINE]
 -----------------------------------
 
@@ -161,7 +164,7 @@ quest.sections =
                     player:delKeyItem(xi.ki.CHARRED_HELM)
                     quest:setVar(player, 'Prog', 9)
                     quest:setMustZone(player)
-                    quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time
+                    quest:setVar(player, 'Wait', JstMidnight())
                 end,
 
                 [164] = function(player, csid, option, npc)

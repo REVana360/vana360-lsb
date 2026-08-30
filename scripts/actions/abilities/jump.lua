@@ -2,7 +2,7 @@
 -- Ability: Jump
 -- Delivers a short jumping attack on a targeted enemy.
 -- Obtained: Dragoon Level 10
--- Recast Time: 1:00
+-- Recast Time: 1:30
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

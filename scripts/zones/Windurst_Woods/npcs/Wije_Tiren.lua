@@ -15,7 +15,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.ETHER,                     4832 },
         { xi.item.SCROLL_OF_HERB_PASTORAL,    108 },
         { xi.item.FLASK_OF_DISTILLED_WATER,    12 },
-        { xi.item.FEDERATION_WAYSTONE,      10000 },
     }
 
     player:showText(npc, zones[xi.zone.WINDURST_WOODS].text.WIJETIREN_SHOP_DIALOG)

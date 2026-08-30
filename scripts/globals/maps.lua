@@ -4,23 +4,12 @@
 xi = xi or {}
 xi.maps = xi.maps or {}
 
--- TODO: When WotG Map Vendors are implemented, use this table to
--- store additional data regarding map discounts in past areas.
-local mapVendors =
-{
-    ['Ashu_Bolkhomo']   = 1006,
-    ['Elesca']          = 567,
-    ['Karine']          = 210,
-    ['Lombaria']        = 500,
-    ['Ludwig']          = 500,
-    ['Mhoji_Roccoruh']  = 10000,
-    ['Pehki_Machumaht'] = 10000,
-    ['Promurouve']      = 10000,
-    ['Rex']             = 115,
-    ['Riyadahf']        = 563,
-    ['Rusese']          = 10000,
-    ['Violitte']        = 595,
-}
+-- July 2009 vendor lists and prices predate the later map-list merges.
+-- Sources:
+-- https://forum.square-enix.com/ffxi/threads/38100
+-- https://wiki.ffo.jp/html/29812.html
+-- https://forum.square-enix.com/ffxi/threads/45365-Dec-10-2014-(JST)-Version-Update
+-- https://wiki.ffo.jp/html/23621.html
 
 local mapInfo =
 {
@@ -35,7 +24,7 @@ local mapInfo =
     [ 7] = { xi.ki.MAP_OF_CARPENTERS_LANDING,          3000 },
     [ 8] = { xi.ki.MAP_OF_THE_ZERUHN_MINES,             200 },
     [ 9] = { xi.ki.MAP_OF_THE_PALBOROUGH_MINES,         600 },
-    [10] = { xi.ki.MAP_OF_BEADEAUX,                     600 },
+    [10] = { xi.ki.MAP_OF_BEADEAUX,                    3000 },
     [11] = { xi.ki.MAP_OF_GIDDEUS,                      600 },
     [12] = { xi.ki.MAP_OF_CASTLE_OZTROJA,              3000 },
     [13] = { xi.ki.MAP_OF_THE_MAZE_OF_SHAKHRAMI,        600 },
@@ -99,11 +88,112 @@ local mapInfo =
     [71] = { xi.ki.MAP_OF_FORT_KARUGO_NARUGO,         30000 },
 }
 
-local function getMapEventParams(player)
+local sandoriaStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+    xi.ki.MAP_OF_ORDELLES_CAVES,
+    xi.ki.MAP_OF_GHELSBA,
+    xi.ki.MAP_OF_DAVOI,
+    xi.ki.MAP_OF_CARPENTERS_LANDING,
+}
+
+local bastokStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+    xi.ki.MAP_OF_THE_ZERUHN_MINES,
+    xi.ki.MAP_OF_THE_PALBOROUGH_MINES,
+    xi.ki.MAP_OF_BEADEAUX,
+}
+
+local windurstStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+    xi.ki.MAP_OF_GIDDEUS,
+    xi.ki.MAP_OF_CASTLE_OZTROJA,
+    xi.ki.MAP_OF_THE_MAZE_OF_SHAKHRAMI,
+}
+
+local selbinaStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+}
+
+local mhauraStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+    xi.ki.MAP_OF_THE_LITELOR_REGION,
+    xi.ki.MAP_OF_BIBIKI_BAY,
+}
+
+local jeunoStock =
+{
+    xi.ki.MAP_OF_THE_SAN_DORIA_AREA,
+    xi.ki.MAP_OF_THE_BASTOK_AREA,
+    xi.ki.MAP_OF_THE_WINDURST_AREA,
+    xi.ki.MAP_OF_THE_JEUNO_AREA,
+    xi.ki.MAP_OF_QUFIM_ISLAND,
+    xi.ki.MAP_OF_THE_ELDIEME_NECROPOLIS,
+    xi.ki.MAP_OF_THE_GARLAIGE_CITADEL,
+    xi.ki.MAP_OF_THE_ELSHIMO_REGIONS,
+}
+
+local rabaoStock =
+{
+    xi.ki.MAP_OF_THE_KUZOTZ_REGION,
+    xi.ki.MAP_OF_THE_KORROLOKA_TUNNEL,
+    xi.ki.MAP_OF_THE_VOLLBOW_REGION,
+}
+
+local whitegateStock =
+{
+    xi.ki.MAP_OF_AL_ZAHBI,
+    xi.ki.MAP_OF_NASHMAU,
+    xi.ki.MAP_OF_WAJAOM_WOODLANDS,
+    xi.ki.MAP_OF_BHAFLAU_THICKETS,
+}
+
+local mapVendors =
+{
+    ['Ashu_Bolkhomo']   = { event =  1006, stock = rabaoStock     },
+    ['Elesca']          = { event =   567, stock = sandoriaStock  },
+    ['Karine']          = { event =   210, stock = bastokStock    },
+    ['Lombaria']        = { event =   500, stock = selbinaStock   },
+    ['Ludwig']          = { event =   500, stock = mhauraStock    },
+    ['Mhoji_Roccoruh']  = { event = 10000, stock = windurstStock  },
+    ['Pehki_Machumaht'] = { event = 10000, stock = windurstStock  },
+    ['Promurouve']      = { event = 10000, stock = jeunoStock     },
+    ['Rex']             = { event =   115, stock = bastokStock    },
+    ['Riyadahf']        = { event =   563, stock = whitegateStock },
+    ['Rusese']          = { event = 10000, stock = jeunoStock     },
+    ['Violitte']        = { event =   595, stock = sandoriaStock  },
+}
+
+local function getMapEventParams(player, vendor)
     local paramTable = { 0, 0, 0 }
 
-    for mapId = 0, #mapInfo do
-        if player:hasKeyItem(mapInfo[mapId][1]) then
+    for mapId = 0, 71 do
+        local map = mapInfo[mapId]
+
+        if
+            not map or
+            not utils.contains(map[1], vendor.stock) or
+            player:hasKeyItem(map[1])
+        then
             local paramPos = math.floor(mapId / 32) + 1
 
             paramTable[paramPos] = bit.bor(paramTable[paramPos], bit.lshift(1, mapId))
@@ -114,32 +204,43 @@ local function getMapEventParams(player)
 end
 
 xi.maps.onTrigger = function(player, npc)
-    local eventParams = getMapEventParams(player)
+    local vendor = mapVendors[npc:getName()]
 
-    player:startEvent(mapVendors[npc:getName()], eventParams[1], eventParams[2], eventParams[3])
-end
-
-xi.maps.onEventUpdate = function(player, csid, option, npc)
-    local mapId = bit.rshift(option, 16)
-
-    if csid ~= mapVendors[npc:getName()] then
+    if not vendor then
         return
     end
 
-    if
-        mapId >= 0 and
-        mapId <= #mapInfo and
-        bit.band(option, 0xF) == 1
-    then
-        local mapCost = mapInfo[mapId][2]
+    local eventParams = getMapEventParams(player, vendor)
 
-        if mapCost <= player:getGil() then
-            player:delGil(mapCost)
-            npcUtil.giveKeyItem(player, mapInfo[mapId][1])
+    player:startEvent(vendor.event, eventParams[1], eventParams[2], eventParams[3])
+end
+
+xi.maps.onEventUpdate = function(player, csid, option, npc)
+    local vendor = mapVendors[npc:getName()]
+    local mapId = bit.rshift(option, 16)
+
+    if
+        not vendor or
+        csid ~= vendor.event
+    then
+        return
+    end
+
+    if bit.band(option, 0xF) == 1 then
+        local map = mapInfo[mapId]
+
+        if
+            not map or
+            not utils.contains(map[1], vendor.stock)
+        then
+            player:printToPlayer('You cannot purchase that item on this server.', xi.msg.channel.SYSTEM_3)
+        elseif map[2] <= player:getGil() then
+            player:delGil(map[2])
+            npcUtil.giveKeyItem(player, map[1])
         else
             player:messageSpecial(zones[player:getZoneID()].text.NOT_HAVE_ENOUGH_GIL)
         end
     end
 
-    player:updateEvent(unpack(getMapEventParams(player)))
+    player:updateEvent(unpack(getMapEventParams(player, vendor)))
 end

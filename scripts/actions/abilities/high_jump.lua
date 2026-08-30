@@ -2,7 +2,7 @@
 -- Ability: High Jump
 -- Performs a high jumping attack on enemy.
 -- Obtained: Dragoon Level 35
--- Recast Time: 2:00
+-- Recast Time: 3:00
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

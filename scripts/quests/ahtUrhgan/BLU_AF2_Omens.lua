@@ -6,8 +6,8 @@
 -- Lathuya         : !pos -95.081 -6 31.638 50
 -- Aydeewa (Blank) : !pos 342.129 36.509 -24.856 68
 -----------------------------------
--- Transformations opens one minute after this quest completes.
--- The June 7, 2016 version update shortened the wait from one Earth day.
+-- Transformations opens at the next JST midnight after this quest completes.
+-- The June 7, 2016 version update shortened the wait to one minute.
 --
 -- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
 -----------------------------------
@@ -130,7 +130,7 @@ quest.sections =
                         player:delKeyItem(xi.ki.SEALED_IMMORTAL_ENVELOPE)
 
                         xi.quest.setMustZone(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.TRANSFORMATIONS)
-                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.TRANSFORMATIONS, 'Timer', GetSystemTime() + 60) -- 1 minute wait time
+                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.TRANSFORMATIONS, 'Timer', JstMidnight())
                     end
                 end,
             },

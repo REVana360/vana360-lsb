@@ -12,10 +12,10 @@ entity.onTrigger = function(player, npc)
         { xi.item.CHOCOBO_FEATHER,               8 },
         { xi.item.PET_FOOD_ALPHA_BISCUIT,       12 },
         { xi.item.PET_FOOD_BETA_BISCUIT,        89 },
-        { xi.item.JUG_OF_CARROT_BROTH,          61 },
-        { xi.item.JUG_OF_BUG_BROTH,             98 },
-        { xi.item.JUG_OF_HERBAL_BROTH,         108 },
-        { xi.item.JUG_OF_CARRION_BROTH,        301 },
+        { xi.item.JUG_OF_CARROT_BROTH,          90 },
+        { xi.item.JUG_OF_BUG_BROTH,            756 },
+        { xi.item.JUG_OF_HERBAL_BROTH,         138 },
+        { xi.item.JUG_OF_CARRION_BROTH,        756 },
         { xi.item.SCROLL_OF_CHOCOBO_MAZURKA, 55200 },
     }
 

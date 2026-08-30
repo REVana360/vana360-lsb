@@ -7,6 +7,9 @@
 
 local quest = Quest:new(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.THE_MOOGLE_PICNIC)
 
+-- The July 8, 2014 update shortened the conquest-tally and reward waits.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+
 quest.reward =
 {
     title = xi.title.MOGS_EXCEPTIONALLY_KIND_MASTER,
@@ -27,7 +30,7 @@ quest.sections[1] =
             quest:getLocalVar(player, 'mustZone') == 0 and
             quest:getLocalVar(player, 'questSeen') == 0 and
             bedPlacedTime ~= 0 and
-            GetSystemTime() > bedPlacedTime + 60
+            bedPlacedTime < NextConquestTally() - utils.days(7)
     end
 }
 
@@ -99,7 +102,7 @@ local questAccepted =
         [30011] = function(player, csid, option, npc)
             player:tradeComplete()
             quest:setVar(player, 'Prog', 1)
-            quest:setVar(player, 'Timer', GetSystemTime() + 60)
+            quest:setVar(player, 'Timer', JstMidnight())
         end,
 
         [30012] = function(player, csid, option, npc)

@@ -6,6 +6,9 @@
 -- Ranemaud        : !pos 15 0 23 252
 -- qm3 (Zi'Tah)    : !pos -416 0 46 121
 -----------------------------------
+-- Yomi Okuri opens at JST midnight after completion.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-----------------------------------
 local zitahID = zones[xi.zone.THE_SANCTUARY_OF_ZITAH]
 -----------------------------------
 
@@ -99,7 +102,7 @@ quest.sections =
 
                         -- Player must zone before being able to flag the next quest
                         xi.quest.setMustZone(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.YOMI_OKURI)
-                        xi.quest.setVar(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.YOMI_OKURI, 'Timer', GetSystemTime() + 60) -- 1 minute wait time
+                        xi.quest.setVar(player, xi.questLog.OUTLANDS, xi.quest.id.outlands.YOMI_OKURI, 'Timer', JstMidnight())
                     end
                 end,
 

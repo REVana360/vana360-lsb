@@ -10,6 +10,9 @@
 
 local quest = Quest:new(xi.questLog.JEUNO, xi.quest.id.jeuno.CHOCOBOS_WOUNDS)
 
+-- The February 19, 2015 update shortened the feeding wait from one Vana'diel day.
+-- Source: https://forum.square-enix.com/ffxi/threads/46068-Feb-19-2015-%28JST%29-Version-Update
+
 quest.reward =
 {
     keyItem  = xi.ki.CHOCOBO_LICENSE,
@@ -99,7 +102,7 @@ quest.sections =
                         return quest:noAction()
                     end
 
-                    if quest:getVar(player, 'Timer') > GetSystemTime() then
+                    if quest:getVar(player, 'Timer') >= VanadielUniqueDay() then
                         return quest:event(73)
                     end
 
@@ -153,23 +156,23 @@ quest.sections =
             {
                 [57] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                    quest:setVar(player, 'Timer', VanadielUniqueDay())
                 end,
 
                 [58] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 3)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                    quest:setVar(player, 'Timer', VanadielUniqueDay())
                 end,
 
                 [59] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 5)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                    quest:setVar(player, 'Timer', VanadielUniqueDay())
                     player:confirmTrade()
                 end,
 
                 [60] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 6)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                    quest:setVar(player, 'Timer', VanadielUniqueDay())
                     player:confirmTrade()
                 end,
 
@@ -184,7 +187,7 @@ quest.sections =
 
                 [99] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 4)
-                    quest:setVar(player, 'Timer', GetSystemTime() + 45)
+                    quest:setVar(player, 'Timer', VanadielUniqueDay())
                     player:confirmTrade()
                 end,
             },

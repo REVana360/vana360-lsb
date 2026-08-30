@@ -16,7 +16,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.WATER_CARD,          48 },
         { xi.item.LIGHT_CARD,          48 },
         { xi.item.DARK_CARD,           48 },
-        { xi.item.TRUMP_CARD_CASE,  10000 },
         { xi.item.SAMURAI_DIE,      35200 },
         { xi.item.NINJA_DIE,          600 },
         { xi.item.DRAGOON_DIE,       9216 },

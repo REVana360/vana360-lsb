@@ -14,12 +14,13 @@ entity.onTrigger = function(player, npc)
         { xi.item.FLASK_OF_ECHO_DROPS,        800 },
         { xi.item.POTION,                     910 },
         { xi.item.FLASK_OF_DISTILLED_WATER,    12 },
-        { xi.item.SHEET_OF_PARCHMENT,        1980 },
         { xi.item.LUGWORM,                     12 },
         { xi.item.HATCHET,                    500 },
         { xi.item.STRIP_OF_MEAT_JERKY,        120 },
         { xi.item.DISH_OF_SALSA,              148 },
-        { xi.item.MHAURA_WAYSTONE,          10000 },
+        { xi.item.SCROLL_OF_REGEN,           4320 },
+        { xi.item.SCROLL_OF_REGEN_II,        7830 },
+        { xi.item.SCROLL_OF_SLEEPGA,        11200 },
     }
 
     player:showText(npc, zones[xi.zone.MHAURA].text.PIKINIMIKINI_SHOP_DIALOG)

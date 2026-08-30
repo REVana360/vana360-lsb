@@ -16,14 +16,9 @@ entity.onTrigger = function(player, npc)
         { xi.item.SCROLL_OF_RERAISE_III,  600000 },
         { xi.item.SCROLL_OF_BANISH_III,    86000 },
         { xi.item.SCROLL_OF_CURA,          21840 },
-        { xi.item.SCROLL_OF_CURA_II,       96075 },
         { xi.item.SCROLL_OF_SACRIFICE,     67600 },
         { xi.item.SCROLL_OF_ESUNA,         70200 },
         { xi.item.SCROLL_OF_AUSPICE,       33660 },
-        { xi.item.SCROLL_OF_CURE_VI,      153410 },
-        { xi.item.SCROLL_OF_PROTECT_V,    115425 },
-        { xi.item.SCROLL_OF_SHELL_V,      135945 },
-        { xi.item.SCROLL_OF_CRUSADE,      155925 },
     }
 
     player:showText(npc, zones[xi.zone.RABAO].text.BRAVEOX_SHOP_DIALOG)

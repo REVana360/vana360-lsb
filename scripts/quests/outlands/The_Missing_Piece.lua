@@ -12,6 +12,9 @@
         -- !pos 787, -16, -819
 -- Charlaimagnat : !pos 124.560 6.500 111.787
 -----------------------------------
+-- Charlaimagnat finishes studying the tablet at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-----------------------------------
 local rabaoID = zones[xi.zone.RABAO]
 -----------------------------------
 
@@ -128,7 +131,7 @@ quest.sections =
             onEventFinish =
             {
                 [703] = function(player, csid, option, npc)
-                    quest:setVar(player, 'Wait', GetSystemTime() + 60)
+                    quest:setVar(player, 'Wait', JstMidnight())
                     player:addTitle(xi.title.ACQUIRER_OF_ANCIENT_ARCANUM)
                     player:delKeyItem(xi.ki.TABLET_OF_ANCIENT_MAGIC)
                     player:delKeyItem(xi.ki.LETTER_FROM_ALFESAR)

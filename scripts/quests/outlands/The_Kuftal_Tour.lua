@@ -4,6 +4,8 @@
 -- Log ID : 5, Quest ID: 195
 -- Datta  : !pos -24.768 8.324 70.722 247
 -- qm5    : !pos -29.195 -22.159 -183.716 174
+-- The June 25, 2015 update reduced the party requirement from six to two.
+-- Source: https://forum.square-enix.com/ffxi/threads/47481-Jun-25-2015-%28JST%29-Version-Update
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.OUTLANDS, xi.quest.id.outlands.THE_KUFTAL_TOUR)
@@ -57,7 +59,7 @@ quest.sections =
                         end
                     end
 
-                    if flag and #player:getParty() > 1 then
+                    if flag and #player:getParty() == 6 then
                         return quest:progressEvent(14)
                     end
                 end,

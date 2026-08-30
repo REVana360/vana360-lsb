@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../schemas/zone.schema.json
 
+level_restriction: 40
 type: [dungeon]
 misc: [escape, mazurka, tractor, pet, trust, los_player_block]
 music:

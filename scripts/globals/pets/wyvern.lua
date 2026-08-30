@@ -49,9 +49,7 @@ local function doHealingBreath(player, divisor)
     local healingbreath = xi.jobAbility.HEALING_BREATH
     local wyvernType    = wyvernTypes[player:getSubJob()]
 
-    if player:getMainLvl() >= 80 then
-        healingbreath = xi.jobAbility.HEALING_BREATH_IV
-    elseif player:getMainLvl() >= 40 then
+    if player:getMainLvl() >= 40 then
         healingbreath = xi.jobAbility.HEALING_BREATH_III
     elseif player:getMainLvl() >= 20 then
         healingbreath = xi.jobAbility.HEALING_BREATH_II
@@ -89,8 +87,6 @@ local function doStatusBreath(target, player)
     {
     --  { lvl, ability                      , { statuses            } },
         { 40, xi.jobAbility.REMOVE_PARALYSIS, { xi.effect.PARALYSIS } },
-        { 60, xi.jobAbility.REMOVE_CURSE    , { xi.effect.CURSE_I, xi.effect.BANE, xi.effect.DOOM } },
-        { 80, xi.jobAbility.REMOVE_DISEASE  , { xi.effect.DISEASE, xi.effect.PLAGUE } },
         { 20, xi.jobAbility.REMOVE_BLINDNESS, { xi.effect.BLINDNESS } },
         {  1, xi.jobAbility.REMOVE_POISON   , { xi.effect.POISON    } },
     }
@@ -126,6 +122,13 @@ xi.pets.wyvern.onMobSpawn = function(mob)
     end
 
     local wyvernType = wyvernTypes[master:getSubJob()]
+
+    -- July 2009: these parameters belong to the wyvern, not its master.
+    -- Sources: https://www.bg-wiki.com/ffxi/Version_Update_(09/19/2011)
+    --          https://forum.square-enix.com/ffxi/threads/44090-Sep-9-2014-%28JST%29-Version-Update
+    -- Status breath source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
+    mob:addMod(xi.mod.DMG, 4000)
+    mob:addMod(xi.mod.WYVERN_SHOW_READYING, 1)
 
     if wyvernType == wyvernCapabilities.DEFENSIVE then
         master:addListener('WEAPONSKILL_USE', 'PET_WYVERN_WS', function(player, target, skill, tp, action, damage)
@@ -187,21 +190,8 @@ xi.pets.wyvern.onMobSpawn = function(mob)
 end
 
 xi.pets.wyvern.removeWyvernLevels = function(mob)
-    local master  = mob:getMaster()
-    local numLvls = mob:getLocalVar('level_Ups')
-
-    if numLvls ~= 0 then
-        local wyvernAttributeIncreaseEffectJP = master:getJobPointLevel(xi.jp.WYVERN_ATTR_BONUS)
-        local wyvernBonusDA = master:getMod(xi.mod.WYVERN_ATTRIBUTE_DA)
-
-        master:delMod(xi.mod.ATT, wyvernAttributeIncreaseEffectJP * numLvls)
-        master:delMod(xi.mod.DEF, wyvernAttributeIncreaseEffectJP * numLvls)
-        master:delMod(xi.mod.ATTP, 4 * numLvls)
-        master:delMod(xi.mod.DEFP, 4 * numLvls)
-        master:delMod(xi.mod.HASTE_ABILITY, 200 * numLvls)
-        master:delMod(xi.mod.DOUBLE_ATTACK, wyvernBonusDA * numLvls)
-        master:delMod(xi.mod.ALL_WSDMG_ALL_HITS, 2 * numLvls)
-    end
+    -- July 2009 leveling modifies the wyvern only; there is no master cleanup.
+    -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/29/2013)
 end
 
 xi.pets.wyvern.onMobDeath = function(mob, player)

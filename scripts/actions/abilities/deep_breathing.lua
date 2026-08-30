@@ -2,7 +2,7 @@
 -- Ability: Deep Breathing
 -- Enhances the effect of next breath used by wyvern.
 -- Obtained: Dragoon Level 75
--- Recast Time: 5 minutes
+-- Recast Time: 15 minutes
 -- Duration: 0:03:00 or until the next breath is executed
 -----------------------------------
 ---@type TAbility

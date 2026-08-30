@@ -18,7 +18,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.WOODEN_ARROW,            4, 2 },
         { xi.item.IRON_ARROW,              8, 3 },
         { xi.item.CROSSBOW_BOLT,           6, 3 },
-        { xi.item.REPUBLIC_WAYSTONE,   10000, 3 },
     }
 
     -- Thief's tools.
@@ -34,7 +33,7 @@ entity.onTrigger = function(player, npc)
         (bastokNationRank == sandyNationRank and bastokNationRank == windyNationRank) or                        -- All 3 nations tied.
         (bastokNationRank ~= sandyNationRank and bastokNationRank ~= windyNationRank and bastokNationRank == 3) -- Nation not tied and nation last.
     then
-        table.insert(stock, { xi.item.LIVING_KEY, 5258, 3 })
+        table.insert(stock, { xi.item.LIVING_KEY, 5870, 3 })
     end
 
     player:showText(npc, zones[xi.zone.BASTOK_MINES].text.BOYTZ_SHOP_DIALOG)

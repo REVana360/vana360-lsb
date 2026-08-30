@@ -4,6 +4,8 @@
 -- Log ID: 0, Quest ID: 63
 -----------------------------------
 -- Vilatroire : !pos -260 -70 423 100
+-- The May 14, 2015 update reduced the party requirement from six to two.
+-- Source: https://forum.square-enix.com/ffxi/threads/46976
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.SANDORIA, xi.quest.id.sandoria.INTRODUCTION_TO_TEAMWORK)
@@ -70,7 +72,7 @@ quest.sections =
             onEventUpdate =
             {
                 [129] = function(player, csid, option, npc)
-                    local partySizeRequirement = 2
+                    local partySizeRequirement = 6
                     local party = player:getParty()
                     local partySameNationCount = 0
 

@@ -9,8 +9,9 @@
 -- Esca      : !pos -624.231 -51.499 278.369 100
 -- qm2 (???) : !pos 145.373 16.462 -548.560 105
 -----------------------------------
--- Brugaire is mugged one minute after the gold hairpin is traded to Ceraulian.
+-- Brugaire is mugged at JST midnight after the gold hairpin is traded to Ceraulian.
 -- The ??? grants Ranchuriome's legacy on the first click after Sturmtiger dies.
+-- Source: https://forum.square-enix.com/ffxi/threads/46068-Feb-19-2015-(JST)-Version-Update
 -----------------------------------
 local batalliaID = zones[xi.zone.BATALLIA_DOWNS]
 -----------------------------------
@@ -214,7 +215,7 @@ quest.sections =
                 [17] = function(player, csid, option, npc)
                     player:tradeComplete()
                     quest:setVar(player, 'Prog', 1)
-                    quest:setVar(player, 'Wait', GetSystemTime() + 60) -- 1 minute wait time.
+                    quest:setVar(player, 'Wait', JstMidnight())
                 end,
             },
         },

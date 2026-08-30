@@ -2,7 +2,7 @@
 -- Ability: Overdrive
 -- Augments the fighting ability of your automaton to its maximum level.
 -- Obtained: Puppetmaster Level 1
--- Recast Time: 1:00:00
+-- Recast Time: 2:00:00
 -- Duration: 1:00
 -----------------------------------
 ---@type TAbility

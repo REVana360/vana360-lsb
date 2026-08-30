@@ -20,7 +20,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.CAN_OF_AUTOMATON_OIL,       50, },
         { xi.item.CAN_OF_AUTOMATON_OIL_P1,   250, },
         { xi.item.CAN_OF_AUTOMATON_OIL_P2,   500, },
-        { xi.item.CAN_OF_AUTOMATON_OIL_P3,  1000, },
     }
 
     player:showText(npc, ID.text.GAVRIE_SHOP_DIALOG)

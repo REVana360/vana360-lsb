@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Spirit Bond
--- Description: Enables the dragoon to take some damage on behalf of their wyvern. Using Healing Breath also restores the wyvern's HP.
+-- Description: Enables the dragoon to take some damage on behalf of their wyvern.
 -- Obtained: DRG Level 65
 -- Recast Time: 00:03:00
 -- Duration: 00:01:00

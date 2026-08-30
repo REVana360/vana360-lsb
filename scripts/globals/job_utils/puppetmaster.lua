@@ -88,10 +88,12 @@ end
 -- https://www.bg-wiki.com/ffxi/Maintenance
 xi.job_utils.puppetmaster.oilData =
 {
-    [xi.item.CAN_OF_AUTOMATON_OIL   ] = { initialHealPercent = 0.1, statusesRemoved = 1, regen = 20, duration = 15 },
-    [xi.item.CAN_OF_AUTOMATON_OIL_P1] = { initialHealPercent = 0.2, statusesRemoved = 2, regen = 40, duration = 30 },
-    [xi.item.CAN_OF_AUTOMATON_OIL_P2] = { initialHealPercent = 0.3, statusesRemoved = 3, regen = 60, duration = 45 },
-    [xi.item.CAN_OF_AUTOMATON_OIL_P3] = { initialHealPercent = 0.4, statusesRemoved = 4, regen = 80, duration = 60 },
+    -- Oil regen potency doubled and duration halved in June 2015.
+    -- Source: https://forum.square-enix.com/ffxi/threads/47481-Jun-25-2015-%28JST%29-Version-Update
+    [xi.item.CAN_OF_AUTOMATON_OIL   ] = { statusesRemoved = 1, regen = 10, duration =  30 },
+    [xi.item.CAN_OF_AUTOMATON_OIL_P1] = { statusesRemoved = 2, regen = 20, duration =  60 },
+    [xi.item.CAN_OF_AUTOMATON_OIL_P2] = { statusesRemoved = 3, regen = 30, duration =  90 },
+    [xi.item.CAN_OF_AUTOMATON_OIL_P3] = { statusesRemoved = 4, regen = 40, duration = 120 },
 }
 
 -----------------------------------
@@ -115,10 +117,11 @@ end
 xi.job_utils.puppetmaster.onAbilityUseOverdrive = function(player, target, ability, action)
     local pet = player:getPet()
 
-    player:addStatusEffect(xi.effect.OVERDRIVE, { duration = 180 + player:getMod(xi.mod.OVERDRIVE_BONUS_DURATION), origin = player })
+    -- Source: https://wiki.ffo.jp/html/954.html
+    player:addStatusEffect(xi.effect.OVERDRIVE, { duration = 60 + player:getMod(xi.mod.OVERDRIVE_BONUS_DURATION), origin = player })
 
     if pet then
-        pet:addStatusEffect(xi.effect.OVERDRIVE, { duration = 180 + player:getMod(xi.mod.OVERDRIVE_BONUS_DURATION), origin = pet })
+        pet:addStatusEffect(xi.effect.OVERDRIVE, { duration = 60 + player:getMod(xi.mod.OVERDRIVE_BONUS_DURATION), origin = pet })
         action:ID(player:getID(), pet:getID())
     end
 
@@ -231,31 +234,22 @@ xi.job_utils.puppetmaster.onAbilityUseRepair = function(player, target, ability,
     -- Self-cast ability but reports on pet
     action:ID(player:getID(), pet:getID())
 
-    local petMaxHP = pet:getMaxHP()
-
-    -- Need to start to calculate the HP to restore to the pet.
-    -- Ref: https://www.bg-wiki.com/ffxi/Repair
     local oilEquipped  = xi.job_utils.puppetmaster.oilData[player:getEquipID(xi.slot.AMMO)]
     local regenAmount  = oilEquipped.regen
-    local totalHealing = oilEquipped.initialHealPercent * petMaxHP
     local regenTime    = oilEquipped.duration
 
     removeStatusEffects(pet, player:getMod(xi.mod.REPAIR_EFFECT))
 
-    local bonus  = 1 + player:getMerit(xi.merit.REPAIR_EFFECT) / 100
-    totalHealing = totalHealing * bonus
-
-    bonus       = bonus + player:getMod(xi.mod.REPAIR_POTENCY) / 100
+    local bonus = 1 + player:getMod(xi.mod.REPAIR_POTENCY) / 100
     regenAmount = regenAmount * bonus
-
-    totalHealing = pet:addHP(totalHealing)
 
     pet:wakeUp()
 
     pet:delStatusEffect(xi.effect.REGEN)
     pet:addStatusEffect(xi.effect.REGEN, { power = regenAmount, duration = regenTime, origin = player, tick = 3 }) -- 3 = tick, each 3 seconds.
     player:removeAmmo(1)
-    return totalHealing
+
+    ability:setMsg(xi.msg.basic.USES_JA)
 end
 
 -----------------------------------

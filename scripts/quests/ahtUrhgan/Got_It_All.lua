@@ -4,6 +4,10 @@
 -- Ekhu Pesshyadha !pos -13.043 0.999 103.423 50
 -- Zabahf !pos -90.070 -1 10.140 50
 -----------------------------------
+-- The final event becomes available at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/5374.html
+-----------------------------------
 
 local quest = Quest:new(xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.GOT_IT_ALL)
 
@@ -58,11 +62,14 @@ quest.sections =
                     elseif progress == 6 then
                         return quest:progressEvent(527)
                     elseif progress == 7 then
-                        if not player:needToZone() then
-                            return quest:progressEvent(528)
-                        else
+                        if
+                            player:needToZone() or
+                            quest:getVar(player, 'Stage') > GetSystemTime()
+                        then
                             return quest:event(539)
                         end
+
+                        return quest:progressEvent(528)
                     end
                 end,
             },
@@ -144,6 +151,7 @@ quest.sections =
 
                 [527] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 7)
+                    quest:setVar(player, 'Stage', JstMidnight())
                     player:needToZone(true)
                 end,
 

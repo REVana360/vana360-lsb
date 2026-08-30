@@ -6,8 +6,8 @@
 -- Imperial Whitegate : !pos 152 -2 0 50
 -- Alzadaal (Blank)   : !pos -529.704 0 649.682 72
 -----------------------------------
--- The Beast Within opens one minute after this quest completes.
--- The June 7, 2016 version update shortened the wait from one Earth day.
+-- The Beast Within opens at the next JST midnight after this quest completes.
+-- The June 7, 2016 version update shortened the wait to one minute.
 --
 -- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
 -----------------------------------
@@ -180,7 +180,7 @@ quest.sections =
 
                 [5] = function(player, csid, option, npc)
                     if quest:complete(player) then
-                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.THE_BEAST_WITHIN, 'Timer', GetSystemTime() + 60) -- 1 minute wait time
+                        xi.quest.setVar(player, xi.questLog.AHT_URHGAN, xi.quest.id.ahtUrhgan.THE_BEAST_WITHIN, 'Timer', JstMidnight())
                     end
                 end,
             },

@@ -25,7 +25,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.SCROLL_OF_DRAIN_II,      30780, },
         { xi.item.SCROLL_OF_DREAD_SPIKES,  70560, },
         { xi.item.SCROLL_OF_ABSORB_ACC,    44000, },
-        { xi.item.SCROLL_OF_ASPIR_II,      79800, },
     }
 
     player:showText(npc, ID.text.MAZWEEN_SHOP_DIALOG)

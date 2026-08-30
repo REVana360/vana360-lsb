@@ -18,7 +18,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.JUG_OF_SELBINA_MILK,         61 },
         { xi.item.PICKLED_HERRING,            480 },
         { xi.item.SERVING_OF_HERB_QUUS,      4984 },
-        { xi.item.SELBINA_WAYSTONE,         10000 },
     }
 
     player:showText(npc, zones[xi.zone.SELBINA].text.DOHDJUMA_SHOP_DIALOG)

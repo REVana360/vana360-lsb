@@ -4,6 +4,9 @@
 -- Log ID      : 1, Quest ID: 45
 -- Izabele     : !pos -43.9 -10 -2.4 237
 -- Hunting Bear: !pos -235.7 40 424.5 106
+-- The June 25, 2015 update reduced the requirement from six level-five
+-- characters to two level-fifteen characters.
+-- Source: https://forum.square-enix.com/ffxi/threads/47481
 -----------------------------------
 
 local quest = Quest:new(xi.questLog.BASTOK, xi.quest.id.bastok.THE_GUSTABERG_TOUR)
@@ -55,14 +58,14 @@ quest.sections =
 
                     for _, member in pairs(player:getAlliance()) do
                         if
-                            member:getMainLvl() > 15 or
+                            member:getMainLvl() > 5 or
                             member:checkDistance(player) > 15
                         then
                             flag = false
                         end
                     end
 
-                    if flag and #player:getParty() > 1 then
+                    if flag and #player:getParty() == 6 then
                         return quest:progressEvent(22)
                     else
                         return quest:progressEvent(21)

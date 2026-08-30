@@ -17,6 +17,15 @@ local currencyAmount = 3
 local stageNumber = 4
 local csParam = 5
 
+-- Relic waits were shortened in June 2016.
+-- Source: https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/21312.html
+local relicWaitTime =
+{
+    [2] = 604800,
+    [3] = 302400,
+}
+
 local relics =
 {
     -- Spharai
@@ -877,11 +886,9 @@ entity.onTrade = function(player, npc, trade)
 
         if currentStage ~= 4 and tradeHasRequiredCurrency(trade, currentRelic) then
             if currentStage == 1 then
-                player:setCharVar('RELIC_DUE_AT', getVanaMidnight())
-            elseif currentStage == 2 then
-                player:setCharVar('RELIC_DUE_AT', GetSystemTime() + xi.settings.main.RELIC_2ND_UPGRADE_WAIT_TIME)
-            elseif currentStage == 3 then
-                player:setCharVar('RELIC_DUE_AT', GetSystemTime() + xi.settings.main.RELIC_3RD_UPGRADE_WAIT_TIME)
+                player:setCharVar('RELIC_DUE_AT', JstMidnight())
+            elseif relicWaitTime[currentStage] then
+                player:setCharVar('RELIC_DUE_AT', GetSystemTime() + relicWaitTime[currentStage])
             end
 
             player:tradeComplete()

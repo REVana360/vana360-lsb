@@ -16,6 +16,10 @@ local mhauraID = zones[xi.zone.MHAURA]
 
 local quest = Quest:new(xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.ITS_RAINING_MANNEQUINS)
 
+-- The mannequin is assembled at the next JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-(JST)-Version-Update
+-- Source: https://wiki.ffo.jp/html/7101.html
+
 quest.sections =
 {
     -- Speak to Fyi Chalmwoh at G-8 in Mhaura (in the Goldsmithing shop).
@@ -125,13 +129,13 @@ quest.sections =
                     player:confirmTrade()
 
                     quest:setVar(player, 'Prog', 3)
-                    quest:setVar(player, 'Wait', GetSystemTime())
+                    quest:setVar(player, 'Wait', JstMidnight())
                 end,
             },
         },
     },
 
-    -- You have to wait about one earth minute to get your reward.
+    -- The mannequin is ready at JST midnight.
     {
         check = function(player, status, vars)
             return status == xi.questStatus.QUEST_ACCEPTED and vars.Prog == 3
@@ -142,8 +146,7 @@ quest.sections =
             ['Fyi_Chalmwoh'] =
             {
                 onTrigger = function(player, npc)
-                    local wait = quest:getVar(player, 'Wait')
-                    if GetSystemTime() >= wait + 60 then
+                    if GetSystemTime() >= quest:getVar(player, 'Wait') then
                         return quest:progressEvent(311)
                     else
                         return quest:event(310) -- Please wait

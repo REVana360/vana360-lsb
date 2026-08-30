@@ -27,7 +27,12 @@ end
 entity.onEventFinish = function(player, csid, option, npc)
     if csid == 698 then
         player:setCharVar('MissionaryManVar', 3)
-        player:setCharVar('MissionaryMan_date', GetSystemTime() + 60)
+        -- The wait was reduced from JST midnight to one minute in September 2014.
+        -- Sources:
+        -- https://www.bg-wiki.com/index.php?title=Missionary_Man&oldid=228476
+        -- https://www.bg-wiki.com/index.php?title=Missionary_Man&oldid=385002
+        -- https://forum.square-enix.com/ffxi/threads/43135
+        player:setCharVar('MissionaryMan_date', JstMidnight())
         player:delKeyItem(xi.ki.RAUTEINOTS_PARCEL)
         player:needToZone(true)
 

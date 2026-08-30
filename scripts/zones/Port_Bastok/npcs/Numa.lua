@@ -20,9 +20,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.COTTON_KYAHAN,            3738, 1 },
         { xi.item.SILVER_OBI,               3643, 1 },
         { xi.item.BAMBOO_STICK,              144, 2 },
-        { xi.item.TOOLBAG_INOSHISHINOFUDA, 15000, 3 },
-        { xi.item.TOOLBAG_SHIKANOFUDA,     20000, 3 },
-        { xi.item.TOOLBAG_CHONOFUDA,       20000, 3 },
         { xi.item.PICKAXE,                   200, 3 },
     }
 

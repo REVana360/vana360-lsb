@@ -11,7 +11,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.GRENADE,            1204 },
         { xi.item.RIOT_GRENADE,       6000 },
         { xi.item.PINCH_OF_BOMB_ASH,   515 },
-        { xi.item.NASHMAU_WAYSTONE,  10000 },
     }
 
     player:showText(npc, zones[xi.zone.NASHMAU].text.PIPIROON_SHOP_DIALOG)

@@ -10,6 +10,8 @@
 -- Altar          : !pos 109 -3 -145 150
 -----------------------------------
 -- Mertaire's hint (event 139) repeats and plays regardless of job; the quest is only granted by Imasuke's appraisal.
+-- The buried star ring is purified at JST midnight.
+-- Source: https://forum.square-enix.com/ffxi/threads/42611
 -----------------------------------
 local monasticID  = zones[xi.zone.MONASTIC_CAVERN]
 local xarcabardID = zones[xi.zone.XARCABARD]
@@ -245,7 +247,7 @@ quest.sections =
 
                 [3] = function(player, csid, option, npc)
                     if option == 0 then
-                        quest:setVar(player, 'Buried', GetSystemTime() + 30) -- Capture: the buried ring was purified within 35 seconds.
+                        quest:setVar(player, 'Buried', JstMidnight())
                     end
                 end,
             },
