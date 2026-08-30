@@ -2799,8 +2799,10 @@ INSERT INTO `item_usable` VALUES (16050,'nashmau_earring',1,8,79,0,30,30,3600,0)
 INSERT INTO `item_usable` VALUES (16071,'kawahori_kabuto',1,2,70,0,50,30,1800,0);
 INSERT INTO `item_usable` VALUES (16077,'megrim_crown',1,8,0,0,50,30,2700,0);
 INSERT INTO `item_usable` VALUES (16078,'blissful_chapeau',1,4,32,0,30,30,600,0);
-INSERT INTO `item_usable` VALUES (16118,'moogle_cap',1,8,79,0,1,30,72000,1);
-INSERT INTO `item_usable` VALUES (16119,'nomad_cap',1,8,79,0,1,30,72000,1);
+-- Original three-day Moogle Cap cooldown.
+-- Source: https://www.bg-wiki.com/ffxi/Version_Update_(05/09/2011)
+INSERT INTO `item_usable` VALUES (16118,'moogle_cap',1,8,79,0,1,30,259200,1);
+INSERT INTO `item_usable` VALUES (16119,'nomad_cap',1,8,79,0,1,30,259200,1);
 INSERT INTO `item_usable` VALUES (16120,'redeyes',1,2,0,0,1,30,86400,0);
 INSERT INTO `item_usable` VALUES (16145,'lunar_cap',1,3,0,0,1,15,3600,0);
 INSERT INTO `item_usable` VALUES (16153,'reikyo_hairpin',4,3,0,0,50,30,900,0);

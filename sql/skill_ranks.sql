@@ -42,21 +42,27 @@ CREATE TABLE IF NOT EXISTS `skill_ranks` (
 -- Contenu de la table `skill_ranks`
 --
 
-INSERT INTO `skill_ranks` VALUES (1,'hand2hand',9,1,0,0,0,10,0,0,0,0,0,0,10,0,0,0,0,1,9,0,0,0);
-INSERT INTO `skill_ranks` VALUES (2,'dagger',5,0,0,9,4,1,8,7,6,5,5,10,6,10,10,0,3,8,1,9,8,0);
-INSERT INTO `skill_ranks` VALUES (3,'sword',4,0,0,0,4,9,1,5,10,8,9,6,7,8,0,1,5,0,9,0,0,2);
+-- Pre-October 2014 ranks: THF dagger A, BST axe A, NIN katana/throwing A,
+-- BLU sword A, PUP hand-to-hand B+, and DNC dagger B+.
+-- Source: https://forum.square-enix.com/ffxi/threads/44592?p=527238#post527239
+-- Ninja throwing confirmation: https://forum.square-enix.com/ffxi/threads/44658-Freshly-Picked-Vana-diel-12-Digest
+INSERT INTO `skill_ranks` VALUES (1,'hand2hand',9,1,0,0,0,10,0,0,0,0,0,0,10,0,0,0,0,3,9,0,0,0);
+INSERT INTO `skill_ranks` VALUES (2,'dagger',5,0,0,9,4,2,8,7,6,5,5,10,6,10,10,0,3,8,3,9,8,0);
+INSERT INTO `skill_ranks` VALUES (3,'sword',4,0,0,0,4,9,1,5,10,8,9,6,7,8,0,2,5,0,9,0,0,2);
 INSERT INTO `skill_ranks` VALUES (4,'great sword',3,0,0,0,0,0,4,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1);
-INSERT INTO `skill_ranks` VALUES (5,'axe',2,0,0,0,0,0,0,5,1,0,5,0,0,0,0,0,0,0,0,0,0,5);
+INSERT INTO `skill_ranks` VALUES (5,'axe',2,0,0,0,0,0,0,5,2,0,5,0,0,0,0,0,0,0,0,0,0,5);
 INSERT INTO `skill_ranks` VALUES (6,'great axe',1,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,4);
 INSERT INTO `skill_ranks` VALUES (7,'scythe',3,0,0,10,0,0,0,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (8,'polearm',5,0,0,0,0,0,10,0,0,0,0,5,0,1,0,0,0,0,0,0,0,0);
-INSERT INTO `skill_ranks` VALUES (9,'katana',0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0);
+INSERT INTO `skill_ranks` VALUES (9,'katana',0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (10,'great katana',0,0,0,0,0,0,0,0,0,0,0,1,8,0,0,0,0,0,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (11,'club',5,6,3,6,9,10,2,8,9,9,10,10,10,10,6,5,0,9,0,6,3,8);
 INSERT INTO `skill_ranks` VALUES (12,'staff',4,4,6,5,0,0,2,0,0,6,0,0,0,5,4,0,0,0,0,6,6,0);
-INSERT INTO `skill_ranks` VALUES (25,'archery',9,0,0,0,9,8,0,0,0,0,1,6,10,0,0,0,0,0,0,0,0,0);
-INSERT INTO `skill_ranks` VALUES (26,'marksmanship',9,0,0,0,0,6,0,10,0,0,1,0,7,0,0,0,4,0,0,0,0,0);
-INSERT INTO `skill_ranks` VALUES (27,'throwing',9,10,10,9,11,9,0,0,0,10,8,6,1,0,0,0,6,6,6,9,0,0);
+-- Ranger archery and marksmanship were raised from A to A+ in June 2015.
+-- Source: https://forum.square-enix.com/ffxi/threads/47481-Jun-25-2015-%28JST%29-Version-Update
+INSERT INTO `skill_ranks` VALUES (25,'archery',9,0,0,0,9,8,0,0,0,0,2,6,10,0,0,0,0,0,0,0,0,0);
+INSERT INTO `skill_ranks` VALUES (26,'marksmanship',9,0,0,0,0,6,0,10,0,0,2,0,7,0,0,0,4,0,0,0,0,0);
+INSERT INTO `skill_ranks` VALUES (27,'throwing',9,10,10,9,11,9,0,0,0,10,8,6,2,0,0,0,6,6,6,9,0,0);
 INSERT INTO `skill_ranks` VALUES (28,'guarding',0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0);
 INSERT INTO `skill_ranks` VALUES (29,'evasion',7,3,10,10,9,1,7,7,7,9,10,3,2,4,10,8,9,4,3,10,9,3);
 INSERT INTO `skill_ranks` VALUES (30,'shield',6,0,9,0,11,11,1,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0);

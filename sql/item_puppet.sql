@@ -22,6 +22,10 @@ CREATE TABLE IF NOT EXISTS `item_puppet` (
 -- Contenu de la table `item_puppet`
 --
 
+-- July 2009 attachment element costs.
+-- https://wiki.ffo.jp/html/25853.html
+-- https://wiki.ffo.jp/html/37589.html
+
 INSERT INTO `item_puppet` VALUES (8193,'harlequin_head',1,2236962);
 INSERT INTO `item_puppet` VALUES (8194,'valoredge_x-900_head',1,33698307);
 INSERT INTO `item_puppet` VALUES (8195,'sharpshot_z-500_head',1,35783427);
@@ -33,11 +37,11 @@ INSERT INTO `item_puppet` VALUES (8225,'valoredge_x-900_frame',2,590562084);
 INSERT INTO `item_puppet` VALUES (8226,'sharpshot_z-500_frame',2,590623779);
 INSERT INTO `item_puppet` VALUES (8227,'stormwaker_y-700_frame',2,1127428674);
 INSERT INTO `item_puppet` VALUES (8449,'strobe',3,1);
-INSERT INTO `item_puppet` VALUES (8450,'tension_spring',3,1);
+INSERT INTO `item_puppet` VALUES (8450,'tension_spring',3,2);
 INSERT INTO `item_puppet` VALUES (8451,'inhibitor',3,1);
-INSERT INTO `item_puppet` VALUES (8452,'tension_spring_ii',3,2);
+INSERT INTO `item_puppet` VALUES (8452,'tension_spring_ii',3,3);
 INSERT INTO `item_puppet` VALUES (8453,'attuner',3,2);
-INSERT INTO `item_puppet` VALUES (8454,'reactive_shield',3,1);
+INSERT INTO `item_puppet` VALUES (8454,'reactive_shield',3,2);
 INSERT INTO `item_puppet` VALUES (8455,'flame_holder',3,1);
 INSERT INTO `item_puppet` VALUES (8456,'heat_capacitor',3,1);
 INSERT INTO `item_puppet` VALUES (8457,'strobe_ii',3,2);
@@ -46,21 +50,21 @@ INSERT INTO `item_puppet` VALUES (8459,'inhibitor_ii',3,2);
 INSERT INTO `item_puppet` VALUES (8460,'tension_spring_iv',3,4);
 INSERT INTO `item_puppet` VALUES (8461,'heat_capacitor_ii',3,2);
 INSERT INTO `item_puppet` VALUES (8481,'mana_booster',3,32);
-INSERT INTO `item_puppet` VALUES (8482,'loudspeaker',3,16);
+INSERT INTO `item_puppet` VALUES (8482,'loudspeaker',3,32);
 INSERT INTO `item_puppet` VALUES (8483,'scanner',3,16);
-INSERT INTO `item_puppet` VALUES (8484,'loudspeaker_ii',3,32);
-INSERT INTO `item_puppet` VALUES (8485,'tactical_processor',3,16);
-INSERT INTO `item_puppet` VALUES (8486,'tranquilizer',3,16);
+INSERT INTO `item_puppet` VALUES (8484,'loudspeaker_ii',3,48);
+INSERT INTO `item_puppet` VALUES (8485,'tactical_processor',3,32);
+INSERT INTO `item_puppet` VALUES (8486,'tranquilizer',3,32);
 INSERT INTO `item_puppet` VALUES (8487,'ice_maker',3,16);
 INSERT INTO `item_puppet` VALUES (8488,'power_cooler',3,32);
 INSERT INTO `item_puppet` VALUES (8489,'loudspeaker_iii',3,48);
-INSERT INTO `item_puppet` VALUES (8490,'tranquilizer_ii',3,32);
+INSERT INTO `item_puppet` VALUES (8490,'tranquilizer_ii',3,48);
 INSERT INTO `item_puppet` VALUES (8491,'amplifier',3,32);
 INSERT INTO `item_puppet` VALUES (8492,'loudspeaker_iv',3,64);
 INSERT INTO `item_puppet` VALUES (8493,'tranquilizer_iii',3,48);
 INSERT INTO `item_puppet` VALUES (8494,'amplifier_ii',3,48);
 INSERT INTO `item_puppet` VALUES (8513,'accelerator',3,512);
-INSERT INTO `item_puppet` VALUES (8514,'scope',3,256);
+INSERT INTO `item_puppet` VALUES (8514,'scope',3,512);
 INSERT INTO `item_puppet` VALUES (8515,'pattern_reader',3,256);
 INSERT INTO `item_puppet` VALUES (8516,'accelerator_ii',3,768);
 INSERT INTO `item_puppet` VALUES (8517,'drum_magazine',3,512);
@@ -77,7 +81,7 @@ INSERT INTO `item_puppet` VALUES (8546,'armor_plate',3,8192);
 INSERT INTO `item_puppet` VALUES (8547,'analyzer',3,4096);
 INSERT INTO `item_puppet` VALUES (8548,'armor_plate_ii',3,12288);
 INSERT INTO `item_puppet` VALUES (8549,'equalizer',3,8192);
-INSERT INTO `item_puppet` VALUES (8550,'schurzen',3,4096);
+INSERT INTO `item_puppet` VALUES (8550,'schurzen',3,8192);
 INSERT INTO `item_puppet` VALUES (8551,'hammermill',3,4096);
 INSERT INTO `item_puppet` VALUES (8552,'barrier_module_ii',3,8192);
 INSERT INTO `item_puppet` VALUES (8553,'shock_absorber_ii',3,8192);
@@ -85,10 +89,10 @@ INSERT INTO `item_puppet` VALUES (8554,'armor_plate_iii',3,16384);
 INSERT INTO `item_puppet` VALUES (8555,'barrier_module',3,4096);
 INSERT INTO `item_puppet` VALUES (8556,'armor_plate_iv',3,20480);
 INSERT INTO `item_puppet` VALUES (8557,'shock_absorber_iii',3,12288);
-INSERT INTO `item_puppet` VALUES (8577,'stabilizer',3,65536);
-INSERT INTO `item_puppet` VALUES (8578,'volt_gun',3,65536);
+INSERT INTO `item_puppet` VALUES (8577,'stabilizer',3,131072);
+INSERT INTO `item_puppet` VALUES (8578,'volt_gun',3,131072);
 INSERT INTO `item_puppet` VALUES (8579,'heat_seeker',3,65536);
-INSERT INTO `item_puppet` VALUES (8580,'stabilizer_ii',3,131072);
+INSERT INTO `item_puppet` VALUES (8580,'stabilizer_ii',3,196608);
 INSERT INTO `item_puppet` VALUES (8581,'target_marker',3,131072);
 INSERT INTO `item_puppet` VALUES (8582,'dynamo',3,131072);
 INSERT INTO `item_puppet` VALUES (8583,'coiler',3,131072);

@@ -145,10 +145,12 @@ INSERT INTO `traits` VALUES (7,'max hp boost',1,30,1,1095,30,'SOA',0);
 INSERT INTO `traits` VALUES (7,'max hp boost',1,50,2,1095,60,'SOA',0);
 INSERT INTO `traits` VALUES (7,'max hp boost',1,70,3,1095,120,'SOA',0);
 INSERT INTO `traits` VALUES (7,'max hp boost',1,90,4,1095,180,'SOA',0);
+-- Monk Max HP Boost thresholds before the October 2019 adjustment.
+-- Source: https://forum.square-enix.com/ffxi/threads/55997-October.-10-2019-%28JST%29-Version-Update
 INSERT INTO `traits` VALUES (7,'max hp boost',2,15,1,1095,30,NULL,0);
-INSERT INTO `traits` VALUES (7,'max hp boost',2,25,2,1095,60,NULL,0);
-INSERT INTO `traits` VALUES (7,'max hp boost',2,35,3,1095,120,NULL,0);
-INSERT INTO `traits` VALUES (7,'max hp boost',2,45,4,1095,180,NULL,0);
+INSERT INTO `traits` VALUES (7,'max hp boost',2,35,2,1095,60,NULL,0);
+INSERT INTO `traits` VALUES (7,'max hp boost',2,55,3,1095,120,NULL,0);
+INSERT INTO `traits` VALUES (7,'max hp boost',2,70,4,1095,180,NULL,0);
 INSERT INTO `traits` VALUES (7,'max hp boost',2,55,5,1095,240,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (7,'max hp boost',2,65,6,1095,280,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (7,'max hp boost',7,45,1,1095,30,'SOA',0);
@@ -452,12 +454,15 @@ INSERT INTO `traits` VALUES (76,'ambush',6,75,1,0,0,'TOAU',2374);
 INSERT INTO `traits` VALUES (77,'iron will',7,75,1,0,0,'TOAU',2436);
 INSERT INTO `traits` VALUES (78,'guardian',7,75,1,0,0,'TOAU',2438);
 INSERT INTO `traits` VALUES (79,'muted soul',8,75,1,0,0,'TOAU',2500);
-INSERT INTO `traits` VALUES (80,'desperate blows',8,15,1,906,500,'TOAU',0);
+-- Desperate Blows source: https://www.bg-wiki.com/ffxi/Version_Update_(04/29/2013)
+INSERT INTO `traits` VALUES (80,'desperate blows',8,75,1,0,0,'TOAU',2502);
 INSERT INTO `traits` VALUES (80,'desperate blows',8,30,2,906,1000,'SOA',0);
 INSERT INTO `traits` VALUES (80,'desperate blows',8,45,3,906,1500,'SOA',0);
 INSERT INTO `traits` VALUES (81,'beast affinity ',9,75,1,0,0,'TOAU',2564);
 INSERT INTO `traits` VALUES (82,'beast healer',9,75,1,0,0,'TOAU',2566);
 INSERT INTO `traits` VALUES (83,'snapshot',11,75,1,0,0,'TOAU',2692);
+-- Recycle source: https://www.bg-wiki.com/ffxi/Version_Update_(04/29/2013)
+INSERT INTO `traits` VALUES (84,'recycle',11,75,1,0,0,'TOAU',2694);
 INSERT INTO `traits` VALUES (84,'recycle',11,20,1,305,10,'SOA',0);
 INSERT INTO `traits` VALUES (84,'recycle',11,35,2,305,20,'SOA',0);
 INSERT INTO `traits` VALUES (84,'recycle',11,50,3,305,30,'SOA',0);
@@ -468,7 +473,8 @@ INSERT INTO `traits` VALUES (85,'ikishoten',12,75,1,0,0,'TOAU',2756);
 INSERT INTO `traits` VALUES (86,'overwhelm',12,75,1,0,0,'TOAU',2758);
 INSERT INTO `traits` VALUES (87,'ninja tool expert.',13,75,1,308,0,'TOAU',2818);
 INSERT INTO `traits` VALUES (88,'empathy',14,75,1,0,0,'TOAU',2884);
-INSERT INTO `traits` VALUES (89,'strafe',14,20,1,986,10,'TOAU',0);
+-- Strafe source: https://forum.square-enix.com/ffxi/threads/44090-Sep-9-2014-%28JST%29-Version-Update
+INSERT INTO `traits` VALUES (89,'strafe',14,75,1,0,0,'TOAU',2886);
 INSERT INTO `traits` VALUES (89,'strafe',14,40,2,986,15,'SOA',0);
 INSERT INTO `traits` VALUES (89,'strafe',14,60,3,986,25,'SOA',0);
 INSERT INTO `traits` VALUES (89,'strafe',14,80,4,986,30,'SOA',0);

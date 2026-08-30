@@ -39,13 +39,3 @@
 # Vana360 July 2009 profile
 
 era/lua
-era/sql/abyssea/attachments.sql
-era/sql/abyssea/item_cooldowns.sql
-era/sql/abyssea/revert_two_hours.sql
-era/sql/abyssea/spell_adjustments.sql
-era/sql/soa/job_adjustments.sql
-era/sql/soa/magic_adjustments.sql
-era/sql/soa/pre_2014_skill_ranks.sql
-era/sql/soa/weaponskills.sql
-era/sql/rov/job_adjustments.sql
-era/sql/rov/spell_adjustments.sql

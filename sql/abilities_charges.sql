@@ -16,7 +16,9 @@ CREATE TABLE `abilities_charges` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `abilities_charges` VALUES (102,9,25,3,30,902);
+-- Sic and Ready charges recovered every 60 seconds before April 2013.
+-- Source: https://www.bg-wiki.com/ffxi/Version_Update_(04/29/2013)
+INSERT INTO `abilities_charges` VALUES (102,9,25,3,60,902);
 INSERT INTO `abilities_charges` VALUES (195,17,40,2,60,1410);
 INSERT INTO `abilities_charges` VALUES (231,20,10,1,240,0);
 INSERT INTO `abilities_charges` VALUES (231,20,30,2,120,0);

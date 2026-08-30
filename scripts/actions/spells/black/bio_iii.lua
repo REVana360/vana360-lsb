@@ -9,6 +9,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
+-- Source: https://forum.square-enix.com/ffxi/threads/55263-April.-3-2019-%28JST%29-Version-Update
 spellObject.onSpellCast = function(caster, target, spell)
     local damage = xi.spells.damage.useDamageSpell(caster, target, spell)
     local tier   = 6
@@ -34,7 +35,7 @@ spellObject.onSpellCast = function(caster, target, spell)
 
         power = utils.clamp(power, 5, 17)
 
-        target:addStatusEffect(xi.effect.BIO, { power = power, duration = 180, origin = caster, tick = 3, subPower = 20, tier = tier })
+        target:addStatusEffect(xi.effect.BIO, { power = power, duration = 180, origin = caster, tick = 3, subPower = 15, tier = tier })
     end
 
     return damage
