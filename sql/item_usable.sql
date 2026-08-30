@@ -290,7 +290,6 @@ INSERT INTO `item_usable` VALUES (4347,'serving_of_salmon_meuniere_+1',1,1,25,0,
 INSERT INTO `item_usable` VALUES (4348,'mutton_enchilada',1,1,28,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4349,'bunny_ball',1,1,28,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4350,'dragon_steak',1,1,28,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (4351,'giddeus_water',1,1,0,0,0,0,0,0); -- TODO: Review animation, charges, delay
 INSERT INTO `item_usable` VALUES (4352,'derfland_pear',1,1,0,26,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4353,'sea_bass_croute',1,1,25,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4354,'shining_trout',1,1,25,0,0,0,0,0);
@@ -448,7 +447,6 @@ INSERT INTO `item_usable` VALUES (4505,'handful_of_sunflower_seeds',1,1,24,0,0,0
 INSERT INTO `item_usable` VALUES (4506,'mutton_tortilla',1,1,24,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4507,'rarab_meatball',1,1,28,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4508,'serving_of_royal_jelly',1,1,24,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (4509,'flask_of_distilled_water',1,1,26,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4510,'acorn_cookie',1,1,29,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4511,'bowl_of_ambrosia',1,1,10,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (4512,'bottle_of_vampire_juice',1,1,26,0,0,0,0,0);
@@ -1313,7 +1311,6 @@ INSERT INTO `item_usable` VALUES (5441,'angelwing',1,1,103,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5442,'thunderguard_dart',4,1,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5443,'magnus_stone_pouch',1,1,55,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5444,'bunch_of_grauberg_greens',1,1,24,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (5445,'prismatic_elixir',4,1,34,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5446,'red_bubble-eye',1,1,27,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5447,'denizanasi',1,1,25,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5448,'kalamar',1,1,25,0,0,0,0,0);
@@ -2513,7 +2510,6 @@ INSERT INTO `item_usable` VALUES (6692,'vial_of_experimental_fluid',1,1,0,0,0,0,
 INSERT INTO `item_usable` VALUES (6693,'impish_box',1,1,0,0,0,0,0,0);                  -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6694,'chocobo_chair_ii',1,1,0,0,0,0,0,0);            -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6695,'adenium_bench',1,1,0,0,0,0,0,0);               -- TODO: verify animation
-INSERT INTO `item_usable` VALUES (6696,'sheet_of_near_east_tunes',1,1,117,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6697,'scroll_of_instant_reraise_iii',1,1,0,0,0,0,0,0);  -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6698,'aht_urhgan_whitegate_glyph',1,10,0,0,0,0,0,0);    -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6699,'bottle_of_evanessence',1,1,0,0,0,0,0,0);          -- TODO: verify animation
@@ -2521,7 +2517,6 @@ INSERT INTO `item_usable` VALUES (6700,'moogle_memorandum',1,5,0,0,0,0,0,0);    
 INSERT INTO `item_usable` VALUES (6701,'pinch_of_lamia_powder',1,1,0,0,0,0,0,0);          -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6702,'peiste_concoction',1,1,0,0,0,0,0,0);              -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6703,'lungo-nangos_thesis',1,1,0,0,0,0,0,0);            -- TODO: verify animation
-INSERT INTO `item_usable` VALUES (6704,'sheet_of_divine_tunes',1,1,117,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6705,'magicked_flyer',1,1,0,0,0,0,0,0);                    -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6706,'piece_of_pom-pom_fruit',1,1,0,0,0,0,0,0);            -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6707,'sheet_of_fishing_tunes',1,1,0,0,0,0,0,0);            -- TODO: verify animation
@@ -2537,8 +2532,6 @@ INSERT INTO `item_usable` VALUES (6716,'trust_magic_primer',1,1,0,0,0,0,0,0);   
 INSERT INTO `item_usable` VALUES (6717,'trust_magic_tome',1,1,0,0,0,0,0,0);                  -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6718,'copy_of_marjorys_thesis',1,1,0,0,0,0,0,0);           -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (6719,'regines_fifth_eye',1,1,0,0,0,0,0,0);                 -- TODO: verify animation
-INSERT INTO `item_usable` VALUES (6720,'sack_of_beads',1,1,0,0,0,0,0,0);                     -- TODO: animation, animationTime, aoe
-INSERT INTO `item_usable` VALUES (6721,'large_sack_of_beads',1,1,0,0,0,0,0,0);               -- TODO: animation, animationTime, aoe
 INSERT INTO `item_usable` VALUES (10250,'moogle_suit',1,2,0,0,1,30,86400,0);
 INSERT INTO `item_usable` VALUES (10253,'decennial_coat_+1',1,2,0,0,1,30,86400,0);
 INSERT INTO `item_usable` VALUES (10254,'decennial_dress_+1',1,2,0,0,1,30,86400,0);
@@ -2963,7 +2956,6 @@ INSERT INTO `item_usable` VALUES (21369,'moggie_goodie_bag',1,3,0,0,12,10,259200
 INSERT INTO `item_usable` VALUES (21370,'gobbie_goodie_bag',1,3,0,0,12,10,259200,0); -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (21485,'fomalhaut',1,2,0,0,1,10,3600,0); -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (21760,'dispatchers_axe',1,1,0,0,1,30,3600,0);     -- TODO: verify animation
-INSERT INTO `item_usable` VALUES (21868,'sha_wujings_la._+1',1,2,0,0,1,30,72000,0); -- Dispenses: Distilled Water x 12
 INSERT INTO `item_usable` VALUES (21951,'shaded_moogle_rod_+1',1,1,0,0,1,30,3600,0);  -- TODO: animation, animationTime, aoe
 INSERT INTO `item_usable` VALUES (21997,'magicians_rod_+1',1,3,0,0,1,30,1800,0);    -- TODO: verify animation
 INSERT INTO `item_usable` VALUES (22003,'arthros_scepter',1,1,0,0,1,30,3600,0);     -- TODO: verify animation

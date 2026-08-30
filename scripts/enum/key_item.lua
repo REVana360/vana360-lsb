@@ -3224,7 +3224,6 @@ xi.keyItem =
     MOG_KUPON_A_DIA                          = 3347,
     MOG_KUPON_A_EME                          = 3348,
     WING_OF_WAR                              = 3349,
-    SHEET_OF_NEAR_EAST_TUNES                 = 3350,
     MOG_KUPON_A_AEV                          = 3351,
     MOG_KUPON_A_AHM                          = 3352,
     MOG_KUPON_A_ATT                          = 3353,
@@ -3234,7 +3233,6 @@ xi.keyItem =
     RAKAZNAR_PLATE_FRAGMENT                  = 3357,
     -- NULL ENTRY                            = 3358,
     -- NULL ENTRY                            = 3359,
-    SHEET_OF_DIVINE_TUNES                    = 3360,
     CIPHER_BRACELET                          = 3361,
 }
 

@@ -2316,7 +2316,7 @@ INSERT INTO `item_weapon` VALUES (18693,'lamiabane',27,0,0,0,0,1,1,294,1,0);
 INSERT INTO `item_weapon` VALUES (18694,'trollbane',27,0,0,0,0,1,1,294,1,0);
 INSERT INTO `item_weapon` VALUES (18695,'cerberus_bow',25,4,0,0,0,1,1,600,72,0);
 INSERT INTO `item_weapon` VALUES (18696,'paralysis_arrow',25,0,0,0,0,1,1,90,1,0);
-INSERT INTO `item_weapon` VALUES (18697,'marid_arrow',25,0,0,0,0,1,1,90,36,0);
+INSERT INTO `item_weapon` VALUES (18697,'marid_arrow',25,0,0,0,0,1,1,120,36,0);
 INSERT INTO `item_weapon` VALUES (18698,'water_arrow',25,0,0,0,0,1,1,90,27,0);
 INSERT INTO `item_weapon` VALUES (18699,'earth_arrow',25,0,0,0,0,1,1,90,27,0);
 INSERT INTO `item_weapon` VALUES (18700,'wind_arrow',25,0,0,0,0,1,1,90,27,0);
@@ -4860,8 +4860,6 @@ INSERT INTO `item_weapon` VALUES (21863,'tzee_xicus_blade',8,0,0,0,0,1,1,480,1,0
 INSERT INTO `item_weapon` VALUES (21864,'voluspa_lance',8,0,215,215,215,1,1,492,266,0);
 INSERT INTO `item_weapon` VALUES (21865,'arasy_lance',8,0,242,242,188,1,1,492,252,0);       -- DMG:252 Delay:492
 INSERT INTO `item_weapon` VALUES (21866,'arasy_lance_+1',8,0,242,242,188,1,1,478,253,0);    -- MG:253 Delay:478
-INSERT INTO `item_weapon` VALUES (21867,'sha_wujings_lance',8,0,0,0,0,1,1,396,1,0);         -- DMG:1 Delay:396
-INSERT INTO `item_weapon` VALUES (21868,'sha_wujings_la._+1',8,0,0,0,0,1,1,385,2,0);        -- DMG:2 Delay:385
 INSERT INTO `item_weapon` VALUES (21869,'exalted_spear',8,0,228,228,188,1,1,396,258,0);     -- DMG:258 Delay:396
 INSERT INTO `item_weapon` VALUES (21870,'exalted_spear_+1',8,0,228,228,188,1,1,385,259,0);  -- DMG:259 Delay:385
 INSERT INTO `item_weapon` VALUES (21871,'raetic_halberd',8,0,242,242,215,1,1,396,264,0);    -- DMG:264 Delay:396

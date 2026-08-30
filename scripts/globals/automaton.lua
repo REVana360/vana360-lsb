@@ -73,8 +73,6 @@ xi.automaton.attachmentModifiers =
                                 { modifier = xi.mod.ELEMENTAL_CELERITY,          values = {    25,    25,    25,    25 }, opticFiber = true  }, },
     ['arcanic_cell'       ] = { { modifier = xi.mod.OCCULT_ACUMEN,               values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['arcanic_cell_ii'    ] = { { modifier = xi.mod.OCCULT_ACUMEN,               values = {    20,    40,    70,   100 }, opticFiber = true  }, },
-    ['arcanoclutch'       ] = { { modifier = xi.mod.MAGIC_DAMAGE,                values = {    20,    40,    60,    80 }, opticFiber = true  }, },
-    ['arcanoclutch_ii'    ] = { { modifier = xi.mod.MAGIC_DAMAGE,                values = {    40,    60,    80,   120 }, opticFiber = true  }, },
     ['armor_plate'        ] = { { modifier = xi.mod.DMGPHYS,                     values = {  -500,  -700, -1000, -1500 }, opticFiber = true  }, },
     ['armor_plate_ii'     ] = { { modifier = xi.mod.DMGPHYS,                     values = { -1000, -1500, -2000, -2500 }, opticFiber = true  }, },
     ['armor_plate_iii'    ] = { { modifier = xi.mod.DMGPHYS,                     values = { -1500, -2000, -2500, -3000 }, opticFiber = true  }, },
@@ -110,11 +108,6 @@ xi.automaton.attachmentModifiers =
     ['loudspeaker_ii'     ] = { { modifier = xi.mod.MATT,                        values = {    10,    15,    20,    25 }, opticFiber = true  }, },
     ['loudspeaker_iii'    ] = { { modifier = xi.mod.MATT,                        values = {    20,    30,    40 ,   50 }, opticFiber = true  }, },
     ['loudspeaker_iv'     ] = { { modifier = xi.mod.MATT,                        values = {    30,    40,    50,    60 }, opticFiber = true  }, },
-    ['loudspeaker_v'      ] = { { modifier = xi.mod.MATT,                        values = {    40,    50,    60,    70 }, opticFiber = true  }, },
-    ['magniplug'          ] = { { modifier = xi.mod.MAIN_DMG_RATING,             values = {     5,    15,    30,    45 }, opticFiber = true  },
-                                { modifier = xi.mod.RANGED_DMG_RATING,           values = {     5,    15,    30,    45 }, opticFiber = true  }, },
-    ['magniplug_ii'       ] = { { modifier = xi.mod.MAIN_DMG_RATING,             values = {    10,    20,    35,    50 }, opticFiber = true  },
-                                { modifier = xi.mod.RANGED_DMG_RATING,           values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['mana_booster'       ] = { { modifier = xi.mod.FASTCAST,                    values = {    20,    30,    45,    60 }, opticFiber = false }, },
     ['mana_channeler'     ] = { { modifier = xi.mod.MATT,                        values = {    10,    15,    25,    35 }, opticFiber = true  },
                                 { modifier = xi.mod.AUTO_MAGIC_COOLDOWN,         values = {     3,     6,     9,    12 }, opticFiber = true  }, },
@@ -141,9 +134,6 @@ xi.automaton.attachmentModifiers =
     ['scope'              ] = { { modifier = xi.mod.RACC,                        values = {    10,    20,    30,    40 }, opticFiber = true  }, },
     ['scope_ii'           ] = { { modifier = xi.mod.RACC,                        values = {    20,    30,    40,    50 }, opticFiber = true  }, },
     ['scope_iii'          ] = { { modifier = xi.mod.RACC,                        values = {    30,    40,    55,    70 }, opticFiber = true  }, },
-    ['scope_iv'           ] = { { modifier = xi.mod.RACC,                        values = {    40,    50,    65,    80 }, opticFiber = true  }, },
-    ['speedloader'        ] = { { modifier = xi.mod.SKILLCHAINBONUS,             values = {    20,    30,    40,    60 }, opticFiber = true  }, },
-    ['speedloader_ii'     ] = { { modifier = xi.mod.SKILLCHAINBONUS,             values = {    35,    45,    60,    80 }, opticFiber = true  }, },
     ['smoke_screen'       ] = { { modifier = xi.mod.EVA,                         values = {    20,    40,    80,   160 }, opticFiber = true  },
                                 { modifier = xi.mod.ACC,                         values = {   -20,   -40,   -80,  -160 }, opticFiber = true  },
                                 { modifier = xi.mod.RACC,                        values = {   -20,   -40,   -80,  -160 }, opticFiber = true  }, },
@@ -155,8 +145,6 @@ xi.automaton.attachmentModifiers =
                                 { modifier = xi.mod.RACC,                        values = {    20,    30,    40,    50 }, opticFiber = true  }, },
     ['stabilizer_iv'      ] = { { modifier = xi.mod.ACC,                         values = {    30,    40,    55,    70 }, opticFiber = true  },
                                 { modifier = xi.mod.RACC,                        values = {    30,    40,    55,    70 }, opticFiber = true  }, },
-    ['stabilizer_v'       ] = { { modifier = xi.mod.ACC,                         values = {    40,    50,    65,    80 }, opticFiber = true  },
-                                { modifier = xi.mod.RACC,                        values = {    40,    50,    65,    80 }, opticFiber = true  }, },
     ['stealth_screen'     ] = { { modifier = xi.mod.ENMITY,                      values = {   -10,   -20,   -30,   -40 }, opticFiber = true  }, },
     ['stealth_screen_ii'  ] = { { modifier = xi.mod.ENMITY,                      values = {   -15,   -25,   -35,   -45 }, opticFiber = true  }, },
     ['steam_jacket'       ] = { { modifier = xi.mod.AUTO_STEAM_JACKET_REDUCTION, values = {    30,    45,    60,    80 }, opticFiber = true  }, },
@@ -171,17 +159,11 @@ xi.automaton.attachmentModifiers =
                                 { modifier = xi.mod.RATTP,                       values = {    12,    15,    18,    21 }, opticFiber = true  }, },
     ['tension_spring_iv'  ] = { { modifier = xi.mod.ATTP,                        values = {    15,    18,    21,    24 }, opticFiber = true  },
                                 { modifier = xi.mod.RATTP,                       values = {    15,    18,    21,    24 }, opticFiber = true  }, },
-    ['tension_spring_v'   ] = { { modifier = xi.mod.ATTP,                        values = {    18,    21,    24,    27 }, opticFiber = true  },
-                                { modifier = xi.mod.RATTP,                       values = {    18,    21,    24,    27 }, opticFiber = true  }, },
     ['tranquilizer'       ] = { { modifier = xi.mod.MACC,                        values = {    10,    30,    40,    50 }, opticFiber = true  }, },
     ['tranquilizer_ii'    ] = { { modifier = xi.mod.MACC,                        values = {    20,    40,    55,    70 }, opticFiber = true  }, },
     ['tranquilizer_iii'   ] = { { modifier = xi.mod.MACC,                        values = {    30,    50,    70,    80 }, opticFiber = true  }, },
-    ['tranquilizer_iv'    ] = { { modifier = xi.mod.MACC,                        values = {    40,    60,    80,   110 }, opticFiber = true  }, },
-    ['truesights'         ] = { { modifier = xi.mod.AUTO_RANGED_DAMAGEP,         values = {     5,    15,    30,    45 }, opticFiber = true  }, },
     ['turbo_charger'      ] = { { modifier = xi.mod.HASTE_MAGIC,                 values = {   500,  1500,  2000,  2500 }, opticFiber = true  }, },
-    ['turbo_charger_ii'   ] = { { modifier = xi.mod.HASTE_MAGIC,                 values = {   700,  1700,  2800,  4375 }, opticFiber = true  }, },
     ['vivi-valve'         ] = { { modifier = xi.mod.CURE_POTENCY,                values = {     5,    15,    30,    45 }, opticFiber = true  }, },
-    ['vivi-valve_ii'      ] = { { modifier = xi.mod.CURE_POTENCY,                values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['volt_gun'           ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {     0,    20,    40,   100 }, opticFiber = false }, },
 }
 
@@ -382,7 +364,7 @@ local function calculatePerformanceBoost(pet)
 end
 
 -----------------------------------
--- Truesights
+-- Automaton ranged damage
 -----------------------------------
 -- Return the base damage of an Automaton Ranged Attack, factoring in the AUTO_RANGED_DAMAGEP modifier.
 xi.automaton.getRangedBaseDamage = function(automaton)

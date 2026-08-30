@@ -878,7 +878,6 @@ values:
   appreciate_gysahl_greens:      156 # Enhances food effect of Gysahl Greens
   eat_raw_fish:                  412 # Without this, only Mithra can eat raw fish (item cannot be used)
   eat_raw_meat:                  413 # Without this, only Galka can eat raw meat (item cannot be used)
-  drink_distilled:               159 # Without this, Distilled Water cannot be consumed (item can still be used)
   equipment_only_race:           276 # An 8-bit flag that denotes that only a certain race(s) can use this equipment (0 means all races can use)
   enhances_cursna_rcvd:           67 # Potency of "Cursna" effects received
   enhances_cursna:               310 # Used by gear with the "Enhances Cursna" or "Cursna+" attribute

@@ -46,8 +46,6 @@ xi.symphonic_curator.onTrigger = function(player, npc)
     songPacks = utils.mask.setBit(songPacks, 19, player:hasKeyItem(xi.ki.SHEET_OF_CHARACTER_SELECTION_TUNES)) -- Hume Male (133), Hume Female (168), Elvaan Male (132), Elvaan Female (131), Tarutaru Male (167), Tarutaru Female (130), Mithra (166), Galka (165)
     songPacks = utils.mask.setBit(songPacks, 20, player:hasKeyItem(xi.ki.SHEET_OF_STARLIGHT_TUNES))           -- Jeuno - Starlight Celebration (239)
     songPacks = utils.mask.setBit(songPacks, 21, player:hasKeyItem(xi.ki.SHEET_OF_CHOCOBO_TUNES))             -- Dash de Chocobo (181), Circuit de Chocobo (176), Run Chocobo Run! (177), Choc-a-bye Baby (188)
-    songPacks = utils.mask.setBit(songPacks, 22, player:hasKeyItem(xi.ki.SHEET_OF_NEAR_EAST_TUNES))           -- Bustle of the Capital (178), Jeweled Boughs (149), Bandits' Market (175), Illusions in the Mist (173)
-    songPacks = utils.mask.setBit(songPacks, 23, player:hasKeyItem(xi.ki.SHEET_OF_DIVINE_TUNES))              -- Fighters of the Crystal (196)
 
     -- 0000 = all instruments shown
     -- 1111 = all instruments hidden
@@ -158,12 +156,6 @@ local optionToSongLookup =
     [738] = 177, -- Run Chocobo Run!
     [754] = 188, -- Choc-a-bye Baby
 
-    -- Next Page
-    [770] = 178, -- Bustle of the Capital
-    [786] = 149, -- Jeweled Boughs
-    [802] = 175, -- Bandits' Market
-    [818] = 173, -- Illusions in the Mist
-    [834] = 196, -- Fighters of the Crystal
 }
 
 xi.symphonic_curator.onEventUpdate = function(player, csid, option, npc)

@@ -45921,9 +45921,6 @@ INSERT INTO `item_mods` VALUES (21866,10,17);    -- VIT: 17
 INSERT INTO `item_mods` VALUES (21866,23,20);    -- ATT: 20
 INSERT INTO `item_mods` VALUES (21866,163,-800); -- DMGMAGIC: -800
 
--- Sha Wujing's lance +1
-INSERT INTO `item_mods` VALUES (21868,159,1);    -- DRINK_DISTILLED: 1
-
 -- Exalted Spear
 INSERT INTO `item_mods` VALUES (21869,8,15);    -- STR: 15
 INSERT INTO `item_mods` VALUES (21869,25,47);   -- ACC: 47
