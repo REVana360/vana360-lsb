@@ -5,6 +5,8 @@
 -- !addmission 4 16
 -- Naja Salaheem      : !pos 22.700 -8.804 -45.591 50
 -- Imperial Whitegate : !pos 152 -2 0 50
+-- The original JST-midnight wait was shortened in August 2016.
+-- Source: https://forum.square-enix.com/ffxi/threads/51154-Aug.-3-2016-%28JST%29-Version-Update
 -----------------------------------
 local whitegateShared = require('scripts/zones/Aht_Urhgan_Whitegate/Shared')
 -----------------------------------
@@ -125,7 +127,7 @@ mission.sections =
                 [3078] = function(player, csid, option, npc)
                     if mission:complete(player) then
                         player:setLocalVar('Mission[4][17]mustZone', 1)
-                        player:setCharVar('Mission[4][17]Timer', VanadielUniqueDay() + 1)
+                        player:setCharVar('Mission[4][17]Timer', 1, JstMidnight())
                     end
                 end,
             },

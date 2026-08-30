@@ -2,7 +2,7 @@
 
 level_restriction: 50
 type: [dungeon]
-misc: [escape, mazurka, tractor, pet, trust, los_player_block]
+misc: [escape, tractor, pet, trust, los_player_block]
 music:
   day:          222
   night:        222

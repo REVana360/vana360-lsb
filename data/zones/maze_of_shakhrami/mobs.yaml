@@ -337,8 +337,6 @@ templates:
       drops:
         - chance: uncommon
           item:   spool_of_silk_thread
-        - chance: uncommon
-          item:   inferior_cocoon
       steal: spool_of_silk_thread
       despoil:
         piece_of_crawler_cocoon: 0
@@ -382,8 +380,6 @@ templates:
       drops:
         - chance: uncommon
           item:   spool_of_silk_thread
-        - chance: uncommon
-          item:   inferior_cocoon
         - chance: rare
           item:   shakhrami_chest_key
       steal: spool_of_silk_thread
@@ -524,8 +520,6 @@ templates:
       drops:
         - chance: uncommon
           item:   spool_of_silk_thread
-        - chance: rare
-          item:   inferior_cocoon
       steal: spool_of_silk_thread
       despoil:
         piece_of_crawler_cocoon: 0

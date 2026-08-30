@@ -211,13 +211,25 @@ xi.job_utils.samurai.useKonzenIttai = function(player, target, ability, action)
 end
 
 xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
+    -- Additional merits reduced the 15-minute recast by 150 seconds per upgrade.
+    local recastReduction = player:getMerit(xi.merit.BLADE_BASH) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    -- Damage
+    -- TODO: Verify damage formula and DRK interaction
+    local jobLevel = utils.getActiveJobLevel(player, xi.job.DRK)
+    local damage   = math.floor((jobLevel + 11) / 4 + player:getMod(xi.mod.WEAPON_BASH))
+    damage = utils.handleStoneskin(target, damage)
+    target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
+    target:updateEnmityFromDamage(player, damage)
+
     -- Stun
     if
         not xi.data.statusEffect.isTargetImmune(target, xi.effect.STUN, xi.element.THUNDER) and
         not xi.data.statusEffect.isTargetResistant(player, target, xi.effect.STUN) and
         not xi.data.statusEffect.isEffectNullified(target, xi.effect.STUN, 0)
     then
-        local stunMaccParams =
+        local maccParams =
         {
             effectId       = xi.effect.STUN,
             magicalElement = xi.element.THUNDER,
@@ -225,9 +237,9 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
             actorStat      = xi.mod.INT,
         }
 
-        local stunResistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, stunMaccParams)
-        if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.STUN, stunResistanceRate, 0) then
-            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6 * stunResistanceRate, origin = player })
+        local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, maccParams)
+        if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.STUN, resistanceRate, 0) then
+            target:addStatusEffect(xi.effect.STUN, { power = 1, duration = 6 * resistanceRate, origin = player })
         end
     end
 
@@ -237,7 +249,7 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
         not xi.data.statusEffect.isTargetResistant(player, target, xi.effect.PLAGUE) and
         not xi.data.statusEffect.isEffectNullified(target, xi.effect.PLAGUE, 0)
     then
-        local plagueMaccParams =
+        local maccParams =
         {
             effectId       = xi.effect.PLAGUE,
             magicalElement = xi.element.FIRE,
@@ -245,10 +257,9 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
             actorStat      = xi.mod.INT,
         }
 
-        local plagueResistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, plagueMaccParams)
-        if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.PLAGUE, plagueResistanceRate, 0) then
-            local duration = (15 + player:getMerit(xi.merit.BLADE_BASH)) * plagueResistanceRate
-            target:addStatusEffect(xi.effect.PLAGUE, { power = 5, duration = duration, origin = player })
+        local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, maccParams)
+        if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.PLAGUE, resistanceRate, 0) then
+            target:addStatusEffect(xi.effect.PLAGUE, { power = 5, duration = 15 * resistanceRate, origin = player })
         end
     end
 
@@ -269,8 +280,7 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
 
     ability:setMsg(xi.msg.basic.JA_DAMAGE)
 
-    -- Blade Bash does not deal damage
-    return 0
+    return damage
 end
 
 xi.job_utils.samurai.useShikikoyo = function(player, target, ability, action)

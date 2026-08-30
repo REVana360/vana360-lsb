@@ -1,7 +1,21 @@
 -----------------------------------
 -- Zone: Maze of Shakhrami (198)
+-- July 2009-era NM respawn behavior restored from pre-November 2013 values.
+-- Source: https://forum.square-enix.com/ffxi/threads/38100
 -----------------------------------
 local ID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
+-----------------------------------
+local function scheduleLeechPair(nextId, seconds)
+    local otherId = nextId == ID.mob.ARGUS and ID.mob.LEECH_KING or ID.mob.ARGUS
+
+    DisallowRespawn(otherId, true)
+    DisallowRespawn(nextId, false)
+    xi.mob.updateNMSpawnPoint(nextId)
+    GetMobByID(nextId):setRespawnTime(seconds)
+    SetServerVariable('[Respawn]LeechKingArgus_Mob', nextId)
+    SetServerVariable('[Respawn]LeechKingArgus_Time', GetSystemTime() + seconds)
+end
+
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
@@ -21,6 +35,24 @@ zoneObject.onInitialize = function(zone)
 
     xi.treasure.initZone(zone)
     xi.helm.initZone(zone, xi.helmType.EXCAVATION)
+
+    GetMobByID(ID.mob.ARGUS):setRespawnTime(0)
+    GetMobByID(ID.mob.LEECH_KING):setRespawnTime(0)
+
+    local nextId = GetServerVariable('[Respawn]LeechKingArgus_Mob')
+    local nextTime = GetServerVariable('[Respawn]LeechKingArgus_Time')
+
+    if nextId == 0 then
+        scheduleLeechPair(
+            math.randomInt(1, 100) <= 50 and ID.mob.ARGUS or ID.mob.LEECH_KING,
+            math.randomInt(64800, 108000)) -- 18 to 30 hours
+    elseif GetSystemTime() < nextTime then
+        scheduleLeechPair(nextId, nextTime - GetSystemTime())
+    else
+        DisallowRespawn(nextId == ID.mob.ARGUS and ID.mob.LEECH_KING or ID.mob.ARGUS, true)
+        xi.mob.updateNMSpawnPoint(nextId)
+        SpawnMob(nextId)
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

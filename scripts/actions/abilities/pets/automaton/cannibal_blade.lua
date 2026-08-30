@@ -8,6 +8,7 @@
 -- TODO: Refine formula if more retail data becomes available.
 -- Automaton Skill / 9.2 is very close, but not exact. Retail appears to use non-linear scaling or hidden stepping.
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 

@@ -2,6 +2,7 @@
 -- Arcuballista
 -- Description: Delivers a single attack. Damage varies with TP.
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 
@@ -21,7 +22,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     params.baseDamage       = xi.automaton.getRangedBaseDamage(automaton)
     params.numHits          = 1
     params.fTP              = { 2.5, 3.0, 4.0 }
-    params.dex_wSC          = 0.60
+    params.dex_wSC          = 0.30
     params.accuracyModifier = { 100, 100, 100 }
     params.attackType       = xi.attackType.RANGED
     params.damageType       = xi.damageType.PIERCING
@@ -32,6 +33,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.fTP     = { 7.0, 10.0, 13.0 }
+        params.dex_wSC = 0.60
     end
 
     xi.automaton.applyFlameHolder(automaton, params.fTP)

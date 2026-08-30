@@ -320,8 +320,6 @@ templates:
           item:   gem_of_the_west
         - chance: very_common
           item:   oblation_abjuration
-        - chance: common
-          item:   gem_of_the_west
         - chance: uncommon
           item:   scarecrow_scythe
 

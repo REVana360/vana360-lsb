@@ -11,7 +11,6 @@ local entity = {}
 entity.onTrigger = function(player, npc)
     local stock =
     {
-        { xi.item.LAUAN_SHIELD,        120, 3, },
         { xi.item.MAPLE_SHIELD,        605, 3, },
         { xi.item.MAHOGANY_SHIELD,    4980, 2, },
         { xi.item.KITE_SHIELD,       11424, 1, },

@@ -4,6 +4,8 @@
 -----------------------------------
 -- !addmission 4 5
 -- Halver : !pos 2 0.1 0.1 233
+-- The original JST-midnight wait was shortened in September 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/44090-Sep-9-2014-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.EASTERLY_WINDS)
@@ -49,7 +51,9 @@ mission.sections =
             onTriggerAreaEnter =
             {
                 [1] = function(player, triggerArea)
-                    return mission:progressEvent(10094)
+                    if mission:getVar(player, 'Timer') == 0 then
+                        return mission:progressEvent(10094)
+                    end
                 end,
             },
 

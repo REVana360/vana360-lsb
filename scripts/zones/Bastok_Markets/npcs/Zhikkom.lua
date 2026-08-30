@@ -18,9 +18,10 @@ entity.onTrigger = function(player, npc)
         { xi.item.SAPARA,          776, 3 },
         { xi.item.SCIMITAR,       4525, 2 },
         { xi.item.FALCHION,      67353, 1 },
-        { xi.item.XIPHOS,          672, 3 },
-        { xi.item.SPATHA,         1860, 3 },
-        { xi.item.BILBO,          3495, 3 },
+        { xi.item.BRONZE_KNIFE,    164, 3 },
+        { xi.item.KNIFE,          2425, 2 },
+        { xi.item.KUKRI,          6151, 1 },
+        { xi.item.CAT_BAGHNAKHS,   116, 3 },
     }
 
     player:showText(npc, zones[xi.zone.BASTOK_MARKETS].text.ZHIKKOM_SHOP_DIALOG)

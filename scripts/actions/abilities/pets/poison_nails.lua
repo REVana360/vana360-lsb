@@ -18,7 +18,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
     params.fTP               = { 2.0, 2.0, 2.0 }
-    params.fTPSubsequentHits = { 2.0, 2.0, 2.0 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.dex_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.PIERCING
@@ -34,7 +34,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
         local effectTable =
         {
-            [1] = { effectId = xi.effect.POISON, power = 1, tick = 3, duration = 90, tier = 1 },
+            [1] = { effectId = xi.effect.POISON, power = 1, tick = 3, duration = 90, tier = 1, origin = pet },
         }
 
         xi.combat.action.executeMobskillStatusEffect(pet, target, petskill, effectTable, { messageBypass = true })

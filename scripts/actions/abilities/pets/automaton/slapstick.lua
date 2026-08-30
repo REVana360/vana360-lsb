@@ -5,6 +5,7 @@
 -- https://www.bg-wiki.com/ffxi/Slapstick (Adoulin)
 -- https://web.archive.org/web/20100401153524/https://www.geocities.jp/pupff/other/slapstick.html (Original)
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 

@@ -18,14 +18,12 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
     params.fTP               = { 2.0, 2.0, 2.0 }
-    params.fTPSubsequentHits = { 2.0, 2.0, 2.0 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.dex_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.PIERCING
     params.shadowBehavior    = xi.mobskills.shadowBehavior.NUMSHADOWS_1
     params.attackMultiplier  = { 2.0, 2.0, 2.0 }
-    params.canCrit           = true
-    params.criticalChance    = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
     params.primaryMessage    = xi.msg.basic.USES_JA_TAKE_DAMAGE
 
     local info = xi.mobskills.mobPhysicalMove(pet, target, petskill, action, params)

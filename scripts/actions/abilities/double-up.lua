@@ -2,7 +2,7 @@
 -- Ability: Double Up
 -- Enhances an active Phantom Roll effect that is eligible for Double-Up.
 -- Obtained: Corsair Level 5
--- Recast Time: 8 seconds
+-- Recast Time: 7 seconds
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

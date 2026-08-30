@@ -9,19 +9,19 @@
 --
 -- Die Roll    |No DNC              |With DNC
 -- --------    ----------           ----------
--- 1           |3HP/Tick            |7HP/Tick
--- 2           |4HP/Tick            |8HP/Tick
--- 3           |12HP/Tick           |16HP/Tick
--- 4           |5HP/Tick            |9HP/Tick
--- 5           |6HP/Tick            |10HP/Tick
--- 6           |7HP/Tick            |11HP/Tick
--- 7           |1HP/Tick            |5HP/Tick
--- 8           |8HP/Tick            |12HP/Tick
--- 9           |9HP/Tick            |13HP/Tick
--- 10          |10HP/Tick           |14HP/Tick
--- 11          |16HP/Tick           |20HP/Tick
--- 12+         |-4hp(regen)/Tick    |-4hp(regen)/Tick
--- A bust will cause a regen effect on you to be reduced by 4, it will not drain HP from you if no regen effect is active.
+-- 1           |3HP/Tick            |6HP/Tick
+-- 2           |4HP/Tick            |7HP/Tick
+-- 3           |11HP/Tick           |14HP/Tick
+-- 4           |4HP/Tick            |7HP/Tick
+-- 5           |5HP/Tick            |8HP/Tick
+-- 6           |6HP/Tick            |9HP/Tick
+-- 7           |1HP/Tick            |4HP/Tick
+-- 8           |7HP/Tick            |10HP/Tick
+-- 9           |8HP/Tick            |11HP/Tick
+-- 10          |8HP/Tick            |11HP/Tick
+-- 11          |14HP/Tick           |17HP/Tick
+-- 12+         |-3hp(regen)/Tick    |-3hp(regen)/Tick
+-- A bust reduces an active regen effect by 3; it does not drain HP without regen.
 -----------------------------------
 ---@type TAbility
 local abilityObject = {}

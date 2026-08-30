@@ -8,6 +8,8 @@
 -- Endracion             : !pos -110 1 -34 230
 -- Halver                : !pos 2 0.1 0.1 233
 -- Fountain of Kings     : !pos 567 18 -939 208
+-- The original JST-midnight final wait was shortened in July 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-%28JST%29-Version-Update
 -----------------------------------
 local quicksandCavesID   = zones[xi.zone.QUICKSAND_CAVES]
 local southernSandoriaID = zones[xi.zone.SOUTHERN_SAN_DORIA]
@@ -113,7 +115,7 @@ mission.sections =
                         -- This cutscene is blocking after the mission has been completed.  Check this
                         -- before allowing further gate guard interaction (Mission[0][20]Progress).  Required
                         -- final CS will set this to 0, and we should disallow on non-zero values
-                        mission:setVar(player, 'Progress', GetSystemTime() + 60)
+                        mission:setVar(player, 'Progress', JstMidnight())
                         player:delKeyItem(xi.ki.DROPS_OF_AMNIO)
                     end
                 end,

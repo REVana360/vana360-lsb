@@ -15,8 +15,8 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
-    params.fTP               = { 1.50, 3.75, 6.00 } -- TODO: Capture 2000 fTP. Using 3.75 for now (Linear scaling).
-    params.fTPSubsequentHits = { 1.50, 3.75, 6.00 }
+    params.fTP               = { 1.50, 1.50, 1.50 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.str_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.PIERCING
@@ -31,7 +31,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
         local effectTable =
         {
-            [1] = { effectId = xi.effect.PARALYSIS, power = 22, duration = 60 }, -- TODO: Capture power
+            [1] = { effectId = xi.effect.PARALYSIS, power = 22, duration = 60, origin = pet }, -- TODO: Capture power
         }
 
         xi.combat.action.executeMobskillStatusEffect(pet, target, petskill, effectTable, { messageBypass = true })

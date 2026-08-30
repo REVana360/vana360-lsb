@@ -910,8 +910,6 @@ templates:
       drops:
         - chance: very_common
           item:   bone_chip
-        - chance: uncommon
-          item:   pumice_stone
         - chance: rare
           item:   gusgen_chest_key
       steal: bone_chip
@@ -964,8 +962,6 @@ templates:
           item:   bone_chip
         - chance: rare
           item:   magicked_skull
-        - chance: uncommon
-          item:   pumice_stone
         - chance: very_rare
           item:   scroll_of_gravity
       steal: bone_chip
@@ -1016,8 +1012,6 @@ templates:
           item:   bone_chip
         - chance: rare
           item:   magicked_skull
-        - chance: uncommon
-          item:   pumice_stone
         - chance: very_rare
           item:   scroll_of_gravity
       steal: bone_chip
@@ -2143,8 +2137,6 @@ templates:
       drops:
         - chance: common
           item:   bone_chip
-        - chance: uncommon
-          item:   pumice_stone
         - chance: very_rare
           item:   gusgen_chest_key
       steal: bone_chip
@@ -2196,8 +2188,6 @@ templates:
       drops:
         - chance: common
           item:   bone_chip
-        - chance: uncommon
-          item:   pumice_stone
         - chance: rare
           item:   gusgen_chest_key
         - chance: very_rare
@@ -2255,8 +2245,6 @@ templates:
       drops:
         - chance: common
           item:   bone_chip
-        - chance: uncommon
-          item:   pumice_stone
         - chance: rare
           item:   gusgen_chest_key
         - chance: very_rare

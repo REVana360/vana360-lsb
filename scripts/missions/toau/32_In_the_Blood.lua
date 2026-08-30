@@ -3,6 +3,8 @@
 -- Aht Uhrgan Mission 32
 -----------------------------------
 -- !addmission 4 31
+-- The original JST-midnight wait was shortened in August 2016.
+-- Source: https://forum.square-enix.com/ffxi/threads/51154-Aug.-3-2016-%28JST%29-Version-Update
 -- Naja Salaheem : !pos 22.700 -8.804 -45.591 50
 -----------------------------------
 
@@ -34,7 +36,7 @@ mission.sections =
             {
                 [3113] = function(player, csid, option, npc)
                     if mission:complete(player) then
-                        player:setCharVar('Mission[4][32]Timer', VanadielUniqueDay() + 1)
+                        player:setCharVar('Mission[4][32]Timer', 1, JstMidnight())
                         player:setLocalVar('Mission[4][32]mustZone', 1)
                     end
                 end,

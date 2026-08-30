@@ -3,6 +3,34 @@
 -----------------------------------
 local ID = zones[xi.zone.SAUROMUGUE_CHAMPAIGN]
 -----------------------------------
+local function initializeTimedNM(zone, mobName, respawnMin, respawnMax)
+    local varName = '[Respawn]' .. mobName
+    local mob = zone:queryEntitiesByName(mobName)[1]
+    if not mob then
+        return
+    end
+
+    local respawn = GetServerVariable(varName)
+    if respawn == 0 and not mob:isSpawned() then
+        respawn = GetSystemTime() + math.randomInt(respawnMin, respawnMax)
+        SetServerVariable(varName, respawn)
+    end
+
+    if GetSystemTime() < respawn then
+        xi.mob.updateNMSpawnPoint(mob)
+        mob:setRespawnTime(respawn - GetSystemTime())
+
+        if mob:isSpawned() then
+            mob:setLocalVar('[Respawn]bootSync', 1)
+            DespawnMob(mob:getID())
+        end
+    elseif not mob:isSpawned() then
+        mob:setRespawnTime(0)
+        SpawnMob(mob:getID())
+    end
+end
+
+-----------------------------------
 ---@type TZone
 local zoneObject = {}
 
@@ -12,6 +40,8 @@ zoneObject.onInitialize = function(zone)
 
     GetNPCByID(ID.npc.QM2 + math.randomInt(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
+
+    initializeTimedNM(zone, 'Roc', 75600, 86400)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

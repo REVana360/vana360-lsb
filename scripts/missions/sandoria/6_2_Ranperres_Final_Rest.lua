@@ -10,6 +10,8 @@
 -- Door: Prince Royal's : !pos -38 -3 73 233
 -- _5a0: Heavy Stone Dr : !pos -39 4.823 20 190
 -- Tombstone            : !pos -73.594 7.585 20.130 190
+-- The original JST-midnight deciphering wait was shortened in June 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-%28JST%29-Version-Update
 -----------------------------------
 local krtID = zones[xi.zone.KING_RANPERRES_TOMB]
 -----------------------------------
@@ -228,7 +230,10 @@ mission.sections =
                     if player:hasKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK) then
                         return mission:progressEvent(1036)
                     elseif missionStatus == 4 then
-                        if player:getLocalVar('Mission[0][17]requiredToZone') == 1 then
+                        if
+                            player:getLocalVar('Mission[0][17]requiredToZone') == 1 or
+                            mission:getVar(player, 'Timer') ~= 0
+                        then
                             return mission:progressEvent(1038)
                         else
                             return mission:progressEvent(1040)
@@ -247,7 +252,10 @@ mission.sections =
                     if player:hasKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK) then
                         return mission:progressEvent(1035)
                     elseif missionStatus == 4 then
-                        if player:getLocalVar('Mission[0][17]requiredToZone') == 1 then
+                        if
+                            player:getLocalVar('Mission[0][17]requiredToZone') == 1 or
+                            mission:getVar(player, 'Timer') ~= 0
+                        then
                             return mission:progressEvent(1037)
                         else
                             return mission:progressEvent(1039)
@@ -271,12 +279,14 @@ mission.sections =
                 [1035] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK)
                     player:setLocalVar('Mission[0][17]requiredToZone', 1)
+                    mission:setVar(player, 'Timer', 1, JstMidnight())
                     player:setMissionStatus(mission.areaId, 4)
                 end,
 
                 [1036] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK)
                     player:setLocalVar('Mission[0][17]requiredToZone', 1)
+                    mission:setVar(player, 'Timer', 1, JstMidnight())
                     player:setMissionStatus(mission.areaId, 4)
                 end,
 
@@ -300,7 +310,10 @@ mission.sections =
                     if player:hasKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK) then
                         return mission:progressEvent(1035)
                     elseif missionStatus == 4 then
-                        if player:getLocalVar('Mission[0][17]requiredToZone') == 1 then
+                        if
+                            player:getLocalVar('Mission[0][17]requiredToZone') == 1 or
+                            mission:getVar(player, 'Timer') ~= 0
+                        then
                             return mission:progressEvent(1037)
                         else
                             return mission:progressEvent(1039)
@@ -320,6 +333,7 @@ mission.sections =
                 [1035] = function(player, csid, option, npc)
                     player:delKeyItem(xi.ki.ANCIENT_SAN_DORIAN_BOOK)
                     player:setLocalVar('Mission[0][17]requiredToZone', 1)
+                    mission:setVar(player, 'Timer', 1, JstMidnight())
                     player:setMissionStatus(mission.areaId, 4)
                 end,
 

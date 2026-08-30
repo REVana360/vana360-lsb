@@ -73,33 +73,39 @@ xi.job_utils.corsair.rollData =
     [xi.jobAbility.HEALERS_ROLL] =
     {
         effect      = xi.effect.HEALERS_ROLL,
-        powers      = { 3, 4, 12, 5, 6, 7, 1, 8, 9, 10, 16 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 2, 3, 10, 4, 4, 5, 1, 6, 7, 7, 12 },
         phantomBase = 3,
-        bonus       = 4,
+        bonus       = 3,
         bonusJob    = xi.job.WHM,
-        bustPower   = 4,
-        bustMod     = xi.mod.CURE_POTENCY_RCVD,
+        bustPower   = 3,
+        bustMod     = xi.mod.MPHEAL,
     },
 
     [xi.jobAbility.DRACHEN_ROLL] =
     {
         effect      = xi.effect.DRACHEN_ROLL,
-        powers      = { 10, 13, 15, 40, 18, 20, 25, 5, 28, 30, 50 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 4, 5, 18, 7, 9, 10, 2, 11, 13, 15, 22 },
         phantomBase = 5,
-        bonus       = 15,
+        bonus       = 8,
         bonusJob    = xi.job.DRG,
-        bustPower   = 15,
+        bustPower   = 8,
         bustMod     = xi.mod.NONE, -- no known bust penalty; buff applies to pet only
     },
 
     [xi.jobAbility.CHORAL_ROLL] =
     {
         effect      = xi.effect.CHORAL_ROLL,
-        powers      = { 13, 55, 17, 20, 25, 8, 30, 35, 40, 45, 65 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 4, 17, 5, 6, 7, 2, 8, 10, 11, 12, 21 },
         phantomBase = 4,
-        bonus       = 25,
+        bonus       = 8,
         bonusJob    = xi.job.BRD,
-        bustPower   = 25,
+        bustPower   = 8,
         bustMod     = xi.mod.SPELLINTERRUPT,
     },
 
@@ -117,11 +123,13 @@ xi.job_utils.corsair.rollData =
     [xi.jobAbility.BEAST_ROLL] =
     {
         effect      = xi.effect.BEAST_ROLL,
-        powers      = { 4, 5, 7, 19, 8, 9, 11, 2, 13, 14, 23 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 5, 6, 7, 19, 8, 9, 12, 2, 13, 14, 23 },
         phantomBase = 3,
-        bonus       = 10,
+        bonus       = 8,
         bonusJob    = xi.job.BST,
-        bustPower   = 7,
+        bustPower   = 8,
         bustMod     = xi.mod.NONE, -- no known bust penalty; buff applies to pet only
     },
 
@@ -161,11 +169,13 @@ xi.job_utils.corsair.rollData =
     [xi.jobAbility.WARLOCKS_ROLL] =
     {
         effect      = xi.effect.WARLOCKS_ROLL,
-        powers      = { 10, 13, 15, 40, 18, 20, 25, 5, 28, 30, 50 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 2, 3, 4, 10, 4, 5, 6, 1, 7, 7, 12 },
         phantomBase = 1,
-        bonus       = 15,
+        bonus       = 4,
         bonusJob    = xi.job.RDM,
-        bustPower   = 15,
+        bustPower   = 4,
         bustMod     = xi.mod.MACC,
     },
 
@@ -183,20 +193,24 @@ xi.job_utils.corsair.rollData =
     [xi.jobAbility.PUPPET_ROLL] =
     {
         effect      = xi.effect.PUPPET_ROLL,
-        powers      = { 4, 5, 18, 7, 9, 10, 2, 11, 13, 15, 22 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 10, 13, 15, 40, 18, 20, 25, 5, 28, 30, 50 },
         phantomBase = 3,
-        bonus       = 8,
+        bonus       = 15,
         bonusJob    = xi.job.PUP,
-        bustPower   = 8,
+        bustPower   = 15,
         bustMod     = xi.mod.NONE, -- no known bust penalty; buff applies to pet only
     },
 
     [xi.jobAbility.GALLANTS_ROLL] =
     {
         effect      = xi.effect.GALLANTS_ROLL,
-        powers      = { 600, 800, 2400, 900, 1100, 1200, 300, 1500, 1700, 1800, 3000 },
+        -- July 2009 reflection roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 4, 5, 15, 6, 7, 8, 3, 9, 10, 12, 20 },
         phantomBase = 234,
-        bonus       = 500,
+        bonus       = 10,
         bonusJob    = xi.job.PLD,
         bustPower   = 500,
         bustMod     = xi.mod.DMG,
@@ -216,11 +230,13 @@ xi.job_utils.corsair.rollData =
     [xi.jobAbility.DANCERS_ROLL] =
     {
         effect      = xi.effect.DANCERS_ROLL,
-        powers      = { 3, 4, 12, 5, 6, 7, 1, 8, 9, 10, 16 },
+        -- July 2009 roll values, before the February 2012 adjustment.
+        -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+        powers      = { 3, 4, 11, 4, 5, 6, 1, 7, 8, 8, 14 },
         phantomBase = 2,
-        bonus       = 4,
+        bonus       = 3,
         bonusJob    = xi.job.DNC,
-        bustPower   = 4,
+        bustPower   = 3,
         bustMod     = xi.mod.REGEN,
     },
 
@@ -406,12 +422,16 @@ xi.job_utils.corsair.quickDrawEffectBoostTable =
 
     [xi.jobAbility.LIGHT_SHOT] =
     {
-        { effectId = xi.effect.DIA, basePowerByTier = { [1] = 10, [3] = 15, [5] = 20, [7] = 25, [9] = 30 } },
+        -- July 2009: Light Shot added +5 defense down and +1 DoT.
+        -- Source: https://forum.square-enix.com/ffxi/threads/55263-April.-3-2019-%28JST%29-Version-Update
+        { effectId = xi.effect.DIA, basePowerByTier = { [1] = 5, [3] = 10, [5] = 15, [7] = 25, [9] = 30 } },
     },
 
     [xi.jobAbility.DARK_SHOT] =
     {
-        { effectId = xi.effect.BIO,       basePowerByTier = { [2] = 10, [4] = 15, [6] = 20, [8] = 25, [10] = 30 } },
+        -- July 2009: Dark Shot added +5 attack down and +3 DoT.
+        -- Source: https://forum.square-enix.com/ffxi/threads/55263-April.-3-2019-%28JST%29-Version-Update
+        { effectId = xi.effect.BIO,       basePowerByTier = { [2] = 5, [4] = 10, [6] = 15, [8] = 25, [10] = 30 } },
         { effectId = xi.effect.BLINDNESS, capGlobal = 30                                                          },
     },
 }
@@ -450,14 +470,6 @@ local function corsairSetup(caster, ability, action, effect, job)
     local recastReduction = utils.clamp(caster:getMerit(xi.merit.PHANTOM_ROLL_RECAST) + caster:getMod(xi.mod.PHANTOM_RECAST), 0, 45)
     local recastTime      = ability:getRecast()
 
-    -- While an XI roll is active, Phantom Roll recast is halved.
-    if
-        xi.job_utils.corsair.checkForElevenRoll(caster) and
-        caster:numBustEffects() == 0
-    then
-        recastTime = math.floor(recastTime / 2)
-    end
-
     -- https://wiki-ffo-jp.translate.goog/html/3347.html?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=sc (Near the middle)
     -- In short, it seems the minimum recast time is 15 seconds.
     action:setRecast(utils.clamp(recastTime - recastReduction, 15, 300))
@@ -494,11 +506,8 @@ local function applyCorsairEffect(caster, target, abilityId, power, subPower)
                 upgradeEffect = effect
 
             else
-                -- Bust: only apply the bust effect on self-rolls and only when no XI roll is active.
-                if
-                    sourceTypeParam == target:getID() and
-                    not xi.job_utils.corsair.checkForElevenRoll(target)
-                then
+                -- Bust applies to the Corsair's self-roll, including an XI result.
+                if sourceTypeParam == target:getID() then
                     target:addStatusEffect(xi.effect.BUST, {
                         power           = power,
                         duration        = 300 - caster:getMerit(xi.merit.BUST_DURATION),
@@ -584,21 +593,6 @@ end
 -- Global helper functions
 -----------------------------------
 
-xi.job_utils.corsair.checkForElevenRoll = function(caster)
-    local effects = caster:getStatusEffects()
-
-    for _, effect in pairs(effects) do
-        if
-            effect:hasEffectFlag(xi.effectFlag.ROLL) and
-            effect:getSubPower() == 11
-        then
-            return true
-        end
-    end
-
-    return false
-end
-
 xi.job_utils.corsair.onRollEffectLose = function(player, effect)
     -- Ignore effect loss if COR is doubling up
     if player:getLocalVar('corsairApplyingRoll') == 1 then
@@ -615,8 +609,9 @@ xi.job_utils.corsair.onRollEffectLose = function(player, effect)
 end
 
 xi.job_utils.corsair.handleQuickDrawDamage = function(player, target, action, element, resist)
-    -- Calculate Quick Draw damage - https://wiki.ffo.jp/html/3349.html TODO: QUICK_DRAW_TRIPLE_DAMAGE gear mod needs research
-    local damage                 = 2 * player:getRangedDmg() + 2 * player:getJobPointLevel(xi.jp.QUICK_DRAW_EFFECT) + player:getMod(xi.mod.QUICK_DRAW_DMG)
+    -- July 2009 Quick Draw base: gun and ammunition damage, plus pre-cutoff gear.
+    -- Source: https://wiki.ffo.jp/html/3349.html
+    local damage                 = 2 * (player:getRangedDmg() + player:getAmmoDmg()) + player:getMod(xi.mod.QUICK_DRAW_DMG)
     local deathPenaltyMultiplier = 1 + player:getMod(xi.mod.QUICK_DRAW_DMG_PERCENT) / 100
     local damageAdditiveBonus    = player:getMod(xi.mod.MAGIC_DAMAGE)
     local elementalStaffBonus    = xi.spells.damage.calculateElementalStaffBonus(player, element)
@@ -707,7 +702,7 @@ xi.job_utils.corsair.handleQuickDrawEffectBoost = function(player, target, abili
             effectPower = effectPower + 1
         end
 
-        effectSubPower = effectSubPower + math.floor(100 * 28 / 1024) -- TODO: Change ATTP, DEFP and similar mods from base 100 to base 10k
+        effectSubPower = effectSubPower + 5
 
     -- Apply boost to all other eligible effects.
     else
@@ -962,10 +957,6 @@ xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
             caster:delStatusEffectSilent(xi.effect.DOUBLE_UP_CHANCE)
         end
 
-        if roll == 11 then
-            caster:resetRecast(xi.recast.ABILITY, xi.recastID.PHANTOM_ROLL)
-        end
-
         caster:setLocalVar('corsairRollTotal', roll)
         action:info(caster:getID(), roll - prevRoll:getSubPower())
         xi.job_utils.corsair.checkForJobBonus(caster, job)
@@ -1026,11 +1017,6 @@ xi.job_utils.corsair.useElementalShot = function(actor, target, ability, action)
         damage = xi.job_utils.corsair.handleQuickDrawDamage(actor, target, action, data.element, resist)
     end
 
-    if damage > 0 then
-        actor:addTP(xi.combat.tp.getSingleRangedHitTPReturn(actor))
-        actor:trySkillUp(xi.skill.MARKSMANSHIP, target:getMainLvl())
-    end
-
     -- Handle effect boost.
     xi.job_utils.corsair.handleQuickDrawEffectBoost(actor, target, abilityId, data.multiplier)
 
@@ -1072,7 +1058,11 @@ xi.job_utils.corsair.useElementalShot = function(actor, target, ability, action)
 end
 
 xi.job_utils.corsair.useSnakeEye = function(player, action)
-    player:addStatusEffect(xi.effect.SNAKE_EYE, { power = player:getMerit(xi.merit.SNAKE_EYE) - 10, duration = 60, origin = player })
+    -- July 2009: merit levels reduce this 15-minute recast by 150 seconds.
+    local recastReduction = player:getMerit(xi.merit.SNAKE_EYE) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    player:addStatusEffect(xi.effect.SNAKE_EYE, { power = 0, duration = 60, origin = player })
 
     return xi.effect.SNAKE_EYE
 end
@@ -1112,10 +1102,9 @@ xi.job_utils.corsair.useFold = function(player, action)
         player:delStatusEffect(selected:getEffectType())
         player:delStatusEffectSilent(xi.effect.DOUBLE_UP_CHANCE)
 
-        -- Each merit level adds +10% chance to reset Phantom Roll recast.
-        if math.randomInt(1, 100) <= player:getMerit(xi.merit.FOLD) then
-            player:resetRecast(xi.recast.ABILITY, xi.recastID.PHANTOM_ROLL)
-        end
+        -- July 2009: merit levels reduce this 15-minute recast by 150 seconds.
+        local recastReduction = player:getMerit(xi.merit.FOLD) - 150
+        action:setRecast(action:getRecast() - recastReduction)
     end
 
     return xi.msg.basic.NONE

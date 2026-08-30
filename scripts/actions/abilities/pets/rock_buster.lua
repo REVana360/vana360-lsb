@@ -17,8 +17,8 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
-    params.fTP               = { 2.25, 4.50, 6.75 } -- TODO: Capture fTP for 2000TP
-    params.fTPSubsequentHits = { 2.25, 4.50, 6.75 }
+    params.fTP               = { 2.25, 2.25, 2.25 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.vit_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.BLUNT
@@ -33,7 +33,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
         local effectTable =
         {
-            [1] = { effectId = xi.effect.BIND, power = 1, duration = 120 }, -- TODO: Capture duration
+            [1] = { effectId = xi.effect.BIND, power = 1, duration = 120, origin = pet }, -- TODO: Capture duration
         }
 
         xi.combat.action.executeMobskillStatusEffect(pet, target, petskill, effectTable, { messageBypass = true })

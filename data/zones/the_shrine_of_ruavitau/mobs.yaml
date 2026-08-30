@@ -704,8 +704,6 @@ templates:
         - chance: always
           item:   summerstone
         - chance: common
-          item:   summerstone
-        - chance: common
           item:   oblation_abjuration
         - chance: uncommon
           item:   tonbo-giri
@@ -1035,8 +1033,6 @@ templates:
         - chance: always
           item:   springstone
         - chance: common
-          item:   springstone
-        - chance: common
           item:   libation_abjuration
         - chance: uncommon
           item:   shiranui
@@ -1090,8 +1086,6 @@ templates:
     loot:
       drops:
         - chance: always
-          item:   winterstone
-        - chance: common
           item:   winterstone
         - chance: common
           item:   libation_abjuration
@@ -1506,8 +1500,6 @@ templates:
     loot:
       drops:
         - chance: always
-          item:   autumnstone
-        - chance: common
           item:   autumnstone
         - chance: common
           item:   oblation_abjuration

@@ -3,6 +3,8 @@
 -- Aht Uhrgan Mission 18
 -----------------------------------
 -- !addmission 4 17
+-- The original JST-midnight wait was shortened in August 2016.
+-- Source: https://forum.square-enix.com/ffxi/threads/51154-Aug.-3-2016-%28JST%29-Version-Update
 -- Naja Salaheem : !pos 22.700 -8.804 -45.591 50
 -----------------------------------
 
@@ -19,7 +21,7 @@ mission.sections =
         check = function(player, currentMission, missionStatus, vars)
             return currentMission == mission.missionId and
                 not mission:getMustZone(player) and
-                VanadielUniqueDay() >= mission:getVar(player, 'Timer')
+                mission:getVar(player, 'Timer') == 0
         end,
 
         [xi.zone.AHT_URHGAN_WHITEGATE] =

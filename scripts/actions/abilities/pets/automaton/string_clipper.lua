@@ -2,6 +2,7 @@
 -- String Clipper
 -- Description: Delivers a twofold attack. Accuracy varies with TP.
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 
@@ -21,8 +22,8 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     params.baseDamage       = automaton:getWeaponDmg()
     params.numHits          = utils.clamp(2 + xi.automaton.getExtraHits(automaton, 2), 1, 8)
     params.fTP              = { 2.0, 2.0, 2.0 }
-    params.str_wSC          = 0.30
-    params.dex_wSC          = 0.30
+    params.str_wSC          = 0.15
+    params.dex_wSC          = 0.15
     params.attackMultiplier = { 1.5, 1.5, 1.5 }
     params.accuracyModifier = { 0, 50, 100 }
     params.attackType       = xi.attackType.PHYSICAL
@@ -31,6 +32,8 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.fTP = { 3.5, 3.5, 3.5 }
+        params.str_wSC = 0.30
+        params.dex_wSC = 0.30
     end
 
     xi.automaton.applyFlameHolder(automaton, params.fTP)

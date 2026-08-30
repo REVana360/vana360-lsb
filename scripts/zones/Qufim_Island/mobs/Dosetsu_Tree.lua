@@ -63,8 +63,9 @@ entity.onMobDisengage = function(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    local respawn = math.randomInt(3600, 7200) -- 1-2 hours during thunder weather
-    mob:setLocalVar('respawn', GetSystemTime() + respawn)
+    local respawn = GetSystemTime() + math.randomInt(75600, 86400) -- 21 to 24 hours
+    mob:setLocalVar('respawn', respawn)
+    SetServerVariable('[Respawn]Dosetsu_Tree', respawn)
 end
 
 return entity

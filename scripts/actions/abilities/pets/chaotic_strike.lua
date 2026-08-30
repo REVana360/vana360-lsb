@@ -18,14 +18,12 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 3
     params.fTP               = { 10.00, 10.00, 10.00 }
-    params.fTPSubsequentHits = { 10.00, 10.00, 10.00 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.str_wSC           = 0.20
     params.int_wSC           = 0.20
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.BLUNT
     params.shadowBehavior    = xi.mobskills.shadowBehavior.NUMSHADOWS_3
-    params.canCrit           = true
-    params.criticalChance    = { 0.10, 0.20, 0.25 } -- TODO: Capture crit rate
     params.primaryMessage    = xi.msg.basic.USES_JA_TAKE_DAMAGE
 
     local info = xi.mobskills.mobPhysicalMove(pet, target, petskill, action, params)
@@ -35,7 +33,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
         local effectTable =
         {
-            [1] = { effectId = xi.effect.STUN, power = 1, duration = 12 },
+            [1] = { effectId = xi.effect.STUN, power = 1, duration = 12, origin = pet },
         }
 
         xi.combat.action.executeMobskillStatusEffect(pet, target, petskill, effectTable, { messageBypass = true })

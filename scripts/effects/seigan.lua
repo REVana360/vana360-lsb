@@ -10,10 +10,6 @@ effectObject.onEffectGain = function(target, effect)
 
     effect:addMod(xi.mod.DEF, jpValue * 3)
 
-    -- SAM main job bonus: Seigan gives counter chance at 25% of Zanshin rate
-    if target:getMainJob() == xi.job.SAM then
-        effect:addMod(xi.mod.SEIGAN_COUNTER_BONUS, 1)
-    end
 end
 
 effectObject.onEffectTick = function(target, effect)

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Gallant's Roll
--- Reduces physical damage taken by party members within area of effect
+-- Reflects a portion of physical damage taken by party members within area of effect
 -- Optimal Job: Paladin
 -- Lucky Number: 3
 -- Unlucky Number: 7
@@ -9,17 +9,17 @@
 --
 -- Die Roll    |No PLD  |With PLD
 -- --------    -------  -----------
--- 1           |6%      |11%
--- 2           |8%      |13%
--- 3           |24%     |29%
--- 4           |9%      |14%
--- 5           |11%     |16%
--- 6           |12%     |17%
--- 7           |3%      |8%
--- 8           |15%     |20%
--- 9           |17%     |22%
--- 10          |18%     |23%
--- 11          |30%     |35%
+-- 1           |+4%     |+14%
+-- 2           |+5%     |+15%
+-- 3           |+15%    |+25%
+-- 4           |+6%     |+16%
+-- 5           |+7%     |+17%
+-- 6           |+8%     |+18%
+-- 7           |+3%     |+13%
+-- 8           |+9%     |+19%
+-- 9           |+10%    |+20%
+-- 10          |+12%    |+22%
+-- 11          |+20%    |+30%
 -- Bust        |-5%     |-5%
 -----------------------------------
 ---@type TAbility

@@ -2,6 +2,7 @@
 -- Bone Crusher
 -- Description: Delivers a threefold attack. Additional Effect: Stun.
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 
@@ -21,13 +22,14 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
     params.baseDamage     = automaton:getWeaponDmg()
     params.numHits        = utils.clamp(3 + xi.automaton.getExtraHits(automaton, 3), 1, 8)
     params.fTP            = { 1.5, 1.5, 1.5 }
-    params.vit_wSC        = 0.60
+    params.vit_wSC        = 0.30
     params.attackType     = xi.attackType.PHYSICAL
     params.damageType     = xi.damageType.BLUNT
     params.shadowBehavior = params.numHits
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.fTP = { 2.66, 2.66, 2.66 }
+        params.vit_wSC = 0.60
 
         if target:isUndead() then
             params.fTP = { 3.66, 3.66, 3.66 }

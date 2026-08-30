@@ -2,7 +2,7 @@
 
 level_restriction: 40
 type: [dungeon]
-misc: [escape, mazurka, tractor, pet, trust, los_player_block]
+misc: [escape, tractor, pet, trust, los_player_block]
 music:
   battle_solo:  115
   battle_party: 218

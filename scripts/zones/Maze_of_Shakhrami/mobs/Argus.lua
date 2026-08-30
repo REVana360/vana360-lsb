@@ -4,6 +4,18 @@
 -----------------------------------
 local ID = zones[xi.zone.MAZE_OF_SHAKHRAMI]
 -----------------------------------
+local function scheduleLeechPair(nextId, seconds)
+    local otherId = nextId == ID.mob.ARGUS and ID.mob.LEECH_KING or ID.mob.ARGUS
+
+    DisallowRespawn(otherId, true)
+    DisallowRespawn(nextId, false)
+    xi.mob.updateNMSpawnPoint(nextId)
+    GetMobByID(nextId):setRespawnTime(seconds)
+    SetServerVariable('[Respawn]LeechKingArgus_Mob', nextId)
+    SetServerVariable('[Respawn]LeechKingArgus_Time', GetSystemTime() + seconds)
+end
+
+-----------------------------------
 ---@type TMobEntity
 local entity = {}
 
@@ -21,17 +33,9 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onMobDespawn = function(mob)
-    if math.randomInt(1, 100) <= 50 then
-        DisallowRespawn(ID.mob.LEECH_KING, true)
-        DisallowRespawn(ID.mob.ARGUS, false)
-        xi.mob.updateNMSpawnPoint(ID.mob.ARGUS)
-        GetMobByID(ID.mob.ARGUS):setRespawnTime(math.randomInt(3600, 7200)) -- 1-2 hours
-    else
-        DisallowRespawn(ID.mob.ARGUS, true)
-        DisallowRespawn(ID.mob.LEECH_KING, false)
-        xi.mob.updateNMSpawnPoint(ID.mob.LEECH_KING)
-        GetMobByID(ID.mob.LEECH_KING):setRespawnTime(math.randomInt(3600, 7200)) -- 1-2 hours
-    end
+    scheduleLeechPair(
+        math.randomInt(1, 100) <= 50 and ID.mob.ARGUS or ID.mob.LEECH_KING,
+        math.randomInt(64800, 108000)) -- 18 to 30 hours
 end
 
 return entity

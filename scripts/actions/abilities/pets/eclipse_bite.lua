@@ -17,8 +17,8 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 3
-    params.fTP               = { 3.269531, 4.085937, 4.902343 } -- TODO: Capture 2000 TP fTP. Using linear scaling for now.
-    params.fTPSubsequentHits = { 3.269531, 4.085937, 4.902343 }
+    params.fTP               = { 3.269531, 3.269531, 3.269531 }
+    params.fTPSubsequentHits = { 1.000000, 1.000000, 1.000000 }
     params.dex_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.SLASHING

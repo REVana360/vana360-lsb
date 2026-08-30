@@ -17,8 +17,8 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
-    params.fTP               = { 7.25, 9.25, 11.25 } -- TODO: Capture fTP for 2000 TP. Using linear scale for now.
-    params.fTPSubsequentHits = { 7.25, 9.25, 11.25 }
+    params.fTP               = { 7.25, 7.25, 7.25 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.vit_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.BLUNT
@@ -30,13 +30,6 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
 
     if xi.mobskills.processDamage(pet, target, petskill, action, info) then
         target:takeDamage(info.damage, pet, info.attackType, info.damageType)
-
-        local effectTable =
-        {
-            [1] = { effectId = xi.effect.BIND, power = 1, duration = math.randomInt(13, 60) }, -- TODO: Get additional captures.
-        }
-
-        xi.combat.action.executeMobskillStatusEffect(pet, target, petskill, effectTable, { messageBypass = true })
     end
 
     return info.damage

@@ -23,7 +23,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.SCROLL_OF_WATER_CAROL,        5000 },
         { xi.item.SCROLL_OF_LIGHT_CAROL,        4200 },
         { xi.item.SCROLL_OF_DARK_CAROL,         8400 },
-        { xi.item.SCROLL_OF_SENTINELS_SCHERZO, 60000 },
     }
 
     player:showText(npc, zones[xi.zone.LOWER_JEUNO].text.YOSKOLO_SHOP_DIALOG)

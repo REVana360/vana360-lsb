@@ -195,10 +195,12 @@ local function getMagicCastCooldown(pet)
 end
 
 -- Sets the SMN pet's base damage.
--- Used as a hook for 75 era modules.
+-- Pre-Seekers base damage was half the later value.
+-- Sources: https://wiki.ffo.jp/html/31916.html
+-- https://docs.google.com/spreadsheets/d/1YBoveP-weMdidrirY-vPDzHyxbEI2ryECINlfCnFkLI/edit?pli=1&gid=562618210#gid=562618210
 ---@param pet CBaseEntity
 xi.pets.avatar.calculateAvatarWeaponDamage = function(pet)
-    local weaponDamage = pet:getMainLvl() + 2 -- TODO: Verify retail base damage.
+    local weaponDamage = (pet:getMainLvl() + 2) / 2
 
     pet:setDamage(weaponDamage, xi.slot.MAIN)
     pet:setDamage(weaponDamage, xi.slot.RANGED)

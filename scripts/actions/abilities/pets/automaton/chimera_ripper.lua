@@ -2,6 +2,7 @@
 -- Chimera Ripper
 -- Description: Delivers a single hit attack.
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 
@@ -20,8 +21,8 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     params.baseDamage       = automaton:getWeaponDmg()
     params.numHits          = utils.clamp(1 + xi.automaton.getExtraHits(automaton, 1), 1, 8)
-    params.fTP              = { 1.5, 2.0, 3.0 }
-    params.str_wSC          = 0.50
+    params.fTP              = { 2.0, 2.5, 3.0 }
+    params.str_wSC          = 0.30
     params.accuracyModifier = { 100, 100, 100 }
     params.attackType       = xi.attackType.PHYSICAL
     params.damageType       = xi.damageType.SLASHING
@@ -29,6 +30,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.fTP = { 6.0, 8.5, 11.0 }
+        params.str_wSC = 0.50
     end
 
     xi.automaton.applyFlameHolder(automaton, params.fTP)

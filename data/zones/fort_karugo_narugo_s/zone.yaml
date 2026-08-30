@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../schemas/zone.schema.json
 
 type: [dungeon]
-misc: [fellow, mount, mazurka, tractor, pet, trust, los_player_block]
+misc: [fellow, mount, tractor, pet, trust, los_player_block]
 music:
   battle_solo:  101
   battle_party: 215

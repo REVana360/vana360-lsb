@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Drachen Roll
--- Enhances pet accuracy for party members within area of effect
+-- Enhances pet magic attack and magic accuracy for party members within area of effect
 -- Optimal Job: Dragoon
 -- Lucky Number: 4
 -- Unlucky Number: 8
@@ -9,18 +9,18 @@
 --
 -- Die Roll    |No DRG  |With DRG
 -- --------    -------  -----------
--- 1           |+10     |+25
--- 2           |+13     |+28
--- 3           |+15     |+30
--- 4           |+40     |+55
--- 5           |+18     |+33
--- 6           |+20     |+35
--- 7           |+25     |+40
--- 8           |+5      |+20
--- 9           |+28     |+43
--- 10          |+30     |+45
--- 11          |+50     |+65
--- Bust        |-15     |-15
+-- 1           |+4      |+12
+-- 2           |+5      |+13
+-- 3           |+18     |+26
+-- 4           |+7      |+15
+-- 5           |+9      |+17
+-- 6           |+10     |+18
+-- 7           |+2      |+10
+-- 8           |+11     |+19
+-- 9           |+13     |+21
+-- 10          |+15     |+23
+-- 11          |+22     |+30
+-- Bust        |-8      |-8
 -----------------------------------
 ---@type TAbility
 local abilityObject = {}

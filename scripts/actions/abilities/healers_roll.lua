@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Healer's Roll
--- Increases potency of "Cure" effect received for party members within area of effect
+-- Restores MP over time for party members within area of effect
 -- Optimal Job: White Mage
 -- Lucky Number: 3
 -- Unlucky Number: 7
@@ -9,20 +9,20 @@
 --
 -- Die Roll    |No WHM  |With WHM
 -- --------    -------  -----------
--- 1           |+3%     |+7%
--- 2           |+4%     |+8%
--- 3           |+12%    |+16%
--- 4           |+5%     |+9%
--- 5           |+6%     |+10%
--- 6           |+7%     |+11%
--- 7           |+1%     |+5%
--- 8           |+8%     |+12%
--- 9           |+9%     |+13%
--- 10          |+10%    |+14%
--- 11          |+16%    |+20%
--- Bust        |-4%     |-4%
+-- 1           |+2MP/Tick |+5MP/Tick
+-- 2           |+3MP/Tick |+6MP/Tick
+-- 3           |+10MP/Tick|+13MP/Tick
+-- 4           |+4MP/Tick |+7MP/Tick
+-- 5           |+4MP/Tick |+7MP/Tick
+-- 6           |+5MP/Tick |+8MP/Tick
+-- 7           |+1MP/Tick |+4MP/Tick
+-- 8           |+6MP/Tick |+9MP/Tick
+-- 9           |+7MP/Tick |+10MP/Tick
+-- 10          |+7MP/Tick |+10MP/Tick
+-- 11          |+12MP/Tick|+15MP/Tick
+-- Bust        |-3MP/Tick |-3MP/Tick
 --
--- Note that this roll will increase potency of cures received, not the potency of the caster's spells
+-- Note that this roll restores MP to the recipient; it does not modify a caster's spell potency
 -----------------------------------
 ---@type TAbility
 local abilityObject = {}

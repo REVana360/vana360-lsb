@@ -3,6 +3,8 @@
 -- Aht Uhrgan Mission 8
 -----------------------------------
 -- !addmission 4 7
+-- The original JST-midnight wait was shortened in June 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.A_MERCENARY_LIFE)
@@ -46,7 +48,8 @@ mission.sections =
     {
         check = function(player, currentMission, missionStatus, vars)
             return currentMission == mission.missionId and
-                not mission:getMustZone(player)
+                not mission:getMustZone(player) and
+                mission:getVar(player, 'Timer') == 0
         end,
 
         [xi.zone.AHT_URHGAN_WHITEGATE] =
@@ -56,7 +59,7 @@ mission.sections =
             onTriggerAreaEnter =
             {
                 [3] = function(player, triggerArea)
-                    return mission:progressEvent(3050, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+                    return mission:progressEvent(3050, 3, 3, 3, 3, 3, 3, 3, 3, 0)
                 end,
             },
 

@@ -3,6 +3,7 @@
 -- Description: Damage varies with Automaton HP.
 -- https://wiki.ffo.jp/html/14821.html
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 

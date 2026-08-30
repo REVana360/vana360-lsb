@@ -39,7 +39,7 @@ entity.onTrigger = function(player, npc)
         (sandyNationRank == bastokNationRank and sandyNationRank == windyNationRank) or                       -- All 3 nations tied.
         (sandyNationRank ~= bastokNationRank and sandyNationRank ~= windyNationRank and sandyNationRank == 3) -- Nation not tied and nation last.
     then
-        table.insert(stock, { xi.item.LIVING_KEY, 5308, 3 })
+        table.insert(stock, { xi.item.LIVING_KEY, 6467, 3 })
     end
 
     player:showText(npc, ID.text.OSTALIE_SHOP_DIALOG)

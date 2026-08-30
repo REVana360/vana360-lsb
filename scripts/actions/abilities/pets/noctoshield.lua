@@ -10,8 +10,7 @@ end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 180 + bonusTime
+    local duration = 180
 
     if target:addStatusEffect(xi.effect.PHALANX, { power = 13, duration = duration, origin = pet }) then
         if target:getID() == action:getPrimaryTargetID() then

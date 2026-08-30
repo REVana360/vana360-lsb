@@ -2,7 +2,7 @@
 -- Ability: Fold
 -- Erases one roll or bust xi.effect. Targets self-cast effect with the longest remaining duration.
 -- Obtained: Corsair Level 75
--- Recast Time: 00:05:00
+-- Recast Time: 00:15:00
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

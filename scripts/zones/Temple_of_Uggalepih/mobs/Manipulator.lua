@@ -80,6 +80,17 @@ entity.onMobInitialize = function(mob)
     end)
 end
 
+entity.onMobDespawn = function(mob)
+    if mob:getLocalVar('[Respawn]bootSync') == 1 then
+        mob:setLocalVar('[Respawn]bootSync', 0)
+        return
+    end
+
+    local respawn = math.randomInt(7200, 7200) -- 2 hours
+    mob:setRespawnTime(respawn)
+    SetServerVariable('[Respawn]Manipulator', GetSystemTime() + respawn)
+end
+
 entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGMAGIC, -7500)
     mob:setMod(xi.mod.SLASH_SDT, -5000)

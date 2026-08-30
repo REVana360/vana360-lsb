@@ -124,8 +124,15 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getLocalVar('[Respawn]bootSync') == 1 then
+        mob:setLocalVar('[Respawn]bootSync', 0)
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
-    mob:setRespawnTime(math.randomInt(5400, 7200)) -- 90 to 120 minutes
+    local respawn = math.randomInt(75600, 86400) -- 21 to 24 hours
+    mob:setRespawnTime(respawn)
+    SetServerVariable('[Respawn]Capricious_Cassie', GetSystemTime() + respawn)
 end
 
 return entity

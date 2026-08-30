@@ -1,5 +1,9 @@
 -----------------------------------
 -- Shining Ruby
+-- Era source: Reverts doubled ward duration and skill-over-cap scaling.
+-- Source: http://www.playonline.com/pcd/update/ff11us/20061017UJ0a71/detail.html
+--         https://www.bg-wiki.com/ffxi/Version_Update_(09/08/2010)
+-- Notes : https://wiki.ffo.jp/html/14112.html
 -----------------------------------
 ---@type TAbilityPet
 local abilityObject = {}
@@ -9,8 +13,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration = 180 + bonusTime
+    local duration = 180
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 

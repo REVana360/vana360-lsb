@@ -14,7 +14,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.IRON_ARROW,                  8 },
         { xi.item.CROSSBOW_BOLT,               6 },
         { xi.item.GRENADE,                  1204 },
-        { xi.item.DUCHY_WAYSTONE,          10000 },
     }
 
     player:showText(npc, zones[xi.zone.LOWER_JEUNO].text.JUNK_SHOP_DIALOG)

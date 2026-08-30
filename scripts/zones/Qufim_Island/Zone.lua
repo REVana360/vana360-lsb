@@ -10,6 +10,13 @@ zoneObject.onInitialize = function(zone)
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.expeditionaryForce.initZone(zone)
+
+    local tree = zone:queryEntitiesByName('Dosetsu_Tree')[1]
+    if not tree then
+        return
+    end
+
+    tree:setLocalVar('respawn', GetServerVariable('[Respawn]Dosetsu_Tree'))
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)

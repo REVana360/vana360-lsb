@@ -548,9 +548,6 @@ templates:
         - chance: uncommon
           one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
       steal: silver_beastcoin
-      despoil:
-        hard-boiled_egg:              0
-        serving_of_herb_crawler_eggs: 0
 
   Brass_Quadav_2:
     id:            525
@@ -628,9 +625,6 @@ templates:
         - chance: uncommon
           one_of: [quadav_fetich_arms, quadav_fetich_legs, quadav_fetich_head, quadav_fetich_torso]
       steal: silver_beastcoin
-      despoil:
-        hard-boiled_egg:              0
-        serving_of_herb_crawler_eggs: 0
 
   Carnivorous_Crawler:
     id:            646

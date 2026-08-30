@@ -4,6 +4,8 @@
 -----------------------------------
 -- !addmission 4 6
 -- Naja Salaheem : !pos 22.700 -8.804 -45.591 50
+-- The original JST-midnight wait was shortened in June 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.WESTERLY_WINDS)
@@ -85,6 +87,7 @@ mission.sections =
                     if mission:complete(player) then
                         player:delKeyItem(xi.ki.RAILLEFALS_NOTE)
                         xi.mission.setMustZone(player, xi.mission.log_id.TOAU, xi.mission.id.toau.A_MERCENARY_LIFE)
+                        player:setCharVar('Mission[4][7]Timer', 1, JstMidnight())
                     end
                 end,
             },

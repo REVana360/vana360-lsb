@@ -195,8 +195,6 @@ templates:
       drops:
         - chance: common
           item:   bat_wing
-        - chance: very_rare
-          item:   vial_of_fiend_blood
       despoil:
         bat_wing: 0
 
@@ -1963,8 +1961,6 @@ templates:
       drops:
         - chance: common
           item:   bat_wing
-        - chance: uncommon
-          item:   vial_of_magicked_blood
       despoil:
         bat_wing: 0
 
@@ -2254,8 +2250,6 @@ templates:
       drops:
         - chance: common
           item:   bat_wing
-        - chance: uncommon
-          item:   vial_of_magicked_blood
       despoil:
         bat_wing: 0
 

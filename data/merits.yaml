@@ -1,4 +1,6 @@
 # yaml-language-server: $schema=schemas/merits.schema.json
+# Adjust retail merits to mirror merits as they existed in July 2009.
+# https://www.playonline.com/pcd/verup/ff11us/detail/3347/detail.html
 
 meta:
   enum:
@@ -18,12 +20,12 @@ meta:
 
 merits:
   upgrade_costs:
-    hp_mp:            [1, 2, 3, 4, 5, 5, 5, 5, 5, 7, 7, 7, 9, 9, 9]
-    attributes:       [3, 6, 9, 9, 9, 12, 12, 12, 12, 15, 15, 15, 15, 18, 18]
+    hp_mp:            [1, 2, 3, 4, 5, 5, 5, 5]
+    attributes:       [3, 6, 9, 9, 9]
     combat_skills:    [1, 2, 3, 3, 3, 3, 3, 3]
-    defensive_skills: [1, 2, 3, 3, 3, 3, 3, 3]
+    defensive_skills: [1, 2, 3, 3]
     magic_skills:     [1, 2, 3, 3, 3, 3, 3, 3]
-    others:           [1, 2, 3, 4, 5]
+    others:           [1, 2, 3, 4]
     job_group_1:      [1, 2, 3, 4, 5]
     job_group_2:      [3, 4, 5, 5, 5]
     weapon_skills:    [20, 22, 24, 27, 30]
@@ -47,7 +49,7 @@ merits:
   categories:
     hp_mp:
       id:           0x0040
-      max_upgrades: 75
+      max_upgrades: 8
       merits:
         max_hp:
           id:           0x0040
@@ -57,14 +59,15 @@ merits:
           id:           0x0042
           value:        10
           upgrade_cost: hp_mp
-        max_merit:
+        max_merit: # Disable Max Merit
           id:           0x0044
           value:        1
           upgrade_cost: max_merits
+          max_upgrades: 0
 
     attributes:
       id:           0x0080
-      max_upgrades: 105
+      max_upgrades: 5
       merits:
         str:
           id:           0x0080
@@ -97,7 +100,7 @@ merits:
 
     combat_skills:
       id:           0x00C0
-      max_upgrades: 152
+      max_upgrades: 20
       merits:
         hand_to_hand_skill:
           id:           0x00C0
@@ -215,7 +218,7 @@ merits:
 
     magic_skills:
       id:           0x0100
-      max_upgrades: 112
+      max_upgrades: 16
       merits:
         divine_magic_skill:
           id:           0x0100
@@ -295,16 +298,18 @@ merits:
           upgrade_cost: magic_skills
           skills:       [geomancy]
           jobs:         [geo]
+          max_upgrades: 0
         handbell_skill:
           id:           0x011A
           value:        2
           upgrade_cost: magic_skills
           skills:       [handbell]
           jobs:         [geo]
+          max_upgrades: 0
 
     others:
       id:           0x0140
-      max_upgrades: 10
+      max_upgrades: 8
       merits:
         enmity_increase:
           id:           0x0140
@@ -327,9 +332,9 @@ merits:
           value:        2
           upgrade_cost: others
 
-    weapon_skills:
+    weapon_skills: # Disable upgrades to unlock Weapon Skills
       id:           0x0680
-      max_upgrades: 15
+      max_upgrades: 0
       merits:
         shijin_spiral:
           id:           0x0680
@@ -545,6 +550,16 @@ merits:
       max_upgrades: 10
       jobs:         [whm]
       merits:
+        protectra_v:
+          id:           0x0884
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        protectra_v
+        shellra_v:
+          id:           0x0886
+          value:        2
+          upgrade_cost: job_group_2
+          spell:        shellra_v
         martyr:
           id:           0x0880
           # Additional ranks reduced recast by 150 seconds before March 27, 2012.
@@ -559,10 +574,12 @@ merits:
           id:           0x0888
           value:        2
           upgrade_cost: job_group_2
+          max_upgrades: 0
         animus_misery:
           id:           0x088A
           value:        5
           upgrade_cost: job_group_2
+          max_upgrades: 0
 
     blm_group_1:
       id:           0x0240
@@ -603,30 +620,66 @@ merits:
       max_upgrades: 10
       jobs:         [blm]
       merits:
+        flare_ii:
+          id:           0x08C0
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        flare_ii
+        freeze_ii:
+          id:           0x08C2
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        freeze_ii
+        tornado_ii:
+          id:           0x08C4
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        tornado_ii
+        quake_ii:
+          id:           0x08C6
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        quake_ii
+        burst_ii:
+          id:           0x08C8
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        burst_ii
+        flood_ii:
+          id:           0x08CA
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        flood_ii
         ancient_magic_atk_bonus:
           id:           0x08CC
           value:        3
           upgrade_cost: job_group_2
+          max_upgrades: 0
         ancient_magic_burst_dmg:
           id:           0x08CE
           value:        3
           upgrade_cost: job_group_2
+          max_upgrades: 0
         elemental_magic_accuracy:
           id:           0x08D0
           value:        5
           upgrade_cost: job_group_2
+          max_upgrades: 0
         elemental_debuff_duration:
           id:           0x08D2
           value:        12
           upgrade_cost: job_group_2
+          max_upgrades: 0
         elemental_debuff_effect:
           id:           0x08D4
           value:        1
           upgrade_cost: job_group_2
+          max_upgrades: 0
         aspir_absorption_amount:
           id:           0x08D6
           value:        4
           upgrade_cost: job_group_2
+          max_upgrades: 0
 
     rdm_group_1:
       id:           0x0280
@@ -639,27 +692,27 @@ merits:
           upgrade_cost: job_group_1
         fire_magic_accuracy:
           id:           0x0282
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
         ice_magic_accuracy:
           id:           0x0284
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
         wind_magic_accuracy:
           id:           0x0286
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
         earth_magic_accuracy:
           id:           0x0288
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
         lightning_magic_accuracy:
           id:           0x028A
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
         water_magic_accuracy:
           id:           0x028C
-          value:        2
+          value:        3
           upgrade_cost: job_group_1
 
     rdm_group_2:
@@ -667,30 +720,66 @@ merits:
       max_upgrades: 10
       jobs:         [rdm]
       merits:
+        dia_iii:
+          id:           0x0900
+          value:        30
+          upgrade_cost: job_group_2
+          spell:        dia_iii
+        slow_ii:
+          id:           0x0902
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        slow_ii
+        paralyze_ii:
+          id:           0x0904
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        paralyze_ii
+        phalanx_ii:
+          id:           0x0906
+          value:        3
+          upgrade_cost: job_group_2
+          spell:        phalanx_ii
+        bio_iii:
+          id:           0x0908
+          value:        30
+          upgrade_cost: job_group_2
+          spell:        bio_iii
+        blind_ii:
+          id:           0x090A
+          value:        1
+          upgrade_cost: job_group_2
+          spell:        blind_ii
         enfeebling_magic_duration:
           id:           0x090C
           value:        6
           upgrade_cost: job_group_2
+          max_upgrades: 0
         magic_accuracy:
           id:           0x090E
           value:        5
           upgrade_cost: job_group_2
+          max_upgrades: 0
         enhancing_magic_duration:
           id:           0x0910
           value:        6
           upgrade_cost: job_group_2
+          max_upgrades: 0
         immunobreak_chance:
           id:           0x0912
           value:        3
           upgrade_cost: job_group_2
+          max_upgrades: 0
         enspell_damage:
           id:           0x0914
           value:        3
           upgrade_cost: job_group_2
+          max_upgrades: 0
         accuracy:
           id:           0x0916
           value:        5
           upgrade_cost: job_group_2
+          max_upgrades: 0
 
     thf_group_1:
       id:           0x02C0
@@ -815,7 +904,7 @@ merits:
           upgrade_cost: job_group_1
         weapon_bash_effect:
           id:           0x0348
-          value:        6
+          value:        10
           upgrade_cost: job_group_1
 
     drk_group_2:
@@ -839,7 +928,7 @@ merits:
           upgrade_cost: job_group_2
         desperate_blows:
           id:           0x09C6
-          value:        200
+          value:        5
           upgrade_cost: job_group_2
 
     bst_group_1:
@@ -853,7 +942,7 @@ merits:
           upgrade_cost: job_group_1
         reward_recast:
           id:           0x0382
-          value:        3
+          value:        6
           upgrade_cost: job_group_1
         call_beast_recast:
           id:           0x0384
@@ -861,7 +950,7 @@ merits:
           upgrade_cost: job_group_1
         sic_recast:
           id:           0x0386
-          value:        2
+          value:        4
           upgrade_cost: job_group_1
         tame_recast:
           id:           0x0388
@@ -907,7 +996,7 @@ merits:
           upgrade_cost: job_group_1
         minne_effect:
           id:           0x03C4
-          value:        2
+          value:        1
           upgrade_cost: job_group_1
         minuet_effect:
           id:           0x03C6
@@ -923,22 +1012,34 @@ merits:
       max_upgrades: 10
       jobs:         [brd]
       merits:
+        foe_sirvente:
+          id:           0x0A44
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        foe_sirvente
+        adventurers_dirge:
+          id:           0x0A46
+          value:        3
+          upgrade_cost: job_group_2
+          spell:        adventurers_dirge
         nightingale:
           id:           0x0A40
-          value:        25
+          value:        150
           upgrade_cost: job_group_2
         troubadour:
           id:           0x0A42
-          value:        25
+          value:        150
           upgrade_cost: job_group_2
         con_anima:
           id:           0x0A48
           value:        1
           upgrade_cost: job_group_2
+          max_upgrades: 0
         con_brio:
           id:           0x0A4A
           value:        1
           upgrade_cost: job_group_2
+          max_upgrades: 0
 
     rng_group_1:
       id:           0x0400
@@ -947,7 +1048,7 @@ merits:
       merits:
         scavenge_effect:
           id:           0x0400
-          value:        5
+          value:        10
           upgrade_cost: job_group_1
         camouflage_recast:
           id:           0x0402
@@ -1031,7 +1132,7 @@ merits:
           upgrade_cost: job_group_2
         blade_bash:
           id:           0x0AC2
-          value:        15
+          value:        150
           upgrade_cost: job_group_2
         ikishoten:
           id:           0x0AC4
@@ -1265,7 +1366,7 @@ merits:
           upgrade_cost: job_group_1
         monster_correlation:
           id:           0x0544
-          value:        4
+          value:        1
           upgrade_cost: job_group_1
         physical_potency:
           id:           0x0546
@@ -1287,7 +1388,7 @@ merits:
           upgrade_cost: job_group_2
         diffusion:
           id:           0x0BC2
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         enchainment:
           id:           0x0BC4
@@ -1331,11 +1432,11 @@ merits:
       merits:
         snake_eye:
           id:           0x0C00
-          value:        10
+          value:        150
           upgrade_cost: job_group_2
         fold:
           id:           0x0C02
-          value:        10
+          value:        150
           upgrade_cost: job_group_2
         winning_streak:
           id:           0x0C04
@@ -1350,20 +1451,23 @@ merits:
       id:           0x05C0
       max_upgrades: 10
       jobs:         [pup]
+      # Later versions kept these IDs but renamed the merits. Retain the July names.
       merits:
         automaton_skills:
           id:           0x05C0
           value:        2
           upgrade_cost: job_group_1
-          skills:       [automaton_melee, automaton_ranged, automaton_magic]
+          skills:       [automaton_melee]
         maintenance_recast:
           id:           0x05C2
-          value:        3
+          value:        2
           upgrade_cost: job_group_1
+          skills:       [automaton_ranged]
         repair_effect:
           id:           0x05C4
           value:        2
           upgrade_cost: job_group_1
+          skills:       [automaton_magic]
         activate_recast:
           id:           0x05C6
           value:        40
@@ -1380,11 +1484,11 @@ merits:
       merits:
         role_reversal:
           id:           0x0C40
-          value:        5
+          value:        30
           upgrade_cost: job_group_2
         ventriloquy:
           id:           0x0C42
-          value:        5
+          value:        15
           upgrade_cost: job_group_2
         fine_tuning:
           id:           0x0C44
@@ -1424,11 +1528,11 @@ merits:
       merits:
         saber_dance:
           id:           0x0C80
-          value:        5
+          value:        30
           upgrade_cost: job_group_2
         fan_dance:
           id:           0x0C82
-          value:        5
+          value:        30
           upgrade_cost: job_group_2
         no_foot_rise:
           id:           0x0C84
@@ -1450,7 +1554,7 @@ merits:
           upgrade_cost: job_group_1
         modus_veritas_duration:
           id:           0x0642
-          value:        1
+          value:        10
           upgrade_cost: job_group_1
         helix_magic_acc_att:
           id:           0x0644
@@ -1484,16 +1588,16 @@ merits:
           upgrade_cost: job_group_2
         enlightenment:
           id:           0x0CC8
-          value:        5
+          value:        75
           upgrade_cost: job_group_2
         stormsurge:
           id:           0x0CCA
-          value:        1
+          value:        3
           upgrade_cost: job_group_2
 
     geo_group_1:
       id:           0x06C0
-      max_upgrades: 10
+      max_upgrades: 0
       jobs:         [geo]
       merits:
         full_circle_effect:
@@ -1519,7 +1623,7 @@ merits:
 
     geo_group_2:
       id:           0x0D40
-      max_upgrades: 10
+      max_upgrades: 0
       jobs:         [geo]
       merits:
         mending_halation:
@@ -1541,7 +1645,7 @@ merits:
 
     run_group_1:
       id:           0x0700
-      max_upgrades: 10
+      max_upgrades: 0
       jobs:         [run]
       merits:
         rune_enhance:
@@ -1567,7 +1671,7 @@ merits:
 
     run_group_2:
       id:           0x0D80
-      max_upgrades: 10
+      max_upgrades: 0
       jobs:         [run]
       merits:
         battuta:

@@ -3,6 +3,11 @@
 -- Family: Avatar (Shiva)
 -- Description: Deals Physical damage to a single target.
 -----------------------------------
+-- Historical Blood Pact: Rage behavior before the November 10th, 2016 patch.
+-- Source: https://wiki.ffo.jp/html/35795.html
+-- Multihit skills' fTPs were lowered but the first hit fTP carried over into subsequent hits.
+-- In the 75 era, the subsequent hits had a 1.0 multiplier.
+-- Old fTPs might be lost to time unless there is new data uncovered through online documentation or client data.
 ---@type TAbilityPet
 local abilityObject = {}
 
@@ -18,7 +23,7 @@ abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
     params.baseDamage        = pet:getWeaponDmg()
     params.numHits           = 1
     params.fTP               = { 2.0, 2.0, 2.0 }
-    params.fTPSubsequentHits = { 2.0, 2.0, 2.0 }
+    params.fTPSubsequentHits = { 1.00, 1.00, 1.00 }
     params.str_wSC           = 0.30
     params.attackType        = xi.attackType.PHYSICAL
     params.damageType        = xi.damageType.BLUNT

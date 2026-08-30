@@ -73,8 +73,15 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
+    if mob:getLocalVar('[Respawn]bootSync') == 1 then
+        mob:setLocalVar('[Respawn]bootSync', 0)
+        return
+    end
+
     xi.mob.updateNMSpawnPoint(mob)
-    mob:setRespawnTime(math.randomInt(3600, 7200)) -- 1 to 2 hours
+    local respawn = math.randomInt(75600, 86400) -- 21 to 24 hours
+    mob:setRespawnTime(respawn)
+    SetServerVariable('[Respawn]Morbolger', GetSystemTime() + respawn)
 end
 
 return entity

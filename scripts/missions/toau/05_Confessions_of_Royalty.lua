@@ -4,6 +4,8 @@
 -----------------------------------
 -- !addmission 4 4
 -- Halver : !pos 2 0.1 0.1 233
+-- The original JST-midnight wait was shortened in September 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/44090-Sep-9-2014-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.CONFESSIONS_OF_ROYALTY)
@@ -92,7 +94,9 @@ mission.sections =
                 [564] = function(player, csid, option, npc)
                     if option == 1 then
                         player:delKeyItem(xi.ki.RAILLEFALS_LETTER)
-                        mission:complete(player)
+                        if mission:complete(player) then
+                            mission:setVar(player, 'Timer', 1, JstMidnight())
+                        end
                     end
                 end,
             },

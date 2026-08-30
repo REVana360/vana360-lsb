@@ -12,6 +12,8 @@ values:
   escape:           0x0001 # Ability to use Escape Spell
   fellow:           0x0002 # Ability to summon Fellow NPC
   mount:            0x0004 # Ability to use Chocobos and mounts
+  # Before September 2010, Mazurka was limited to city and outdoor zones.
+  # Source: https://www.bg-wiki.com/ffxi/Version_Update_(09/08/2010)
   mazurka:          0x0008 # Ability to use Mazurka Spell
   tractor:          0x0010 # Ability to use Tractor Spell
   mogmenu:          0x0020 # Ability to communicate with Nomad Moogle (menu access mog house)

@@ -1745,8 +1745,6 @@ templates:
           item:   seasoning_stone
         - chance: rare
           item:   fossilized_fang
-        - chance: rare
-          item:   chunk_of_adaman_ore
     content: abyssea
 
   Renfred:

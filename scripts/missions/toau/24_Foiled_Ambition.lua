@@ -3,6 +3,8 @@
 -- Aht Uhrgan Mission 24
 -----------------------------------
 -- !addmission 4 23
+-- The original JST-midnight wait was shortened in August 2016.
+-- Source: https://forum.square-enix.com/ffxi/threads/51154-Aug.-3-2016-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.FOILED_AMBITION)
@@ -55,7 +57,7 @@ mission.sections =
                 [3097] = function(player, csid, option, npc)
                     if mission:complete(player) then
                         player:setLocalVar('Mission[4][24]mustZone', 1)
-                        player:setCharVar('Mission[4][24]Timer', VanadielUniqueDay() + 1)
+                        player:setCharVar('Mission[4][24]Timer', 1, JstMidnight())
                     end
                 end,
             },

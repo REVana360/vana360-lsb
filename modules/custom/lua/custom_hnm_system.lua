@@ -21,7 +21,6 @@ local hnmSystem = Module:new('custom_HNM_System')
 -----------------------------------
 -- Module enable/disable
 -----------------------------------
--- Do not use along era_HNM_System module. Choose one or the other.
 hnmSystem:setEnabled(false)
 
 -----------------------------------

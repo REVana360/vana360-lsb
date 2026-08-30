@@ -9,8 +9,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
 end
 
 abilityObject.onPetAbility = function(target, pet, petskill, summoner, action)
-    local bonusTime = utils.clamp(summoner:getSkillLevel(xi.skill.SUMMONING_MAGIC) - 300, 0, 200)
-    local duration  = 120 + bonusTime
+    local duration = math.min(60 + xi.summon.getSummoningSkillOverCap(pet) * 2, 180)
 
     xi.job_utils.summoner.onUseBloodPact(target, petskill, summoner, action)
 

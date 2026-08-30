@@ -5,7 +5,9 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
-    effect:addMod(xi.mod.CURE_POTENCY_RCVD, effect:getPower())
+    -- July 2009: Healer's Roll restored MP over time, not cure potency.
+    -- Source: https://forum.square-enix.com/ffxi/threads/20744?p=278735#post278735
+    effect:addMod(xi.mod.MPHEAL, effect:getPower())
 end
 
 effectObject.onEffectTick = function(target, effect)

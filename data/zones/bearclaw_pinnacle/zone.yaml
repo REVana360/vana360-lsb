@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../schemas/zone.schema.json
 
-misc: [mazurka, tractor, pet, trust, los_player_block]
+misc: [tractor, pet, trust, los_player_block]
 music:
   battle_solo:  220
   battle_party: 220

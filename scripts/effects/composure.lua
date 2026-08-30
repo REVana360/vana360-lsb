@@ -7,7 +7,9 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
-    local power = math.floor((24 * target:getMainLvl() + 74) / 49) + target:getJobPointLevel(xi.jp.COMPOSURE_EFFECT)
+    -- Accuracy scaled at one point per five levels before the February 2019 adjustment.
+    -- Source: https://forum.square-enix.com/ffxi/threads/55025-February.-8-2019-%28JST%29-Version-Update
+    local power = math.floor(target:getMainLvl() / 5)
 
     effect:addMod(xi.mod.ACC, power)
 end

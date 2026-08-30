@@ -205,17 +205,8 @@ xi.job_utils.paladin.useSepulcher = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useShieldBash = function(player, target, ability)
-    local shieldSize = player:getShieldSize()
-    local jpValue    = player:getJobPointLevel(xi.jp.SHIELD_BASH_EFFECT)
-    local damage     = math.floor(player:getMainLvl() * 0.273)
-
-    if shieldSize == 2 then
-        damage = 13 + damage
-    elseif shieldSize == 3 then
-        damage = 40 + damage
-    elseif shieldSize == 4 then
-        damage = 67 + damage
-    end
+    -- Shield-size and job-point bonuses were added after the July 2009 profile.
+    local damage = math.floor(player:getMainLvl() * 0.28)
 
     -- Main job factors
     if player:getMainJob() ~= xi.job.PLD then
@@ -224,7 +215,7 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
         damage = math.floor(damage)
     end
 
-    damage = damage + player:getMod(xi.mod.SHIELD_BASH) + (jpValue * 10)
+    damage = damage + player:getMod(xi.mod.SHIELD_BASH)
 
     -- Apply stun effect
     if
@@ -247,10 +238,10 @@ xi.job_utils.paladin.useShieldBash = function(player, target, ability)
     end
 
     -- Randomize damage
-    local randomizer = 1 + math.randomInt(1, 5) / 100
+    local randomizer = 1 + (math.randomInt(1, 5) / 100)
 
-    damage = math.floor(damage * randomizer)
-    damage = utils.handleStoneskin(target, damage, xi.attackType.PHYSICAL)
+    damage = damage * randomizer
+    damage = utils.handleStoneskin(target, damage)
 
     target:takeDamage(damage, player, xi.attackType.PHYSICAL, xi.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)

@@ -4,6 +4,8 @@
 -----------------------------------
 -- !addmission 4 2
 -- Naja Salaheem : !pos 22.700 -8.804 -45.591 50
+-- The original JST-midnight wait was shortened in June 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/42614-Jun-17-2014-%28JST%29-Version-Update
 -----------------------------------
 
 local mission = Mission:new(xi.mission.log_id.TOAU, xi.mission.id.toau.PRESIDENT_SALAHEEM)
@@ -27,7 +29,10 @@ mission.sections =
                 onTrigger = function(player, npc)
                     if player:getMissionStatus(mission.areaId) == 1 then
                         -- TODO: This isn't necesarily true. We have proof showing that is both needed and not needed. More info is necesary.
-                        if not mission:getMustZone(player) then
+                        if
+                            not mission:getMustZone(player) and
+                            mission:getVar(player, 'Timer') == 0
+                        then
                             -- Trivia: There is a copy of this CS, but as a flashback, with Falzum instead of your character. CS: 3030
                             -- TODO: Maybe it's used?
                             return mission:progressEvent(3020, { text_table = 0 }) -- Enter Not-Trion.
@@ -47,6 +52,7 @@ mission.sections =
                 [73] = function(player, csid, option, npc)
                     player:setMissionStatus(mission.areaId, 1)
                     mission:setMustZone(player) -- TODO: This isn't necesarily true. We have proof showing that is both needed and not needed. More info is necesary.
+                    mission:setVar(player, 'Timer', 1, JstMidnight())
                 end,
 
                 [3020] = function(player, csid, option, npc)

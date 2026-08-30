@@ -21,8 +21,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.SCROLL_OF_BEWITCHING_ETUDE,   60000, 3 },
         { xi.item.SCROLL_OF_HERCULEAN_ETUDE,    88400, 2 },
         { xi.item.SCROLL_OF_UNCANNY_ETUDE,      85000, 2 },
-        { xi.item.SCROLL_OF_FOE_SIRVENTE,      99375, 3 },
-        { xi.item.SCROLL_OF_ADVENTURERS_DIRGE, 99375, 3 },
     }
 
     player:showText(npc, zones[xi.zone.BASTOK_MARKETS].text.HARMODIOS_SHOP_DIALOG)

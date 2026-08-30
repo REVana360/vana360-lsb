@@ -1088,8 +1088,6 @@ templates:
           item:   yagudo_bead_necklace
         - chance: uncommon
           item:   scroll_of_foe_lullaby
-        - chance: rare
-          item:   scroll_of_mages_ballad
         - chance: very_rare
           item:   circlet
         - chance: very_rare

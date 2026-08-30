@@ -5,6 +5,7 @@
 -- https://www.bg-wiki.com/ffxi/Knockout (Adoulin)
 -- https://web.archive.org/web/20100401051051/https://www.geocities.jp/pupff/other/knockout.html (Original)
 -----------------------------------
+-- TODO: find a patch note or source for this change
 ---@type TAbilityAutomaton
 local abilityObject = {}
 
@@ -23,7 +24,7 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
     params.numHits          = utils.clamp(1 + xi.automaton.getExtraHits(automaton, 1), 1, 8)
     params.fTP              = { 4.0, 4.5, 5.0 }
-    params.agi_wSC          = 0.85
+    params.agi_wSC          = 0.40
     params.accuracyModifier = { 50, 50, 50 }
     params.attackType       = xi.attackType.PHYSICAL
     params.damageType       = xi.damageType.BLUNT

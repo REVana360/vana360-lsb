@@ -11,6 +11,12 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.HP_DRAIN)
 end
 
+entity.onMobDespawn = function(mob)
+    local respawn = 259200 -- 72 hours
+    mob:setRespawnTime(respawn)
+    SetServerVariable('[Respawn]Bloodsucker_NM', GetSystemTime() + respawn)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
     xi.regime.checkRegime(player, mob, 613, 1, xi.regime.type.GROUNDS)
 end

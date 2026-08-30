@@ -4,6 +4,12 @@
 -- Involved in quest: No Strings Attached
 -- !pos 34.325 -7.804 57.511 50
 -----------------------------------
+-- July 2009 frame materials and work waits:
+-- https://forum.square-enix.com/ffxi/threads/46531-Mar-26-2015-(JST)-Version-Update
+-- https://forum.square-enix.com/ffxi/threads/50760-Jun.-7-2016-(JST)-Version-Update
+-- https://forum.square-enix.com/ffxi/threads/53127-September.-11-2017-(JST)-Version-Update
+-- https://wiki.ffo.jp/html/13124.html
+-----------------------------------
 local ID = zones[xi.zone.AHT_URHGAN_WHITEGATE]
 -----------------------------------
 ---@type TNpcEntity
@@ -50,8 +56,8 @@ local unlockCost =
 -- combination that can be purchased (Valoredge, Sharpshot, Stormwaker)
 local headAndFrameItems =
 {
-    [2] = { xi.item.BRASS_SHEET,              xi.item.WAMOURA_COCOON,          xi.item.CHUNK_OF_IMPERIAL_CERMET,  xi.item.PATAS          },
-    [3] = { xi.item.PIECE_OF_ROSEWOOD_LUMBER, xi.item.SQUARE_OF_KARAKUL_CLOTH, xi.item.SQUARE_OF_KARAKUL_LEATHER, xi.item.HEAVY_CROSSBOW },
+    [2] = { xi.item.BRASS_SHEET,              xi.item.WAMOURA_COCOON,          xi.item.CHUNK_OF_IMPERIAL_CERMET,  xi.item.TIGERFANGS         },
+    [3] = { xi.item.PIECE_OF_ROSEWOOD_LUMBER, xi.item.SQUARE_OF_KARAKUL_CLOTH, xi.item.SQUARE_OF_KARAKUL_LEATHER, xi.item.REPEATING_CROSSBOW },
     [4] = { xi.item.SPOOL_OF_GOLD_THREAD,     xi.item.SQUARE_OF_VELVET_CLOTH,  xi.item.SQUARE_OF_WAMOURA_CLOTH,   xi.item.BRASS_RING     },
 }
 
@@ -82,6 +88,26 @@ local function getWaitRange(turbanType, trade)
     end
 
     return { 0, 0 }
+end
+
+-- A fueled work day completes at Japanese midnight. A new coffee is required
+-- before Ghatsad can work the next day.
+local function settleHeadWork(player)
+    local fueledUntil = player:getCharVar('[PUP]HeadFueled')
+
+    if fueledUntil ~= 0 and JstMidnight() > fueledUntil then
+        local daysRemaining = player:getCharVar('[PUP]HeadDaysRemaining') - 1
+
+        player:setCharVar('[PUP]HeadDaysRemaining', daysRemaining)
+        player:setCharVar('[PUP]HeadFueled', 0)
+
+        if
+            daysRemaining <= 0 and
+            player:getCharVar('PUP_AttachmentReady') > VanadielUniqueDay()
+        then
+            player:setCharVar('PUP_AttachmentReady', VanadielUniqueDay())
+        end
+    end
 end
 
 local function getNumUnlockedHeads(player)
@@ -135,15 +161,33 @@ local function play_event902(player, newAttachmentStatus, waitDays)
     player:setCharVar('PUP_AttachmentStatus', newAttachmentStatus)
     player:setCharVar('PUP_AttachmentReady', VanadielUniqueDay() + waitDays)
     player:setCharVar('PUP_nextCoffeeTrade', VanadielUniqueDay() + 1)
+    player:setCharVar('[PUP]HeadDaysRemaining', waitDays)
+    player:setCharVar('[PUP]HeadFueled', JstMidnight())
     player:startEvent(902)
 end
 
 entity.onTrade = function(player, npc, trade)
     local attachmentStatus   = player:getCharVar('PUP_AttachmentStatus')
     local numUnlockedHeads   = getNumUnlockedHeads(player)
+    local tradeHasPayment    = trade:getItemQty(unlockCost[numUnlockedHeads][1]) == unlockCost[numUnlockedHeads][2]
+
+    if attachmentStatus == 12 or attachmentStatus == 13 then
+        settleHeadWork(player)
+
+        if player:getCharVar('[PUP]HeadDaysRemaining') > 0 then
+            if
+                player:getCharVar('[PUP]HeadFueled') == 0 and
+                npcUtil.tradeMatches(trade, { { xi.item.CUP_OF_IMPERIAL_COFFEE, 1 } })
+            then
+                player:startEvent(904)
+            end
+
+            return
+        end
+    end
+
     local attachmentReadyDay = player:getCharVar('PUP_AttachmentReady')
     local attachmentReady    = attachmentReadyDay ~= 0 and attachmentReadyDay <= VanadielUniqueDay()
-    local tradeHasPayment    = trade:getItemQty(unlockCost[numUnlockedHeads][1]) == unlockCost[numUnlockedHeads][2]
 
     -- Initial Trade: Has Materials + Payment, or just Materials
     if attachmentStatus >= 2 and attachmentStatus <= 4 then
@@ -271,6 +315,23 @@ entity.onTrigger = function(player, npc)
 
     -- Paid in Full (Mats & Currency) for Head/Frame Combination
     elseif attachmentStatus >= 8 and attachmentStatus <= 10 then
+        local completionTime = player:getCharVar('[PUP]FrameCompletion')
+
+        if completionTime ~= 0 then
+            if JstMidnight() <= completionTime then
+                player:startEvent(626)
+                return
+            end
+
+            player:setCharVar('[PUP]FrameCompletion', 0)
+
+            if player:getCharVar('PUP_AttachmentReady') > VanadielUniqueDay() then
+                player:setCharVar('PUP_AttachmentReady', VanadielUniqueDay())
+            end
+
+            attachmentReady = true
+        end
+
         if not attachmentReady then
             player:startEvent(626)
         else
@@ -285,16 +346,23 @@ entity.onTrigger = function(player, npc)
 
     -- Paid for Soulsoother/Spiritreaver Head
     elseif attachmentStatus == 12 or attachmentStatus == 13 then
-        local attachmentDaysRemaining = attachmentReadyDay - VanadielUniqueDay()
+        settleHeadWork(player)
 
-        if not attachmentReady then
-            player:startEvent(903, attachmentDaysRemaining, 1)
-        else
-            if attachmentDaysRemaining > 0 then
-                player:startEvent(903, attachmentDaysRemaining, 0)
+        attachmentReadyDay = player:getCharVar('PUP_AttachmentReady')
+        attachmentReady    = attachmentReadyDay ~= 0 and attachmentReadyDay <= VanadielUniqueDay()
+
+        local daysRemaining = player:getCharVar('[PUP]HeadDaysRemaining')
+
+        if daysRemaining > 0 then
+            if player:getCharVar('[PUP]HeadFueled') ~= 0 then
+                player:startEvent(903, daysRemaining, 1)
             else
-                player:startEvent(905, attachmentStatus - 12)
+                player:startEvent(903, daysRemaining, 0)
             end
+        elseif not attachmentReady then
+            player:startEvent(903, attachmentReadyDay - VanadielUniqueDay(), 1)
+        else
+            player:startEvent(905, attachmentStatus - 12)
         end
 
     -- Ask about other head, after obtaining one already (Spiritreaver or Soulsoother)
@@ -385,6 +453,16 @@ entity.onEventFinish = function(player, csid, option, npc)
         player:setCharVar('PUP_AttachmentStatus', 0)
         player:setCharVar('PUP_AttachmentReady', 0)
         player:setCharVar('PUP_nextCoffeeTrade', 0)
+    end
+
+    if csid == 625 then
+        player:setCharVar('[PUP]FrameCompletion', JstMidnight())
+    elseif csid == 904 and player:getCharVar('[PUP]HeadDaysRemaining') > 0 then
+        player:setCharVar('[PUP]HeadFueled', JstMidnight())
+    elseif csid == 627 or csid == 905 then
+        player:setCharVar('[PUP]FrameCompletion', 0)
+        player:setCharVar('[PUP]HeadDaysRemaining', 0)
+        player:setCharVar('[PUP]HeadFueled', 0)
     end
 end
 

@@ -20,9 +20,6 @@ entity.onTrigger = function(player, npc)
         { xi.item.PLATE_LEGGINGS,   23760, 2 },
         { xi.item.MYTHRIL_LEGGINGS, 39550, 1 },
         { xi.item.GORGET,           18360, 2 },
-        { xi.item.LEATHER_BELT,       425, 3 },
-        { xi.item.SILVER_BELT,      11424, 3 },
-        { xi.item.SWORDBELT,        21573, 1 },
     }
 
     player:showText(npc, zones[xi.zone.BASTOK_MARKETS].text.CHARGINGCHOCOBO_SHOP_DIALOG)

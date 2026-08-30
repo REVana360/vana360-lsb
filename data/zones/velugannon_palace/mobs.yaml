@@ -132,8 +132,6 @@ templates:
       drops:
         - chance: always
           item:   gem_of_the_south
-        - chance: common
-          item:   gem_of_the_south
         - chance: very_common
           item:   libation_abjuration
       steal: buccaneers_knife
@@ -620,8 +618,6 @@ templates:
         - chance: always
           item:   gem_of_the_east
         - chance: common
-          item:   gem_of_the_east
-        - chance: common
           item:   libation_abjuration
         - chance: uncommon
           item:   indra_katars
@@ -846,8 +842,6 @@ templates:
     loot:
       drops:
         - chance: always
-          item:   gem_of_the_north
-        - chance: common
           item:   gem_of_the_north
         - chance: common
           item:   oblation_abjuration

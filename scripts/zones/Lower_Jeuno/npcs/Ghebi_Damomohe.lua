@@ -51,7 +51,6 @@ entity.onEventFinish = function(player, csid, option, npc)
             { xi.item.RICE_BALL,        160 },
             { xi.item.EEL_KABOB,       3000 },
             { xi.item.GARLIC_CRACKER,     4 },
-            { xi.item.CHUNK_OF_BRONZITE, 26566 },
         }
 
         xi.shop.general(player, stock, xi.fameArea.NORG)

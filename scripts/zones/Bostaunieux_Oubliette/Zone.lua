@@ -15,6 +15,19 @@ zoneObject.onInitialize = function(zone)
             zone:registerCylindricalTriggerArea(i, door:getXPos(), door:getZPos(), trapRadius)
         end
     end
+
+    local bloodsucker = GetMobByID(ID.mob.BLOODSUCKER)
+    if not bloodsucker then
+        return
+    end
+
+    local respawn = GetServerVariable('[Respawn]Bloodsucker_NM')
+    if GetSystemTime() < respawn then
+        bloodsucker:setRespawnTime(respawn - GetSystemTime())
+    elseif not bloodsucker:isSpawned() then
+        bloodsucker:setRespawnTime(0)
+        SpawnMob(ID.mob.BLOODSUCKER)
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
