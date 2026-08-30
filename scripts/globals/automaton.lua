@@ -62,6 +62,16 @@ local maneuverList =
 -- Regen & Refresh values are calculated separately in their own function and left nil on purpose.
 xi.automaton.attachmentModifiers =
 {
+    -- Reduces Enmity boost from Strobe: https://wiki.ffo.jp/html/8610.html
+    -- Reduces Store TP from Inhibitor: https://wiki.ffo.jp/html/8625.html
+    -- Changes Armor Plate and Armor Plate II to Defense instead of PDT: https://wiki.ffo.jp/html/9070.html
+    -- Adds a Ranged Attack Penalty to Drum Magazine: https://wiki.ffo.jp/html/8882.html
+    -- Changes Turbo Charger Haste to Gear Haste instead of Magic: https://wiki.ffo.jp/html/8627.html
+    -- Adds Burden to Tactical Processor: https://wiki.ffo.jp/html/13527.html
+    -- Reduces scaling from Volt Gun: https://wiki.ffo.jp/html/8752.html
+    -- Reduces Burden Decay From Heatsink: https://wiki.ffo.jp/html/8629.html
+    -- Reduces the potency of Steam Jackets Damage Reduction: https://wiki.ffo.jp/html/15352.html
+
     ['accelerator'        ] = { { modifier = xi.mod.EVA,                         values = {     5,    10,    15,    20 }, opticFiber = true  }, },
     ['accelerator_ii'     ] = { { modifier = xi.mod.EVA,                         values = {    10,    15,    20,    25 }, opticFiber = true  }, },
     ['accelerator_iii'    ] = { { modifier = xi.mod.EVA,                         values = {    20,    30,    40,    50 }, opticFiber = true  }, },
@@ -73,8 +83,8 @@ xi.automaton.attachmentModifiers =
                                 { modifier = xi.mod.ELEMENTAL_CELERITY,          values = {    25,    25,    25,    25 }, opticFiber = true  }, },
     ['arcanic_cell'       ] = { { modifier = xi.mod.OCCULT_ACUMEN,               values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['arcanic_cell_ii'    ] = { { modifier = xi.mod.OCCULT_ACUMEN,               values = {    20,    40,    70,   100 }, opticFiber = true  }, },
-    ['armor_plate'        ] = { { modifier = xi.mod.DMGPHYS,                     values = {  -500,  -700, -1000, -1500 }, opticFiber = true  }, },
-    ['armor_plate_ii'     ] = { { modifier = xi.mod.DMGPHYS,                     values = { -1000, -1500, -2000, -2500 }, opticFiber = true  }, },
+    ['armor_plate'        ] = { { modifier = xi.mod.DEFP,                        values = {    10,    15,    20,    25 }, opticFiber = true  }, },
+    ['armor_plate_ii'     ] = { { modifier = xi.mod.DEFP,                        values = {    20,    25,    30,    35 }, opticFiber = true  }, },
     ['armor_plate_iii'    ] = { { modifier = xi.mod.DMGPHYS,                     values = { -1500, -2000, -2500, -3000 }, opticFiber = true  }, },
     ['armor_plate_iv'     ] = { { modifier = xi.mod.DMGPHYS,                     values = { -2000, -2500, -3000, -4000 }, opticFiber = true  }, },
     ['auto-repair_kit'    ] = { { modifier = xi.mod.REGEN,                       values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
@@ -89,18 +99,19 @@ xi.automaton.attachmentModifiers =
     ['coiler_ii'          ] = { { modifier = xi.mod.DOUBLE_ATTACK,               values = {    10,    15,    25,    35 }, opticFiber = true  }, },
     ['damage_gauge'       ] = { { modifier = xi.mod.AUTO_HEALING_THRESHOLD,      values = {    50,    60,    70,    80 }, opticFiber = false },
                                 { modifier = xi.mod.AUTO_HEALING_DELAY,          values = {     3,     3,     3,     3 }, opticFiber = false }, },
-    ['drum_magazine'      ] = { { modifier = xi.mod.AUTO_RANGED_DELAY,           values = {     3,     6,     9,    15 }, opticFiber = true  }, },
+    ['drum_magazine'      ] = { { modifier = xi.mod.AUTO_RANGED_DELAY,           values = {     2,     4,     6,     8 }, opticFiber = false },
+                                { modifier = xi.mod.RACC,                        values = {   -15,   -30,   -50,   -75 }, opticFiber = false }, },
     ['dynamo'             ] = { { modifier = xi.mod.CRITHITRATE,                 values = {     3,     5,     7,     9 }, opticFiber = true  }, },
     ['dynamo_ii'          ] = { { modifier = xi.mod.CRITHITRATE,                 values = {     5,    10,    15,    20 }, opticFiber = true  }, },
     ['dynamo_iii'         ] = { { modifier = xi.mod.CRITHITRATE,                 values = {    10,    15,    25,    35 }, opticFiber = true  }, },
-    ['flame_holder'       ] = { { modifier = xi.mod.WEAPONSKILL_DAMAGE_BASE,     values = {   125,   200,   275,   350 }, opticFiber = true  }, },
+    ['flame_holder'       ] = { { modifier = xi.mod.WEAPONSKILL_DAMAGE_BASE,     values = {     0,   125,   150,   175 }, opticFiber = true  }, },
     ['equalizer'          ] = { { modifier = xi.mod.AUTO_EQUALIZER,              values = {    10,    25,    50,    75 }, opticFiber = true  }, },
     ['galvanizer'         ] = { { modifier = xi.mod.COUNTER,                     values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['hammermill'         ] = { { modifier = xi.mod.SHIELD_BASH,                 values = {    15,    25,    50,   100 }, opticFiber = true  },
                                 { modifier = xi.mod.AUTO_SHIELD_BASH_SLOW,       values = {     0,    12,    19,    25 }, opticFiber = true  }, },
-    ['heatsink'           ] = { { modifier = xi.mod.BURDEN_DECAY,                values = {     2,     4,     5,     6 }, opticFiber = false }, },
-    ['ice_maker'          ] = { { modifier = xi.mod.AUTO_MAB_COEFFICIENT,        values = {     0,    50,    75,   100 }, opticFiber = true  }, },
-    ['inhibitor'          ] = { { modifier = xi.mod.STORETP,                     values = {     5,    15,    25,    40 }, opticFiber = true  }, },
+    ['heatsink'           ] = { { modifier = xi.mod.BURDEN_DECAY,                values = {     1,     1,     1,     1 }, opticFiber = false }, },
+    ['ice_maker'          ] = { { modifier = xi.mod.AUTO_MAB_COEFFICIENT,        values = {     0,    20,    40,    60 }, opticFiber = true  }, },
+    ['inhibitor'          ] = { { modifier = xi.mod.STORETP,                     values = {     5,    10,    15,    20 }, opticFiber = true  }, },
     ['inhibitor_ii'       ] = { { modifier = xi.mod.STORETP,                     values = {    10,    25,    40,    65 }, opticFiber = true  }, },
     ['loudspeaker'        ] = { { modifier = xi.mod.MATT,                        values = {     5,    10,    15,    20 }, opticFiber = true  }, },
     ['loudspeaker_ii'     ] = { { modifier = xi.mod.MATT,                        values = {    10,    15,    20,    25 }, opticFiber = true  }, },
@@ -142,10 +153,11 @@ xi.automaton.attachmentModifiers =
                                 { modifier = xi.mod.RACC,                        values = {    30,    40,    55,    70 }, opticFiber = true  }, },
     ['stealth_screen'     ] = { { modifier = xi.mod.ENMITY,                      values = {   -10,   -20,   -30,   -40 }, opticFiber = true  }, },
     ['stealth_screen_ii'  ] = { { modifier = xi.mod.ENMITY,                      values = {   -15,   -25,   -35,   -45 }, opticFiber = true  }, },
-    ['steam_jacket'       ] = { { modifier = xi.mod.AUTO_STEAM_JACKET_REDUCTION, values = {    30,    45,    60,    80 }, opticFiber = true  }, },
-    ['strobe'             ] = { { modifier = xi.mod.ENMITY,                      values = {    10,    25,    40,    60 }, opticFiber = true  }, },
+    ['steam_jacket'       ] = { { modifier = xi.mod.AUTO_STEAM_JACKET_REDUCTION, values = {    25,    35,    40,    60 }, opticFiber = true  }, },
+    ['strobe'             ] = { { modifier = xi.mod.ENMITY,                      values = {     5,    15,    25,    40 }, opticFiber = true  }, },
     ['strobe_ii'          ] = { { modifier = xi.mod.ENMITY,                      values = {    20,    40,    65,   100 }, opticFiber = true  }, },
-    ['tactical_processor' ] = { { modifier = xi.mod.AUTO_DECISION_DELAY,         values = {    50,    70,    85,   115 }, opticFiber = false }, },
+    ['tactical_processor' ] = { { modifier = xi.mod.AUTO_DECISION_DELAY,         values = {    50,    70,    85,   115 }, opticFiber = false },
+                                { modifier = xi.mod.OVERLOAD_THRESH,             values = {    -5,    -5,    -5,    -5 }, opticFiber = false }, },
     ['tension_spring'     ] = { { modifier = xi.mod.ATTP,                        values = {     3,     6,     9,    12 }, opticFiber = true  },
                                 { modifier = xi.mod.RATTP,                       values = {     3,     6,     9,    12 }, opticFiber = true  }, },
     ['tension_spring_ii'  ] = { { modifier = xi.mod.ATTP,                        values = {     6,     9,    12,    15 }, opticFiber = true  },
@@ -157,9 +169,9 @@ xi.automaton.attachmentModifiers =
     ['tranquilizer'       ] = { { modifier = xi.mod.MACC,                        values = {    10,    30,    40,    50 }, opticFiber = true  }, },
     ['tranquilizer_ii'    ] = { { modifier = xi.mod.MACC,                        values = {    20,    40,    55,    70 }, opticFiber = true  }, },
     ['tranquilizer_iii'   ] = { { modifier = xi.mod.MACC,                        values = {    30,    50,    70,    80 }, opticFiber = true  }, },
-    ['turbo_charger'      ] = { { modifier = xi.mod.HASTE_MAGIC,                 values = {   500,  1500,  2000,  2500 }, opticFiber = true  }, },
+    ['turbo_charger'      ] = { { modifier = xi.mod.HASTE_GEAR,                  values = {   500,  1500,  2000,  2500 }, opticFiber = true  }, },
     ['vivi-valve'         ] = { { modifier = xi.mod.CURE_POTENCY,                values = {     5,    15,    30,    45 }, opticFiber = true  }, },
-    ['volt_gun'           ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {     0,    20,    40,   100 }, opticFiber = false }, },
+    ['volt_gun'           ] = { { modifier = xi.mod.VOLT_GUN_POTENCY,            values = {     0,     0,     0,     0 }, opticFiber = false }, },
 }
 
 -----------------------------------
@@ -220,7 +232,8 @@ xi.automaton.repairKit =
     data =
     {
         ['auto-repair_kit'    ] = { id = 193, hpBoost = 1, regenBase = { 0,  1,  2,  3 }, regenMultiplier = { 0, 0.125, 0.225, 0.375 } },
-        ['auto-repair_kit_ii' ] = { id = 196, hpBoost = 2, regenBase = { 0,  3,  6,  9 }, regenMultiplier = { 0, 0.600, 1.200, 1.800 } },
+        -- Reduces potency of Auto Repair Kit II and removes level-based scaling from Mana Tank: https://wiki.ffo.jp/html/19739.html
+        ['auto-repair_kit_ii' ] = { id = 196, hpBoost = 2, regenBase = { 0,  2,  3,  4 }, regenMultiplier = { 0, 0.4, 0.6, 0.8 } },
         ['auto-repair_kit_iii'] = { id = 202, hpBoost = 3, regenBase = { 0,  9, 12, 15 }, regenMultiplier = { 0, 1.800, 2.400, 3.000 } },
         ['auto-repair_kit_iv' ] = { id = 205, hpBoost = 4, regenBase = { 0, 15, 18, 21 }, regenMultiplier = { 0, 3.000, 3.600, 4.200 } },
     },
@@ -312,8 +325,8 @@ xi.automaton.manaTank =
 
     data =
     {
-        ['mana_tank'    ] = { id = 225, mpBoost = 1, refreshBase = { 0, 1, 2, 3 }, refreshMultiplier = { 0, 0.2, 0.4, 0.6 } },
-        ['mana_tank_ii' ] = { id = 228, mpBoost = 2, refreshBase = { 0, 2, 3, 4 }, refreshMultiplier = { 0, 0.4, 0.6, 0.8 } },
+        ['mana_tank'    ] = { id = 225, mpBoost = 1, refreshBase = { 0, 1, 2, 3 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } },
+        ['mana_tank_ii' ] = { id = 228, mpBoost = 2, refreshBase = { 0, 2, 3, 4 }, refreshMultiplier = { 0, 0.0, 0.0, 0.0 } },
         ['mana_tank_iii'] = { id = 233, mpBoost = 3, refreshBase = { 0, 3, 4, 5 }, refreshMultiplier = { 0, 0.6, 0.8, 1.0 } },
         ['mana_tank_iv' ] = { id = 235, mpBoost = 4, refreshBase = { 0, 4, 5, 6 }, refreshMultiplier = { 0, 0.8, 1.0, 1.2 } },
     },

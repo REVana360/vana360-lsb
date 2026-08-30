@@ -158,7 +158,6 @@ jobs:
           python <<EOF
           with open("modules/init.txt", "w") as f:
               f.write("custom\n")
-              f.write("era/lua\n")
               f.write("example\n")
           EOF
 
@@ -168,8 +167,7 @@ jobs:
       - name: Run xi_test
         if: ${{ inputs.xi_test }}
         id: xi_test
-        continue-on-error: true
-        run: ./xi_test --keep-going --retry 5 --output tests.ctrf.json
+        run: ./xi_test --output tests.ctrf.json
 
       - name: Publish Test Report
         if: ${{ !cancelled() && inputs.xi_test }}
@@ -190,11 +188,8 @@ jobs:
       - name: Startup checks
         if: ${{ inputs.startup_checks }}
         id: startup_checks
-        uses: nick-fields/retry@v4
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: python -m tools.ci.startup_checks ${{ inputs.multi_process && 'multi' || '' }}
+        timeout-minutes: 10
+        run: python -m tools.ci.startup_checks ${{ inputs.multi_process && 'multi' || '' }}
 
       - name: Summarize checks
         id: summarize_checks

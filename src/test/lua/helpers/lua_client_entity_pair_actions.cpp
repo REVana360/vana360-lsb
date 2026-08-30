@@ -70,6 +70,30 @@
 #include "test_char.h"
 #include "test_common.h"
 
+namespace
+{
+
+auto findInventorySlot(const CCharEntity* PChar, const uint16 itemId, const uint8 quantity, const std::array<uint8, 256>& reservedQuantities) -> Maybe<uint8>
+{
+    uint8 slotId = 0;
+
+    const auto itemFn = [&](const CItem* item)
+    {
+        const auto itemSlot = item->getSlotID();
+        if (slotId == 0 &&
+            item->getID() == itemId &&
+            static_cast<uint32>(reservedQuantities[itemSlot]) + quantity <= static_cast<uint32>(item->getQuantity()))
+        {
+            slotId = itemSlot;
+        }
+    };
+
+    PChar->getStorage(LOC_INVENTORY)->ForEachItem(itemFn);
+    return slotId != 0 ? std::make_optional(slotId) : std::nullopt;
+}
+
+} // namespace
+
 CLuaClientEntityPairActions::CLuaClientEntityPairActions(CLuaClientEntityPair* parent)
 : parent_(parent)
 {
@@ -487,7 +511,8 @@ void CLuaClientEntityPairActions::tradeNpc(const sol::object& npcQuery, const so
     tradePacket->ActIndex = npc.value().getTargID();
     tradePacket->ItemNum  = static_cast<uint8_t>(itemCount);
 
-    size_t idx = 0;
+    std::array<uint8, 256> reservedQuantities{};
+    size_t                 idx = 0;
     for (const auto& pair : items)
     {
         if (idx >= 9)
@@ -509,14 +534,16 @@ void CLuaClientEntityPairActions::tradeNpc(const sol::object& npcQuery, const so
             quantity      = itemInfo["quantity"].get_or<uint8>(1);
         }
 
-        auto invSlot = parent_->getItemInvSlot(itemId, quantity);
+        auto invSlot = findInventorySlot(parent_->testChar()->entity(), itemId, quantity, reservedQuantities);
         if (!invSlot.has_value())
         {
             TestError("Could not find item with ID {} in inventory with needed quantity.", itemId);
+            return;
         }
 
         tradePacket->PropertyItemIndexTbl[idx] = invSlot.value();
         tradePacket->ItemNumTbl[idx]           = quantity;
+        reservedQuantities[invSlot.value()]    = UINT8_MAX;
 
         idx++;
     }
@@ -929,7 +956,8 @@ void CLuaClientEntityPairActions::craft(const uint16 crystalItemId, const sol::t
     p->CrystalIdx     = crystalSlot.value();
     p->Items          = static_cast<uint8>(ingredientCount);
 
-    uint8 idx = 0;
+    std::array<uint8, 256> reservedQuantities{};
+    uint8                  idx = 0;
     for (const auto& [_key, val] : ingredients)
     {
         if (idx >= 8 || !val.is<uint16>())
@@ -938,7 +966,7 @@ void CLuaClientEntityPairActions::craft(const uint16 crystalItemId, const sol::t
         }
 
         const uint16 ingredientId = val.as<uint16>();
-        const auto   invSlot      = parent_->getItemInvSlot(ingredientId, 1);
+        const auto   invSlot      = findInventorySlot(parent_->testChar()->entity(), ingredientId, 1, reservedQuantities);
         if (!invSlot.has_value())
         {
             TestError("craft: ingredient {} not in inventory", ingredientId);
@@ -947,6 +975,7 @@ void CLuaClientEntityPairActions::craft(const uint16 crystalItemId, const sol::t
 
         p->ItemNo[idx]  = ingredientId;
         p->TableNo[idx] = invSlot.value();
+        reservedQuantities[invSlot.value()]++;
         ++idx;
     }
 

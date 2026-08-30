@@ -6,8 +6,9 @@ describe('Guild shop selling', function()
         player = xi.test.world:spawnPlayer({ zone = xi.zone.MHAURA })
     end)
 
-    local offered    = xi.item.CHUNK_OF_TIN_ORE -- initial 110 => offered and sellable
-    local notOffered = xi.item.CHAINMAIL        -- initial 0   => only bought from players
+    local offered       = xi.item.CHUNK_OF_TIN_ORE -- initial 110 => offered and sellable
+    local stackable     = xi.item.STEEL_INGOT      -- initial 80, stack size 12
+    local notOffered    = xi.item.CHAINMAIL        -- initial 0 => only bought from players
 
     local function open(hour)
         xi.test.world:setVanaTime(hour or 8, 0)
@@ -58,38 +59,38 @@ describe('Guild shop selling', function()
 
     it('clamps a sale to the shop max stock', function()
         open()
-        local cfg = cfgOf(offered)
+        local cfg = cfgOf(stackable)
 
         -- no packet sets shop stock; seed one below max so the 5-sale only has room for 1
-        xi.guildShops.state['Kamilah'].items[offered].stock = cfg.maxStock - 1
-        player:addItem(offered, 5)
-        local held = player:getItemCount(offered)
+        xi.guildShops.state['Kamilah'].items[stackable].stock = cfg.maxStock - 1
+        player:addItem(stackable, 5)
+        local held = player:getItemCount(stackable)
 
-        local reply = sell(offered, 5)
+        local reply = sell(stackable, 5)
 
-        assert(sellList()[offered].count == cfg.maxStock, 'stock not clamped to max')
-        assert(player:getItemCount(offered) == held - 1, 'took more than the room left')
+        assert(sellList()[stackable].count == cfg.maxStock, 'stock not clamped to max')
+        assert(player:getItemCount(stackable) == held - 1, 'took more than the room left')
         assert(reply.trade == 0xFF, 'partial fill not flagged: trade ' .. tostring(reply.trade))
     end)
 
     it('sells across multiple inventory stacks', function()
         open()
 
-        -- two stacks of 3 + 12, so a 12-sale has to span both (tin ore caps at 12)
-        player:addItem(offered, 12)
-        player:addItem(offered, 12)
-        player:delItem(offered, 9) -- drains the front stack: 12 -> 3
-        assert(player:getItemCount(offered) == 15, 'setup: expected 3 + 12 = 15')
+        -- two stacks of 3 + 12, so a 12-sale has to span both (steel ingots cap at 12)
+        player:addItem(stackable, 12)
+        player:addItem(stackable, 12)
+        player:delItem(stackable, 9) -- drains the front stack: 12 -> 3
+        assert(player:getItemCount(stackable) == 15, 'setup: expected 3 + 12 = 15')
 
-        local before = sellList()[offered]
+        local before = sellList()[stackable]
         local gil    = player:getGil()
 
-        local reply = sell(offered, 12)
+        local reply = sell(stackable, 12)
 
         assert(reply.trade == 12, 'full sale not reported as 12: ' .. tostring(reply.trade))
-        assert(player:getItemCount(offered) == 3, 'inventory not 3')
+        assert(player:getItemCount(stackable) == 3, 'inventory not 3')
         assert(player:getGil() == gil + before.price * 12, 'gil off for 12 sold')
-        assert(sellList()[offered].count == before.count + 12, 'stock not +12')
+        assert(sellList()[stackable].count == before.count + 12, 'stock not +12')
     end)
 
     it('offers a seeded item the next day, not the same day', function()

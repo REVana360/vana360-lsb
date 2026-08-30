@@ -139,7 +139,7 @@ local packets =
             res_sum = 0,
             cmd_no  = xi.action.category.MAGIC_FINISH,
             cmd_arg = xi.magic.spell.STONESKIN,
-            info    = 25, -- Recast
+            info    = 27, -- July 2009 Fast Cast III recast
             target  =
             {
                 {
@@ -184,7 +184,7 @@ local packets =
             res_sum = 0,
             cmd_no  = xi.action.category.MAGIC_FINISH,
             cmd_arg = xi.magic.spell.STONESKIN,
-            info    = 25, -- Recast
+            info    = 27, -- July 2009 Fast Cast III recast
             target  =
             {
                 {

@@ -1,8 +1,7 @@
 -----------------------------------
 -- Attachment: Flame Holder
--- Description : Adds fire maneuver burden to increase weapon skill damage.
--- 25% at 0, 100% at 1, 175% at 2, and 250% at 3. Ex. at 3 fire maneuvers, 10 fTP will be 25 fTP.
--- Applies 7/14/21 Fire Burden per Maneuver active when a weaponskill is executed.
+-- Description: Consumes Fire Maneuvers to increase weapon skill damage.
+-- Adds 12.5%, 15%, or 17.5% per maneuver with one, two, or three maneuvers.
 -- https://wiki.ffo.jp/html/11183.html
 -----------------------------------
 ---@type TAttachment
@@ -24,19 +23,13 @@ local validFlameHolderSkills = set
     xi.mobSkill.STRING_SHREDDER_AUTOMATON,
 }
 
-local burdenApplied =
-{
-    [1] = 7,
-    [2] = 14,
-    [3] = 21,
-}
-
 attachmentObject.onEquip = function(pet, attachment)
     pet:addListener('WEAPONSKILL_STATE_EXIT', 'AUTO_FLAME_HOLDER_END', function(automaton, skillId, wasExecuted)
-        if
-            not validFlameHolderSkills[skillId] or
-            not wasExecuted
-        then
+        if not validFlameHolderSkills[skillId] then
+            return
+        end
+
+        if not wasExecuted then
             return
         end
 
@@ -46,12 +39,14 @@ attachmentObject.onEquip = function(pet, attachment)
             return
         end
 
+        -- Consume all Fire Maneuvers on weaponskill execution.
         local fireManeuvers = master:countEffect(xi.effect.FIRE_MANEUVER)
-        local burdenAmount  = burdenApplied[fireManeuvers]
 
-        if burdenAmount then
-            master:addBurden(xi.element.FIRE - 1, burdenAmount)
+        for i = 1, fireManeuvers do
+            master:delStatusEffectSilent(xi.effect.FIRE_MANEUVER)
         end
+
+        master:updateAttachments()
     end)
 
     xi.automaton.onAttachmentEquip(pet, attachment)

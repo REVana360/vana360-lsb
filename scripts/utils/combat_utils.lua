@@ -313,19 +313,30 @@ end
 function utils.handleAutomatonAutoAnalyzer(actor, skill, damage)
     local analyzerModifier = actor:getMod(xi.mod.AUTO_ANALYZER)
 
-    -- If no Analyzer equipped, return unmodified damage.
     if analyzerModifier <= 0 then
         return damage
     end
 
-    local incomingSkill      = skill:getID()
-    local analyzedSkillCount = math.min(analyzerModifier, 6)
+    local automatonId = actor:getID()
 
-    -- Check if the incoming skill matches any of the analyzed skills. If so, apply the damage reduction.
-    for i = 1, analyzedSkillCount do
-        if incomingSkill == actor:getLocalVar('analyzedSkill' .. i) then
-            return math.floor(damage * 0.6)
-        end
+    if not automatonId then
+        return damage
+    end
+
+    local automatonMaster = actor:getMaster()
+
+    if not automatonMaster then
+        return damage
+    end
+
+    local incomingSkill = skill:getID()
+    local analyzedSkill = actor:getLocalVar('analyzedSkill1')
+
+    if incomingSkill == analyzedSkill then
+        local earthManeuvers  = xi.automaton.getManeuverCount(automatonMaster, automatonMaster:countEffect(xi.effect.EARTH_MANEUVER))
+        local damageReduction = 10 + 10 * earthManeuvers
+
+        return math.floor(damage * (100 - damageReduction) / 100)
     end
 
     return damage

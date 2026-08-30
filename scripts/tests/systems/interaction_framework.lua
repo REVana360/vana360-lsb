@@ -14,16 +14,18 @@ describe('Interaction Framework', function()
         -- Verify quest was started
         player.assert:hasQuest(xi.questLog.BASTOK, xi.quest.id.bastok.SHADY_BUSINESS)
 
-        -- Add 4 chunks of zinc ore to inventory
-        player:addItem(xi.item.CHUNK_OF_ZINC_ORE, 4)
+        -- Zinc ore was a singleton in July 2009, so each chunk occupies its own slot.
+        for _ = 1, 4 do
+            player:addItem(xi.item.CHUNK_OF_ZINC_ORE)
+        end
 
         -- Trade the zinc ore to complete the quest
         player.actions:tradeNpc('Talib',
             {
-                {
-                    itemId = xi.item.CHUNK_OF_ZINC_ORE,
-                    quantity = 4,
-                }
+                xi.item.CHUNK_OF_ZINC_ORE,
+                xi.item.CHUNK_OF_ZINC_ORE,
+                xi.item.CHUNK_OF_ZINC_ORE,
+                xi.item.CHUNK_OF_ZINC_ORE,
             },
             { eventId = 91 })
 

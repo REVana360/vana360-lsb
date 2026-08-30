@@ -19,22 +19,6 @@ describe('Rise of the Zilart', function()
             player.assert:hasMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.WELCOME_TNORG)
         end)
 
-        it('should complete ZM1 after postponing it to the Tales\' Beginning', function()
-            player:addMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.THE_NEW_FRONTIER)
-            player:setRank(6)
-
-            -- Choosing "Maybe later" postpones the storyline instead of completing it.
-            player:gotoZone(xi.zone.NORG)
-            player.events:expect({ eventId = 1, finishOption = 0 }) -- Maybe later.
-            player.assert:hasMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.THE_NEW_FRONTIER)
-
-            -- Examine the Tales' Beginning at H-9 to start the storyline.
-            player.entities:gotoAndTrigger('Tales_Beginning', { eventId = 293, finishOption = 1 })
-            player.events:expect({ eventId = 1 })
-            player.assert:hasKI(xi.ki.MAP_OF_NORG)
-            player.assert:hasMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.WELCOME_TNORG)
-        end)
-
         it("should complete ZM2 - Welcome T'Norg", function()
             player:addMission(xi.mission.log_id.ZILART, xi.mission.id.zilart.WELCOME_TNORG)
 

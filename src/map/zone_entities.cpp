@@ -2078,13 +2078,7 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
         auto* PChar       = *it;
         bool  shouldErase = false;
 
-        auto ipp = zoneutils::GetZoneIPP(PChar->loc.destination);
-        if (ipp == 0 && PChar->status != xi::Status::Shutdown)
-        {
-            ShowWarning(fmt::format("Char {} requested zone ({}) returned IPP of 0", PChar->name, PChar->loc.destination));
-            shouldErase = true;
-        }
-        else if (PChar->status == xi::Status::Shutdown)
+        if (PChar->status == xi::Status::Shutdown)
         {
             PChar->clearPacketList();
             charutils::ForceLogout(PChar);
@@ -2106,13 +2100,22 @@ auto CZoneEntities::ZoneServer(timer::time_point tick) -> Task<void>
         }
         else if (PChar->loc.destination != ZONE_NO_DESTINATION)
         {
-            const bool ready = co_await zoneutils::IsZoneReady(scheduler_, config_, PChar->loc.destination);
-            if (ready)
+            const auto ipp = zoneutils::GetZoneIPP(PChar->loc.destination);
+            if (ipp == 0)
             {
-                PChar->clearPacketList();
-                if (charutils::SendToZone(PChar, PChar->loc.destination))
+                ShowWarning(fmt::format("Char {} requested zone ({}) returned IPP of 0", PChar->name, PChar->loc.destination));
+                shouldErase = true;
+            }
+            else
+            {
+                const bool ready = co_await zoneutils::IsZoneReady(scheduler_, config_, PChar->loc.destination);
+                if (ready)
                 {
-                    shouldErase = true;
+                    PChar->clearPacketList();
+                    if (charutils::SendToZone(PChar, PChar->loc.destination))
+                    {
+                        shouldErase = true;
+                    }
                 }
             }
         }

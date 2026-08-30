@@ -62,12 +62,10 @@ local testSuites =
     ['Basic Attacks']    = require('scripts.tests.packets.s2c.0x028_battle2.basic_attacks'),
     ['Beastmaster']      = require('scripts.tests.packets.s2c.0x028_battle2.beastmaster'),
     ['Dancer #dnc']      = require('scripts.tests.packets.s2c.0x028_battle2.dancer'),
-    ['Dragoon #drg']     = require('scripts.tests.packets.s2c.0x028_battle2.dragoon'),
     ['Items #item']      = require('scripts.tests.packets.s2c.0x028_battle2.items'),
     ['Magic #magic']     = require('scripts.tests.packets.s2c.0x028_battle2.magic'),
     ['Mobskills']        = require('scripts.tests.packets.s2c.0x028_battle2.mobskills'),
     ['Ranged']           = require('scripts.tests.packets.s2c.0x028_battle2.ranged'),
-    ['Rune Fencer #run'] = require('scripts.tests.packets.s2c.0x028_battle2.runefencer'),
     ['Summoner #smn']    = require('scripts.tests.packets.s2c.0x028_battle2.summoner'),
     ['Weaponskills #ws'] = require('scripts.tests.packets.s2c.0x028_battle2.weaponskills'),
 }

@@ -138,7 +138,7 @@ Place a `.cpp` file somewhere in the `modules/` subfolder and enable it with `in
 your build using CMake. Towards the end of configuration, it will log which module files have been added to the build:
 
 ```txt
--- Adding module files to build: C:/ffxi/server/modules/era/cpp/test.cpp
+-- Adding module files to build: C:/ffxi/server/modules/custom/cpp/test.cpp
 ```
 
 You can then continue your build as normal, and your module files will be compiled at the end.

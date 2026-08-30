@@ -29,11 +29,9 @@ Command modules register with `xi.module.registerCommand('name', commandTable)` 
 
 Mutating game data at require time is forbidden. Data changes are declared as an override of `xi.server.onServerStart` that calls `super()` first and then applies the changes.
 
-## Era Accuracy Modules
+## Expansion-aware modules
 
-Lua era-accuracy modules live under `era/lua/` and mirror the main `scripts/` tree where practical.
-
-An override that reverts a retail change declares one implementation per era with `addOverrideByEra`, keyed by `xi.expansion` (defined in `module_utils.lua`). A case applies when its expansion's content is disabled:
+An override that changes across retail eras can declare one implementation per era with `addOverrideByEra`, keyed by `xi.expansion` (defined in `module_utils.lua`). A case applies when its expansion's content is disabled:
 
 ```lua
 m:addOverrideByEra('xi.job_utils.dragoon.addWyvernExp', {
@@ -68,32 +66,4 @@ local m = Module:new('pre_wotg_behavior', xi.pre(xi.expansion.WOTG))
 - ROV       : Rhapsodies of Vana'diel (May 2015 - July 2020)
 - TVR       : The Voracious Resurgence (August 2020 - Present)
 
-The module header comment should carry the dates and patch notes for the reverted change.
-
-## Era SQL
-
-Era SQL lives under `era/sql/<expansion>/`, keyed by the same content tags. Unlike the Lua modules, SQL has no runtime gate: `dbtool` applies whatever `init.txt` lists. List the expansion folders you want:
-
-```txt
-era/lua
-era/sql/abyssea
-era/sql/soa
-era/sql/rov
-```
-
-Listing plain `era` applies every era SQL folder regardless of your content settings, so list `era/lua` and the `era/sql/<expansion>` folders separately.
-
-## Upgrading an existing init.txt
-
-`init.txt` is usually marked `assume-unchanged`, so an update will not fix your copy. Two changes need action:
-
-**The expansion folders moved.** `modules/abyssea`, `modules/rov`, `modules/soa`, `modules/toau` and `modules/wotg` no longer exist; their SQL is now under `era/sql/<expansion>/`. Rename those entries:
-
-```txt
-abyssea          ->  era/sql/abyssea
-wotg             ->  era/sql/wotg
-```
-
-The map server now reports any `init.txt` entry that names nothing on disk, so a missed rename shows up at startup rather than silently applying nothing.
-
-**`era` now covers all era SQL.** It used to resolve to two SQL files; it now resolves to every file under `era/sql/`. If your `init.txt` lists plain `era`, `dbtool` will apply every expansion's reverts to your database. Change it to `era/lua` plus the `era/sql/<expansion>` folders you actually want.
+The module header comment should carry the dates and patch notes for the behavior it changes.

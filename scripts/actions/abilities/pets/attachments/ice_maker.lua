@@ -1,8 +1,7 @@
 -----------------------------------
 -- Attachment: Ice Maker
--- Description : Adds ice maneuver burden to increase magic damage.
--- 50% at 1, 75% at 2, and 100% at 3. Works as a coefficient increase to magic attack bonus.
--- Applies 7/14/21 Ice Burden per Maneuver active when a spell is cast.
+-- Description: Consumes Ice Maneuvers to increase magic damage.
+-- Adds 20%, 40%, or 60% to the magic attack bonus coefficient.
 -- https://wiki.ffo.jp/html/11198.html
 -----------------------------------
 ---@type TAttachment
@@ -42,13 +41,6 @@ local validIceMakerSpells = set
     xi.magic.spell.WATER_V,
 }
 
-local burdenApplied =
-{
-    [1] = 7,
-    [2] = 14,
-    [3] = 21,
-}
-
 attachmentObject.onEquip = function(pet, attachment)
     pet:addListener('MAGIC_USE', 'AUTO_ICE_MAKER_USE', function(automaton, target, spell, action)
         if not validIceMakerSpells[spell:getID()] then
@@ -62,11 +54,12 @@ attachmentObject.onEquip = function(pet, attachment)
         end
 
         local iceManeuvers = master:countEffect(xi.effect.ICE_MANEUVER)
-        local burdenAmount = burdenApplied[iceManeuvers]
 
-        if burdenAmount then
-            master:addBurden(xi.element.ICE - 1, burdenAmount)
+        for i = 1, iceManeuvers do
+            master:delStatusEffectSilent(xi.effect.ICE_MANEUVER)
         end
+
+        master:updateAttachments()
     end)
 
     xi.automaton.onAttachmentEquip(pet, attachment)

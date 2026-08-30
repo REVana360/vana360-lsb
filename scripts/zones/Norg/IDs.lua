@@ -52,10 +52,6 @@ zones[xi.zone.NORG] =
     mob =
     {
     },
-    npc =
-    {
-        TALES_BEGINNING = GetFirstID('Tales_Beginning'), -- ZM1 mission script uses this
-    },
 }
 
 return zones[xi.zone.NORG]

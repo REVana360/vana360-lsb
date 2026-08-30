@@ -107,7 +107,6 @@ jobs:
           python <<EOF
           with open("modules/init.txt", "w") as f:
               f.write("custom\n")
-              f.write("era/lua\n")
               f.write("example\n")
           EOF
 
@@ -117,8 +116,7 @@ jobs:
 
       - name: Run xi_test
         id: xi_test
-        continue-on-error: true
-        run: docker exec test-server /bin/bash -c './xi_test --keep-going --retry 5 --output log/tests.ctrf.json'
+        run: docker exec test-server /bin/bash -c './xi_test --output log/tests.ctrf.json'
 
       - name: Publish Test Report
         if: ${{ !cancelled() }}

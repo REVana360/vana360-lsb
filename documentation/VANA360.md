@@ -28,16 +28,13 @@ require a tested disposition before destructive pruning.
 
 ## Module and database profile
 
-The tracked `modules/init.txt` is the canonical Vana360 module selection for a
-clean checkout. It enables the era Lua layer and lists vetted SQL files
-individually. Do not replace those entries with `era` or an era SQL directory:
-those broader selections include pre-cutoff reverts, obsolete-schema updates,
-and SQL that is not safe to apply repeatedly.
+July 2009 behavior is maintained directly in canonical scripts, data, and SQL.
+The tracked `modules/init.txt` enables no project modules in a clean checkout.
+The generic module framework remains available for local operator extensions,
+but those modules are not part of the maintained Vana360 profile.
 
-`dbtool` applies the selected SQL after the base schema during database setup.
-The selected files use deterministic updates, so rebuilding or updating does
-not compound their results. Local custom modules belong in an operator's local
-configuration and are not part of the maintained Vana360 profile.
+`dbtool` applies the canonical schema and data during database setup. No
+separate era SQL layer is required.
 
 ## Accepting upstream changes
 

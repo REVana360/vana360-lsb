@@ -21,7 +21,7 @@ local function applyHammermillSlow(automaton, target, skill, master)
         return
     end
 
-    local slowTier = slowTable[master and master:countEffect(xi.effect.EARTH_MANEUVER) or 0]
+    local slowTier = slowTable[master and xi.automaton.getManeuverCount(master, master:countEffect(xi.effect.EARTH_MANEUVER)) or 0]
 
     local params =
     {
@@ -57,7 +57,6 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
             params.fTP[3] * shieldBashBonus,
         }
 
-        params.guaranteedFirstHit = true
     end
 
     local info = xi.mobskills.mobPhysicalMove(automaton, target, skill, action, params)
@@ -67,7 +66,6 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
 
         xi.mobskills.mobStatusEffectMove(automaton, target, xi.effect.STUN, 1, 0, 6)
 
-        -- Check for Hammermill, if equipped, apply Slow based on Earth Maneuvers.
         if hammermillEquipped then
             applyHammermillSlow(automaton, target, skill, master)
         end

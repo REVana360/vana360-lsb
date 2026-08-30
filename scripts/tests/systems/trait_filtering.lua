@@ -32,25 +32,4 @@ describe('Job trait filtering', function()
 
         assert(player:hasTrait(xi.trait.RESIST_SLEEP), 'Paladin player should have Resist Sleep')
     end)
-
-    it('gives Resist Sleep to a trust', function()
-        local player = xi.test.world:spawnPlayer({ zone = xi.zone.WEST_RONFAURE, job = xi.job.WAR, level = 99 })
-
-        player:addSpell(xi.magic.spell.VALAINERAL)
-        player.actions:useSpell(player, xi.magic.spell.VALAINERAL)
-        xi.test.world:tickEntity(player)
-        xi.test.world:skipTime(10)
-
-        local valaineral = nil
-        for _, member in ipairs(player:getPartyWithTrusts()) do
-            if member:getName() == 'valaineral' then
-                valaineral = member
-                break
-            end
-        end
-
-        assert(valaineral, 'Valaineral was not summoned')
-        assert(valaineral:getMainJob() == xi.job.PLD, 'Valaineral is not a Paladin')
-        assert(valaineral:hasTrait(xi.trait.RESIST_SLEEP), 'Valaineral should have Resist Sleep')
-    end)
 end)

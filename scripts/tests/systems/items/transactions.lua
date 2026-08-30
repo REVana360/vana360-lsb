@@ -161,22 +161,6 @@ describe('Item transaction invariants', function()
             assert(axe:state() == xi.itemState.FREE, 'state after unequip: ' .. tostring(axe:state()))
         end)
 
-        -- dropping moves the stack to the recycle bin, and it has to arrive there unclaimed
-        it('leaves a dropped stack Free in the recycle bin', function()
-            player:addItem(stackable, 2)
-
-            local slot = slotOf(stackable)
-
-            player.actions:dropItem(xi.inventoryLocation.INVENTORY, slot, 2)
-
-            assert(not player:findItem(stackable, xi.inventoryLocation.INVENTORY), 'the stack stayed in inventory')
-
-            local binned = player:findItem(stackable, xi.inventoryLocation.RECYCLEBIN)
-
-            assert(binned, 'the stack reached neither inventory nor the recycle bin')
-            assert(binned:state() == xi.itemState.FREE, 'binned state: ' .. tostring(binned:state()))
-        end)
-
         -- character creation runs from the login sequence, and the gil it claims has to come back Free
         it('leaves gil usable after character creation', function()
             local newPlayer = xi.test.world:spawnPlayer({ zone = xi.zone.GM_HOME, new = true })

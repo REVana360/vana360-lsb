@@ -218,7 +218,6 @@ jobs:
           python3 <<EOF
           with open("modules/init.txt", "w") as f:
               f.write("custom\n")
-              f.write("era/lua\n")
               f.write("example\n")
           EOF
 

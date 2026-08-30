@@ -1,7 +1,7 @@
 -----------------------------------
 -- Eraser
--- Removes up to 3 status effects from the Automaton or its Master based on the number of Light Maneuvers active.
--- Applies 7/14/21 Light Burden per Maneuver active when activated regardless of the number of effects removed.
+-- Changes Eraser to consume all Maneuvers on activation.
+-- https://wiki.ffo.jp/html/5365.html
 -----------------------------------
 ---@type TAbilityAutomaton
 local abilityObject = {}
@@ -10,7 +10,26 @@ abilityObject.onAutomatonAbilityCheck = function(target, automaton, skill)
     return 0
 end
 
--- Eraser cannot remove Venom, Death Sentence, Charm or Gradual Petrification.
+local maneuvers =
+{
+    xi.effect.FIRE_MANEUVER,
+    xi.effect.ICE_MANEUVER,
+    xi.effect.WIND_MANEUVER,
+    xi.effect.EARTH_MANEUVER,
+    xi.effect.THUNDER_MANEUVER,
+    xi.effect.WATER_MANEUVER,
+    xi.effect.LIGHT_MANEUVER,
+    xi.effect.DARK_MANEUVER,
+}
+
+local function removeAllManeuvers(master)
+    -- The July 2009 behavior consumes all active maneuvers, not just Light Maneuvers.
+    for _, maneuverId in ipairs(maneuvers) do
+        for _ = 1, master:countEffect(maneuverId) do
+            master:delStatusEffectSilent(maneuverId)
+        end
+    end
+end
 
 local removables =
 {
@@ -71,37 +90,26 @@ local removables =
     xi.effect.MAX_HP_DOWN
 }
 
-local burdenApplied =
-{
-    [1] = 7,
-    [2] = 14,
-    [3] = 21,
-}
-
 abilityObject.onAutomatonAbility = function(target, automaton, skill, master, action)
     automaton:addRecast(xi.recast.ABILITY, skill:getID(), 30)
 
-    local maneuvers    = master:countEffect(xi.effect.LIGHT_MANEUVER)
-    local burdenAmount = burdenApplied[maneuvers]
-
-    if burdenAmount then
-        master:addBurden(xi.element.LIGHT - 1, burdenAmount)
-    end
+    local lightManeuvers = xi.automaton.getManeuverCount(master, master:countEffect(xi.effect.LIGHT_MANEUVER))
 
     local effectsRemoved = 0
 
-    -- Eraser removes 1 effect per Light Maneuver, up to a maximum of 3.
-    for i = 1, #removables do
-        local effectId = removables[i]
+    for _, effectId in ipairs(removables) do
         if target:hasStatusEffect(effectId) then
             target:delStatusEffectSilent(effectId)
             effectsRemoved = effectsRemoved + 1
 
-            if effectsRemoved >= maneuvers then
+            if effectsRemoved >= lightManeuvers then
                 break
             end
         end
     end
+
+    removeAllManeuvers(master)
+    master:updateAttachments()
 
     if effectsRemoved > 0 then
         skill:setMsg(xi.msg.basic.DISAPPEAR_NUM)
