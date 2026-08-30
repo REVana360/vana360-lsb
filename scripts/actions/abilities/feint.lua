@@ -2,7 +2,7 @@
 -- Ability: Feint
 -- Reduces targets evasion by -150 (Assassin's Culottes +2 Aug: -10 more eva per merit)
 -- Obtained: Thief Level 75
--- Recast Time: 2:00 minutes
+-- Recast Time: 10:00 minutes
 -- Duration: 1:00 minutes
 -----------------------------------
 ---@type TAbility

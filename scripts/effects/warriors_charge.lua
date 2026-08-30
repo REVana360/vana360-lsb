@@ -5,7 +5,6 @@
 local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
-    effect:addMod(xi.mod.TRIPLE_ATTACK, effect:getPower())
     effect:addMod(xi.mod.DOUBLE_ATTACK, 100)
 end
 

@@ -246,6 +246,20 @@ function utils.handleStoneskin(actor, damage, attackType)
         return damage
     end
 
+    if attackType == xi.attackType.MAGICAL then
+        local rampart = actor:getStatusEffect(xi.effect.RAMPART)
+        if rampart and rampart:getPower() > 0 then
+            local absorbed = math.min(rampart:getPower(), damage)
+
+            rampart:setPower(rampart:getPower() - absorbed)
+            damage = damage - absorbed
+
+            if damage <= 0 then
+                return damage
+            end
+        end
+    end
+
     -- Early return: No effect present.
     local effect = actor:getStatusEffect(xi.effect.STONESKIN)
     if not effect then

@@ -2,7 +2,7 @@
 -- Ability: Flashy Shot
 -- Next attack will generate more enmity and ignore level difference penalties.
 -- Obtained: Ranger Level 75
--- Recast Time: 10:00
+-- Recast Time: 20:00
 -- Duration: 1:00
 -- Target: Self Only
 -----------------------------------

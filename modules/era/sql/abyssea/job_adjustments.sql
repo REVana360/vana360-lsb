@@ -6,13 +6,6 @@
 ------------------------------------
 
 ------------------------------------
--- Warrior
-------------------------------------
-
--- Warrior's Charge: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'warriors_charge';
-
-------------------------------------
 -- White Mage
 ------------------------------------
 
@@ -23,68 +16,12 @@ UPDATE abilities SET recastTime = 1200 WHERE name = 'martyr';
 UPDATE abilities SET recastTime = 1200 WHERE name = 'devotion';
 
 ------------------------------------
--- Thief
-------------------------------------
-
--- Assassin's Charge: Revert cooldown to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'assassins_charge';
-
--- Feint: Revert cooldown to 10 minutes
-UPDATE abilities SET recastTime = 600 WHERE name = 'feint';
-
-------------------------------------
 -- Dark Knight
 -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
 ------------------------------------
 
--- Arcane Circle: Revert recast from 5 to 10 minutes
-UPDATE abilities SET recastTime = 600 WHERE name = 'arcane_circle';
-
 -- Weapon Bash: Revert recast from 3 to 5 minutes
 UPDATE abilities SET recastTime = 300 WHERE name = 'weapon_bash';
-
--- Dark Seal: Revert recast from 5 to 15 minutes
--- Source: https://www.bg-wiki.com/ffxi/Version_Update_(03/26/2012)
-UPDATE abilities SET recastTime = 900 WHERE name = 'dark_seal';
-
--- Diabolic Eye: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'diabolic_eye';
-
-------------------------------------
--- Paladin
-------------------------------------
-
--- Holy Circle: Revert recast from 5 to 10 minutes
--- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
-UPDATE abilities SET recastTime = 600 WHERE name = 'holy_circle';
-
--- Chivalry: Revert recast from 10 to 20 minutes
-UPDATE abilities SET recastTime = 1200 WHERE name = 'chivalry';
-
--- Fealty: Revert recast from 10 to 20 minutes
-UPDATE abilities SET recastTime = 1200 WHERE name = 'fealty';
-
--- Shield Bash: Revert recast from 3 to 5 minutes
-UPDATE abilities SET recastTime = 300 WHERE name = 'shield_bash';
-
-------------------------------------
--- Beastmaster
-------------------------------------
-
--- Pet Food Biscuits: Remove level requirements
--- Source: https://www.bg-wiki.com/ffxi/Version_Update_(09/08/2010)
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_food_alpha';
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_food_beta';
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_fd._gamma';
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_food_delta';
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_fd._epsilon';
-UPDATE item_equipment SET level = 0 WHERE name = 'pet_food_zeta';
-
--- Feral Howl: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'feral_howl';
-
--- Killer Instinct: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'killer_instinct';
 
 ------------------------------------
 -- Bard
@@ -110,9 +47,6 @@ WHERE (zonetype & (@TYPE_CITY | @TYPE_OUTDOORS)) <> 0;
 -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
 ------------------------------------
 
--- Warding Circle: Revert recast from 5 to 10 minutes
-UPDATE abilities SET recastTime = 600 WHERE name = 'warding_circle';
-
 -- Sekkanoki: Adjust level requirement from 40 to 60
 -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(06/21/2010)
 UPDATE abilities SET level = 60 WHERE name = 'sekkanoki';
@@ -121,22 +55,13 @@ UPDATE abilities SET level = 60 WHERE name = 'sekkanoki';
 -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(05/15/2012)
 UPDATE abilities SET recastTime = 900 WHERE name = 'blade_bash';
 
--- Shikikoyo: Revert recast from 5 to 15 minutes
-UPDATE abilities SET recastTime = 900 WHERE name = 'shikikoyo';
-
 ------------------------------------
 -- Ranger
 -- Source: https://www.bg-wiki.com/ffxi/Version_Update_(05/15/2012)
 ------------------------------------
 
--- Eagle Eye Shot: Revert range from 20 to 15 yalms
-UPDATE abilities SET `range` = 15 WHERE name = 'eagle_eye_shot';
-
 -- Shadowbind: Revert range from 20 to 10 yalms
 UPDATE abilities SET `range` = 10 WHERE name = 'shadowbind';
-
--- Flashy Shot: revert recast from 10 to 20 minutes
-UPDATE abilities SET recastTime = 1200 WHERE name = 'flashy_shot';
 
 -----------------------------------
 -- Ninja

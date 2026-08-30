@@ -13,14 +13,14 @@ xi.job_utils.beastmaster = xi.job_utils.beastmaster or {}
 
 xi.job_utils.beastmaster.petFoodData =
 {
-    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =   50, regen =  1, mndMult = 2, mndThreshold = 10 },
-    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  180, regen =  3, mndMult = 1, mndThreshold = 33 },
-    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing =  300, regen =  5, mndMult = 1, mndThreshold = 35 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing =  530, regen =  8, mndMult = 2, mndThreshold = 40 }, -- TO BE VERIFIED.
-    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing =  750, regen = 11, mndMult = 2, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing =  900, regen = 14, mndMult = 3, mndThreshold = 45 },
-    [xi.item.PET_FOOD_ETA_BISCUIT]     = { minHealing = 1200, regen = 17, mndMult = 4, mndThreshold = 50 },
-    [xi.item.PET_FOOD_THETA_BISCUIT]   = { minHealing = 1600, regen = 20, mndMult = 4, mndThreshold = 55 },
+    -- Pet food gained level requirements and stronger healing in September 2010.
+    -- Source: https://www.playonline.com/pcd/verup/ff11us/detail/5835/detail.html
+    [xi.item.PET_FOOD_ALPHA_BISCUIT]   = { minHealing =  25, regen = 1, mndMult = 2, mndThreshold = 10 },
+    [xi.item.PET_FOOD_BETA_BISCUIT]    = { minHealing =  50, regen = 2, mndMult = 1, mndThreshold = 33 },
+    [xi.item.PET_FOOD_GAMMA_BISCUIT]   = { minHealing = 100, regen = 3, mndMult = 1, mndThreshold = 35 },
+    [xi.item.PET_FOOD_DELTA_BISCUIT]   = { minHealing = 150, regen = 4, mndMult = 2, mndThreshold = 40 },
+    [xi.item.PET_FOOD_EPSILON_BISCUIT] = { minHealing = 300, regen = 5, mndMult = 2, mndThreshold = 45 },
+    [xi.item.PET_FOOD_ZETA_BISCUIT]    = { minHealing = 350, regen = 6, mndMult = 3, mndThreshold = 45 },
 }
 
 -----------------------------------
@@ -276,10 +276,7 @@ xi.job_utils.beastmaster.checkReward = function(player, target, ability)
         return xi.msg.basic.NO_EFFECT_ON_PET, 0
     else
         local id = player:getEquipID(xi.slot.AMMO)
-        if
-            id >= xi.item.PET_FOOD_ALPHA_BISCUIT and
-            id <= xi.item.PET_FOOD_THETA_BISCUIT
-        then
+        if xi.job_utils.beastmaster.petFoodData[id] then
             return 0, 0
         else
             return xi.msg.basic.MUST_HAVE_FOOD, 0
@@ -683,11 +680,16 @@ xi.job_utils.beastmaster.useFight = function(player, target, ability)
 end
 
 xi.job_utils.beastmaster.useKillerInstinct = function(player, target, ability, action)
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.KILLER_INSTINCT) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
     -- Notes: Pet ecosystem is assigned to the subPower, then mapped to the correct killer mod in the effect script.
     local pet          = player:getPet()
     local petEcosystem = pet:getEcosystem()
     local power        = 10
-    local duration     = 180 + (player:getMerit(xi.merit.KILLER_INSTINCT) - 10)
+    local duration     = 60
 
     target:addStatusEffect(xi.effect.KILLER_INSTINCT, { power = power, duration = duration, origin = player, subPower = petEcosystem })
 
@@ -730,37 +732,28 @@ xi.job_utils.beastmaster.useRunWild = function(player, target, ability, action)
 end
 
 xi.job_utils.beastmaster.useFeralHowl = function(player, target, ability, action)
-    local modAcc       = player:getMerit(xi.merit.FERAL_HOWL)
-    local feralHowlMod = player:getMod(xi.mod.FERAL_HOWL_DURATION)
-    local duration     = 10
-
-    -- Calculate duration bonus from gear
-    if feralHowlMod >= 1 then
-        -- https://ffxiclopedia.fandom.com/wiki/Monster_Jackcoat_%2B2
-        -- Add 1 second duration per merit level if wearing Monster Jackcoat +2
-        duration = duration + (modAcc / 5)
-    end
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.FERAL_HOWL) - 150
+    action:setRecast(action:getRecast() - recastReduction)
 
     if
-        xi.data.statusEffect.isTargetImmune(target, xi.effect.TERROR, xi.element.DARK) or
-        xi.data.statusEffect.isTargetResistant(player, target, xi.effect.TERROR) or
-        xi.data.statusEffect.isEffectNullified(target, xi.effect.TERROR, 0)
+        not xi.data.statusEffect.isTargetImmune(target, xi.effect.TERROR, xi.element.DARK) and
+        not xi.data.statusEffect.isTargetResistant(player, target, xi.effect.TERROR) and
+        not xi.data.statusEffect.isEffectNullified(target, xi.effect.TERROR, 0)
     then
-        ability:setMsg(xi.msg.basic.JA_MISS_2)
-    else
-        -- modAcc returns 5 per merit level (5, 10, 15, 20, 25), providing 5% accuracy bonus per merit
         local params =
         {
             effectId       = xi.effect.TERROR,
-            skillRank      = xi.skillRank.B_MINUS,
             magicalElement = xi.element.DARK,
+            skillRank      = xi.skillRank.B_MINUS,
             actorStat      = xi.mod.CHR,
-            bonusMacc      = modAcc,
         }
+
         local resistanceRate = xi.combat.magicHitRate.calculateResistRate(player, target, params)
 
         if xi.data.statusEffect.isResistRateSuccessfull(xi.effect.TERROR, resistanceRate, 0) then
-            target:addStatusEffect(xi.effect.TERROR, { power = 1, duration = duration * resistanceRate, origin = player })
+            target:addStatusEffect(xi.effect.TERROR, { power = 1, duration = 10 * resistanceRate, origin = player })
         end
     end
 

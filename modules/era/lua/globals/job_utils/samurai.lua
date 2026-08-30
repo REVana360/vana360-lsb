@@ -5,23 +5,6 @@ require('modules/module_utils')
 -----------------------------------
 local m = Module:new('era_job_utils_samurai', xi.pre(xi.expansion.ABYSSEA))
 
--- Warding Circle: Revert duration from 3 minutes to 1 minute
--- Source: https://www.bg-wiki.com/ffxi/Version_Update_(02/13/2012)
-m:addOverride('xi.job_utils.samurai.useWardingCircle', function(player, target, ability)
-    local duration = 60 + player:getMod(xi.mod.WARDING_CIRCLE_DURATION)
-    local power    = 15
-
-    if player:getMainJob() ~= xi.job.SAM then
-        power = 5
-    end
-
-    power = power + player:getMod(xi.mod.WARDING_CIRCLE_POTENCY)
-
-    target:addStatusEffect(xi.effect.WARDING_CIRCLE, { power = power, duration = duration, origin = player })
-
-    return xi.effect.WARDING_CIRCLE
-end)
-
 -- Blade Bash: Apply merit recast reduction, remove extra plague duration from merits
 -- TODO: find a patch note or source for this change
 m:addOverride('xi.job_utils.samurai.useBladeBash', function(player, target, ability, action)
@@ -94,21 +77,6 @@ m:addOverride('xi.job_utils.samurai.useBladeBash', function(player, target, abil
     ability:setMsg(xi.msg.basic.JA_DAMAGE)
 
     return damage
-end)
-
--- Shikikoyo: Apply merit recast reduction, remove extra TP sharing from merits
--- TODO: find a patch note or source for this change
-m:addOverride('xi.job_utils.samurai.useShikikoyo', function(player, target, ability, action)
-    local recastReduction = player:getMerit(xi.merit.SHIKIKOYO) - 150
-    action:setRecast(action:getRecast() - recastReduction)
-
-    local pTP = player:getTP() - 1000
-    pTP       = utils.clamp(pTP, 0, 3000 - target:getTP())
-
-    player:setTP(1000)
-    target:setTP(target:getTP() + pTP)
-
-    return pTP
 end)
 
 -- Hasso: Remove Zanshin bonus

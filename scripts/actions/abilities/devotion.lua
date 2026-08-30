@@ -2,7 +2,7 @@
 -- Ability: Devotion
 -- Sacrifices HP to grant a party member the same amount in MP.
 -- Obtained: White Mage Level 75
--- Recast Time: 0:10:00
+-- Recast Time: 0:20:00
 -- Duration: Instant
 -- Target: Party member, cannot target self.
 -----------------------------------

@@ -236,6 +236,19 @@ xi.spells.damage.pTable =
     [xi.magic.spell.CURE_VI       ] = { xi.mod.MND,    0, false,  295,    2,  295, 212, 0 },
 }
 
+-- The July 2019 update replaced the six San merit categories with new categories.
+-- The first rank unlocked the spell; each additional rank granted Magic Attack and Magic Accuracy.
+-- https://forum.square-enix.com/ffxi/archive/index.php/t-55648.html
+local sanMeritBySpell =
+{
+    [xi.magic.spell.KATON_SAN ] = xi.merit.KATON_SAN,
+    [xi.magic.spell.HYOTON_SAN] = xi.merit.HYOTON_SAN,
+    [xi.magic.spell.HUTON_SAN ] = xi.merit.HUTON_SAN,
+    [xi.magic.spell.DOTON_SAN ] = xi.merit.DOTON_SAN,
+    [xi.magic.spell.RAITON_SAN] = xi.merit.RAITON_SAN,
+    [xi.magic.spell.SUITON_SAN] = xi.merit.SUITON_SAN,
+}
+
 local function cardinalChantBonus(actor, target, direction, spellId, skillType)
     -- https://www.bg-wiki.com/ffxi/Cardinal_Chant
     local chantBonus = 0
@@ -979,20 +992,9 @@ xi.spells.damage.calculateIfMagicBurst = function(caster, target, spellElement, 
         return 1
     end
 
-    -- Multiplier for each resistance rank.
-    local rankTable  = { 1.5, 1.15, 0.85, 0.6, 0.5, 0.4, 0.15, 0.05, 0, 0, 0, 0, 0, 0, 0 }
-
-    local resistRank = utils.clamp(target:getMod(xi.data.element.getElementalResistanceRankModifier(spellElement)), -3, 11) + 4 -- We add 4 so the minimum value is 1, for table.
-    local countBonus = caster:isPC() and 0.1 or 0.05
-    local magicBurst = 1.25 + rankTable[resistRank] + countBonus * magicBurstTier
-
-    -- Sengikori appears to add to base mb multiplier per JP wiki https://wiki.ffo.jp/html/20051.html
-    if target:getMod(xi.mod.SENGIKORI_MB_DMG_DEBUFF) > 0 then
-        magicBurst = magicBurst + target:getMod(xi.mod.SENGIKORI_MB_DMG_DEBUFF) / 100
-        target:setMod(xi.mod.SENGIKORI_MB_DMG_DEBUFF, 0) -- Consume the "Effect" upon magic burst.
-    end
-
-    return magicBurst
+    -- July 2009 magic burst multiplier: 1.25 + 0.05 per skillchain step.
+    -- Source: https://forum.square-enix.com/ffxi/threads/46531
+    return 1.25 + 0.05 * utils.clamp(magicBurstTier, 1, 5)
 end
 
 xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spellId, skillType, spellElement)
@@ -1110,6 +1112,8 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local spellGroup      = spell:getSpellGroup()
     local statUsed        = xi.spells.damage.pTable[spellId][column.STAT_USED]
     local forceDayWeather = xi.spells.damage.pTable[spellId][column.FORCE_DAY_WEATHER]
+    local sanMerit        = sanMeritBySpell[spellId]
+    local sanMeritBonus   = sanMerit and math.max(caster:getMerit(sanMerit) - 5, 0) or 0
 
     local maccParams =
     {
@@ -1118,7 +1122,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         actorStat      = statUsed,
         skillType      = skillType,
         spellGroup     = spellGroup,
-        bonusMacc      = xi.spells.damage.pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType),
+        bonusMacc      = xi.spells.damage.pTable[spellId][column.BONUS_MACC] + cardinalChantBonus(caster, target, xi.direction.SOUTH, spellId, skillType) + sanMeritBonus,
     }
 
     -- Calculate base damage and the rest of damage multipliers.
@@ -1131,7 +1135,7 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     local magicBurst                  = canMBurst and xi.spells.damage.calculateIfMagicBurst(caster, target, spellElement, magicBurstTier) or 1
     local magicBurstBonus             = canMBurst and xi.spells.damage.calculateIfMagicBurstBonus(caster, target, spellId, skillType, spellElement) or 1
     local dayAndWeather               = xi.spells.damage.calculateDayAndWeather(caster, spellElement, forceDayWeather)
-    local magicBonusDiff              = xi.spells.damage.calculateMagicBonusDiff(caster, target, spellId, skillType, spellElement, 0)
+    local magicBonusDiff              = xi.spells.damage.calculateMagicBonusDiff(caster, target, spellId, skillType, spellElement, sanMeritBonus)
     local targetMagicDamageAdjustment = not absorb and xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false) or 1
     local sdt                         = not absorb and xi.combat.damage.magicalElementSDT(target, spellElement) or 1
     local ecosystemMultiplier         = xi.combat.damage.ecosystemMultiplier(caster, target, 0)

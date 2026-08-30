@@ -1,6 +1,6 @@
 -----------------------------------
 -- Ability: Yonin
--- Increases enmity and enhances "Ninja Tool Expertise" effect, but impairs accuracy. Improves evasion and reduces enemy Critical Hit Rate when in front of target.
+-- Increases enmity and Ninja Tool Expertise, but impairs accuracy.
 -- Obtained: Ninja Level 40
 -- Recast Time: 3:00
 -- Duration: 5:00

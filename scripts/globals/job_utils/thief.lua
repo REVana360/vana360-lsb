@@ -139,14 +139,12 @@ xi.job_utils.thief.useAccomplice = function(player, target, ability)
 end
 
 xi.job_utils.thief.useAssassinsCharge = function(player, target, ability, action)
-    local merits = player:getMerit(xi.merit.ASSASSINS_CHARGE)
-    local crit   = 0
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.ASSASSINS_CHARGE) - 150
+    action:setRecast(action:getRecast() - recastReduction)
 
-    if player:getMod(xi.mod.AUGMENTS_ASSASSINS_CHARGE) > 0 then
-        crit = merits / 5
-    end
-
-    player:addStatusEffect(xi.effect.ASSASSINS_CHARGE, { power = merits - 5, duration = 60, origin = player, subPower = crit })
+    player:addStatusEffect(xi.effect.ASSASSINS_CHARGE, { power = 1, duration = 60, origin = player })
 
     return xi.effect.ASSASSINS_CHARGE
 end
@@ -265,10 +263,12 @@ xi.job_utils.thief.useDespoil = function(player, target, ability, action)
 end
 
 xi.job_utils.thief.useFeint = function(player, target, ability, action)
-    local bonus = player:getMod(xi.mod.AUGMENTS_FEINT) * player:getMerit(xi.merit.FEINT) / 25 -- Divide by the merit value (feint is 25) to get the number of merit points
+    -- Additional merits reduced the 10-minute recast by 120 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.FEINT) - 120
+    action:setRecast(action:getRecast() - recastReduction)
 
-    -- Subpower is the proc rate bonus for TH procs
-    player:addStatusEffect(xi.effect.FEINT, { power = 150 + bonus, duration = 60, origin = player, subPower = player:getMerit(xi.merit.FEINT) - 25 }) -- -150 Evasion base, 0% base TREASURE_HUNTER_PROC, every merit past 1 gives 25%
+    player:addStatusEffect(xi.effect.FEINT, { power = 150, duration = 60, origin = player })
 end
 
 xi.job_utils.thief.useFlee = function(player, target, ability)

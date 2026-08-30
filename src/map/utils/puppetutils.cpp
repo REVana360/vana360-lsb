@@ -179,11 +179,10 @@ void LoadAutomaton(CCharEntity* PChar)
 
             petutils::CalculateAutomatonStats(PChar, PChar->PPet);
 
-            // Always load Optic Fiber and Optic Fiber II first
+            // Always load Optic Fiber first
             for (int i = 0; i < 12; i++)
             {
-                if (static_cast<AutomatonAttachment>(tempEquip.attachments[i]) == AutomatonAttachment::OpticFiber ||
-                    static_cast<AutomatonAttachment>(tempEquip.attachments[i]) == AutomatonAttachment::OpticFiberII)
+                if (static_cast<AutomatonAttachment>(tempEquip.attachments[i]) == AutomatonAttachment::OpticFiber)
                 {
                     setAttachment(PChar, i, tempEquip.attachments[i]);
                 }
@@ -191,8 +190,7 @@ void LoadAutomaton(CCharEntity* PChar)
 
             for (int i = 0; i < 12; i++)
             {
-                if (static_cast<AutomatonAttachment>(tempEquip.attachments[i]) != AutomatonAttachment::OpticFiber &&
-                    static_cast<AutomatonAttachment>(tempEquip.attachments[i]) != AutomatonAttachment::OpticFiberII)
+                if (static_cast<AutomatonAttachment>(tempEquip.attachments[i]) != AutomatonAttachment::OpticFiber)
                 {
                     setAttachment(PChar, i, tempEquip.attachments[i]);
                 }

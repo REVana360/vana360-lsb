@@ -9,59 +9,27 @@ xi.combat.tp = xi.combat.tp or {}
 -----------------------------------
 
 -- USED IN CORE (If you add/remove function params, they must be mirrored in core)
--- https://www.bg-wiki.com/ffxi/Tactical_Points
--- Gainee is the target who is going to gain the TP.
--- For instance, if a player attacks a mob, the mob uses the mob formula when gaining TP from the returned hit.
--- This appears to be a measure to not buff mobs when players were buffed with the new TP gain formula.
---- @params gainee CBaseEntity
---- @params delay integer
---- @return integer
+---@param gainee CBaseEntity Retained for the core call signature; the July formula is entity-independent.
+---@param delay integer
+---@return integer
 xi.combat.tp.calculateTPReturn = function(gainee, delay)
     local tpReturn = 0
-    local isCharmedPCPet = false
 
-    -- Charmed pets controlled by the player are not caught by isPet() and are considered mobs still.
-    -- However once charmed, they convert to use the PC delay formula.
-    if
-        gainee:getObjType() == xi.objType.MOB and
-        gainee:getMaster() ~= nil and
-        gainee:getMaster():isPC() and
-        gainee:isCharmed()
-    then
-        isCharmedPCPet = true
-    end
-
-    if
-        gainee and
-        gainee:getObjType() ~= xi.objType.MOB or
-        isCharmedPCPet
-
-    then -- Pets and PCs have been observed to use this formula
-        if delay > 900 then
-            tpReturn = 173 + (delay - 900) * 28 / 360
-        elseif delay > 720 then
-            tpReturn = 161 + (delay - 720) * 24 / 360
-        elseif delay > 630 then
-            tpReturn = 154 + (delay - 630) * 28 / 360
-        elseif delay > 540 then
-            tpReturn = 149 + (delay - 540) * 20 / 360
-        elseif delay > 180 then
-            tpReturn = 61 + (delay - 180) * 88 / 360
-        else
-            tpReturn = 61 + (delay - 180) * 63 / 360
-        end
-    else -- mobs have been observed to use this formula -- http://wiki.ffo.jp/html/308.html
-        if delay > 530 then
-            tpReturn = 145 + (delay - 530) * 35 / 470
-        elseif delay > 480 then
-            tpReturn = 130 + (delay - 480) * 15 / 30
-        elseif delay > 450 then
-            tpReturn = 115 + (delay - 450) * 15 / 30
-        elseif delay > 180 then
-            tpReturn = 50 + (delay - 180) * 65 / 270
-        else
-            tpReturn = 50 + (delay - 180) * 15 / 180
-        end
+    -- July 2009 used one TP-return formula for every entity.
+    -- TP overview: https://wiki.ffo.jp/html/308.html
+    -- Formula: https://wiki.ffo.jp/html/8311.html
+    -- The player TP increase began with the June 17, 2014 update:
+    -- https://forum.square-enix.com/ffxi/threads/42614
+    if delay > 530 then
+        tpReturn = 145 + (delay - 530) * 35 / 470
+    elseif delay > 480 then
+        tpReturn = 130 + (delay - 480) * 15 / 50
+    elseif delay > 450 then
+        tpReturn = 115 + (delay - 450) * 15 / 30
+    elseif delay > 180 then
+        tpReturn = 50 + (delay - 180) * 65 / 270
+    else
+        tpReturn = 50 + (delay - 180) * 15 / 180
     end
 
     return math.floor(tpReturn)

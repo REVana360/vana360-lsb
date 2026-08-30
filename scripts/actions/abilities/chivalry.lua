@@ -2,7 +2,7 @@
 -- Ability: Chivalry
 -- Converts TP to MP.
 -- Obtained: Paladin Level 75 (Must be Purchased with Merit Points)
--- Recast Time: 0:10:00 (+5% MP granted per additional upgrade)
+-- Recast Time: 0:20:00
 -- Duration: Instant
 -----------------------------------
 ---@type TAbility

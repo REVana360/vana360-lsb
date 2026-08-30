@@ -153,7 +153,10 @@ xi.job_utils.ranger.useEagleEyeShot = function(player, target, ability, action)
     local params = {}
 
     params.numHits = 1
-    params.ignoreShadows = true -- Eagle Eye Shot bypasses Utsusemi and Blink
+
+    -- Eagle Eye Shot did not bypass Blink or shadow images before June 2015.
+    -- Source: https://forum.square-enix.com/ffxi/threads/47481-Jun-25-2015-%28JST%29-Version-Update
+    params.ignoreShadows = false
 
     -- TP params.
     local tp          = 1000 -- to ensure ftp multiplier is applied
@@ -169,11 +172,10 @@ xi.job_utils.ranger.useEagleEyeShot = function(player, target, ability, action)
     params.mnd_wsc = 0
     params.chr_wsc = 0
 
-    params.enmityMult = 0.5
-
-    -- Job Point Bonus Damage
-    local jpValue = player:getJobPointLevel(xi.jp.EAGLE_EYE_SHOT_EFFECT)
-    player:addMod(xi.mod.ALL_WSDMG_ALL_HITS, jpValue * 3)
+    -- Eagle Eye Shot used normal damage enmity before May 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/23295-May-16-2012-%28JST%29-Version-Update
+    -- Reference: https://www.bg-wiki.com/ffxi/Version_Update_(05/15/2012)
+    params.enmityMult = 1
 
     local damage, _, tpHits, extraHits = xi.weaponskills.doRangedWeaponskill(player, target, 0, params, tp, action, true)
 
@@ -203,34 +205,61 @@ end
 xi.job_utils.ranger.useScavenge = function(player, target, ability, action)
     -- RNG AF2 quest check
     if xi.job_utils.ranger.tryScavengeQuestItem(player) then
-        return
+        return 0
     end
 
-    local bonuses        = (player:getMod(xi.mod.SCAVENGE_EFFECT) + player:getMerit(xi.merit.SCAVENGE_EFFECT)) / 100
-    local arrowsToReturn = math.floor(math.floor(player:getLocalVar('ArrowsUsed') % 10000) * (player:getMainLvl() / 200 + bonuses))
-    local playerID       = target:getID()
+    local playerID = target:getID()
+    local zonePool = xi.data.scavenge.zonePoolMap[player:getZoneID()]
 
-    if arrowsToReturn == 0 then
+    if not zonePool then
         action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_NOTHING)
-    else
-        if arrowsToReturn > 99 then
-            arrowsToReturn = 99
-        end
 
-        local arrowID = math.floor(player:getLocalVar('ArrowsUsed') / 10000)
-        player:addItem(arrowID, arrowsToReturn)
-
-        if arrowsToReturn == 1 then
-            action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_ITEM)
-        else
-            action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_ITEMS)
-            action:additionalEffect(playerID, 1)
-            action:addEffectParam(playerID, arrowsToReturn)
-        end
-
-        player:setLocalVar('ArrowsUsed', 0)
-        return arrowID
+        return 0
     end
+
+    local curX  = math.floor(player:getXPos())
+    local curZ  = math.floor(player:getZPos())
+    local lastX = player:getLocalVar('[Scavenge]LastX')
+    local lastZ = player:getLocalVar('[Scavenge]LastZ')
+    player:setLocalVar('[Scavenge]LastX', curX)
+    player:setLocalVar('[Scavenge]LastZ', curZ)
+
+    if lastX > 0 then
+        local lastPos = { x = lastX, y = 0, z = lastZ }
+        local curPos  = { x = curX,  y = 0, z = curZ }
+
+        if utils.distanceWithin(lastPos, curPos, 2, true) then
+            action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_NOTHING)
+
+            return 0
+        end
+    end
+
+    if math.randomInt(1, 100) > 25 + player:getMod(xi.mod.SCAVENGE_EFFECT) then
+        action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_NOTHING)
+
+        return 0
+    end
+
+    local itemPool = {}
+
+    for _, itemId in pairs(zonePool) do
+        itemPool[#itemPool + 1] = itemId
+    end
+
+    itemPool[#itemPool + 1] = xi.data.scavenge.guaranteedItems[math.randomInt(1, #xi.data.scavenge.guaranteedItems)]
+
+    local selectedItem = itemPool[math.randomInt(1, #itemPool)]
+
+    if player:addItem(selectedItem) then
+        action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_ITEM)
+
+        return selectedItem
+    end
+
+    action:messageID(playerID, xi.msg.basic.SCAVENGE_FIND_NOTHING)
+
+    return 0
 end
 
 xi.job_utils.ranger.useCamouflage = function(player, target, ability, action)
@@ -278,7 +307,11 @@ xi.job_utils.ranger.useUnlimitedShot = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useFlashyShot = function(player, target, ability, action)
-    -- TODO: Flashy Shot should add "D" damage to the next ranged attack
+    -- Additional merits reduced the 20-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.FLASHY_SHOT) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
     player:addStatusEffect(xi.effect.FLASHY_SHOT, { power = 1, duration = 60, origin = player })
 
     return xi.effect.FLASHY_SHOT

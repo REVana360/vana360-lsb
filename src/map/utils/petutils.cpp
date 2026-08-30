@@ -925,7 +925,14 @@ void CalculateAvatarStats(CBattleEntity* PMaster, CPetEntity* PPet)
         PPet->addModifier(xi::Mod::MEVA, PMaster->getMod(xi::Mod::PET_MACC_MEVA));
     }
 
-    PMaster->setModifier(xi::Mod::AVATAR_PERPETUATION, PerpetuationCost(petID, mLvl));
+    int16 perpetuationCost = PerpetuationCost(petID, mLvl);
+    if (PMaster->objtype == TYPE_PC && petID <= PETID_DARKSPIRIT)
+    {
+        auto* PChar = static_cast<CCharEntity*>(PMaster);
+        perpetuationCost -= PChar->PMeritPoints->GetMeritValue(xi::Merit::ElementalMpCost, PChar);
+    }
+
+    PMaster->setModifier(xi::Mod::AVATAR_PERPETUATION, std::max<int16>(perpetuationCost, 0));
 
     FinalizePetStatistics(PMaster, PPet);
 }
@@ -1460,36 +1467,86 @@ int16 PerpetuationCost(uint32 id, uint8 level)
 {
     int16 cost = 0;
 
-    // Fire Spirit through Dark Spirit
+    // The official table reports net cost with Auto Refresh. This function
+    // returns the raw cost because TickRegen applies Refresh separately.
+    // Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-(JST)-Version-Update
     if (id <= PETID_DARKSPIRIT)
     {
-        if (level < 19)
-        {
-            cost = 1;
-        }
-        else if (level < 38)
+        if (level < 5)
         {
             cost = 2;
         }
-        else if (level < 57)
+        else if (level < 9)
         {
             cost = 3;
         }
-        else if (level < 75)
+        else if (level < 14)
         {
             cost = 4;
         }
-        else if (level < 81)
+        else if (level < 18)
         {
             cost = 5;
         }
-        else if (level < 91)
+        else if (level < 23)
         {
             cost = 6;
         }
-        else
+        else if (level < 27)
         {
             cost = 7;
+        }
+        else if (level < 32)
+        {
+            cost = 8;
+        }
+        else if (level < 36)
+        {
+            cost = 9;
+        }
+        else if (level < 40)
+        {
+            cost = 10;
+        }
+        else if (level < 45)
+        {
+            cost = 11;
+        }
+        else if (level < 49)
+        {
+            cost = 12;
+        }
+        else if (level < 54)
+        {
+            cost = 13;
+        }
+        else if (level < 58)
+        {
+            cost = 14;
+        }
+        else if (level < 63)
+        {
+            cost = 15;
+        }
+        else if (level < 67)
+        {
+            cost = 16;
+        }
+        else if (level < 72)
+        {
+            cost = 17;
+        }
+        else if (level < 81)
+        {
+            cost = 18;
+        }
+        else if (level < 95)
+        {
+            cost = 19;
+        }
+        else
+        {
+            cost = 20;
         }
     }
     else if (id == PETID_CARBUNCLE || id == PETID_CAIT_SITH)

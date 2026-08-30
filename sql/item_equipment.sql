@@ -6748,12 +6748,14 @@ INSERT INTO `item_equipment` VALUES (17012,'judges_rod',1,0,1048575,11,0,0,4,0,0
 INSERT INTO `item_equipment` VALUES (17013,'goldfish_basket',1,0,1048575,12,0,0,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (17014,'hume_fishing_rod',1,0,1048575,8,0,0,4,0,0,0);
 INSERT INTO `item_equipment` VALUES (17015,'halcyon_rod',1,0,1048575,1,0,0,4,0,0,0);
-INSERT INTO `item_equipment` VALUES (17016,'pet_food_alpha',12,0,1048575,0,0,0,8,4,0,0);
-INSERT INTO `item_equipment` VALUES (17017,'pet_food_beta',24,0,1048575,0,0,0,8,4,0,0);
-INSERT INTO `item_equipment` VALUES (17018,'pet_fd._gamma',36,0,1048575,0,0,0,8,4,0,0);
-INSERT INTO `item_equipment` VALUES (17019,'pet_food_delta',48,0,1048575,0,0,0,8,4,0,0);
-INSERT INTO `item_equipment` VALUES (17020,'pet_fd._epsilon',60,0,1048575,0,0,0,8,4,0,0);
-INSERT INTO `item_equipment` VALUES (17021,'pet_food_zeta',72,0,1048575,0,0,0,8,4,0,0);
+-- Pet food gained minimum level requirements in September 2010.
+-- Source: https://www.playonline.com/pcd/verup/ff11us/detail/5835/detail.html
+INSERT INTO `item_equipment` VALUES (17016,'pet_food_alpha',0,0,1048575,0,0,0,8,4,0,0);
+INSERT INTO `item_equipment` VALUES (17017,'pet_food_beta',0,0,1048575,0,0,0,8,4,0,0);
+INSERT INTO `item_equipment` VALUES (17018,'pet_fd._gamma',0,0,1048575,0,0,0,8,4,0,0);
+INSERT INTO `item_equipment` VALUES (17019,'pet_food_delta',0,0,1048575,0,0,0,8,4,0,0);
+INSERT INTO `item_equipment` VALUES (17020,'pet_fd._epsilon',0,0,1048575,0,0,0,8,4,0,0);
+INSERT INTO `item_equipment` VALUES (17021,'pet_food_zeta',0,0,1048575,0,0,0,8,4,0,0);
 INSERT INTO `item_equipment` VALUES (17022,'pet_food_eta',84,0,1048575,0,0,0,8,4,0,0);
 INSERT INTO `item_equipment` VALUES (17023,'pet_food_theta',96,0,1048575,0,0,0,8,4,0,0);
 INSERT INTO `item_equipment` VALUES (17024,'ash_club',1,0,1048575,108,0,0,3,0,0,0);

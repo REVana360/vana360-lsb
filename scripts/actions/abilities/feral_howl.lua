@@ -2,7 +2,7 @@
 -- Ability: Feral Howl
 -- Terrorizes the target.
 -- Obtained: Beastmaster Level 75
--- Recast Time: 0:05:00
+-- Recast Time: 0:15:00
 -- Duration: Apprx. 0:00:01 - 0:00:10
 -----------------------------------
 ---@type TAbility

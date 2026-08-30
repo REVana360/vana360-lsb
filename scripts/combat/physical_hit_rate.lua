@@ -49,19 +49,9 @@ end
 ---@param slot xi.attackAnimation
 ---@return number
 xi.combat.physicalHitRate.getPhysicalHitRateCap = function(attacker, slot)
-    if attacker:isPet() then
-        return 0.99
-    elseif attacker:isPC() then
-        if attacker:isUsingH2H() then -- Kicks aren't explicitly listed as 99%, TODO: needs verification
-            return 0.99
-        elseif attacker:isWeaponTwoHanded() or slot >= xi.attackAnimation.LEFT_ATTACK then -- 1h offhand, ranged
-            return 0.95
-        end
-
-        return 0.99 -- 1h mainhand
-    end
-
-    return 0.95 -- mobs, charmed pets. -- Do trusts have a 99% or 95% acc cap?
+    -- July 2009 melee hit-rate cap.
+    -- Source: https://forum.square-enix.com/ffxi/threads/45365?p=534537#post534537
+    return 0.95
 end
 
 ---@param entity CBaseEntity

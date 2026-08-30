@@ -1,8 +1,8 @@
 -----------------------------------
 -- Ability: Sange
--- Daken will always activate but consumes shuriken while active.
+-- Consumes Utsusemi shadows to add hits to the next ranged attack.
 -- Obtained: Ninja Level 75 Merits
--- Recast Time: 3 minutes
+-- Recast Time: 15 minutes
 -- Duration: 1 minute
 -----------------------------------
 ---@type TAbility

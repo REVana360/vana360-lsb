@@ -2,7 +2,7 @@
 -- Ability: Martyr
 -- Sacrifices HP to heal a party member double the amount.
 -- Obtained: White Mage Level 75
--- Recast Time: 0:10:00
+-- Recast Time: 0:20:00
 -- Duration: Instant
 -- Target: Party member, cannot target self.
 -----------------------------------

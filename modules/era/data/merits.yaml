@@ -1,4 +1,5 @@
-# Adjust retail merits to mirror merits as they existed in ToAU.
+# Adjust retail merits to mirror merits as they existed in July 2009.
+# https://www.playonline.com/pcd/verup/ff11us/detail/3347/detail.html
 #
 # Temporary location for this module, please rework it according to the various expansions.
 
@@ -8,7 +9,7 @@ merits:
     attributes:       [3, 6, 9, 9, 9]
     defensive_skills: [1, 2, 3, 3]
     others:           [1, 2, 3, 4]
-    job_group_2:      [3, 4, 5]
+    job_group_2:      [3, 4, 5, 5, 5]
 
   categories:
     weapon_skills: # Disable upgrades to unlock Weapon Skills
@@ -37,26 +38,8 @@ merits:
     others:
       max_upgrades: 8
 
-    war_group_2:
-      max_upgrades: 6
-      merits:
-        warriors_charge:
-          value: 150
-
-    mnk_group_1:
-      merits:
-        focus_recast:
-          value: 10
-        dodge_recast:
-          value: 10
-        chakra_recast:
-          value: 10
-
-    mnk_group_2:
-      max_upgrades: 6
-
     whm_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits: # Readd the merited spells and drop the replacement merits.
         protectra_v:
           id:           0x0884
@@ -72,13 +55,9 @@ merits:
           max_upgrades: 0
         animus_misery:
           max_upgrades: 0
-        martyr:
-          value: 150
-        devotion:
-          value: 150
 
     blm_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits: # Readd the merited spells and drop the replacement merits.
         flare_ii:
           id:           0x08C0
@@ -139,7 +118,7 @@ merits:
           value: 3
 
     rdm_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits: # Readd the merited spells and drop the replacement merits.
         dia_iii:
           id:           0x0900
@@ -184,45 +163,14 @@ merits:
         accuracy:
           max_upgrades: 0
 
-    thf_group_2:
-      max_upgrades: 6
-      merits:
-        assassins_charge:
-          value: 150
-        feint:
-          value: 120
-
-    pld_group_1:
-      merits:
-        shield_bash_recast:
-          value: 10
-        holy_circle_recast:
-          value: 20
-        rampart_recast:
-          value: 10
-
-    pld_group_2:
-      max_upgrades: 6
-      merits:
-        fealty:
-          value: 150
-        chivalry:
-          value: 150
-
     drk_group_1:
       merits:
-        arcane_circle_recast:
-          value: 20
         weapon_bash_effect:
           value: 10
 
     drk_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
-        dark_seal:
-          value: 150
-        diabolic_eye:
-          value: 150
         desperate_blows:
           value: 5
 
@@ -233,21 +181,13 @@ merits:
         sic_recast:
           value: 4
 
-    bst_group_2:
-      max_upgrades: 6
-      merits:
-        feral_howl:
-          value: 150
-        killer_instinct:
-          value: 150
-
     brd_group_1:
       merits:
         minne_effect:
           value: 1
 
     brd_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits: # Readd the merited spells and drop the replacement merits.
         foe_sirvente:
           id:           0x0A44
@@ -273,67 +213,10 @@ merits:
         scavenge_effect:
           value: 10
 
-    rng_group_2:
-      max_upgrades: 6
-      merits:
-        flashy_shot:
-          value: 150
-
-    sam_group_1:
-      merits:
-        warding_circle_recast:
-          value: 20
-
     sam_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
-        shikikoyo:
-          value: 150
         blade_bash:
-          value: 150
-
-    nin_group_2:
-      max_upgrades: 6
-      merits: # Readd the merited spells and drop the replacement merits.
-        katon_san:
-          id:           0x0B04
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        katon_san
-        hyoton_san:
-          id:           0x0B06
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        hyoton_san
-        huton_san:
-          id:           0x0B08
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        huton_san
-        doton_san:
-          id:           0x0B0A
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        doton_san
-        raiton_san:
-          id:           0x0B0C
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        raiton_san
-        suiton_san:
-          id:           0x0B0E
-          value:        5
-          upgrade_cost: job_group_2
-          spell:        suiton_san
-        yonin_effect:
-          max_upgrades: 0
-        innin_effect:
-          max_upgrades: 0
-        nin_magic_accuracy:
-          max_upgrades: 0
-        nin_magic_bonus:
-          max_upgrades: 0
-        sange:
           value: 150
 
     drg_group_1:
@@ -348,20 +231,15 @@ merits:
           value: 6
 
     drg_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         deep_breathing:
           value: 150
         strafe_effect:
           value: 5
 
-    smn_group_1:
-      merits:
-        summoning_magic_cast_time:
-          value: 1
-
     smn_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
 
     blu_group_1:
       merits:
@@ -369,13 +247,13 @@ merits:
           value: 1
 
     blu_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         diffusion:
           value: 150
 
     cor_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         snake_eye:
           value: 150
@@ -393,7 +271,7 @@ merits:
           skills: [automaton_magic]
 
     pup_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         role_reversal:
           value: 30
@@ -401,7 +279,7 @@ merits:
           value: 15
 
     dnc_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         saber_dance:
           value: 30
@@ -414,7 +292,7 @@ merits:
           value: 10
 
     sch_group_2:
-      max_upgrades: 6
+      max_upgrades: 10
       merits:
         enlightenment:
           value: 75

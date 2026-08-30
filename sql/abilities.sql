@@ -45,7 +45,10 @@ INSERT INTO `abilities` VALUES (22,'invincible',7,0,1,7200,0,0,0,18,2000,0,6,0,0
 INSERT INTO `abilities` VALUES (23,'blood_weapon',8,0,1,7200,0,0,0,19,2000,0,6,0,0,0,1,80,0,0,NULL);
 INSERT INTO `abilities` VALUES (24,'familiar',9,0,1,7200,0,0,0,39,2000,0,6,0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (25,'soul_voice',10,0,1,7200,0,0,0,40,2000,0,6,0,0,0,1,0,0,0,NULL);
-INSERT INTO `abilities` VALUES (26,'eagle_eye_shot',11,0,4,7200,0,110,0,186,2000,0,3,20,0,0,0,0,0,0,NULL);
+-- Eagle Eye Shot range was extended in May 2012; July 2009 used 15 yalms.
+-- Source: https://forum.square-enix.com/ffxi/threads/23295-May-16-2012-%28JST%29-Version-Update
+-- Reference: https://www.bg-wiki.com/ffxi/Version_Update_(05/15/2012)
+INSERT INTO `abilities` VALUES (26,'eagle_eye_shot',11,0,4,7200,0,110,0,186,2000,0,3,15,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (27,'meikyo_shisui',12,0,1,7200,0,0,0,96,2000,0,6,0,0,0,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (28,'mijin_gakure',13,0,4,7200,0,110,0,93,2000,0,6,16,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (29,'spirit_surge',14,0,1,7200,0,0,0,97,2000,0,6,0,0,0,0,0,0,0,'COP');
@@ -73,11 +76,17 @@ INSERT INTO `abilities` VALUES (42,'flee',6,25,1,300,62,126,0,9,2000,0,6,0,0,0,1
 INSERT INTO `abilities` VALUES (43,'hide',6,45,1,300,63,0,0,10,2000,0,6,0,0,0,0,0,706,0,NULL);
 INSERT INTO `abilities` VALUES (44,'sneak_attack',6,15,1,60,64,0,0,17,2000,0,6,0,0,0,1,0,708,0,NULL);
 INSERT INTO `abilities` VALUES (45,'mug',6,35,4,900,65,129,0,183,2000,0,3,3,0,0,1,300,0,0,NULL);
-INSERT INTO `abilities` VALUES (46,'shield_bash',7,15,4,60,73,0,0,185,2000,0,3,3,0,0,450,900,768,0,NULL);
-INSERT INTO `abilities` VALUES (47,'holy_circle',7,5,1,300,74,131,0,29,2000,0,6,0,1,10,1,20,770,0,NULL);
+-- Paladin recasts were reduced in February and March 2012.
+-- Sources:
+-- https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+-- https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (46,'shield_bash',7,15,4,300,73,0,0,185,2000,0,3,3,0,0,450,900,768,0,NULL);
+INSERT INTO `abilities` VALUES (47,'holy_circle',7,5,1,600,74,131,0,29,2000,0,6,0,1,10,1,20,770,0,NULL);
 INSERT INTO `abilities` VALUES (48,'sentinel',7,30,1,300,75,0,0,11,2000,0,6,0,0,0,1,900,772,0,NULL);
 INSERT INTO `abilities` VALUES (49,'souleater',8,30,1,360,85,0,0,20,2000,0,6,0,0,0,1,1300,832,0,NULL);
-INSERT INTO `abilities` VALUES (50,'arcane_circle',8,5,1,300,86,134,0,30,2000,0,6,0,1,10,1,20,834,0,NULL);
+-- Arcane Circle's recast was reduced from 10 to 5 minutes in February 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (50,'arcane_circle',8,5,1,600,86,134,0,30,2000,0,6,0,1,10,1,20,834,0,NULL);
 INSERT INTO `abilities` VALUES (51,'last_resort',8,15,1,300,87,115,0,12,2000,0,6,0,0,0,1,1300,836,0,NULL);
 INSERT INTO `abilities` VALUES (52,'charm',9,1,4,15,97,0,0,13,2000,0,6,16,0,0,320,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (53,'gauge',9,10,4,30,98,0,0,14,2000,0,6,20,0,0,0,0,0,0,NULL);
@@ -91,7 +100,9 @@ INSERT INTO `abilities` VALUES (60,'barrage',11,30,1,300,125,0,0,23,2000,0,6,0,0
 INSERT INTO `abilities` VALUES (61,'call_wyvern',14,1,1,1200,163,0,0,94,2000,0,6,0,0,0,1,300,0,4,NULL);
 INSERT INTO `abilities` VALUES (62,'third_eye',12,15,1,60,133,0,0,24,2000,0,6,0,0,0,1,0,1088,0,NULL);
 INSERT INTO `abilities` VALUES (63,'meditate',12,30,1,180,134,0,0,25,2000,0,6,0,0,0,320,0,1094,0,NULL);
-INSERT INTO `abilities` VALUES (64,'warding_circle',12,5,1,300,135,148,0,31,2000,0,6,0,1,10,1,20,1090,0,NULL);
+-- Warding Circle's recast was reduced from 10 to 5 minutes in February 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (64,'warding_circle',12,5,1,600,135,148,0,31,2000,0,6,0,1,10,1,20,1090,0,NULL);
 INSERT INTO `abilities` VALUES (65,'ancient_circle',14,5,1,300,157,150,0,32,2000,0,6,0,1,10,1,20,1216,0,NULL);
 INSERT INTO `abilities` VALUES (66,'jump',14,10,4,60,158,110,0,204,2000,0,3,8,0,0,0,0,1218,0,NULL);
 INSERT INTO `abilities` VALUES (67,'high_jump',14,35,4,120,159,110,0,209,2000,0,3,10,0,0,0,0,1220,0,NULL);
@@ -175,25 +186,35 @@ INSERT INTO `abilities` VALUES (145,'thunder_maneuver',18,1,1,10,210,0,0,333,0,0
 INSERT INTO `abilities` VALUES (146,'water_maneuver',18,1,1,10,210,0,0,333,0,0,6,0,0,0,1,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (147,'light_maneuver',18,1,1,10,210,0,0,333,0,0,6,0,0,0,1,0,0,512,'TOAU');
 INSERT INTO `abilities` VALUES (148,'dark_maneuver',18,1,1,10,210,0,0,333,0,0,6,0,0,0,1,0,0,512,'TOAU');
-INSERT INTO `abilities` VALUES (149,'warriors_charge',1,75,1,300,6,0,0,154,2000,0,6,0,0,0,1,300,2048,1,'TOAU');
+-- Group 2 ability recasts and additional-merit effects changed in March 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (149,'warriors_charge',1,75,1,900,6,0,0,154,2000,0,6,0,0,0,1,300,2048,1,'TOAU');
 INSERT INTO `abilities` VALUES (150,'tomahawk',1,75,4,180,7,0,0,244,2000,0,3,10,0,0,1,600,2050,1,'TOAU');
 INSERT INTO `abilities` VALUES (151,'mantra',2,75,1,600,19,441,0,155,2000,0,6,0,1,8,1,60,2112,1,'TOAU');
 INSERT INTO `abilities` VALUES (152,'formless_strikes',2,75,1,600,20,0,0,156,2000,0,6,0,0,0,1,300,2114,1,'TOAU');
-INSERT INTO `abilities` VALUES (153,'martyr',3,75,2,600,27,102,0,157,2000,0,6,20,0,0,1,300,2176,1,'TOAU');
-INSERT INTO `abilities` VALUES (154,'devotion',3,75,2,600,28,451,0,158,2000,0,6,10,0,0,1,300,2178,1,'TOAU');
-INSERT INTO `abilities` VALUES (155,'assassins_charge',6,75,1,300,67,0,0,160,2000,0,6,0,0,0,1,300,2368,1,'TOAU');
-INSERT INTO `abilities` VALUES (156,'feint',6,75,1,120,68,0,0,159,2000,0,6,0,0,0,1,300,2370,1,'TOAU');
-INSERT INTO `abilities` VALUES (157,'fealty',7,75,1,600,78,0,0,148,2000,0,6,0,0,0,1,300,2432,1,'TOAU');
-INSERT INTO `abilities` VALUES (158,'chivalry',7,75,1,600,79,451,0,149,2000,0,6,0,0,0,1,300,2434,1,'TOAU');
-INSERT INTO `abilities` VALUES (159,'dark_seal',8,75,1,300,89,0,0,144,2000,0,6,0,0,0,1,300,2496,1,'TOAU');
-INSERT INTO `abilities` VALUES (160,'diabolic_eye',8,75,1,300,90,0,0,145,2000,0,6,0,0,0,1,300,2498,1,'TOAU');
-INSERT INTO `abilities` VALUES (161,'feral_howl',9,75,4,300,105,0,0,146,2000,0,6,16,0,0,1,600,2560,1,'TOAU');
-INSERT INTO `abilities` VALUES (162,'killer_instinct',9,75,1,300,106,0,0,147,2000,0,6,0,1,8,1,80,2562,1,'TOAU');
+-- Martyr and Devotion recasts were reduced to ten minutes on March 27, 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099
+INSERT INTO `abilities` VALUES (153,'martyr',3,75,2,1200,27,102,0,157,2000,0,6,20,0,0,1,300,2176,1,'TOAU');
+INSERT INTO `abilities` VALUES (154,'devotion',3,75,2,1200,28,451,0,158,2000,0,6,10,0,0,1,300,2178,1,'TOAU');
+INSERT INTO `abilities` VALUES (155,'assassins_charge',6,75,1,900,67,0,0,160,2000,0,6,0,0,0,1,300,2368,1,'TOAU');
+INSERT INTO `abilities` VALUES (156,'feint',6,75,1,600,68,0,0,159,2000,0,6,0,0,0,1,300,2370,1,'TOAU');
+INSERT INTO `abilities` VALUES (157,'fealty',7,75,1,1200,78,0,0,148,2000,0,6,0,0,0,1,300,2432,1,'TOAU');
+INSERT INTO `abilities` VALUES (158,'chivalry',7,75,1,1200,79,451,0,149,2000,0,6,0,0,0,1,300,2434,1,'TOAU');
+-- Dark Seal and Diabolic Eye recasts were reduced from 15 to 5 minutes in March 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (159,'dark_seal',8,75,1,900,89,0,0,144,2000,0,6,0,0,0,1,300,2496,1,'TOAU');
+INSERT INTO `abilities` VALUES (160,'diabolic_eye',8,75,1,900,90,0,0,145,2000,0,6,0,0,0,1,300,2498,1,'TOAU');
+-- Feral Howl and Killer Instinct recasts were reduced from 15 to 5 minutes in March 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (161,'feral_howl',9,75,4,900,105,0,0,146,2000,0,6,16,0,0,1,600,2560,1,'TOAU');
+INSERT INTO `abilities` VALUES (162,'killer_instinct',9,75,1,900,106,0,0,147,2000,0,6,0,1,8,1,80,2562,1,'TOAU');
 INSERT INTO `abilities` VALUES (163,'nightingale',10,75,1,600,109,0,0,161,2000,0,6,0,0,0,1,300,2624,1,'TOAU');
 INSERT INTO `abilities` VALUES (164,'troubadour',10,75,1,600,110,0,0,162,2000,0,6,0,0,0,1,300,2626,1,'TOAU');
 INSERT INTO `abilities` VALUES (165,'stealth_shot',11,75,1,300,127,0,0,150,2000,0,6,0,0,0,1,300,2688,1,'TOAU');
-INSERT INTO `abilities` VALUES (166,'flashy_shot',11,75,1,600,128,0,0,151,2000,0,6,0,0,0,1,300,2690,1,'TOAU');
-INSERT INTO `abilities` VALUES (167,'shikikoyo',12,75,2,300,136,452,0,152,2000,0,6,10,0,0,1,300,2752,1,'TOAU');
+-- Flashy Shot's recast was reduced from 20 to 10 minutes in March 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+INSERT INTO `abilities` VALUES (166,'flashy_shot',11,75,1,1200,128,0,0,151,2000,0,6,0,0,0,1,300,2690,1,'TOAU');
+INSERT INTO `abilities` VALUES (167,'shikikoyo',12,75,2,900,136,452,0,152,2000,0,6,10,0,0,1,300,2752,1,'TOAU');
 INSERT INTO `abilities` VALUES (168,'blade_bash',12,75,4,180,137,110,0,202,2000,0,3,3,0,0,1,900,2754,1,'TOAU');
 INSERT INTO `abilities` VALUES (169,'deep_breathing',14,75,1,300,164,0,0,153,2000,0,6,0,0,0,0,0,2880,1,'TOAU');
 INSERT INTO `abilities` VALUES (170,'angon',14,75,4,180,165,127,0,245,2000,0,3,10,0,0,1,600,2882,1,'TOAU');

@@ -139,6 +139,35 @@ TEST_CASE("merits: a merit only grants what it names", "[data][merit]")
     CHECK(exenterator->WeaponSkill == "exenterator");
     CHECK(exenterator->Spell.empty());
 
+    const auto katonSan = find(xi::Merit::KatonSan);
+    REQUIRE(katonSan != records.Entries.end());
+    CHECK(katonSan->Category == xi::MeritCategory::NinGroup2);
+    CHECK(katonSan->Value == 5);
+    CHECK(katonSan->MaxUpgrades == 5);
+    CHECK(katonSan->Spell == "katon_san");
+
+    const auto ninGroup2 = std::ranges::find(records.Categories, xi::MeritCategory::NinGroup2, &xi::data::MeritCategoryData::Id);
+    REQUIRE(ninGroup2 != records.Categories.end());
+    CHECK(ninGroup2->MaxUpgrades == 10);
+
+    const auto elementalMpCost = find(xi::Merit::ElementalMpCost);
+    REQUIRE(elementalMpCost != records.Entries.end());
+    CHECK(elementalMpCost->Category == xi::MeritCategory::SmnGroup1);
+    CHECK(elementalMpCost->Value == 1);
+    CHECK(elementalMpCost->MaxUpgrades == 5);
+
+    const auto martyr = find(xi::Merit::Martyr);
+    REQUIRE(martyr != records.Entries.end());
+    CHECK(martyr->Category == xi::MeritCategory::WhmGroup2);
+    CHECK(martyr->Value == 150);
+    CHECK(martyr->MaxUpgrades == 5);
+
+    const auto devotion = find(xi::Merit::Devotion);
+    REQUIRE(devotion != records.Entries.end());
+    CHECK(devotion->Category == xi::MeritCategory::WhmGroup2);
+    CHECK(devotion->Value == 150);
+    CHECK(devotion->MaxUpgrades == 5);
+
     // Weapon skill unlocks belong to the weapon skill category and nowhere else.
     for (const auto& entry : records.Entries)
     {

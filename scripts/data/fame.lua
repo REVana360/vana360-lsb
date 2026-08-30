@@ -2,6 +2,7 @@
 -- Rank thresholds for fame calculations
 -- Fame is stored at 10x the retail 0-250 scale to account for decimal precision (2500 cap)
 -- https://wiki.ffo.jp/html/2683.html
+-- https://forum.square-enix.com/ffxi/threads/40059
 -----------------------------------
 xi = xi or {}
 xi.data = xi.data or {}
@@ -9,18 +10,18 @@ xi.data.fame = xi.data.fame or {}
 -----------------------------------
 
 -- Points required for each fame rank
--- These are the retail values after the February 18th 2014 "relaxation" as called by JP wiki (see link above)
+-- These thresholds predate the February 18th 2014 reduction.
 xi.data.fame.rankPoints =
 {
     [1] = 0,
-    [2] = 50,
-    [3] = 125,
-    [4] = 225,
-    [5] = 325,
-    [6] = 425,
-    [7] = 488,
-    [8] = 550,
-    [9] = 613,
+    [2] = 200,
+    [3] = 500,
+    [4] = 900,
+    [5] = 1300,
+    [6] = 1700,
+    [7] = 1950,
+    [8] = 2200,
+    [9] = 2450,
 }
 
 -- Fame rank (1-9) for a raw fame point value

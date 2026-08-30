@@ -1,8 +1,56 @@
 xi.equipment = xi.equipment or {}
+xi.items = xi.items or {}
 
--- To allow "unlocking_a_myth" module to use pre-2014 ws point scaling on Nyzul Climb progress
+local vigilWeaponNames =
+{
+    'brave_blade',
+    'burning_fists',
+    'dancing_dagger',
+    'death_sickle',
+    'double_axe',
+    'elder_staff',
+    'inferno_claws',
+    'killer_bow',
+    'mages_staff',
+    'main_gauche',
+    'quicksilver',
+    'radiant_lance',
+    'sasuke_katana',
+    'scepter_staff',
+    'sturdy_axe',
+    'swordbreaker',
+    'vorpal_sword',
+    'werebuster',
+    'wightslayer',
+    'windslicer',
+}
+
+-- July 8, 2014 removed Nyzul floor-based skillchain requirements.
+-- Source: https://forum.square-enix.com/ffxi/threads/43135-Jul-8-2014-%28JST%29-Version-Update
 xi.equipment.vigilWeaponRequiredWsPoints = function(player)
-    return 250
+    local nyzulFloorProgress = player:getCharVar('NyzulFloorProgress')
+    if nyzulFloorProgress == 100 then
+        return 250
+    elseif nyzulFloorProgress >= 80 then
+        return 500 + 20 * (99 - nyzulFloorProgress)
+    elseif nyzulFloorProgress >= 60 then
+        return 1000 + 40 * (79 - nyzulFloorProgress)
+    elseif nyzulFloorProgress >= 40 then
+        return 2000 + 80 * (59 - nyzulFloorProgress)
+    elseif nyzulFloorProgress >= 20 then
+        return 4000 + 160 * (39 - nyzulFloorProgress)
+    elseif nyzulFloorProgress > 0 then
+        return 8000 + 320 * (19 - nyzulFloorProgress)
+    else
+        return 16000
+    end
+end
+
+for _, weaponName in ipairs(vigilWeaponNames) do
+    xi.items[weaponName] = xi.items[weaponName] or {}
+    xi.items[weaponName].onItemEquip = function(player, item)
+        item:setWeaponskillPointsNeeded(xi.equipment.vigilWeaponRequiredWsPoints(player))
+    end
 end
 
 -----------------------------------

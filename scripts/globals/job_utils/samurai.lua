@@ -94,7 +94,9 @@ xi.job_utils.samurai.useYaegasumi = function(player, target, ability)
 end
 
 xi.job_utils.samurai.useWardingCircle = function(player, target, ability)
-    local duration = 180 + player:getMod(xi.mod.WARDING_CIRCLE_DURATION)
+    -- Circle durations increased from one to three minutes in February 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+    local duration = 60 + player:getMod(xi.mod.WARDING_CIRCLE_DURATION)
     local power    = player:getMainJob() == xi.job.SAM and 15 or 5
 
     power = power + player:getMod(xi.mod.WARDING_CIRCLE_POTENCY)
@@ -272,7 +274,12 @@ xi.job_utils.samurai.useBladeBash = function(player, target, ability, action)
 end
 
 xi.job_utils.samurai.useShikikoyo = function(player, target, ability, action)
-    local pTP = (player:getTP() - 1000) * (1 + (player:getMerit(xi.merit.SHIKIKOYO) - 12) / 100)
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.SHIKIKOYO) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    local pTP = player:getTP() - 1000
     pTP       = utils.clamp(pTP, 0, 3000 - target:getTP())
 
     player:setTP(1000)

@@ -7,11 +7,8 @@ local effectObject = {}
 
 effectObject.onEffectGain = function(target, effect)
     local bonusPower = effect:getPower()
-    local monkLevel = utils.getActiveJobLevel(target, xi.job.MNK) + 1
 
-    -- https://www.bg-wiki.com/ffxi/Dodge
-    effect:addMod(xi.mod.EVA, monkLevel + bonusPower)
-    effect:addMod(xi.mod.ADDITIVE_GUARD, math.floor(monkLevel * 0.2))
+    effect:addMod(xi.mod.EVA, 20 + bonusPower)
 end
 
 effectObject.onEffectTick = function(target, effect)

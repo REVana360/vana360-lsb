@@ -79,8 +79,12 @@ xi.job_utils.ninja.useInnin = function(player, target, ability, action)
 end
 
 xi.job_utils.ninja.useSange = function(player, target, ability, action)
-    local potency = player:getMerit(xi.merit.SANGE)-1
-    player:addStatusEffect(xi.effect.SANGE, { power = potency * 25, duration = 60, origin = player })
+    -- Sange changed from a shadow-consuming multi-hit attack in October 2014.
+    -- Source: https://forum.square-enix.com/ffxi/threads/44592-Oct-7-2014-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.SANGE) - 150
+    action:setRecast(math.max(0, action:getRecast() - recastReduction))
+
+    player:addStatusEffect(xi.effect.SANGE, { duration = 60, origin = player })
 
     return xi.effect.SANGE
 end

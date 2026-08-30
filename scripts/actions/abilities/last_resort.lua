@@ -3,7 +3,7 @@
 -- Description: Increases user's attack, but lowers defense.
 -- Obtained: Dark Knight Level 15
 -- Recast Time: 00:05:00
--- Duration: 00:03:00
+-- Duration: 00:00:30
 -----------------------------------
 ---@type TAbility
 local abilityObject = {}

@@ -2,7 +2,7 @@
 -- Ability: Diabolic Eye
 -- Description: Reduces max. HP, increases accuracy.
 -- Obtained: Dark Knight Level 75
--- Recast Time: 00:05:00
+-- Recast Time: 00:15:00
 -- Duration: 00:03:00
 -----------------------------------
 ---@type TAbility

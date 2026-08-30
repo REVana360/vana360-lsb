@@ -2,7 +2,7 @@
 -- Ability: Dark Seal
 -- Description: Enhances the accuracy of your next dark magic spell.
 -- Obtained: Dark Knight Level 75
--- Recast Time: 00:05:00
+-- Recast Time: 00:15:00
 -- Duration: 1 Spell or 60 seconds, whichever occurs first.
 -----------------------------------
 ---@type TAbility

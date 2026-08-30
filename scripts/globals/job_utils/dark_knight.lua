@@ -44,7 +44,9 @@ end
 xi.job_utils.dark_knight.useArcaneCircle = function(player, target, ability)
     -- Main (DRK) job gives a unique 15% damage bonus against arcana, 15% damage resistance from arcana, and likely +15% Arcana Killer.
     -- When subbed, gives 5% of these bonuses.
-    local duration = 180 + player:getMod(xi.mod.ARCANE_CIRCLE_DURATION)
+    -- Circle durations increased from one to three minutes in February 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+    local duration = 60 + player:getMod(xi.mod.ARCANE_CIRCLE_DURATION)
     local power    = player:getMainJob() == xi.job.DRK and 15 or 5
 
     power = power + player:getMod(xi.mod.ARCANE_CIRCLE_POTENCY)
@@ -77,27 +79,31 @@ xi.job_utils.dark_knight.useConsumeMana = function(player, target, ability)
 end
 
 xi.job_utils.dark_knight.useDarkSeal = function(player, target, ability, action)
-    -- Power: Each merit level after the first reduces Dark Magic casting time by -10% (total of -40% bonus).
-    -- Sub Power: Enhances Dark Seal effect by increasing duration of Dark Magic by 10% per merit level (total of 50% bonus).
-    local power    = player:getMerit(xi.merit.DARK_SEAL) - 10
-    local subPower = player:getMerit(xi.merit.DARK_SEAL) * player:getMod(xi.mod.ENHANCES_DARK_SEAL) / 10
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.DARK_SEAL) - 150
+    action:setRecast(action:getRecast() - recastReduction)
 
-    player:addStatusEffect(xi.effect.DARK_SEAL, { power = power, duration = 60, origin = player, subPower = subPower })
+    player:addStatusEffect(xi.effect.DARK_SEAL, { power = 1, duration = 60, origin = player })
 
     return xi.effect.DARK_SEAL
 end
 
 xi.job_utils.dark_knight.useDiabolicEye = function(player, target, ability, action)
-    local power    = 15 + player:getMerit(xi.merit.DIABOLIC_EYE) * 5
-    local duration = 180 + player:getMerit(xi.merit.DIABOLIC_EYE) * player:getMod(xi.mod.ENHANCES_DIABOLIC_EYE)
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.DIABOLIC_EYE) - 150
+    action:setRecast(action:getRecast() - recastReduction)
 
-    player:addStatusEffect(xi.effect.DIABOLIC_EYE, { power = power, duration = duration, origin = player })
+    player:addStatusEffect(xi.effect.DIABOLIC_EYE, { power = 20, duration = 180, origin = player })
 
     return xi.effect.DIABOLIC_EYE
 end
 
 xi.job_utils.dark_knight.useLastResort = function(player, target, ability)
-    player:addStatusEffect(xi.effect.LAST_RESORT, { duration = 180, origin = player })
+    -- Last Resort's duration increased from 30 to 180 seconds in May 2011.
+    -- Source: https://forum.square-enix.com/ffxi/threads/7267-May-10-2011-%28JST%29-Version-Update
+    player:addStatusEffect(xi.effect.LAST_RESORT, { duration = 30, origin = player })
 
     return xi.effect.LAST_RESORT
 end

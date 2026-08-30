@@ -53,12 +53,8 @@ xi.job_utils.monk.useChakra = function(player, target, ability)
         end
     end
 
-    -- see https://www.bg-wiki.com/ffxi/Chakra
-    local monkLevel         = utils.getActiveJobLevel(player, xi.job.MNK)
-    local jpModifier        = target:getJobPointLevel(xi.jp.CHAKRA_EFFECT) -- NOTE: Level is the modified value, so 10 per point spent
-    local hpModifier        = ((monkLevel + 1) * 0.2 / 100) * player:getMaxHP()
     local chakraMultiplier  = 1 + player:getMod(xi.mod.CHAKRA_MULT) / 100
-    local maxRecoveryAmount = (player:getStat(xi.mod.VIT) * 2 + hpModifier) * chakraMultiplier + jpModifier
+    local maxRecoveryAmount = player:getStat(xi.mod.VIT) * 2 * chakraMultiplier
     local recoveryAmount    = math.min(player:getMaxHP() - player:getHP(), maxRecoveryAmount)
 
     player:setHP(player:getHP() + recoveryAmount)
@@ -116,8 +112,8 @@ end
 xi.job_utils.monk.useDodge = function(player, target, ability)
     local pTable =
     {
-        power    = target:getMod(xi.mod.DODGE_EFFECT) + target:getJobPointLevel(xi.jp.DODGE_EFFECT),
-        duration = 30,
+        power    = target:getMod(xi.mod.DODGE_EFFECT),
+        duration = 120,
         origin   = player,
     }
 
@@ -129,8 +125,8 @@ end
 xi.job_utils.monk.useFocus = function(player, target, ability)
     local pTable =
     {
-        power    = target:getMod(xi.mod.FOCUS_EFFECT) + target:getJobPointLevel(xi.jp.FOCUS_EFFECT),
-        duration = 30,
+        power    = target:getMod(xi.mod.FOCUS_EFFECT),
+        duration = 120,
         origin   = player,
     }
 

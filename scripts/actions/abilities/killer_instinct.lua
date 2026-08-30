@@ -2,8 +2,8 @@
 -- Ability: Killer Instinct
 -- Grants your pet's Killer Effect to party members within area of effect.
 -- Obtained: Beastmaster Level 75 (Merit)
--- Recast Time: 5:00
--- Duration: 3:00
+-- Recast Time: 15:00
+-- Duration: 1:00
 -----------------------------------
 local abilityObject = {}
 

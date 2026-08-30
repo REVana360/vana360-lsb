@@ -48,7 +48,7 @@ Every applicable case is applied, newest era first, so the oldest era's implemen
 Use `addOverrideByEra` only when more than one expansion makes changes in the file. A module whose changes all belong to one expansion takes the gate as a module condition and declares plain overrides:
 
 ```lua
-local m = Module:new('original_pdif_caps', xi.pre(xi.expansion.WOTG))
+local m = Module:new('pre_wotg_behavior', xi.pre(xi.expansion.WOTG))
 ```
 
 `xi.pre(expansion)` is true when the server is configured to before that expansion's changes (content restriction on, expansion content disabled).

@@ -89,8 +89,6 @@ xi.automaton.attachmentModifiers =
     ['coiler_ii'          ] = { { modifier = xi.mod.DOUBLE_ATTACK,               values = {    10,    15,    25,    35 }, opticFiber = true  }, },
     ['damage_gauge'       ] = { { modifier = xi.mod.AUTO_HEALING_THRESHOLD,      values = {    50,    60,    70,    80 }, opticFiber = false },
                                 { modifier = xi.mod.AUTO_HEALING_DELAY,          values = {     3,     3,     3,     3 }, opticFiber = false }, },
-    ['damage_gauge_ii'    ] = { { modifier = xi.mod.AUTO_HEALING_THRESHOLD,      values = {    60,    70,    80,    90 }, opticFiber = false },
-                                { modifier = xi.mod.AUTO_HEALING_DELAY,          values = {     3,     3,     3,     3 }, opticFiber = false }, },
     ['drum_magazine'      ] = { { modifier = xi.mod.AUTO_RANGED_DELAY,           values = {     3,     6,     9,    15 }, opticFiber = true  }, },
     ['dynamo'             ] = { { modifier = xi.mod.CRITHITRATE,                 values = {     3,     5,     7,     9 }, opticFiber = true  }, },
     ['dynamo_ii'          ] = { { modifier = xi.mod.CRITHITRATE,                 values = {     5,    10,    15,    20 }, opticFiber = true  }, },
@@ -111,8 +109,6 @@ xi.automaton.attachmentModifiers =
     ['mana_booster'       ] = { { modifier = xi.mod.FASTCAST,                    values = {    20,    30,    45,    60 }, opticFiber = false }, },
     ['mana_channeler'     ] = { { modifier = xi.mod.MATT,                        values = {    10,    15,    25,    35 }, opticFiber = true  },
                                 { modifier = xi.mod.AUTO_MAGIC_COOLDOWN,         values = {     3,     6,     9,    12 }, opticFiber = true  }, },
-    ['mana_channeler_ii'  ] = { { modifier = xi.mod.MATT,                        values = {    20,    30,    40,    50 }, opticFiber = true  },
-                                { modifier = xi.mod.AUTO_MAGIC_COOLDOWN,         values = {     6,    12,    18,    24 }, opticFiber = true  }, },
     ['mana_conserver'     ] = { { modifier = xi.mod.CONSERVE_MP,                 values = {    15,    30,    45,    60 }, opticFiber = true  }, },
     ['mana_jammer'        ] = { { modifier = xi.mod.MDEF,                        values = {    10,    20,    30,    40 }, opticFiber = true  }, },
     ['mana_jammer_ii'     ] = { { modifier = xi.mod.MDEF,                        values = {    20,    30,    40,    50 }, opticFiber = true  }, },
@@ -123,7 +119,6 @@ xi.automaton.attachmentModifiers =
     ['mana_tank_iii'      ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['mana_tank_iv'       ] = { { modifier = xi.mod.REFRESH,                     values = {   nil,   nil,   nil,   nil }, opticFiber = true  }, },
     ['optic_fiber'        ] = { { modifier = xi.mod.AUTO_PERFORMANCE_BOOST,      values = {    10,    20,    25,    30 }, opticFiber = false }, },
-    ['optic_fiber_ii'     ] = { { modifier = xi.mod.AUTO_PERFORMANCE_BOOST,      values = {    15,    30,    37,    45 }, opticFiber = false }, },
     ['percolator'         ] = { { modifier = xi.mod.COMBAT_SKILLUP_RATE,         values = {     5,    10,    15,    20 }, opticFiber = true  }, },
     ['power_cooler'       ] = { { modifier = xi.mod.MP_COST_REDUCTION,           values = {    10,    20,    35,    50 }, opticFiber = true  }, },
     ['repeater'           ] = { { modifier = xi.mod.DOUBLE_SHOT_RATE,            values = {    10,    15,    35,    65 }, opticFiber = true  }, },
@@ -510,21 +505,14 @@ end
 -----------------------------------
 -- Global functions to handle maneuvers
 -----------------------------------
+-- Overdrive began granting three effects per equipped maneuver on February 18, 2014.
+-- Source: https://forum.square-enix.com/ffxi/threads/40059
 xi.automaton.getManeuverCount = function(master, maneuvers)
     if not master then
         return 0
     end
 
-    local maneuversActive = math.min(maneuvers, 3)
-
-    if
-        maneuversActive > 0 and
-        master:hasStatusEffect(xi.effect.OVERDRIVE)
-    then
-        return 3
-    end
-
-    return maneuversActive
+    return math.min(maneuvers, 3)
 end
 
 xi.automaton.onManeuverGain = function(pet, attachment, maneuvers)
@@ -547,6 +535,8 @@ xi.automaton.onManeuverCheck = function(player, target, ability)
     end
 end
 
+-- Puppetmaster level began affecting maneuver stat gains on March 23, 2010.
+-- Source: https://www.playonline.com/pcd/verup/ff11us/detail/5338/detail.html
 xi.automaton.onUseManeuver = function(player, target, ability, action)
     local pet = player:getPet()
 
@@ -575,8 +565,7 @@ xi.automaton.onUseManeuver = function(player, target, ability, action)
         pet:addStatusEffect(xi.effect.OVERLOAD, { duration = overload, origin = pet })
         action:messageID(player:getID(), xi.msg.basic.AUTO_OVERLOADED)
     else
-        local puppetmasterLevel = target:getMainJob() == xi.job.PUP and target:getMainLvl() or target:getSubLvl()
-        local maneuverBonus     = 1 + (puppetmasterLevel / 15) + target:getMod(xi.mod.MANEUVER_BONUS)
+        local maneuverBonus = 1 + target:getMod(xi.mod.MANEUVER_BONUS)
 
         if target:getActiveManeuverCount() == 3 then
             target:removeOldestManeuver()

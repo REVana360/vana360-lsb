@@ -1,8 +1,6 @@
 -----------------------------------
 -- Ability: Rampart
--- Grants all party members within the area of effect -25% SDT.
--- SDT is multiplicative with regular Damage Taken; many forms of SDT are for a single type or element of damage
--- However, Rampart's SDT is for all damage types.
+-- Raises party members' defense and provides a barrier against magic damage.
 -- Obtained: Paladin Level 62
 -- Recast Time: 5:00
 -- Duration: 0:30

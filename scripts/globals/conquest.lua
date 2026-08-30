@@ -27,7 +27,9 @@ local conquestConstants =
 
 -- Bestow the nation's Signet.
 xi.conquest.bestowSignet = function(player, pNation, pRank, mOffset)
-    local duration = (pRank + GetNationRank(pNation) + 3) * 3600
+    -- Signet durations were increased by three hours on May 10, 2011.
+    -- Source: https://forum.square-enix.com/ffxi/threads/7267
+    local duration = (pRank + GetNationRank(pNation)) * 3600
 
     player:delStatusEffectsByFlag(xi.effectFlag.INFLUENCE, true)
     player:addStatusEffect(xi.effect.SIGNET, { duration = duration, origin = player })

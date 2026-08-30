@@ -447,9 +447,11 @@ merits:
       max_upgrades: 10
       jobs:         [war]
       merits:
+        # Additional merits reduced recast by 150 seconds before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         warriors_charge:
           id:           0x0800
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         tomahawk:
           id:           0x0802
@@ -471,15 +473,15 @@ merits:
       merits:
         focus_recast:
           id:           0x01C0
-          value:        4
+          value:        10
           upgrade_cost: job_group_1
         dodge_recast:
           id:           0x01C2
-          value:        4
+          value:        10
           upgrade_cost: job_group_1
         chakra_recast:
           id:           0x01C4
-          value:        6
+          value:        10
           upgrade_cost: job_group_1
         counter_rate:
           id:           0x01C6
@@ -545,11 +547,13 @@ merits:
       merits:
         martyr:
           id:           0x0880
-          value:        5
+          # Additional ranks reduced recast by 150 seconds before March 27, 2012.
+          # Source: https://forum.square-enix.com/ffxi/threads/22099
+          value:        150
           upgrade_cost: job_group_2
         devotion:
           id:           0x0882
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         animus_solace:
           id:           0x0888
@@ -719,13 +723,15 @@ merits:
       max_upgrades: 10
       jobs:         [thf]
       merits:
+        # Additional merits reduced recast before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         assassins_charge:
           id:           0x0940
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         feint:
           id:           0x0942
-          value:        25
+          value:        120
           upgrade_cost: job_group_2
         aura_steal:
           id:           0x0944
@@ -743,11 +749,11 @@ merits:
       merits:
         shield_bash_recast:
           id:           0x0300
-          value:        2
+          value:        10
           upgrade_cost: job_group_1
         holy_circle_recast:
           id:           0x0302
-          value:        10
+          value:        20
           upgrade_cost: job_group_1
         sentinel_recast:
           id:           0x0304
@@ -769,11 +775,11 @@ merits:
       merits:
         fealty:
           id:           0x0980
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         chivalry:
           id:           0x0982
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         iron_will:
           id:           0x0984
@@ -795,7 +801,9 @@ merits:
           upgrade_cost: job_group_1
         arcane_circle_recast:
           id:           0x0342
-          value:        10
+          # Circle recast merits reduced recast by 20 seconds before February 2012.
+          # Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+          value:        20
           upgrade_cost: job_group_1
         last_resort_recast:
           id:           0x0344
@@ -815,13 +823,15 @@ merits:
       max_upgrades: 10
       jobs:         [drk]
       merits:
+        # Additional merits reduced recast by 150 seconds before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         dark_seal:
           id:           0x09C0
-          value:        10
+          value:        150
           upgrade_cost: job_group_2
         diabolic_eye:
           id:           0x09C2
-          value:        1
+          value:        150
           upgrade_cost: job_group_2
         muted_soul:
           id:           0x09C4
@@ -863,13 +873,15 @@ merits:
       max_upgrades: 10
       jobs:         [bst]
       merits:
+        # Additional merits reduced recast by 150 seconds before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         feral_howl:
           id:           0x0A00
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         killer_instinct:
           id:           0x0A02
-          value:        10
+          value:        150
           upgrade_cost: job_group_2
         beast_affinity:
           id:           0x0A04
@@ -963,9 +975,11 @@ merits:
           id:           0x0A80
           value:        10
           upgrade_cost: job_group_2
+        # Additional Flashy Shot merits reduced recast by 150 seconds before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         flashy_shot:
           id:           0x0A82
-          value:        5
+          value:        150
           upgrade_cost: job_group_2
         snapshot:
           id:           0x0A84
@@ -987,7 +1001,9 @@ merits:
           upgrade_cost: job_group_1
         warding_circle_recast:
           id:           0x0442
-          value:        10
+          # Circle recast merits reduced recast by 20 seconds before February 2012.
+          # Source: https://forum.square-enix.com/ffxi/threads/20744-February-14-2012-%28JST%29-Version-Update
+          value:        20
           upgrade_cost: job_group_1
         store_tp_effect:
           id:           0x0444
@@ -1007,9 +1023,11 @@ merits:
       max_upgrades: 10
       jobs:         [sam]
       merits:
+        # Additional merits reduced recast by 150 seconds before March 2012.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
         shikikoyo:
           id:           0x0AC0
-          value:        12
+          value:        150
           upgrade_cost: job_group_2
         blade_bash:
           id:           0x0AC2
@@ -1065,28 +1083,62 @@ merits:
       merits:
         sange:
           id:           0x0B00
-          value:        1
+          value:        150
           upgrade_cost: job_group_2
         ninja_tool_expertise:
           id:           0x0B02
           value:        5
           upgrade_cost: job_group_2
+        katon_san:
+          id:           0x0B04
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        katon_san
+        hyoton_san:
+          id:           0x0B06
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        hyoton_san
+        huton_san:
+          id:           0x0B08
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        huton_san
+        doton_san:
+          id:           0x0B0A
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        doton_san
+        raiton_san:
+          id:           0x0B0C
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        raiton_san
+        suiton_san:
+          id:           0x0B0E
+          value:        5
+          upgrade_cost: job_group_2
+          spell:        suiton_san
         yonin_effect:
           id:           0x0B10
           value:        50
           upgrade_cost: job_group_2
+          max_upgrades: 0
         innin_effect:
           id:           0x0B12
           value:        1
           upgrade_cost: job_group_2
+          max_upgrades: 0
         nin_magic_accuracy:
           id:           0x0B14
           value:        5
           upgrade_cost: job_group_2
+          max_upgrades: 0
         nin_magic_bonus:
           id:           0x0B16
           value:        4
           upgrade_cost: job_group_2
+          max_upgrades: 0
 
     drg_group_1:
       id:           0x04C0
@@ -1157,9 +1209,11 @@ merits:
           id:           0x0506
           value:        2
           upgrade_cost: job_group_1
-        summoning_magic_cast_time:
+        # Replaced by Summoning Magic Cast Time in the March 27, 2012 update.
+        # Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-(JST)-Version-Update
+        elemental_mp_cost:
           id:           0x0508
-          value:        5
+          value:        1
           upgrade_cost: job_group_1
 
     smn_group_2:

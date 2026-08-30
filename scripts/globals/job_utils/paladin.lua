@@ -59,11 +59,12 @@ end
 -- Ability Use Functions
 -----------------------------------
 xi.job_utils.paladin.useChivalry = function(player, target, ability, action)
-    local merits = player:getMerit(xi.merit.CHIVALRY) - 5
+    local recastReduction = player:getMerit(xi.merit.CHIVALRY) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
     local tp     = target:getTP()
-    local base   = 0.05 + (player:getMod(xi.mod.ENHANCES_CHIVALRY) / 100)
-    -- MP gained = (TP * 0.05) + (0.0015 * TP * MND) * Merits
-    local amount = (tp * base) + (0.0015 * tp * target:getStat(xi.mod.MND)) * ((100 + merits) / 100)
+    local base   = 0.05 + player:getMod(xi.mod.ENHANCES_CHIVALRY) / 100
+    local amount = tp * base + 0.0015 * tp * target:getStat(xi.mod.MND)
 
     target:setTP(0)
 
@@ -91,9 +92,11 @@ xi.job_utils.paladin.useDivineEmblem = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useFealty = function(player, target, ability, action)
-    local merits    = player:getMerit(xi.merit.FEALTY) - 5
-    local enhFealty = (player:getMerit(xi.merit.FEALTY) / 5) * player:getMod(xi.mod.ENHANCES_FEALTY)
-    local duration  = 60 + merits + enhFealty
+    local recastReduction = player:getMerit(xi.merit.FEALTY) - 150
+    action:setRecast(action:getRecast() - recastReduction)
+
+    local enhFealty = player:getMerit(xi.merit.FEALTY) / 150 * player:getMod(xi.mod.ENHANCES_FEALTY)
+    local duration  = 60 + enhFealty
 
     player:addStatusEffect(xi.effect.FEALTY, { power = 1, duration = duration, origin = player })
 
@@ -103,7 +106,7 @@ end
 xi.job_utils.paladin.useHolyCircle = function(player, target, ability)
     -- Main (PLD) job gives a unique 15% damage bonus against undead, 15% damage resistance from undead, and likely +15% Undead Killer.
     -- When subbed, gives 5% of these bonuses.
-    local duration = 180 + player:getMod(xi.mod.HOLY_CIRCLE_DURATION)
+    local duration = 60 + player:getMod(xi.mod.HOLY_CIRCLE_DURATION)
     local power    = player:getMainJob() == xi.job.PLD and 15 or 5
 
     power = power + player:getMod(xi.mod.HOLY_CIRCLE_POTENCY)
@@ -156,9 +159,24 @@ xi.job_utils.paladin.usePalisade = function(player, target, ability)
 end
 
 xi.job_utils.paladin.useRampart = function(player, target, ability)
+    -- Rampart changed from defense and a magic barrier to damage reduction in February 2020.
+    -- Source: https://forum.square-enix.com/ffxi/threads/56444-February-12-2020-%28JST%29-Version-Update
     local duration = 30 + player:getMod(xi.mod.RAMPART_DURATION)
+    local defense  = math.floor((player:getMainLvl() - 1) / 4 + 5)
+    local members  = 0
 
-    target:addStatusEffect(xi.effect.RAMPART, { power = 2500, duration = duration, origin = player })
+    for _, member in pairs(player:getParty()) do
+        if
+            member:isAlive() and
+            player:checkDistance(member) <= ability:getRadius()
+        then
+            members = members + 1
+        end
+    end
+
+    local barrier = math.floor(player:getStat(xi.mod.VIT) * (1 + 0.5 * (members - 1)))
+
+    target:addStatusEffect(xi.effect.RAMPART, { power = barrier, duration = duration, origin = player, subPower = defense })
 
     return xi.effect.RAMPART
 end

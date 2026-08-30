@@ -6565,7 +6565,6 @@ INSERT INTO `item_basic` VALUES (8618,0,'stealth_screen_ii','stealth_screen_ii',
 INSERT INTO `item_basic` VALUES (8619,0,'resister','resister','レジスター',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8620,0,'resister_ii','resister_ii','レジスターII',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8621,0,'mana_jammer_iv','mana_jammer_iv','マナジャマーIV',@PUPPET_TYPE,1,0,@NONE,0);
-INSERT INTO `item_basic` VALUES (8622,0,'mana_channeler_ii','mana_channeler_ii','マナチャネラーII',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8641,0,'auto-repair_kit','auto-repair_kit','オートリペアキット',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8642,0,'flashbulb','flashbulb','フラッシュバルブ',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8643,0,'damage_gauge','damage_gauge','ダメージゲージ',@PUPPET_TYPE,1,0,@NONE,0);
@@ -6577,8 +6576,6 @@ INSERT INTO `item_basic` VALUES (8650,0,'auto-repair_kit_iii','auto-repair_kit_i
 INSERT INTO `item_basic` VALUES (8651,0,'arcanic_cell','arcanic_cell','アカニックセル',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8652,0,'arcanic_cell_ii','arcanic_cell_ii','アカニックセルII',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8653,0,'auto-repair_kit_iv','auto-repair_kit_iv','Ａ．リペアキットIV',@PUPPET_TYPE,1,0,@NONE,0);
-INSERT INTO `item_basic` VALUES (8654,0,'optic_fiber_ii','optic_fiber_ii','Ｏ．ファイバーII',@PUPPET_TYPE,1,0,@NONE,0);
-INSERT INTO `item_basic` VALUES (8655,0,'damage_gauge_ii','damage_gauge_ii','ダメージゲージII',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8673,0,'mana_tank','mana_tank','マナタンク',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8674,0,'mana_converter','mana_converter','マナコンバーター',@PUPPET_TYPE,1,0,@NONE,0);
 INSERT INTO `item_basic` VALUES (8675,0,'mana_conserver','mana_conserver','マナコンサーバー',@PUPPET_TYPE,1,0,@NONE,0);
@@ -7094,8 +7091,6 @@ INSERT INTO `item_basic` VALUES (9226,0,'mog_kupon_a-emi','kupon_a-emi','クー�
 INSERT INTO `item_basic` VALUES (9227,0,'mog_kupon_a-syw','kupon_a-syw','クーポンA-SYO',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9228,0,'mog_kupon_a-asyw','kupon_a-asyw','クーポンA-ASYO',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9232,0,'tropical_cactus','tropical_cactus','トロピカルカクタス',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@MISC,0);
-INSERT INTO `item_basic` VALUES (9233,8622,'mana_channeler_ii','mana_channeler_ii','マナチャネラーII',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@AUTOMATON,810);
-INSERT INTO `item_basic` VALUES (9234,8654,'optic_fiber_ii','optic_fiber_ii','Ｏ．ファイバーII',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@AUTOMATON,0);
 INSERT INTO `item_basic` VALUES (9235,0,'ambuscade_voucher_head','a._voucher_head','Ａ．チケット：頭',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9236,0,'ambuscade_voucher_body','a._voucher_body','Ａ．チケット：胴',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9237,0,'ambuscade_voucher_hands','a._voucher_hands','Ａ．チケット：手',@GENERAL_TYPE,12,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
@@ -7141,7 +7136,6 @@ INSERT INTO `item_basic` VALUES (9276,0,'venus_orb','venus_orb','ビーナスオ
 INSERT INTO `item_basic` VALUES (9277,0,'silver_a.m.a.n._voucher','silver_voucher','互助会引換券・銀',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9278,0,'prishes_teardrop','prishes_teardrop','プリッシュの雫石',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (9279,0,'mog_kupon_w-mogb','kupon_w-mogb','クーポンW-MOGB',@GENERAL_TYPE,99,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
-INSERT INTO `item_basic` VALUES (9280,8655,'damage_gauge_ii','damage_gauge_ii','ダメージゲージII',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9281,0,'paragon_warrior_card','p._war_card','大戦士のカード',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9282,0,'paragon_monk_card','p._mnk_card','大格闘家のカード',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
 INSERT INTO `item_basic` VALUES (9283,0,'paragon_white_mage_card','p._whm_card','大白魔道士のカード',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);

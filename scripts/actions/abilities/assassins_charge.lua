@@ -2,7 +2,7 @@
 -- Ability: Assassin's Charge
 -- Will triple your next attack.
 -- Obtained: Thief Level 75
--- Recast Time: 5:00
+-- Recast Time: 15:00
 -- Duration: 1:00 minute
 -----------------------------------
 ---@type TAbility

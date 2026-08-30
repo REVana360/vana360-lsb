@@ -356,27 +356,9 @@ xi.battlefield.id =
     PURPLE_THE_NEW_BLACK                       = 2721, -- Converted
 }
 
-xi.battlefield.itemUses =
-{
-    [xi.item.WARRIORS_TESTIMONY]      = 3,
-    [xi.item.MONKS_TESTIMONY]         = 3,
-    [xi.item.WHITE_MAGES_TESTIMONY]   = 3,
-    [xi.item.BLACK_MAGES_TESTIMONY]   = 3,
-    [xi.item.RED_MAGES_TESTIMONY]     = 3,
-    [xi.item.THIEFS_TESTIMONY]        = 3,
-    [xi.item.PALADINS_TESTIMONY]      = 3,
-    [xi.item.DARK_KNIGHTS_TESTIMONY]  = 3,
-    [xi.item.BEASTMASTERS_TESTIMONY]  = 3,
-    [xi.item.BARDS_TESTIMONY]         = 3,
-    [xi.item.RANGERS_TESTIMONY]       = 3,
-    [xi.item.SAMURAIS_TESTIMONY]      = 3,
-    [xi.item.NINJAS_TESTIMONY]        = 3,
-    [xi.item.DRAGOONS_TESTIMONY]      = 3,
-    [xi.item.SUMMONERS_TESTIMONY]     = 3,
-    [xi.item.BLUE_MAGES_TESTIMONY]    = 3,
-    [xi.item.CORSAIRS_TESTIMONY]      = 3,
-    [xi.item.PUPPETMASTERS_TESTIMONY] = 3,
-}
+-- Job testimonies became three-use items on March 27, 2012.
+-- Source: https://forum.square-enix.com/ffxi/threads/22099
+xi.battlefield.itemUses = {}
 
 Battlefield         = setmetatable({}, { __index = Container })
 Battlefield.__index = Battlefield
@@ -1139,7 +1121,7 @@ function Battlefield:onBattlefieldEnter(player, battlefield)
     then
         local itemId    = self.requiredItems[1]
         local uses      = player:incrementItemWear(itemId)
-        local totalUses = xi.battlefield.itemUses[itemId] or 1 -- Gets number of item uses. (Tests = 3; Else = 1)
+        local totalUses = xi.battlefield.itemUses[itemId] or 1
 
         if totalUses > 1 then
             local remaining = totalUses - uses

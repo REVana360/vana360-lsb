@@ -8,31 +8,11 @@ xi.combat = xi.combat or {}
 xi.combat.skillchain = xi.combat.skillchain or {}
 -----------------------------------
 
-local resistanceRankMultiplier =
-{
-    [-3] = 1.50,
-    [-2] = 1.30,
-    [-1] = 1.15,
-    [ 0] = 1.00,
-    [ 1] = 0.85,
-    [ 2] = 0.70,
-    [ 3] = 0.60,
-    [ 4] = 0.50,
-    [ 5] = 0.40,
-    [ 6] = 0.30,
-    [ 7] = 0.25,
-    [ 8] = 0.20,
-    [ 9] = 0.15,
-    [10] = 0.10,
-    [11] = 0.05,
-}
-
 local chainMultipliers =
 {
     [1] = { 0.50, 0.60, 0.70, 0.80, 0.90, 1.00 }, -- Level 1
     [2] = { 0.60, 0.75, 1.00, 1.25, 1.50, 1.75 }, -- Level 2
     [3] = { 1.00, 1.50, 1.75, 2.00, 2.25, 2.50 }, -- Level 3
-    [4] = { 1.50, 1.80, 2.10, 2.40, 2.70, 3.00 }, -- Level 4 "Radiance/Umbra"
 }
 
 local function getSkillchainElementToUse(target, skillchainType)
@@ -77,7 +57,7 @@ xi.combat.skillchain.calculateSkillchainDamage = function(actor, target, baseDam
     end
 
     local skillchainLevel = skillchainEffect:getTier()
-    if skillchainLevel < 1 or skillchainLevel > 4 then
+    if skillchainLevel < 1 or skillchainLevel > 3 then
         return 0
     end
 
@@ -95,55 +75,36 @@ xi.combat.skillchain.calculateSkillchainDamage = function(actor, target, baseDam
         return 0
     end
 
-    -- Resistance rank.
-    local resRankModifier = xi.data.element.getElementalResistanceRankModifier(skillchainElement)
-    local resRankValue    = utils.clamp(target:getMod(resRankModifier), -3, 11)
-
-    -- Calculate base damage and multipliers.
+    -- Skillchains could be resisted before the June 2014 adjustment.
+    -- Source: https://forum.square-enix.com/ffxi/threads/42614
+    -- Calculate resist, base damage and multipliers.
     local finalDamage          = math.abs(baseDamage) -- Damage from skillchain, no matter if absorbed or not.
     local levelMultiplier      = chainMultipliers[skillchainLevel][skillchainCount]
-    local bonusMultiplier      = 1 + actor:getMod(xi.mod.SKILLCHAINBONUS) / 100
-    local damageMultiplier     = 1 + actor:getMod(xi.mod.SKILLCHAINDMG) / 10000
     local dayWeatherMultiplier = xi.spells.damage.calculateDayAndWeather(actor, skillchainElement, false)
     local staffMultiplier      = xi.spells.damage.calculateElementalStaffBonus(actor, skillchainElement)
-    local affinityMultiplier   = xi.spells.damage.calculateElementalAffinityBonus(actor, skillchainElement)
-    local resRankMultiplier    = resistanceRankMultiplier[resRankValue]
+    local resistRate           = xi.combat.magicHitRate.calculateResistRate(actor, target, { magicalElement = skillchainElement, skillRank = xi.skillRank.A_PLUS })
     local magicTakenMultiplier = xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false)
-
-    -- Unconfirmed order.
-    local inninMultiplier      = 1 + actor:getMerit(xi.merit.INNIN_EFFECT) / 100
-    local sengikoriMultiplier  = 1 + target:getMod(xi.mod.SENGIKORI_SC_DMG_DEBUFF) / 100
+    local absorptionMultiplier = xi.spells.damage.calculateAbsorption(target, skillchainElement, false, true, false, false)
 
     -- Apply multipliers in order and floor after each step.
     finalDamage = math.floor(finalDamage * levelMultiplier)
-    finalDamage = math.floor(finalDamage * bonusMultiplier) + actor:getMod(xi.mod.MAGIC_DAMAGE)
-    finalDamage = math.floor(finalDamage * damageMultiplier)
     finalDamage = math.floor(finalDamage * dayWeatherMultiplier)
     finalDamage = math.floor(finalDamage * staffMultiplier)
-    finalDamage = math.floor(finalDamage * affinityMultiplier)
-    finalDamage = math.floor(finalDamage * resRankMultiplier)
+    finalDamage = math.floor(finalDamage * resistRate)
     finalDamage = math.floor(finalDamage * magicTakenMultiplier)
-    finalDamage = math.floor(finalDamage * inninMultiplier)
-    finalDamage = math.floor(finalDamage * sengikoriMultiplier)
-
-    -- Handle (reset) Sengikori.
-    target:setMod(xi.mod.SENGIKORI_SC_DMG_DEBUFF, 0)
-
-    -- Handle absorbption.
-    local absorb = xi.spells.damage.calculateAbsorption(target, skillchainElement, false, true, false, false) < 0
-    if absorb then
-        target:addHP(finalDamage)
-        return finalDamage
-    end
+    finalDamage = math.floor(finalDamage * absorptionMultiplier)
 
     -- Handle other damage alterations.
     if finalDamage > 0 then
         finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 99999)
-        finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 99999)
-        finalDamage = utils.handleStoneskin(target, finalDamage, xi.attackType.SPECIAL)
+        finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), 0, 99999)
         finalDamage = target:checkDamageCap(finalDamage)
 
         target:takeDamage(finalDamage, actor, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL + skillchainElement)
+
+    -- Handle absorption.
+    else
+        target:addHP(-finalDamage)
     end
 
     return finalDamage

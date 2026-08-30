@@ -40,12 +40,9 @@ xi.job_utils.warrior.useAggressor = function(player, target, ability)
 end
 
 xi.job_utils.warrior.useBerserk = function(player, target, ability)
-    -- Get bonus from WAR lvl as main Job
-    local warriorLevel = player:getMainJob() == xi.job.WAR and player:getMainLvl() or 0
-    local levelScale   = math.floor((warriorLevel - 40) / 10) * 2
-
-    -- Get Power and duration.
-    local power    = 25 + player:getMod(xi.mod.BERSERK_POTENCY) + utils.clamp(levelScale, 0, 10)
+    -- Berserk gained main-job level scaling in October 2014.
+    -- Source: https://forum.square-enix.com/ffxi/threads/44592-Oct-7-2014-%28JST%29-Version-Update
+    local power    = 25 + player:getMod(xi.mod.BERSERK_POTENCY)
     local duration = 180 + player:getMod(xi.mod.BERSERK_DURATION)
 
     player:addStatusEffect(xi.effect.BERSERK, { power = power, duration = duration, origin = player })
@@ -73,15 +70,11 @@ xi.job_utils.warrior.useBrazenRush = function(player, target, ability)
 end
 
 xi.job_utils.warrior.useDefender = function(player, target, ability)
-    -- Get bonus from WAR lvl as main Job
-    local warriorLevel = player:getMainJob() == xi.job.WAR and player:getMainLvl() or 0
-    local levelScale   = math.floor((warriorLevel - 40) / 10) * 2
-
-    -- Get Power and duration.
-    local power    = 25 + utils.clamp(levelScale, 0, 10)
+    -- Defender gained main-job level scaling in October 2014.
+    -- Source: https://forum.square-enix.com/ffxi/threads/44592-Oct-7-2014-%28JST%29-Version-Update
     local duration = 180 + player:getMod(xi.mod.DEFENDER_DURATION)
 
-    player:addStatusEffect(xi.effect.DEFENDER, { power = power, duration = duration, origin = player })
+    player:addStatusEffect(xi.effect.DEFENDER, { power = 25, duration = duration, origin = player })
 
     return xi.effect.DEFENDER
 end
@@ -130,9 +123,12 @@ xi.job_utils.warrior.useWarcry = function(player, target, ability)
 end
 
 xi.job_utils.warrior.useWarriorsCharge = function(player, target, ability, action)
-    local merits = player:getMerit(xi.merit.WARRIORS_CHARGE)
+    -- Additional merits reduced the 15-minute recast by 150 seconds before March 2012.
+    -- Source: https://forum.square-enix.com/ffxi/threads/22099-March-27-2012-%28JST%29-Version-Update
+    local recastReduction = player:getMerit(xi.merit.WARRIORS_CHARGE) - 150
+    action:setRecast(action:getRecast() - recastReduction)
 
-    player:addStatusEffect(xi.effect.WARRIORS_CHARGE, { power = merits - 5, duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.WARRIORS_CHARGE, { power = 1, duration = 60, origin = player })
 
     return xi.effect.WARRIORS_CHARGE
 end

@@ -1,6 +1,10 @@
------------------------------------
--- Data file consumed by job_adjustments.lua for Scavenge zone pools
+-- Scavenge item pools before the April 30, 2013 ammunition-recovery change
 -- Source: https://ffxiclopedia.fandom.com/wiki/Scavenge/Items
+-- https://forum.square-enix.com/ffxi/archive/index.php/t-32909.html
+-----------------------------------
+xi = xi or {}
+xi.data = xi.data or {}
+xi.data.scavenge = xi.data.scavenge or {}
 -----------------------------------
 
 -- Items available from Scavenge in all zones
@@ -191,8 +195,5 @@ local zonePoolMap =
     [xi.zone.XARCABARD_S         ] = scavengePools.NORTHLANDS_WOTG,
 }
 
-return
-{
-    guaranteedItems = guaranteedItems,
-    zonePoolMap     = zonePoolMap,
-}
+xi.data.scavenge.guaranteedItems = guaranteedItems
+xi.data.scavenge.zonePoolMap     = zonePoolMap
