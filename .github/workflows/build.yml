@@ -3,7 +3,7 @@ name: Builds
 on:
   push:
     branches:
-      - base
+      - main
   workflow_dispatch:
 
 concurrency:

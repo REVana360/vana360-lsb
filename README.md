@@ -5,8 +5,8 @@
 
 > [!NOTE]
 > This is the Vana360 server fork for the supported Xbox 360 client.
-> `vana360-lsb` contains the maintained product changes; `base` remains an
-> unmodified mirror of upstream LandSandBoat. See
+> `main` contains the maintained product changes. `upstream/base` is the
+> upstream intake line and is never merged wholesale. See
 > [Vana360 server profile](documentation/VANA360.md).
 
 <p align="center">

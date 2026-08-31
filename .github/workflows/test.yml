@@ -13,6 +13,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
   cancel-in-progress: true
 
+env:
+  VANA360_UPSTREAM_BASE: ebd7a61e37a6763b3f4096ebae94165615e4228a
+
 jobs:
   Sanity_Checks:
     name: Sanity Checks
@@ -27,11 +30,12 @@ jobs:
       - run: git config --global --add safe.directory $GITHUB_WORKSPACE
       - uses: actions/checkout@v6
         with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 0
           filter: blob:none
 
       - name: Run checks
-        run: ./tools/ci/sanity_checks.sh
+        run: ./tools/ci/sanity_checks.sh "$VANA360_UPSTREAM_BASE"
 
       - name: Add sanity checks report to summary
         if: ${{ always() }}

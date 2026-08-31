@@ -1,7 +1,7 @@
 # Vana360 server profile
 
-`vana360-lsb` is the maintained project branch. `base` is a fast-forward-only
-mirror of `upstream/base`.
+`main` is the maintained project branch. `upstream/base` is the upstream intake
+line; no local mirror branch is part of the maintained history.
 
 The project branch targets the selected Vana360 Xbox 360 client with a
 level-75 profile through the July 21, 2009 update. It keeps current engine
