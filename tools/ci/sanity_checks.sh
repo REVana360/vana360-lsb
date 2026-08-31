@@ -21,8 +21,7 @@ if [[ $# -gt 0 ]]; then
 
     # Git
     echo "Checking commit formatting..."
-    gitcheck_output=$(python tools/ci/sanity_checks/git.py $GIT_REF 2>&1 || true)
-    if [[ -n "$gitcheck_output" ]]; then
+    if ! gitcheck_output=$(python tools/ci/sanity_checks/git.py "$GIT_REF" 2>&1); then
         checks_failed=true
         {
             echo "## :x: Git Checks Failed"

@@ -35,20 +35,3 @@ but those modules are not part of the maintained Vana360 profile.
 
 `dbtool` applies the canonical schema and data during database setup. No
 separate era SQL layer is required.
-
-## Accepting upstream changes
-
-1. Fetch `upstream` and identify candidate engine, safety, build, and tooling
-   changes independently from new retail content.
-2. Integrate accepted changes on a disposable branch from the chosen upstream
-   commit.
-3. Reconstruct the Vana360 delta as coherent landmark commits. Do not merge
-   `base` or the previous maintained branch into the candidate.
-4. Review the complete diff and every added or restored content surface.
-5. Build the server, create a fresh database, and run upstream and Vana360
-   checks.
-6. Validate the pinned title and private asset snapshot before advancing the
-   maintained reference.
-
-Do not place project commits on `base`. Vana360 pins an exact project commit;
-the maintained reference moves only after its consumers are validated.

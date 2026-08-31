@@ -1,5 +1,32 @@
 # Contributing Guide
 
+Vana360 fork changes must preserve the [Vana360 server profile](documentation/VANA360.md).
+The upstream guidance below continues to apply
+except where the profile requires a narrower content scope.
+
+## Vana360 Commit Subjects
+
+Use `type: imperative summary`: one ASCII line, 50 characters or fewer
+including the type, with exactly one space after the colon. Do not use a body,
+parentheses, or trailers. Preserve another contributor's credit with Git author
+metadata rather than a commit-message trailer.
+
+Choose one type from this fixed list:
+
+- `core` C++ services, engine behavior, and shared libraries.
+- `lua` script behavior and native Lua bindings.
+- `sql` schema, migrations, and maintained profile data.
+- `content` zones, NPCs, quests, mobs, drops, and items.
+- `tools` build, audit, and repository tooling.
+- `docs` documentation and agent guidance.
+- `ci` hosted checks and automation.
+- `chore` repository housekeeping with no single code area.
+- `refactor` behavior-preserving changes spanning areas.
+- `test` test fixtures and harnesses.
+
+Prefer the owning area over the kind of change. `landmark`, `feat`, and `fix`
+are not types on the maintained branch.
+
 ## Table of Contents
 
 - [Contributing Guide](#contributing-guide)
@@ -37,7 +64,7 @@
 
 - It is **always** better to ask questions and ask for advice instead of investing a lot of time into work that we may end up asking you to rewrite or split up into smaller contributions.
 - Cite your sources. This can be comments in your code or your commit messages. Pull Request descriptions and comments will get lost over time.
-- If you're commiting work on someone else's behalf, use git's `--author` argument or GitHub's `Co-Authored-By:` feature so they get the credit they deserve.
+- If you're committing work on someone else's behalf, use git's `--author` argument so the commit retains their credit without a message trailer.
 - Make your commit messages meaningful, or amend/rebase once you're ready to push.
 - If you want to report or resolve an exploitable issue please try and get in contact with staff privately. Staff are pretty easy to find across different Discords or by the emails their commits are attributed with. This software is used by many live servers with active players, and we want to distribute fixes for exploits in a responsible and private fashion before they're published to the public.
 
