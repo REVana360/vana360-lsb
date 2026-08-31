@@ -97,6 +97,9 @@ jobs:
 
   Docker_Build:
     name: ${{ matrix.save_cache && 'Cache Build' || 'Build' }}
+    permissions:
+      contents: read
+      packages: write
     strategy:
       fail-fast: false
       matrix:

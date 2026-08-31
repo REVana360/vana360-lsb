@@ -3,7 +3,7 @@ name: Publish Meshes Docker Image
 on:
   push:
     branches:
-      - base
+      - main
     # These are submodules, so a bump changes the gitlink path itself, not anything beneath it.
     paths:
       - 'navmeshes'

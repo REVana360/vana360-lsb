@@ -41,7 +41,7 @@ services:
       target: devtools
       context: .
     user: "1000:1000"
-    command: ["/server/tools/ci/sanity_checks.sh", "origin/base"]
+    command: ["/server/tools/ci/sanity_checks.sh", "upstream/base"]
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER:-./}:/server
 
