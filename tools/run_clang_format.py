@@ -4,18 +4,21 @@ Run clang-format on C++ source files.
 
 Usage: python3 tools/run_clang_format.py [--check]
   --check : Only check formatting without modifying files
+  --resolve : Print the selected major-22 executable and exit
 """
 
 import os
-import sys
-import subprocess
+import re
 import shutil
+import subprocess
+import sys
 from pathlib import Path
+
+EXPECTED_MAJOR_VERSION = 22
 
 
 def find_clang_format():
     """Find clang-format executable."""
-    # Check paths for clang-format-22 only
     paths = [
         "clang-format-22",
         "/usr/bin/clang-format-22",
@@ -27,28 +30,49 @@ def find_clang_format():
         "/opt/homebrew/bin/clang-format",
         "C:\\Program Files\\LLVM\\bin\\clang-format.exe",
     ]
+    rejected = []
+    checked = set()
 
     for path in paths:
-        executable = shutil.which(path) if "/" not in path else path
-        if executable and os.path.isfile(executable):
+        executable = path if os.path.isabs(path) else shutil.which(path)
+        if executable and executable not in checked and os.path.isfile(executable):
+            checked.add(executable)
             try:
-                # Verify it's exactly version 22
                 result = subprocess.run(
                     [executable, "--version"], capture_output=True, text=True, timeout=5
                 )
-                if result.returncode == 0:
-                    # Extract version number from output like "clang-format version 22.0.0"
-                    import re
-
-                    version_match = re.search(r"version (\d+)\.", result.stdout)
-                    if version_match:
-                        major_version = int(version_match.group(1))
-                        if major_version == 22:
-                            return executable
-            except:
+            except (OSError, subprocess.SubprocessError) as exc:
+                rejected.append(f"{executable}: {exc}")
                 continue
 
-    print("Error: clang-format version 22 not found!")
+            output = f"{result.stdout}\n{result.stderr}"
+            version_match = re.search(
+                r"\bversion\s+(\d+(?:\.\d+){1,2})\b", output
+            )
+            if result.returncode != 0:
+                rejected.append(f"{executable}: version check failed")
+            elif not version_match:
+                rejected.append(f"{executable}: unrecognized version output")
+            else:
+                version = version_match.group(1)
+                major_version = int(version.split(".", 1)[0])
+                if major_version == EXPECTED_MAJOR_VERSION:
+                    return executable
+                rejected.append(f"{executable}: reports version {version}")
+
+    if rejected:
+        details = "; ".join(rejected)
+        print(
+            "Error: clang-format major version "
+            f"{EXPECTED_MAJOR_VERSION} is required; rejected candidates: {details}",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            "Error: clang-format major version "
+            f"{EXPECTED_MAJOR_VERSION} is required, but no executable was found.",
+            file=sys.stderr,
+        )
     sys.exit(1)
 
 
@@ -63,6 +87,10 @@ def find_source_files():
 
 
 def main():
+    if "--resolve" in sys.argv:
+        print(find_clang_format())
+        return
+
     check_only = "--check" in sys.argv
 
     clang_format = find_clang_format()

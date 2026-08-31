@@ -4,6 +4,7 @@
 # cppcheck
 
 any_issues=false
+clang_format=
 
 if [[ $# -gt 0 ]]; then
     targets=("$@")
@@ -13,6 +14,13 @@ fi
 
 for file in "${targets[@]}"; do
     [[ -f $file && ($file == *.cpp || $file == *.h) && ($file == src/**/* || $file == modules/**/*) ]] || continue
+
+    if [[ -z "${clang_format}" ]]; then
+        if ! clang_format="$(python tools/run_clang_format.py --resolve)"; then
+            echo "Unable to resolve clang-format major version 22 for C++ sanity checks."
+            exit 1
+        fi
+    fi
 
     # Run tools and capture output
     if [[ $file == *.cpp ]]; then
@@ -72,8 +80,12 @@ for file in "${targets[@]}"; do
             echo
         fi
     fi
-    clang-format -style=file -i "$file"
+    "$clang_format" -style=file -i "$file"
 done
+
+if [[ -z "${clang_format}" ]]; then
+    exit 0
+fi
 
 git_diff_output=$(git diff --no-color 2>&1 || true)
 
@@ -83,7 +95,7 @@ if [[ -n "$git_diff_output" ]]; then
         any_issues=true
     fi
     echo "#### Formatting Errors:"
-    echo "> $(clang-format -version)"
+    echo "> $("$clang_format" -version)"
     echo '```diff'
     echo "$git_diff_output"
     echo '```'
