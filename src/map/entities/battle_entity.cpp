@@ -3358,37 +3358,6 @@ void CBattleEntity::OnRangedAttack(CRangeState& state, action_t& action)
     // We hit the target at least once
     if (hitOccured)
     {
-        // TODO: Check if mobs and trusts have penalties and messages
-        if (isChar && actionResult.messageID != MsgBasic::RangedAttackCrit)
-        {
-            auto rangedPenaltyFunction = lua["xi"]["combat"]["ranged"]["attackDistancePenalty"];
-            auto distancePenaltyResult = rangedPenaltyFunction(this, PTarget);
-            int  distancePenalty       = 0;
-
-            if (!distancePenaltyResult.valid())
-            {
-                sol::error err = distancePenaltyResult;
-                ShowError("battleentity::OnRangedAttack: %s", err.what());
-            }
-            else
-            {
-                distancePenalty = distancePenaltyResult.get_type() == sol::type::number ? distancePenaltyResult.get<int16>(0) : 0;
-            }
-
-            if (distancePenalty == 0)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackPummels;
-            }
-            else if (distancePenalty <= 15)
-            {
-                actionResult.messageID = MsgBasic::RangedAttackSquarely;
-            }
-            else
-            {
-                actionResult.messageID = MsgBasic::RangedAttackHit;
-            }
-        }
-
         // any misses with barrage/sange cause remaining shots to miss, meaning we must check Action.reaction
         if (actionResult.resolution != ActionResolution::Hit && (isBarrage || isSange))
         {

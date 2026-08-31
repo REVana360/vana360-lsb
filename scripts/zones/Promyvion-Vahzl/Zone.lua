@@ -43,13 +43,6 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
-    -- ZONE WIDE LEVEL RESTRICTION
-    if xi.settings.main.ENABLE_COP_ZONE_CAP == 1 then
-        player:addStatusEffect(xi.effect.LEVEL_RESTRICTION, { power = 50, origin = player })
-    end
-end
-
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     local triggerAreaID = triggerArea:getTriggerAreaID()
 

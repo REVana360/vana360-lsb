@@ -51,20 +51,19 @@ local packets =
     ['Ranged Attack Finish (Ranged Finish)'] =
     {
         test = function(player, mob)
-            stub('xi.combat.ranged.attackDistancePenalty', 14)
+            stub('xi.combat.physicalHitRate.getRangedHitRate', 1)
             player:changeJob(xi.job.RNG)
             player:setLevel(99)
-            player:setMod(xi.mod.RACC, 1000)
             player:addItem(xi.item.POWER_BOW)
             player:addItem(xi.item.WOODEN_ARROW, 99)
             player:equipItem(xi.item.POWER_BOW)
             player:equipItem(xi.item.WOODEN_ARROW)
+            player:setMod(xi.mod.RACC, 1000)
+            player:setMod(xi.mod.CRITHITRATE, -1000)
             player.actions:engage(mob)
-            for i = 1, 10 do
-                player.actions:rangedAttack(mob)
-                xi.test.world:skipTime(10)
-                xi.test.world:skipTime(10)
-            end
+            player.actions:rangedAttack(mob)
+            xi.test.world:skipTime(10)
+            xi.test.world:skipTime(10)
         end,
 
         expected =
@@ -89,7 +88,7 @@ local packets =
                             info      = ph.IGNORE,
                             scale     = ph.IGNORE,
                             value     = ph.IGNORE,
-                            message   = ph.IGNORE, -- This might be a miss, we just want to know the action completed
+                            message   = xi.msg.basic.RANGED_ATTACK_HIT,
                             bit       = 0,
                             has_proc  = false,
                             has_react = false,
@@ -152,15 +151,16 @@ local packets =
     {
         test = function(player, mob)
             stub('xi.combat.ranged.attackDistancePenalty', 14)
+            stub('xi.combat.physicalHitRate.getRangedHitRate', 1)
             player:changeJob(xi.job.RNG)
             player:setLevel(99)
-            player:setMod(xi.mod.RACC, 1000)
-            player:setMod(xi.mod.RATTP, 1000)
-            player:setMod(xi.mod.CRITHITRATE, 100)
             player:addItem(xi.item.YOICHINOYUMI_119)
             player:addItem(xi.item.RUSZOR_ARROW, 99)
             player:equipItem(xi.item.YOICHINOYUMI_119)
             player:equipItem(xi.item.RUSZOR_ARROW)
+            player:setMod(xi.mod.RACC, 1000)
+            player:setMod(xi.mod.RATTP, 1000)
+            player:setMod(xi.mod.CRITHITRATE, 1000)
             player.actions:engage(mob)
             for i = 1, 5 do
                 player.actions:rangedAttack(mob)

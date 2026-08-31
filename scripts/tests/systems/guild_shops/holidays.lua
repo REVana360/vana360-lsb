@@ -1,14 +1,16 @@
 describe('Guild shop holidays', function()
+    -- Guild shop holidays were removed after the Vana360 cutoff.
+    -- Source: https://forum.square-enix.com/ffxi/archive/index.php/t-42614.html
+
     ---@type CClientEntityPair
     local player
 
     before_each(function()
         player = xi.test.world:spawnPlayer({ zone = xi.zone.MHAURA })
-        xi.settings.main.GUILD_SHOP_HOLIDAYS = true
     end)
 
     after_each(function()
-        xi.settings.main.GUILD_SHOP_HOLIDAYS = false
+        xi.settings.main.GUILD_SHOP_HOLIDAYS = true
     end)
 
     local statOpen    = 0
@@ -45,6 +47,10 @@ describe('Guild shop holidays', function()
             end
         end
     end
+
+    it('uses the July 2009 default', function()
+        assert(xi.settings.main.GUILD_SHOP_HOLIDAYS, 'guild shop holidays are disabled by default')
+    end)
 
     it('reports holiday on the guild holiday during shop hours', function()
         openOn(shopHoliday, 8)

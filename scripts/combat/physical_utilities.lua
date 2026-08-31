@@ -70,6 +70,26 @@ xi.combat.physical.pDifWeaponCapTable =
     [xi.skill.THROWING        ] = 3.25,
 }
 
+-- The March 2013 update equalized one- and two-handed ratio damage. The
+-- preceding official baseline was a 2.0 one-handed cap and a 2.25 two-handed
+-- cap. The selected July curves remain an emulator reconstruction across the
+-- 2007 two-handed adjustments.
+-- Sources: https://forum.square-enix.com/ffxi/threads/29831?p=395968#post395968
+-- https://forum.square-enix.com/ffxi/threads/31310
+local legacyTwoHandedSkills =
+{
+    [xi.skill.GREAT_SWORD ] = true,
+    [xi.skill.GREAT_AXE   ] = true,
+    [xi.skill.SCYTHE      ] = true,
+    [xi.skill.POLEARM     ] = true,
+    [xi.skill.GREAT_KATANA] = true,
+    [xi.skill.STAFF       ] = true,
+}
+
+local function getLegacyMeleeRatioCap(weaponType)
+    return legacyTwoHandedSkills[weaponType] and 2.25 or 2.0
+end
+
 local shieldSizeToBlockRateTable =
 {
     [1] =  55, -- Buckler
@@ -505,6 +525,57 @@ xi.combat.physical.calculateFTPBonus = function(actor)
     return fTPBonus
 end
 
+---@param cRatio number
+---@param isTwoHanded boolean
+---@return number pDifLowerCap
+---@return number pDifUpperCap
+local function getLegacyMeleePDifBounds(cRatio, isTwoHanded)
+    local pDifUpperCap = 0
+    local pDifLowerCap = 0
+
+    if isTwoHanded then
+        if cRatio < 0.5 then
+            pDifUpperCap = 0.4 + 1.2 * cRatio
+        elseif cRatio <= 5 / 6 then
+            pDifUpperCap = 1
+        elseif cRatio <= 10 / 6 then
+            pDifUpperCap = 1.25 * cRatio
+        else
+            pDifUpperCap = 1.2 * cRatio
+        end
+
+        if cRatio < 1.25 then
+            pDifLowerCap = math.max(0, -0.5 + 1.2 * cRatio)
+        elseif cRatio <= 1.5 then
+            pDifLowerCap = 1
+        else
+            pDifLowerCap = -0.8 + 1.2 * cRatio
+        end
+    else
+        if cRatio < 0.5 then
+            pDifUpperCap = 1 + 10 / 9 * (cRatio - 0.5)
+        elseif cRatio <= 0.75 then
+            pDifUpperCap = 1
+        else
+            pDifUpperCap = 1 + 10 / 9 * (cRatio - 0.75)
+        end
+
+        if cRatio < 0.5 then
+            pDifLowerCap = 1 / 6
+        elseif cRatio <= 1.25 then
+            pDifLowerCap = 1 + 10 / 9 * (cRatio - 1.25)
+        elseif cRatio <= 1.5 then
+            pDifLowerCap = 1
+        else
+            pDifLowerCap = 1 + 10 / 9 * (cRatio - 1.5)
+        end
+
+        pDifLowerCap = math.max(0, pDifLowerCap)
+    end
+
+    return pDifLowerCap, pDifUpperCap
+end
+
 ---@param wRatio number
 ---@param pDifFinalCap number
 xi.combat.physical.wRatioCapPC = function(wRatio, pDifFinalCap)
@@ -709,18 +780,33 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
     local pDifLowerCap       = 0
     local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
     local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
-    local pDifFinalCap       = 0
+    local pDifFinalCap        = 0
+    local useLegacyPlayerPDif = actor:isPC() and not xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES
 
     if actor:isPC() then
-        pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
+        if useLegacyPlayerPDif then
+            local isTwoHanded = legacyTwoHandedSkills[weaponType] or false
+            local ratioCap    = getLegacyMeleeRatioCap(weaponType)
+            local cRatio      = utils.clamp(math.min(baseRatio, ratioCap) + levelDifFactor, 0, 2)
+            local sRatio      = getSpikeRatio(true, cRatio)
 
-        local sRatio = getSpikeRatio(true, wRatio)
+            if math.randomInt(1, 10000) / 10000 <= sRatio then
+                pDifLowerCap = 1
+                pDifUpperCap = 1
+            else
+                pDifLowerCap, pDifUpperCap = getLegacyMeleePDifBounds(cRatio, isTwoHanded)
+            end
+        else
+            pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
 
-        if math.randomInt(1, 10000) / 10000 <= sRatio then
-            return 1.0
+            local sRatio = getSpikeRatio(true, wRatio)
+
+            if math.randomInt(1, 10000) / 10000 <= sRatio then
+                return 1.0
+            end
+
+            pDifLowerCap, pDifUpperCap = xi.combat.physical.wRatioCapPC(wRatio, pDifFinalCap)
         end
-
-        pDifLowerCap, pDifUpperCap = xi.combat.physical.wRatioCapPC(wRatio, pDifFinalCap)
     else
         -- Mobs and pets, unconfirmed if pets use this same formula
         -- corrected mobs have 2.0 pdif + 1.0 for crits, with level correction added after the fact
@@ -743,9 +829,18 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
     -- Dice roll the 50/50 chance to select two different bounds. Mote has not yet implemented the spike by the time of this post so his ratio is not 50/50 rate.
     -- His model at the time and implemented spike, so the (0.0, 0.5) bounds also looks different
     -- https://www.bluegartr.com/threads/108161-pDif-and-damage?p=5007487&viewfull=1#post5007487
-    local upperMax   = math.randomInt(0, 1) == 0 and 0.5 or 0
-    local upperBound = math.max(pDifUpperCap + levelDifFactor, upperMax)
-    local lowerbound = math.max(pDifLowerCap + levelDifFactor, 0)
+    local upperBound
+    local lowerbound
+
+    if useLegacyPlayerPDif then
+        upperBound = pDifUpperCap
+        lowerbound = pDifLowerCap
+    else
+        local upperMax = math.randomInt(0, 1) == 0 and 0.5 or 0
+
+        upperBound = math.max(pDifUpperCap + levelDifFactor, upperMax)
+        lowerbound = math.max(pDifLowerCap + levelDifFactor, 0)
+    end
 
     if upperBound == 0 then
         return 0
@@ -753,10 +848,14 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
 
     pDif = math.randomInt(lowerbound * 1000, upperBound * 1000) / 1000
 
+    if useLegacyPlayerPDif and isCritical then
+        pDif = math.min(pDif + 1, 3)
+    end
+
     ----------------------------------------
     -- Step 4: Melee random factor.
     ----------------------------------------
-    local meleeRandom = 1 + math.randomInt(0, 5) * 0.01 -- 5 distinct values
+    local meleeRandom = 1 + math.randomInt(0, 5) * 0.01 -- Six values from 1.00 through 1.05.
 
     pDif = pDif * meleeRandom
 
@@ -856,7 +955,14 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
         levelDifFactor = 0
     end
 
-    local cRatio = utils.clamp(baseRatio, 0, 10) -- Clamp for the lower limit, mainly.
+    local useLegacyPlayerPDif = actor:isPC() and not xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES
+    local cRatio
+
+    if useLegacyPlayerPDif then
+        cRatio = utils.clamp(math.min(baseRatio, 3) + levelDifFactor, 0, 3)
+    else
+        cRatio = utils.clamp(baseRatio, 0, 10) -- Clamp for the lower limit, mainly.
+    end
 
     -- TODO: Presumably, pets get a Cap here if the target checks as 'Too Weak'. More info needed.
 
@@ -870,7 +976,11 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
     local pDifFinalCap       = 0
 
     if actor:isPC() then
-        pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
+        if useLegacyPlayerPDif then
+            pDifFinalCap = 3
+        else
+            pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent -- Added damage limit bonuses
+        end
     else
         -- 4.0 is guessed. there is some indication that mob pdif can go to 8.0 in ilvl content
         -- 3.0 with level correction matches player ranged pdif cap for 2013 and may need verification
@@ -893,8 +1003,10 @@ xi.combat.physical.calculateRangedPDIF = function(actor, target, weaponType, wsA
     end
 
     -- Add in level correction
-    pDifUpperCap = pDifUpperCap + levelDifFactor
-    pDifLowerCap = pDifLowerCap + levelDifFactor
+    if not useLegacyPlayerPDif then
+        pDifUpperCap = pDifUpperCap + levelDifFactor
+        pDifLowerCap = pDifLowerCap + levelDifFactor
+    end
 
     pDif = math.randomInt(pDifLowerCap * 1000, pDifUpperCap * 1000) / 1000
 
@@ -964,10 +1076,24 @@ xi.combat.physical.criticalRateFromInnin = function(actor, target)
         actor:hasStatusEffect(xi.effect.INNIN) and
         actor:isBehind(target, 23)
     then
-        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower()
+        inninBonus = actor:getStatusEffect(xi.effect.INNIN):getPower() / 100
     end
 
     return inninBonus
+end
+
+-- Yonin: Critical hit rate penalty when the target faces the actor.
+xi.combat.physical.criticalRateFromYonin = function(actor, target)
+    local yoninPenalty = 0
+
+    if
+        target:hasStatusEffect(xi.effect.YONIN) and
+        target:isFacing(actor, 64)
+    then
+        yoninPenalty = target:getStatusEffect(xi.effect.YONIN):getPower() / 100
+    end
+
+    return yoninPenalty
 end
 
 -- Fencer: Critical hit rate bonus when actor is only wielding with main hand.
@@ -1032,6 +1158,7 @@ xi.combat.physical.calculateSwingCriticalRate = function(actor, target, actorTP,
     local baseCriticalRate      = 0.05
     local statBonus             = xi.combat.physical.criticalRateFromStatDiff(actor, target)
     local inninBonus            = xi.combat.physical.criticalRateFromInnin(actor, target)
+    local yoninPenalty          = xi.combat.physical.criticalRateFromYonin(actor, target)
     local fencerBonus           = xi.combat.physical.criticalRateFromFencer(actor)
     local buildingFlourishBonus = xi.combat.physical.criticalRateFromFlourish(actor)
     local weaponSlotBonus       = xi.combat.physical.criticalRateFromWeaponSlot(actor, slot)
@@ -1047,9 +1174,9 @@ xi.combat.physical.calculateSwingCriticalRate = function(actor, target, actorTP,
     end
 
     -- Add all different bonuses and clamp.
-    finalCriticalRate = baseCriticalRate + statBonus + inninBonus + fencerBonus + buildingFlourishBonus + weaponSlotBonus + modifierBonus + meritBonus - targetCriticalEvasion - targetMeritPenalty + tpFactor
+    finalCriticalRate = baseCriticalRate + statBonus + inninBonus + fencerBonus + buildingFlourishBonus + weaponSlotBonus + modifierBonus + meritBonus - yoninPenalty - targetCriticalEvasion - targetMeritPenalty + tpFactor
 
-    return utils.clamp(finalCriticalRate, 0.05, 1) -- TODO: Need confirmation of no upper cap.
+    return utils.clamp(finalCriticalRate, 0, 1)
 end
 
 ---@param actor CBaseEntity
@@ -1064,14 +1191,16 @@ xi.combat.physical.calculateRangedCriticalRate = function(actor, target, actorTP
     local baseCriticalRate      = 0.05
     local statBonus             = xi.combat.physical.criticalRateFromAGIDiff(actor, target)
     local inninBonus            = xi.combat.physical.criticalRateFromInnin(actor, target)
-    local fencerBonus           = xi.combat.physical.criticalRateFromFencer(actor)
-    local buildingFlourishBonus = xi.combat.physical.criticalRateFromFlourish(actor)
-    local weaponSlotBonus       = xi.combat.physical.criticalRateFromWeaponSlot(actor, slot)
+    local yoninPenalty          = xi.combat.physical.criticalRateFromYonin(actor, target)
     local modifierBonus         = actor:getMod(xi.mod.CRITHITRATE) / 100
     local meritBonus            = actor:getMerit(xi.merit.CRIT_HIT_RATE) / 100
     local targetCriticalEvasion = target:getMod(xi.mod.CRITICAL_HIT_EVASION) / 100
     local targetMeritPenalty    = target:getMerit(xi.merit.ENEMY_CRIT_RATE) / 100
     local tpFactor              = 0
+
+    if actor:hasStatusEffect(xi.effect.MIGHTY_STRIKES) then
+        modifierBonus = modifierBonus - 1
+    end
 
     -- For weaponskills.
     if optCritModTable then
@@ -1079,9 +1208,9 @@ xi.combat.physical.calculateRangedCriticalRate = function(actor, target, actorTP
     end
 
     -- Add all different bonuses and clamp.
-    finalCriticalRate = baseCriticalRate + statBonus + inninBonus + fencerBonus + buildingFlourishBonus + weaponSlotBonus + modifierBonus + meritBonus - targetCriticalEvasion - targetMeritPenalty + tpFactor
+    finalCriticalRate = baseCriticalRate + statBonus + inninBonus + modifierBonus + meritBonus - yoninPenalty - targetCriticalEvasion - targetMeritPenalty + tpFactor
 
-    return utils.clamp(finalCriticalRate, 0.05, 1) -- TODO: Need confirmation of no upper cap.
+    return utils.clamp(finalCriticalRate, 0, 1)
 end
 
 xi.combat.physical.calculateNumberOfHits = function(actor, additionalParamsHere)

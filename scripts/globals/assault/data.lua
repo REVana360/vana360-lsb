@@ -132,7 +132,6 @@ xi.assault.missionsByArea =
     [xi.assault.assaultArea.NYZUL_ISLE] =
     {
         xi.assault.mission.NYZUL_ISLE_INVESTIGATION,
-        xi.assault.mission.NYZUL_ISLE_UNCHARTED_AREA_SURVEY,
     },
 }
 

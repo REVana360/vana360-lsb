@@ -1159,16 +1159,16 @@ xi.helm.dataTable =
                 obtainRate = 82.76, -- n=14613, 95% CI +/-0.61pp
                 breakRate  = 15.60, -- n=14613, 95% CI +/-0.59pp
 
-                -- Aquilaria was added after July 2009.
-                -- Source: https://www.bg-wiki.com/ffxi/September_2010_Version_Update_Changes#Usable_Items
+                -- Aquilaria, butterpear, and kapor logs were added after July 2009.
+                -- Sources:
+                -- https://www.bg-wiki.com/ffxi/September_2010_Version_Update_Changes#New_Items
+                -- https://www.bg-wiki.com/ffxi/September_2011_Version_Update_Changes#New_Items
                 drops =
                 {
                     { 1840, xi.item.PIECE_OF_RATTAN_LUMBER }, -- n=2232/12094, 95% CI +/-0.69pp
                     { 1750, xi.item.ARROWWOOD_LOG          }, -- n=2115/12094, 95% CI +/-0.68pp
                     { 1160, xi.item.LAUAN_LOG              }, -- n=1407/12094, 95% CI +/-0.57pp
-                    {  970, xi.item.BUTTERPEAR             }, -- n=1176/12094, 95% CI +/-0.53pp
                     {  870, xi.item.BEEHIVE_CHIP           }, -- n=1051/12094, 95% CI +/-0.50pp
-                    {  860, xi.item.KAPOR_LOG              }, -- n=1038/12094, 95% CI +/-0.50pp
                     {  600, xi.item.REVIVAL_TREE_ROOT      }, -- n= 722/12094, 95% CI +/-0.42pp
                     {  590, xi.item.HOLLY_LOG              }, -- n= 712/12094, 95% CI +/-0.42pp
                     {  240, xi.item.ROSEWOOD_LOG           }, -- n= 287/12094, 95% CI +/-0.27pp
@@ -1213,8 +1213,8 @@ xi.helm.dataTable =
 
                 -- Aquilaria, butterpear, and kapor logs were added after July 2009.
                 -- Sources:
-                -- https://www.bg-wiki.com/ffxi/September_2010_Version_Update_Changes#Usable_Items
-                -- https://www.bg-wiki.com/ffxi/September_2011_Version_Update_Changes#Wings_of_the_Goddess_Quests
+                -- https://www.bg-wiki.com/ffxi/September_2010_Version_Update_Changes#New_Items
+                -- https://www.bg-wiki.com/ffxi/September_2011_Version_Update_Changes#New_Items
                 drops =
                 {
                     { 1810, xi.item.ARROWWOOD_LOG          }, -- n=1518/8338, 95% CI +/-0.83pp

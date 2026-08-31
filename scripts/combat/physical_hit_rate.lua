@@ -95,7 +95,7 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
             attacker:hasStatusEffect(xi.effect.INNIN) and
             attacker:isBehind(target, 23) -- angle needs confirmation
         then
-            local jpValue = target:getJobPointLevel(xi.jp.INNIN_EFFECT)
+            local jpValue = attacker:getJobPointLevel(xi.jp.INNIN_EFFECT)
 
             -- Innin acc boost if attacker is behind target
             accBonus = accBonus + attacker:getStatusEffect(xi.effect.INNIN):getPower() + jpValue
@@ -111,14 +111,15 @@ xi.combat.physicalHitRate.getHitRateModifiers = function(attacker, target, isWea
         accBonus = accBonus + attacker:getMerit(xi.merit.AMBUSH)
     end
 
-    -- Yonin evasion is likely agnostic to ranged or melee but needs confirmation
+    -- Yonin grants directional evasion to the target. Its accuracy penalty is
+    -- already applied by the status effect.
     if
-        attacker:hasStatusEffect(xi.effect.YONIN) and
-        attacker:isFacing(target, 64) -- angle needs confirmation
+        target:hasStatusEffect(xi.effect.YONIN) and
+        target:isFacing(attacker, 64) -- angle needs confirmation
     then
         local jpValue = target:getJobPointLevel(xi.jp.YONIN_EFFECT)
 
-        evaBonus = evaBonus + attacker:getStatusEffect(xi.effect.YONIN):getPower() + 2 * jpValue
+        evaBonus = evaBonus + target:getStatusEffect(xi.effect.YONIN):getPower() + 2 * jpValue
     end
 
     -- target modifiers
@@ -142,22 +143,18 @@ local function accuracyAndEvasionToHitRate(attacker, target, acc, eva)
     if shouldApplyLevelCorrection then
         local dlvl = attacker:getMainLvl() - target:getMainLvl()
 
-        -- cap dlvl for avatars. It's known to cap at 38
+        -- Avatars receive only a positive correction, capped at 38 levels.
         if attacker:isAvatar() then
             dlvl = utils.clamp(dlvl, 0, 38)
-        end
-
-        -- Accuracy Bonus, doesn't apply to PCs
-        if not attacker:isPC() and attacker:getMainLvl() > target:getMainLvl() then
             acc = acc + dlvl * 4
 
-        -- Accuracy Penalty, only applies to PCs -- TODO: does this apply to player pets?
+        -- Players receive only a penalty against a higher-level target.
         elseif attacker:isPC() and attacker:getMainLvl() < target:getMainLvl() then
             acc = acc + dlvl * 4
         end
     end
 
-    local hitdiff = (acc - eva) / 2
+    local hitdiff = math.floor((acc - eva) / 2)
     local hitrate = (75 + hitdiff) / 100
 
     return hitrate

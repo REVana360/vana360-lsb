@@ -1,5 +1,4 @@
 require('scripts/globals/teleports')
-require('scripts/globals/interaction/interaction_global')
 -----------------------------------
 xi = xi or {}
 xi.homepoint = xi.homepoint or {}
@@ -170,52 +169,31 @@ local function goToHP(player, choice, index)
     end
 end
 
--- Home point teleportation was not introduced until December 2013.
--- Source: https://www.bg-wiki.com/ffxi/Home_Point
-local function showHomepointMenu(player, npc)
-    local triggerTarget = npc
-    local menu =
-    {
-        title = 'What will you do?',
-        options =
-        {
-            {
-                'Set this as your home point.',
-                function(playerArg)
-                    if triggerTarget and playerArg:checkDistance(triggerTarget) <= 6 then
-                        triggerTarget:entityAnimationPacket(xi.animationString.EFFECT_HOME_POINT, playerArg)
-                        playerArg:setHomePoint()
-                    end
-
-                    if zones[playerArg:getZoneID()].text.HOMEPOINT_SET then
-                        playerArg:messageSpecial(zones[playerArg:getZoneID()].text.HOMEPOINT_SET)
-                    else
-                        print(string.format('ERROR: missing ID.text.HOMEPOINT_SET in zone %s.', playerArg:getZoneName()))
-                    end
-                end,
-            },
-            {
-                'On second thought, never mind.',
-                function(playerArg)
-                end,
-            },
-        },
-        onCancelled = function(playerArg)
-            playerArg:setFreezeFlag(false)
-        end,
-
-        onEnd = function(playerArg)
-            playerArg:setFreezeFlag(false)
-        end,
-    }
-
-    player:setFreezeFlag(true)
-    player:customMenu(menu)
-end
-
 -- Functions called by homepoint scripts.
 xi.homepoint.onTrigger = function(player, csid, index)
-    showHomepointMenu(player, player:getCursorTarget())
+    if xi.settings.main.HOMEPOINT_TELEPORT ~= 1 then
+        player:startEvent(csid, 0, 0, 0, 0, 0, player:getGil(), 4095, index)
+        return
+    end
+
+    local hpBit  = index % 32
+    local hpSet  = math.floor(index / 32)
+    local menu   = player:getTeleportMenu(xi.teleport.type.HOMEPOINT)
+    local params = bit.bor(index, bit.lshift(menu[10] < 1 and 0 or 1, 18))
+
+    if not player:hasTeleport(xi.teleport.type.HOMEPOINT, hpBit, hpSet) then
+        player:addTeleport(xi.teleport.type.HOMEPOINT, hpBit, hpSet)
+        params = bit.bor(params, 0x10000)
+    end
+
+    if player:hasKeyItem(xi.ki.RHAPSODY_IN_WHITE) then
+        params = bit.bor(params, 0x20000)
+    end
+
+    player:setLocalVar('originIndex', index)
+
+    local g1, g2, g3, g4 = unpack(player:getTeleportTable(xi.teleport.type.HOMEPOINT))
+    player:startEvent(csid, 1, g1, g2, g3, g4, player:getGil(), 4095, params)
 end
 
 xi.homepoint.onEventUpdate = function(player, csid, option, npc)

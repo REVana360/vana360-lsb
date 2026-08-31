@@ -44,7 +44,6 @@ xi.settings.main =
     -- FIELDS OF VALOR/Grounds of Valor settings
     ENABLE_FIELD_MANUALS  = 1, -- Enables Fields of Valor
     ENABLE_GROUNDS_TOMES  = 0, -- Enables Grounds of Valor
-    ENABLE_SURVIVAL_GUIDE = 0, -- Enables Survival Guides (Not Implemented)
     REGIME_WAIT           = 1, -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
     FOV_REWARD_ALLIANCE   = 0, -- Allow Fields of Valor rewards while being a member of an alliance. (default retail behavior: 0)
     GOV_REWARD_ALLIANCE   = 1, -- Allow Grounds of Valor rewards while being a member of an alliance. (default retail behavior: 1)
@@ -136,25 +135,25 @@ xi.settings.main =
     DELAY_REDUCTION_CAP = 0.93,  -- Set the cap for melee swing haste effect. (0.80 = 80% retail delay reduction max, 0.93 = 93% ToAU delay reduction max)
 
     -- STR:ATT/RATT ratios. For players only. Mobs are hardcoded to 0.5
-    TWO_HANDED_STR_ATTACK_MULTIPLIER         = 1.0,  -- 1.0: 1 STR = 1 Attack. This has been 0.5 and 0.75 in previous eras
-    HAND_TO_HAND_STR_ATTACK_MULTIPLIER       = 1.0,  -- 1.0: 1 STR = 1 Attack. This has been 0.5 and 0.625 in previous eras.
-    ONE_HAND_MAIN_HAND_STR_ATTACK_MULTIPLIER = 0.75, -- 0.75: 1 STR = 0.75 Attack. This has been 0.5 in previous eras.
-    ONE_HAND_OFF_HAND_STR_ATTACK_MULTIPLIER  = 0.5,  -- 0.5: 1 STR = 0.5 Attack. This has always been 0.5 but is provided anyway.
-    RANGED_STR_ATTACK_MULTIPLIER             = 1.0,  -- 1.0: 1 STR = 1.0 Ranged Attack. This has been 0.5 and 0.75 in previous eras.
+    TWO_HANDED_STR_ATTACK_MULTIPLIER         = 0.75, -- July 2009: 1 STR = 0.75 Attack.
+    HAND_TO_HAND_STR_ATTACK_MULTIPLIER       = 0.5,  -- July 2009: 1 STR = 0.5 Attack.
+    ONE_HAND_MAIN_HAND_STR_ATTACK_MULTIPLIER = 0.5,  -- July 2009: 1 STR = 0.5 Attack.
+    ONE_HAND_OFF_HAND_STR_ATTACK_MULTIPLIER  = 0.5,  -- July 2009: 1 STR = 0.5 Attack.
+    RANGED_STR_ATTACK_MULTIPLIER             = 0.5,  -- July 2009: 1 STR = 0.5 Ranged Attack.
 
     -- DEX:ACC ratios. For players only. Mobs are hardcoded to 0.5
-    TWO_HANDED_DEX_ACCURACY_MULTIPLIER         = 0.75, -- 0.75: 1 DEX = 0.75 Accuracy. This has been 0.5 and 0.75 in previous eras
-    HAND_TO_HAND_DEX_ACCURACY_MULTIPLIER       = 0.75, -- 0.75: 1 DEX = 0.75 Accuracy. This has been 0.5 in previous eras.
-    ONE_HAND_MAIN_HAND_DEX_ACCURACY_MULTIPLIER = 0.75, -- 0.75: 1 DEX = 0.75 Accuracy. This has been 0.5 in previous eras.
-    ONE_HAND_OFF_HAND_DEX_ACCURACY_MULTIPLIER  = 0.75, -- 0.75: 1 DEX = 0.75 Accuracy. This has been 0.5 in previous eras.
+    TWO_HANDED_DEX_ACCURACY_MULTIPLIER         = 0.75, -- July 2009: 1 DEX = 0.75 Accuracy.
+    HAND_TO_HAND_DEX_ACCURACY_MULTIPLIER       = 0.5,  -- July 2009: 1 DEX = 0.5 Accuracy.
+    ONE_HAND_MAIN_HAND_DEX_ACCURACY_MULTIPLIER = 0.5,  -- July 2009: 1 DEX = 0.5 Accuracy.
+    ONE_HAND_OFF_HAND_DEX_ACCURACY_MULTIPLIER  = 0.5,  -- July 2009: 1 DEX = 0.5 Accuracy.
 
     -- AGI:RACC ratio. Mobs are hardcoded to 0.5
-    RANGED_AGI_ACCURACY_MULTIPLIER = 0.75, -- 0.75: 1 AGI = 0.75 Ranged Accuracy. This has been 0.5 in previous eras.
+    RANGED_AGI_ACCURACY_MULTIPLIER = 0.5, -- July 2009: 1 AGI = 0.5 Ranged Accuracy.
 
     -- VIT:DEF ratio. Applies to everything but mobs and charmed mobs. Those are hardcoded to 0.5.
-    PLAYER_ALLIES_VIT_DEF_MULTIPLIER = 1.5, -- 1.5: 1 VIT = 1.5 DEF. This has been 0.5 in previous eras.
+    PLAYER_ALLIES_VIT_DEF_MULTIPLIER = 0.5, -- July 2009: 1 VIT = 0.5 Defense.
 
-    -- Ranged Attack Free Phase Delay (in milliseconds) - The delay before a ranged attack can be executed after the player puts away their weapon. Default is 500 milliseconds. (Use 1200 for pre-2012 setting)
+    -- July profile uses the emulator's pre-2012 1200 ms free-phase delay.
     RANGED_ATTACK_FREE_PHASE_DELAY = 1200,
 
     USE_ADOULIN_WEAPON_SKILL_CHANGES = false, -- true/false. Change to toggle new Adoulin weapon skill damage calculations
@@ -237,12 +236,12 @@ xi.settings.main =
     -- SPELL SPECIFIC SETTINGS
     STONESKIN_CAP                   = 350,   -- Soft cap for hp absorbed by stoneskin
     SNEAK_INVIS_DURATION_MULTIPLIER = 1,     -- multiplies duration of sneak, invis, deodorize to reduce player torture. 1 = retail behavior.
-    USE_OLD_CURE_FORMULA            = false, -- true/false. if true, uses older cure formula (3*MND + VIT + 3*(healing skill/5)) // cure 6 will use the newer formula
-    USE_OLD_MAGIC_DAMAGE            = false, -- true/false. if true, uses older magic damage formulas
-    USE_OLD_COUNTERSTANCE           = false, -- true/false. if true, Counterstance DEF = 1 + VIT/2 (+ Minne); gear/Protect ignored
+    USE_OLD_CURE_FORMULA            = true,  -- true/false. if true, uses older cure formula (3*MND + VIT + 3*(healing skill/5)) // cure 6 will use the newer formula
+    USE_OLD_MAGIC_DAMAGE            = true,  -- true/false. if true, uses older magic damage formulas
+    USE_OLD_COUNTERSTANCE           = true,  -- true/false. if true, Counterstance DEF = 1 + VIT/2 (+ Minne); gear/Protect ignored
 
     -- CELEBRATIONS
-    EXPLORER_MOOGLE_LV              = 10, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
+    EXPLORER_MOOGLE_LV              = 0,  -- Keep disabled until Mog Tablet Super Kupower state controls availability.
     HALLOWEEN_2005                  = 0,  -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
     HALLOWEEN_YEAR_ROUND            = 0,  -- Set to 1 to have Harvest Festival initialize outside of normal times.
     EGG_HUNT                        =
@@ -288,7 +287,7 @@ xi.settings.main =
     MAX_FAKE_ENTRIES     = 15,
 
     -- NYZUL
-    NYZUL_ENABLED        = false, -- true/false. Enable Nyzul Isle content and functionality.
+    NYZUL_ENABLED        = true,  -- true/false. Enable Nyzul Isle content and functionality.
     RUNIC_DISK_SAVE      = true,  -- Allow anyone participating in Nyzul to save progress. Set to false so only initiator can save progress.
     ENABLE_NYZUL_CASKETS = true,  -- Enable Treasure casket pops from NMs.
     ENABLE_VIGIL_DROPS   = true,  -- Enable Vigil Weapon drops from NMs.
@@ -310,7 +309,7 @@ xi.settings.main =
     -- MISC
     RIVERNE_PORTERS              = 120,   -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.
     LANTERNS_STAY_LIT            = 1200,  -- time in seconds that lanterns in the Den of Rancor stay lit.
-    ENABLE_COP_ZONE_CAP          = 0,     -- Enable or disable lvl cap
+    ENABLE_COP_ZONE_CAP          = 1,     -- Enable or disable CoP area level caps.
     ALLOW_MULTIPLE_EXP_RINGS     = 0,     -- Set to 1 to remove ownership restrictions on the Chariot/Empress/Emperor Band trio.
     BYPASS_EXP_RING_ONE_PER_WEEK = 0,     -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
     NUMBER_OF_DM_EARRINGS        = 1,     -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
@@ -323,7 +322,7 @@ xi.settings.main =
     EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
     REGIME_REWARD_THRESHOLD      = 15,    -- If the player is more than N levels below the minimum suggested range, do not award experience.
     PERSIST_SEAL_TIMERS          = false, -- Persist seal (Beastmen/Kindred) recast timers across zone changes and logout.
-    GUILD_SHOP_HOLIDAYS          = false, -- true/false. Close each guild shop on its weekly holiday.
+    GUILD_SHOP_HOLIDAYS          = true,  -- true/false. Close each guild shop on its weekly holiday.
 
     -- SYSTEM
     DISABLE_INACTIVITY_WATCHDOG = false, -- true/false. If this is enabled, the watchdog which detects if the main loop isn't being ticked will no longer be able to kill the process.

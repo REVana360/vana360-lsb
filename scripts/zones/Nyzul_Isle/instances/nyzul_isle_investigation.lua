@@ -90,12 +90,16 @@ end
 
 -- Requirements for the first player registering the instance
 instanceObject.registryRequirements = function(player)
-    return player:hasKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+    return
+        player:getCurrentAssault() == xi.assault.mission.NYZUL_ISLE_INVESTIGATION and
+        player:hasKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
 end
 
 -- Requirements for further players entering an already-registered instance
 instanceObject.entryRequirements = function(player)
-    return player:hasKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
+    return
+        player:getCurrentAssault() == xi.assault.mission.NYZUL_ISLE_INVESTIGATION and
+        player:hasKeyItem(xi.ki.NYZUL_ISLE_ASSAULT_ORDERS)
 end
 
 -- Called on the instance once it is created and ready

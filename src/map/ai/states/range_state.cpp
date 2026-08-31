@@ -53,7 +53,7 @@ auto CRangeState::init() -> StateErrorOr<void>
         return refuseWithErrorMsg();
     }
 
-    // Configured in main : Default is 500ms
+    // Configured in main.
     m_freePhaseTimePlayer = std::chrono::milliseconds(settings::get<uint32>("main.RANGED_ATTACK_FREE_PHASE_DELAY"));
 
     if (!CanUseRangedAttack(PTarget, false))

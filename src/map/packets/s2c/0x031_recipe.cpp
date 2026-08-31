@@ -21,6 +21,8 @@
 
 #include "0x031_recipe.h"
 
+#include "lua/luautils.h"
+
 #include <map>
 
 namespace
@@ -36,6 +38,21 @@ const std::vector<std::string> craftSkillDbNames = {
     "Alchemy",
     "Cook",
 };
+
+auto enabledContentCondition() -> std::string
+{
+    std::string condition = "synth_recipes.content_tag IS NULL";
+
+    for (const auto* content : { "ROTZ", "COP", "TOAU", "WOTG", "ACP", "AMK", "ASA", "ABYSSEA", "SOA", "ROV", "TVR", "VOIDWATCH" })
+    {
+        if (luautils::IsContentEnabled(content))
+        {
+            condition += std::format(" OR synth_recipes.content_tag = '{}'", content);
+        }
+    }
+
+    return condition;
+}
 
 auto processRecipeDetails = [](auto& rset, GP_SERV_COMMAND_RECIPE_TYPE1_3& details, uint16 skillID)
 {
@@ -106,7 +123,8 @@ auto processRecipeDetails = [](auto& rset, GP_SERV_COMMAND_RECIPE_TYPE1_3& detai
 
 GP_SERV_COMMAND_RECIPE::GP_SERV_COMMAND_RECIPE(GP_SERV_COMMAND_RECIPE_TYPE type, const uint16 skillID, const uint16 skillLevel, const uint8 skillRank, const uint16 offset)
 {
-    auto& packet = this->data();
+    auto&      packet           = this->data();
+    const auto contentCondition = enabledContentCondition();
 
     switch (type)
     {
@@ -123,9 +141,10 @@ GP_SERV_COMMAND_RECIPE::GP_SERV_COMMAND_RECIPE(GP_SERV_COMMAND_RECIPE_TYPE type,
                                            "Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8 "
                                            "FROM synth_recipes INNER JOIN item_basic ON Result = item_basic.itemid "
                                            "WHERE {} >= GREATEST(`Wood`, `Smith`, `Gold`, `Cloth`, `Leather`, `Bone`, `Alchemy`, `Cook`) AND "
-                                           "{} BETWEEN ? AND ? AND Desynth = 0 ORDER BY RAND() LIMIT 1",
+                                           "{} BETWEEN ? AND ? AND Desynth = 0 AND ({}) ORDER BY RAND() LIMIT 1",
                                            craftName,
-                                           craftName);
+                                           craftName,
+                                           contentCondition);
             const auto rset  = db::preparedStmt(query, minSkill, maxSkill);
             FOR_DB_SINGLE_RESULT(rset)
             {
@@ -150,9 +169,10 @@ GP_SERV_COMMAND_RECIPE::GP_SERV_COMMAND_RECIPE(GP_SERV_COMMAND_RECIPE_TYPE type,
                                            "Ingredient1, Ingredient2, Ingredient3, Ingredient4, Ingredient5, Ingredient6, Ingredient7, Ingredient8 "
                                            "FROM synth_recipes INNER JOIN item_basic ON Result = item_basic.itemid "
                                            "WHERE {} >= GREATEST(`Wood`, `Smith`, `Gold`, `Cloth`, `Leather`, `Bone`, `Alchemy`, `Cook`) AND "
-                                           "{} BETWEEN ? AND ? AND Desynth = 0 ORDER BY {}, item_basic.name LIMIT ?, 1",
+                                           "{} BETWEEN ? AND ? AND Desynth = 0 AND ({}) ORDER BY {}, item_basic.name LIMIT ?, 1",
                                            craftName,
                                            craftName,
+                                           contentCondition,
                                            craftName);
             const auto rset  = db::preparedStmt(query, minSkill, maxSkill, offset);
             FOR_DB_SINGLE_RESULT(rset)
@@ -178,9 +198,10 @@ GP_SERV_COMMAND_RECIPE::GP_SERV_COMMAND_RECIPE(GP_SERV_COMMAND_RECIPE_TYPE type,
             const auto query = std::format("SELECT Result FROM synth_recipes "
                                            "INNER JOIN item_basic ON Result = item_basic.itemid "
                                            "WHERE {} >= GREATEST(`Wood`, `Smith`, `Gold`, `Cloth`, `Leather`, `Bone`, `Alchemy`, `Cook`) AND "
-                                           "{} BETWEEN ? AND ? AND Desynth = 0 ORDER BY {}, item_basic.name LIMIT ?, 17",
+                                           "{} BETWEEN ? AND ? AND Desynth = 0 AND ({}) ORDER BY {}, item_basic.name LIMIT ?, 17",
                                            craftName,
                                            craftName,
+                                           contentCondition,
                                            craftName);
             const auto rset  = db::preparedStmt(query, minSkill, maxSkill, offset);
             FOR_DB_MULTIPLE_RESULTS(rset)

@@ -325,7 +325,11 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
     -- Calculate critrates
     calcParams.critRate = 0
     if wsParams.critVaries then -- Work out critical hit ratios
-        calcParams.critRate = xi.combat.physical.calculateSwingCriticalRate(attacker, target, tp, calcParams.attackInfo.slot, wsParams.critVaries)
+        if calcParams.attackInfo.slot == xi.slot.RANGED then
+            calcParams.critRate = xi.combat.physical.calculateRangedCriticalRate(attacker, target, tp, calcParams.attackInfo.slot, wsParams.critVaries)
+        else
+            calcParams.critRate = xi.combat.physical.calculateSwingCriticalRate(attacker, target, tp, calcParams.attackInfo.slot, wsParams.critVaries)
+        end
     end
 
     -- Start the WS
