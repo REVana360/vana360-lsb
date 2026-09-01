@@ -105,13 +105,11 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
 
             auto exitDestination = static_cast<GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE>(this->MyRoomExitMode);
 
-            if (exitDestination == GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::MogGarden)
-            {
-                exitDestination = GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom;
-            }
-
             switch (exitDestination)
             {
+                case GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::MogGarden:
+                    exitDestination = GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom;
+                    [[fallthrough]];
                 case GP_CLI_COMMAND_MAPRECT_MYROOMEXITMODE::AreaEnteredFrom:
                     // Return to current zone
                     break;
@@ -138,6 +136,7 @@ void GP_CLI_COMMAND_MAPRECT::process(MapSession* PSession, CCharEntity* PChar) c
                                                   ? offsetZone(xi::ZoneId::AlZahbi, this->MyRoomExitMode - 1)
                                                   : offsetZone(xi::ZoneId::AhtUrhganWhitegate, this->MyRoomExitMode - 2);
                             break;
+                        case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::Adoulin:
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::RonfaureFront:
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::GustabergFront:
                         case GP_CLI_COMMAND_MAPRECT_MYROOMEXITBIT::SarutaFront:
