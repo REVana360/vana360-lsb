@@ -47,7 +47,7 @@ describe('July cure formula', function()
     for _, testCase in ipairs(julySpells) do
         it('uses the old formula for spell ' .. testCase[1], function()
             assert(xi.settings.main.USE_OLD_CURE_FORMULA, 'old cure formula is disabled by default')
-            mock('getCurePowerOld', 200)
+            local _ = mock('getCurePowerOld', 200)
 
             local startingHP = player:getHP()
             cast(testCase[1])
@@ -60,7 +60,7 @@ describe('July cure formula', function()
 
     it('retains the modern formula option', function()
         xi.settings.main.USE_OLD_CURE_FORMULA = false
-        mock('getCurePower', 200)
+        local _ = mock('getCurePower', 200)
 
         local startingHP = player:getHP()
         cast(xi.magic.spell.CURE_IV)

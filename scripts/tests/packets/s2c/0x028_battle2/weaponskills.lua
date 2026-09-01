@@ -436,10 +436,11 @@ local packets =
             },
         },
     },
-    ['Eventually critical WS'] =
+    ['Critical-chance WS'] =
     {
         test = function(player, mob)
             stub('xi.combat.physicalHitRate.getPhysicalHitRate', 1)
+            stub('math.randomFloat', 0)
             mob:setUnkillable(true)
             player:changeJob(xi.job.MNK)
             player:setLevel(99)
@@ -448,12 +449,9 @@ local packets =
             player.actions:engage(mob)
             xi.test.world:skipTime(1)
 
-            -- Surely we'll get at least 1 crit in 10 attempts...
-            for i = 1, 10 do
-                player:setTP(3000)
-                player.actions:useWeaponskill(mob, xi.weaponskill.VICTORY_SMITE)
-                xi.test.world:skipTime(1)
-            end
+            player:setTP(3000)
+            player.actions:useWeaponskill(mob, xi.weaponskill.VICTORY_SMITE)
+            xi.test.world:skipTime(1)
         end,
 
         expected =

@@ -9,7 +9,6 @@ effectObject.onEffectGain = function(target, effect)
     local jpValue = target:getJobPointLevel(xi.jp.SEIGAN_EFFECT)
 
     effect:addMod(xi.mod.DEF, jpValue * 3)
-
 end
 
 effectObject.onEffectTick = function(target, effect)

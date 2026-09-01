@@ -10,7 +10,6 @@ effectObject.onEffectGain = function(target, effect)
     effect:addMod(xi.mod.TWOHAND_STR, effect:getPower())
     effect:addMod(xi.mod.TWOHAND_HASTE_ABILITY, 1000)
     effect:addMod(xi.mod.TWOHAND_ACC, 10)
-
 end
 
 effectObject.onEffectTick = function(target, effect)

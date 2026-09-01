@@ -56,7 +56,6 @@ abilityObject.onAutomatonAbility = function(target, automaton, skill, master, ac
             params.fTP[2] * shieldBashBonus,
             params.fTP[3] * shieldBashBonus,
         }
-
     end
 
     local info = xi.mobskills.mobPhysicalMove(automaton, target, skill, action, params)

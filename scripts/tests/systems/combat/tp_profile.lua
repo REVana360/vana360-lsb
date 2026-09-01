@@ -1,4 +1,5 @@
 describe('July physical TP profile', function()
+    ---@return CBaseEntity
     local function makeEntity(options)
         options = options or {}
 
@@ -81,7 +82,7 @@ describe('July physical TP profile', function()
         }
 
         for _, testCase in ipairs(cases) do
-            assert(xi.combat.tp.calculateTPReturn(nil, testCase.delay) == testCase.expected)
+            assert(xi.combat.tp.calculateTPReturn(makeEntity(), testCase.delay) == testCase.expected)
         end
     end)
 

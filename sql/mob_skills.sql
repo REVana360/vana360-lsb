@@ -4007,7 +4007,6 @@ INSERT INTO `mob_skills` VALUES (3962,912,'nihility_song',1,0.0,7.0,2000,1500,4,
 -- INSERT INTO `mob_skills` VALUES (3966,3710,'#2174',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (3967,3711,'#2175',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 
-
 -- INSERT INTO `mob_skills` VALUES (4041,203,'hard_membrane',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (4042,2008,'depth_charge',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);
 -- INSERT INTO `mob_skills` VALUES (4043,2009,'blowhole_blast',0,0.0,7.0,2000,1500,4,0,0,0,0,0,0);

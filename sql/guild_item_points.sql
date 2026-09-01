@@ -45,7 +45,6 @@ CREATE TABLE `guild_item_points` (
 -- UPDATE to new item, DELETE old item, INSERT new items
 -- ========================================================
 
-
 -- Fishing / Amateur
 INSERT INTO `guild_item_points` VALUES (0,4360,0,24,1200,0); -- Bastore Sardine (24 / 1200)
 INSERT INTO `guild_item_points` VALUES (0,4472,0,30,1280,1); -- Crayfish (30 / 1280)

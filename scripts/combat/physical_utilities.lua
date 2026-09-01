@@ -677,6 +677,53 @@ local function getSpikeRatio(isPC, wRatio)
     return 0
 end
 
+local function getPlayerMeleePDIFBounds(weaponType, baseRatio, levelDifFactor, isCritical, damageLimitPlus, damageLimitPercent)
+    local useLegacyPlayerPDif = not xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES
+
+    if useLegacyPlayerPDif then
+        local isTwoHanded = legacyTwoHandedSkills[weaponType] or false
+        local ratioCap    = getLegacyMeleeRatioCap(weaponType)
+        local cRatio      = utils.clamp(math.min(baseRatio, ratioCap) + levelDifFactor, 0, 2)
+        local sRatio      = getSpikeRatio(true, cRatio)
+
+        if math.randomInt(1, 10000) / 10000 <= sRatio then
+            return 1, 1, true
+        end
+
+        local lowerCap, upperCap = getLegacyMeleePDifBounds(cRatio, isTwoHanded)
+
+        return lowerCap, upperCap, true
+    end
+
+    local pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
+    local wRatio       = baseRatio + (isCritical and 1 or 0)
+    local sRatio       = getSpikeRatio(true, wRatio)
+
+    if math.randomInt(1, 10000) / 10000 <= sRatio then
+        return 1, 1, false, 1
+    end
+
+    local lowerCap, upperCap = xi.combat.physical.wRatioCapPC(wRatio, pDifFinalCap)
+
+    return lowerCap, upperCap, false
+end
+
+local function getBuildingFlourishAttackBonus(actor, isWeaponskill)
+    if not isWeaponskill then
+        return 1
+    end
+
+    local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
+
+    if flourishEffect and flourishEffect:getPower() >= 2 then -- 2 or more Finishing Moves used.
+        local meritCount = flourishEffect:getSubPower()
+
+        return 1.25 + 0.01 * meritCount -- +1% attack bonus per merit -- TODO: do the merits apply even when FMs are < 2?
+    end
+
+    return 1
+end
+
 -- WARNING: This function is used in src/utils/battleutils.cpp "GetDamageRatio" function.
 -- If you update this parameters, update them there aswell.
 ---@param actor CBaseEntity
@@ -699,18 +746,7 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
     local baseRatio     = 0
     local actorAttack   = 0
     local targetDefense = math.max(1, target:getStat(xi.mod.DEF))
-    local flourishBonus = 1
-
-    -- Actor Weaponskill Specific Attack modifiers.
-    if isWeaponskill then
-        local flourishEffect = actor:getStatusEffect(xi.effect.BUILDING_FLOURISH)
-
-        if flourishEffect and flourishEffect:getPower() >= 2 then -- 2 or more Finishing Moves used.
-            local meritCount = flourishEffect:getSubPower()
-
-            flourishBonus = 1.25 + 0.01 * meritCount -- +1% attack bonus per merit -- TODO: do the merits apply even when FMs are < 2?
-        end
-    end
+    local flourishBonus = getBuildingFlourishAttackBonus(actor, isWeaponskill)
 
     -- TODO: it is unknown if ws attack mod and flourish bonus are additive or multiplicative
     -- TODO: do flourish and attack mods come before or after food?
@@ -780,32 +816,15 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
     local pDifLowerCap       = 0
     local damageLimitPlus    = actor:getMod(xi.mod.DAMAGE_LIMIT) / 100
     local damageLimitPercent = 1 + actor:getMod(xi.mod.DAMAGE_LIMITP) / 100
-    local pDifFinalCap        = 0
-    local useLegacyPlayerPDif = actor:isPC() and not xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES
+    local useLegacyPlayerPDif = false
 
     if actor:isPC() then
-        if useLegacyPlayerPDif then
-            local isTwoHanded = legacyTwoHandedSkills[weaponType] or false
-            local ratioCap    = getLegacyMeleeRatioCap(weaponType)
-            local cRatio      = utils.clamp(math.min(baseRatio, ratioCap) + levelDifFactor, 0, 2)
-            local sRatio      = getSpikeRatio(true, cRatio)
+        local spikePDIF
 
-            if math.randomInt(1, 10000) / 10000 <= sRatio then
-                pDifLowerCap = 1
-                pDifUpperCap = 1
-            else
-                pDifLowerCap, pDifUpperCap = getLegacyMeleePDifBounds(cRatio, isTwoHanded)
-            end
-        else
-            pDifFinalCap = (xi.combat.physical.pDifWeaponCapTable[weaponType] + damageLimitPlus) * damageLimitPercent + (isCritical and 1 or 0)
+        pDifLowerCap, pDifUpperCap, useLegacyPlayerPDif, spikePDIF = getPlayerMeleePDIFBounds(weaponType, baseRatio, levelDifFactor, isCritical, damageLimitPlus, damageLimitPercent)
 
-            local sRatio = getSpikeRatio(true, wRatio)
-
-            if math.randomInt(1, 10000) / 10000 <= sRatio then
-                return 1.0
-            end
-
-            pDifLowerCap, pDifUpperCap = xi.combat.physical.wRatioCapPC(wRatio, pDifFinalCap)
+        if spikePDIF then
+            return spikePDIF
         end
     else
         -- Mobs and pets, unconfirmed if pets use this same formula
@@ -813,7 +832,7 @@ xi.combat.physical.calculateMeleePDIF = function(actor, target, weaponType, wsAt
         -- non-corrected mobs have 4.0 pdif cap, but there is some indication that ilvl may go up to 8.0
         local basePDIF  = applyLevelCorrection and 2 or 4
         local critBonus = (applyLevelCorrection and isCritical) and 1 or 0
-        pDifFinalCap    = (basePDIF + damageLimitPlus) * damageLimitPercent + critBonus
+        local pDifFinalCap = (basePDIF + damageLimitPlus) * damageLimitPercent + critBonus
 
         local sRatio = getSpikeRatio(false, wRatio)
 

@@ -166,24 +166,79 @@ local function play_event902(player, newAttachmentStatus, waitDays)
     player:startEvent(902)
 end
 
+local function handleHeadWorkTrade(player, trade, attachmentStatus)
+    if attachmentStatus ~= 12 and attachmentStatus ~= 13 then
+        return false
+    end
+
+    settleHeadWork(player)
+
+    if player:getCharVar('[PUP]HeadDaysRemaining') <= 0 then
+        return false
+    end
+
+    if
+        player:getCharVar('[PUP]HeadFueled') == 0 and
+        npcUtil.tradeMatches(trade, { { xi.item.CUP_OF_IMPERIAL_COFFEE, 1 } })
+    then
+        player:startEvent(904)
+    end
+
+    return true
+end
+
+local function showHeadWorkStatus(player, attachmentStatus)
+    settleHeadWork(player)
+
+    local attachmentReadyDay = player:getCharVar('PUP_AttachmentReady')
+    local attachmentReady    = attachmentReadyDay ~= 0 and attachmentReadyDay <= VanadielUniqueDay()
+    local daysRemaining      = player:getCharVar('[PUP]HeadDaysRemaining')
+
+    if daysRemaining > 0 then
+        local fueled = player:getCharVar('[PUP]HeadFueled') ~= 0 and 1 or 0
+
+        player:startEvent(903, daysRemaining, fueled)
+    elseif not attachmentReady then
+        player:startEvent(903, attachmentReadyDay - VanadielUniqueDay(), 1)
+    else
+        player:startEvent(905, attachmentStatus - 12)
+    end
+end
+
+local function showFrameWorkStatus(player, attachmentStatus, automatonName, attachmentReady)
+    local completionTime = player:getCharVar('[PUP]FrameCompletion')
+
+    if completionTime ~= 0 then
+        if JstMidnight() <= completionTime then
+            player:startEvent(626)
+            return
+        end
+
+        player:setCharVar('[PUP]FrameCompletion', 0)
+
+        if player:getCharVar('PUP_AttachmentReady') > VanadielUniqueDay() then
+            player:setCharVar('PUP_AttachmentReady', VanadielUniqueDay())
+        end
+
+        attachmentReady = true
+    end
+
+    if not attachmentReady then
+        player:startEvent(626)
+    else
+        local param6 = attachmentStatus - 7
+
+        player:startEventString(627, automatonName, automatonName, automatonName, automatonName, 0, param6)
+    end
+end
+
 entity.onTrade = function(player, npc, trade)
     local attachmentStatus   = player:getCharVar('PUP_AttachmentStatus')
     local numUnlockedHeads   = getNumUnlockedHeads(player)
     local tradeHasPayment    = trade:getItemQty(unlockCost[numUnlockedHeads][1]) == unlockCost[numUnlockedHeads][2]
 
-    if attachmentStatus == 12 or attachmentStatus == 13 then
-        settleHeadWork(player)
-
-        if player:getCharVar('[PUP]HeadDaysRemaining') > 0 then
-            if
-                player:getCharVar('[PUP]HeadFueled') == 0 and
-                npcUtil.tradeMatches(trade, { { xi.item.CUP_OF_IMPERIAL_COFFEE, 1 } })
-            then
-                player:startEvent(904)
-            end
-
-            return
-        end
+    if handleHeadWorkTrade(player, trade, attachmentStatus) then
+        return
     end
 
     local attachmentReadyDay = player:getCharVar('PUP_AttachmentReady')
@@ -315,30 +370,7 @@ entity.onTrigger = function(player, npc)
 
     -- Paid in Full (Mats & Currency) for Head/Frame Combination
     elseif attachmentStatus >= 8 and attachmentStatus <= 10 then
-        local completionTime = player:getCharVar('[PUP]FrameCompletion')
-
-        if completionTime ~= 0 then
-            if JstMidnight() <= completionTime then
-                player:startEvent(626)
-                return
-            end
-
-            player:setCharVar('[PUP]FrameCompletion', 0)
-
-            if player:getCharVar('PUP_AttachmentReady') > VanadielUniqueDay() then
-                player:setCharVar('PUP_AttachmentReady', VanadielUniqueDay())
-            end
-
-            attachmentReady = true
-        end
-
-        if not attachmentReady then
-            player:startEvent(626)
-        else
-            local param6 = attachmentStatus - 7
-
-            player:startEventString(627, automatonName, automatonName, automatonName, automatonName, 0, param6)
-        end
+        showFrameWorkStatus(player, attachmentStatus, automatonName, attachmentReady)
 
     -- Asked about Soulsoother/Spiritreaver Head
     elseif attachmentStatus == 11 and numUnlockedHeads == 3 then
@@ -346,24 +378,7 @@ entity.onTrigger = function(player, npc)
 
     -- Paid for Soulsoother/Spiritreaver Head
     elseif attachmentStatus == 12 or attachmentStatus == 13 then
-        settleHeadWork(player)
-
-        attachmentReadyDay = player:getCharVar('PUP_AttachmentReady')
-        attachmentReady    = attachmentReadyDay ~= 0 and attachmentReadyDay <= VanadielUniqueDay()
-
-        local daysRemaining = player:getCharVar('[PUP]HeadDaysRemaining')
-
-        if daysRemaining > 0 then
-            if player:getCharVar('[PUP]HeadFueled') ~= 0 then
-                player:startEvent(903, daysRemaining, 1)
-            else
-                player:startEvent(903, daysRemaining, 0)
-            end
-        elseif not attachmentReady then
-            player:startEvent(903, attachmentReadyDay - VanadielUniqueDay(), 1)
-        else
-            player:startEvent(905, attachmentStatus - 12)
-        end
+        showHeadWorkStatus(player, attachmentStatus)
 
     -- Ask about other head, after obtaining one already (Spiritreaver or Soulsoother)
     elseif attachmentStatus == 14 then

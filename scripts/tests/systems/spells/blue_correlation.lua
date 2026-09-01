@@ -31,6 +31,12 @@ describe('Blue Magic monster correlation', function()
         player:addSpell(xi.magic.spell.FOOT_KICK)
         player.actions:setBlueSpells({ xi.magic.spell.FOOT_KICK })
 
+        -- Keep this correlation fixture independent of the July STR-to-attack profile.
+        local strength     = player:getStat(xi.mod.STR)
+        local attackOffset = math.floor(strength * 0.75) - math.floor(strength * xi.settings.main.ONE_HAND_MAIN_HAND_STR_ATTACK_MULTIPLIER)
+
+        player:addMod(xi.mod.ATT, attackOffset)
+
         -- The Clipper spawns at level 28 or 29, so its VIT, its DEF, and the damage below all
         -- depend on the shared RNG stream. Pin the level.
         mob = player.entities:moveTo(17293357)

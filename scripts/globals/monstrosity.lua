@@ -354,20 +354,12 @@ xi.monstrosity.purchasableInstincts =
     RUN = 31,
 }
 
-local limitBreakQuests =
-{
-    [xi.job.BLU] = { xi.questLog.AHT_URHGAN,  xi.quest.id.ahtUrhgan.THE_BEAST_WITHIN           },
-    [xi.job.COR] = { xi.questLog.AHT_URHGAN,  xi.quest.id.ahtUrhgan.BREAKING_THE_BONDS_OF_FATE },
-    [xi.job.PUP] = { xi.questLog.BASTOK,      xi.quest.id.bastok.ACHIEVING_TRUE_POWER          },
-    [xi.job.DNC] = { xi.questLog.JEUNO,       xi.quest.id.jeuno.A_FURIOUS_FINALE               },
-    [xi.job.SCH] = { xi.questLog.OTHER_AREAS, xi.quest.id.otherAreas.SURVIVAL_OF_THE_WISEST    },
-    [xi.job.GEO] = { xi.questLog.ADOULIN,     xi.quest.id.adoulin.ELEMENTARY_MY_DEAR_SYLVIE    },
-    [xi.job.RUN] = { xi.questLog.ADOULIN,     xi.quest.id.adoulin.ENDEAVORING_TO_AWAKEN        },
-}
-
 -- NOTE: Cost and granted species/variant are hardcoded into Terynon's event; however, the requirements
 -- to get each of these purchasable MONs is not displayed, and can be modified to a different set or
 -- level.  The requirements are limited to species!
+-- Terynon is outside the July profile; retain the purchase table as reference data.
+-- luacheck: push ignore 211
+---@diagnostic disable-next-line: unused-local
 local terynonMonData =
 {
     [0] = -- Beasts
@@ -825,6 +817,7 @@ local terynonMonData =
         },
     },
 }
+-- luacheck: pop
 
 -----------------------------------
 -- Helpers
@@ -895,111 +888,6 @@ xi.monstrosity.unlockVariant = function(player, variant)
 
         player:setMonstrosityData(data)
     end
-end
-
-local function hasPurchasedInstinct(player, purchasableInstinctId)
-    local data        = player:getMonstrosityData()
-    local byteOffset  = 20 + math.floor(purchasableInstinctId / 8)
-    local shiftAmount = purchasableInstinctId % 8
-
-    if byteOffset >= 20 and byteOffset < 24 then
-        return bit.band(data.instincts[byteOffset], bit.lshift(1, shiftAmount)) > 0
-    else
-        print('byteOffset out of range')
-    end
-end
-
-local function getPurchasedInstinctsMask(player)
-    local instinctMask = 0
-
-    for _, purchasableInstinctId in pairs(xi.monstrosity.purchasableInstincts) do
-        if
-            purchasableInstinctId >= xi.monstrosity.purchasableInstincts.HUME_II and
-            hasPurchasedInstinct(player, purchasableInstinctId)
-        then
-            instinctMask = utils.mask.setBit(instinctMask, purchasableInstinctId - xi.monstrosity.purchasableInstincts.HUME_II, true)
-        end
-    end
-
-    return instinctMask
-end
-
-local function addPurchasedInstinct(player, purchasableInstinctId)
-    local data        = player:getMonstrosityData()
-    local byteOffset  = 20 + math.floor(purchasableInstinctId / 8)
-    local shiftAmount = purchasableInstinctId % 8
-
-    if byteOffset >= 20 and byteOffset < 24 then
-        data.instincts[byteOffset] = bit.bor(data.instincts[byteOffset] or 0, bit.lshift(0x01, shiftAmount))
-    else
-        print('byteOffset out of range')
-    end
-
-    player:setMonstrosityData(data)
-end
-
--- When generating Terynon's mask for discounts, we need a bitmask for
--- specific jobs.  Since only one quest exists for pre-ToAU jobs, use
--- Maat's Cap tracking for those.
-local function hasCompletedLimitBreak(player, jobId)
-    if jobId <= xi.job.SMN then
-        local maatsCap = player:getCharVar('maatsCap')
-
-        return utils.mask.getBit(maatsCap, jobId - 1)
-    else
-        return player:hasCompletedQuest(unpack(limitBreakQuests[jobId]))
-    end
-end
-
-local function getLimitBreakMask(player)
-    local limitMask = 0
-
-    for jobId = xi.job.WAR, xi.job.RUN do
-        if hasCompletedLimitBreak(player, jobId) then
-            limitMask = utils.mask.setBit(limitMask, jobId - 1, true)
-        end
-    end
-
-    return limitMask
-end
-
-local function hasPurchaseRequirements(player, monCategory, selectedMon)
-    local selectedMonData = terynonMonData[monCategory][selectedMon]
-    local eligibleSpecies = selectedMonData.monSpecies and xi.monstrosity.getSpeciesLevel(player, selectedMonData.monSpecies) == 0
-    local eligibleVariant = selectedMonData.monVariant and not xi.monstrosity.hasUnlockedVariant(player, selectedMonData.monVariant)
-
-    if
-        eligibleSpecies or
-        eligibleVariant
-    then
-        if selectedMonData.requirements then
-            for _, reqTable in ipairs(selectedMonData.requirements) do
-                if xi.monstrosity.getSpeciesLevel(player, reqTable[1]) < reqTable[2] then
-                    return false
-                end
-            end
-        end
-
-        return true
-    end
-
-    return false
-end
-
-local function getMonPageMask(player, monCategory)
-    local pageMask = 0
-
-    if terynonMonData[monCategory] then
-        local categoryTable = terynonMonData[monCategory]
-
-        for bitPos, _ in pairs(categoryTable) do
-            if hasPurchaseRequirements(player, monCategory, bitPos) then
-                pageMask = utils.mask.setBit(pageMask, bitPos, true)
-            end
-        end
-    end
-
-    return pageMask
 end
 
 -----------------------------------
