@@ -38,11 +38,10 @@ jobs:
     name: ${{ format('{0}', inputs.runner) }}
     runs-on: ${{ inputs.runner }}
     permissions:
-      contents: read         # Read repository contents
-      checks: write          # Create check runs with test results
-      pull-requests: write   # Post PR comments with test summaries
-      actions: read          # Browse workflow runs and artifacts
-      statuses: write        # Update commit statuses
+      actions: read
+      checks: write
+      contents: read
+      statuses: write
     defaults:
       run:
         shell: bash
