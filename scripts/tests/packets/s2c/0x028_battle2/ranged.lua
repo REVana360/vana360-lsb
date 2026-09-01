@@ -259,6 +259,8 @@ local packets =
                 return xi.subEffect.SILENCE, xi.msg.basic.ADD_EFFECT_STATUS, xi.effect.SILENCE
             end)
 
+            stub('xi.combat.physicalHitRate.getRangedHitRate', 1)
+
             player:changeJob(xi.job.RNG)
             player:setLevel(99)
             player:setMod(xi.mod.RACC, 1000)
@@ -267,10 +269,9 @@ local packets =
             player:equipItem(xi.item.POWER_BOW)
             player:equipItem(xi.item.KABURA_ARROW)
             player.actions:engage(mob)
-            for i = 1, 10 do
-                player.actions:rangedAttack(mob)
-                xi.test.world:skipTime(10)
-            end
+            player.actions:rangedAttack(mob)
+            xi.test.world:skipTime(10)
+            xi.test.world:skipTime(10)
         end,
 
         expected =

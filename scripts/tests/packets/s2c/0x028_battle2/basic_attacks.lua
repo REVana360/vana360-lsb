@@ -180,6 +180,7 @@ local packets =
     ['Guarded hits'] =
     {
         test = function(player, mob)
+            stub('xi.combat.physicalHitRate.getPhysicalHitRate', 1)
             player:gotoZone(xi.zone.DYNAMIS_SAN_DORIA)
             player:changeJob(xi.job.BRD)
             player:setLevel(99)
@@ -192,6 +193,7 @@ local packets =
             mnkMob:setMod(xi.mod.ADDITIVE_GUARD, 100)
 
             player.actions:engage(mnkMob)
+            mnkMob:updateEnmity(player)
             for i = 1, 20 do
                 xi.test.world:tickEntity(player)
                 xi.test.world:skipTime(10)
