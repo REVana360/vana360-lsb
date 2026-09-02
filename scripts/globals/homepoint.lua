@@ -7,8 +7,6 @@ local homepointData =
 {
     -- [Index]= [1]group(if to/from both same group, then no cost) [2]fee multiplier [3]dest { x, y, z, rot, zone }
     [  0] = { group = 1, fee = 1, dest = {  -85.554,       1, -64.554,  45, xi.zone.SOUTHERN_SAN_DORIA     } }, -- Southern San d'Oria #1
-    [  1] = { group = 1, fee = 1, dest = {     44.1,       2,   -34.5, 170, xi.zone.SOUTHERN_SAN_DORIA     } }, -- Southern San d'Oria #2
-    [  2] = { group = 1, fee = 1, dest = {    140.5,      -2,     121,   0, xi.zone.SOUTHERN_SAN_DORIA     } }, -- Southern San d'Oria #3
     [  3] = { group = 1, fee = 1, dest = {     -178,       4,      71,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #1
     [  4] = { group = 1, fee = 1, dest = {       10,    -0.2,      95,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #2
     [  5] = { group = 1, fee = 1, dest = {       70,    -0.2,      10,   0, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #3
@@ -95,7 +93,6 @@ local homepointData =
     [ 94] = { group = 0, fee = 2, dest = {      102,       0,     269, 191, xi.zone.FEIYIN                 } }, -- Fei'Yin #2
     [ 95] = { group = 0, fee = 2, dest = {      -63,      50,      81, 192, xi.zone.IFRITS_CAULDRON        } }, -- Ifrit's Cauldron #1
     [ 96] = { group = 0, fee = 2, dest = {      573,       9,    -500,   0, xi.zone.QUICKSAND_CAVES        } }, -- Quicksand Caves #2
-    [ 97] = { group = 1, fee = 1, dest = {     -165,      -1,      12,  65, xi.zone.SOUTHERN_SAN_DORIA     } }, -- Southern San d'Oria #4
     [ 98] = { group = 1, fee = 1, dest = {     -132,      12,     194, 170, xi.zone.NORTHERN_SAN_DORIA     } }, -- Northern San d'Oria #4
     [ 99] = { group = 2, fee = 1, dest = {       87,       7,       1,   0, xi.zone.BASTOK_MINES           } }, -- Bastok Mines #3
     [100] = { group = 2, fee = 1, dest = {     -192,      -6,     -69,   0, xi.zone.BASTOK_MARKETS         } }, -- Bastok Markets #4

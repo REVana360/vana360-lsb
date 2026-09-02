@@ -2,7 +2,6 @@
 -- Deeds of Heroism (A.M.A.N. Validator)
 -----------------------------------
 -- Bastok Markets      : !pos -338.18 -10 -180.19 235
--- Southern San d'Oria : !pos -83.07 1 -55.58 230
 -- Windurst Woods      : !pos 89.9 -4.2 -47.63 241
 -----------------------------------
 require('scripts/globals/npc_util')
@@ -12,9 +11,8 @@ xi.deeds = xi.deeds or {}
 
 local validatorNpcEvents =
 {
-    [xi.zone.BASTOK_MARKETS    ] = 669,
-    [xi.zone.SOUTHERN_SAN_DORIA] = 3610,
-    [xi.zone.WINDURST_WOODS    ] = 976,
+    [xi.zone.BASTOK_MARKETS] = 669,
+    [xi.zone.WINDURST_WOODS] = 976,
 }
 
 -- Raw Rewards from AMAN Validator

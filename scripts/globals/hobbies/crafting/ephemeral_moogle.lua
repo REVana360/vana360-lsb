@@ -13,7 +13,6 @@ local moogleEventTable =
     ['Ephemeral_Moogle_Smith'  ] = { trigger =  914, trade =  916, fail =  918 }, -- Northern San d'Oria
     ['Ephemeral_Moogle_Gold'   ] = { trigger =  617, trade =  618, fail =  619 }, -- Bastok Markets
     ['Ephemeral_Moogle_Cloth'  ] = { trigger =  896, trade =  898, fail =  900 }, -- Windurst Woods
-    ['Ephemeral_Moogle_Leather'] = { trigger = 3549, trade = 3550, fail = 3551 }, -- Southern San d'Oria
     ['Ephemeral_Moogle_Bone'   ] = { trigger =  895, trade =  897, fail =  899 }, -- Windurst Woods
     ['Ephemeral_Moogle_Alchemy'] = { trigger =  617, trade =  618, fail =  619 }, -- Bastok Mines
     ['Ephemeral_Moogle_Cook'   ] = { trigger = 1098, trade = 1099, fail = 1100 }, -- Windurst Waters

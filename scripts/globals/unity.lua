@@ -7,9 +7,8 @@ xi.unity = xi.unity or {}
 -- Table Format: Needs 10 RoE Objectives, All for One not set, All for One set, Unity Joined, Zone Directory Name
 local zoneEventIds =
 {
-    [xi.zone.SOUTHERN_SAN_DORIA] = { 3528, 3525, 3526, 3529 },
-    [xi.zone.BASTOK_MARKETS    ] = {  597,  594,  595,  598 },
-    [xi.zone.WINDURST_WOODS    ] = {  878,  875,  876,  879 },
+    [xi.zone.BASTOK_MARKETS] = { 597, 594, 595, 598 },
+    [xi.zone.WINDURST_WOODS] = { 878, 875, 876, 879 },
 }
 
 -- Table Format: X, Y, Z, Rot, Zone ID

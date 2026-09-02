@@ -161,7 +161,7 @@ TEST_CASE("npcs: a door carries the id the client reads, and other npcs carry no
 {
     const auto& npcs = southernSanDoria();
 
-    const auto door = std::ranges::find(npcs, 17719443u, &xi::data::NpcData::Id);
+    const auto door = std::ranges::find(npcs, 17719435u, &xi::data::NpcData::Id);
     REQUIRE(door != npcs.end());
     REQUIRE(door->DoorId == 811939423u);
 

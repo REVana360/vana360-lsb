@@ -148,7 +148,7 @@ zones[xi.zone.SOUTHERN_SAN_DORIA] =
             [17719304] = 50, -- Corua
             [17719305] = 48, -- Phamelise
             [17719306] = 46, -- Apairemant
-            [17719493] = 49, -- Pourette
+            [17719481] = 49, -- Pourette
         },
         ARPETION  = GetFirstID('Arpetion'),
         CAMEREINE = GetFirstID('Camereine'),
