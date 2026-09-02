@@ -37,6 +37,18 @@ This tool is used to distribute the following items:
 
 Sends `<your message>` to every character, in every zone, on every map process.  
 
+## Entity ID Audit
+
+`python tools/client/entity_id_audit.py <catalog.json> <zone-id> <zone-dir> --out <report.json>`
+
+Compares one zone from Tinkerer's private `export-zone-entities` catalog with
+the maintained NPC and mob YAML. The report identifies direct matches,
+same-index mismatches, unique-name move candidates, ambiguous names, and
+one-sided targets. Candidate moves are evidence for review, not an authorized
+rewrite: duplicate names, unnamed entities, slot members, Lua references, and
+ordering assumptions require a separate dependency audit. Unplaced mob
+reservations are reported separately and excluded from name matching.
+
 Setup
 ========================
 
