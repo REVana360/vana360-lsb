@@ -21,7 +21,7 @@ local packets =
             xi.test.world:skipTime(5)
             player.actions:useAbility(player, xi.jobAbility.TAIL_BLOW)
             xi.test.world:skipTime(5)
-            xi.test.world:tickEntity(mob)
+            xi.test.world:tickEntity(pet)
             xi.test.world:skipTime(5)
         end,
 
