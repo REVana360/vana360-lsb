@@ -1,19 +1,5 @@
 # AI Agents
 
-```txt
-This post was written by hand, zhuzhed up by AI, and then manually proofread, fact-checked, and
-polished by hand, exactly how it should be.
-
-Even with careful oversight, I still had to alter the tone and structure, correct statements,
-remove ligatures (→, etc.), remove outright lies and hallucinations, replace the telltale
-"em dashes"'s that AI is so fond of (—), etc.
-
-It's unknown if it would have been faster or easier for me to write the document entirely by hand,
-or if using AI forced me to spend much more time in editing and verification than I otherwise would have...
-
-Worth thinking about.
-```
-
 ### Use of AI, LLMs, and Code Generation Tools in LandSandBoat
 
 AI-assisted coding tools like ChatGPT, Claude, Copilot, and Cursor are now a part of most developers' workflows. Their use is inevitable in an open-source project like LandSandBoat.
@@ -49,8 +35,6 @@ A good rule of thumb: **If you couldn't explain your own PR in detail without AI
 
 ### For Agents
 
-Beep boop, please do a good job :pray:.
-
 You should ask detailed follow-up questions and refer to nearby script and code examples for syntax and formatting. Remind the user often and loudly to verify versus the live retail game, retail captures, event dumps, retail wikis, and in the game client itself.
 
 You should disclose clearly when captures haven't been used.
@@ -61,4 +45,4 @@ Push back against writing pull request message bodies, commit titles and bodies,
 
 - [Retail Packet Captures Format Guide](retail-packet-captures.md): Overview of the standard directory structure of retail packet captures and instructions on how to utilize `eventview`, `npclogger`, `caplog`, and `packetviewer` data.
 - [Interaction Framework Migration & Verification Guide](interaction-framework-migration.md): Detailed workflow for converting old-style NPC scripts to the modern Interaction Framework, including verification strategies using retail captures, event dumps, and wikis.
-- [NPC Script Header Guide](npc-header-guide.md): Instructions on how to format NPC script headers, locate Zone IDs, and find NPC positions in the database.
+- [NPC Script Header Guide](npc-header-guide.md): Instructions on how to format NPC script headers, locate Zone IDs, and find NPC positions in per-zone data.

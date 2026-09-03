@@ -25,35 +25,29 @@ Every NPC script should begin with a standardized header. This header provides t
 ### 1. Zone Name and ID
 
 *   **Zone Name**: Usually matches the name of the folder containing the script (e.g., `scripts/zones/Windurst_Walls/`).
-*   **Zone ID**: Can be found in `scripts/enum/zone.lua`. Search for the zone's constant name (e.g., `WINDURST_WALLS`) to find its numeric ID.
+*   **Zone ID**: Can be found in `data/enums/zone.yaml`, the source for the generated `scripts/enum/zone.codegen.lua`. Search for the zone's key (e.g., `windurst_walls`) to find its numeric ID.
 
-### 2. NPC Name
+### 2. NPC Name and Entity ID
 
-*   **NPC Name**: Use the **display name** (the second name) as it appears in the `sql/npc_list.sql` file. This is usually the name players see in-game.
+*   **NPC Name**: Use the `display_name` in the zone's `data/zones/<zone>/npcs.yaml` file. This is usually the name players see in-game.
+*   **Entity ID**: Use the numeric key for the NPC record in that same file.
 
-    Example SQL:
-    ```sql
-    INSERT INTO `npc_list` VALUES (17752605,'AMAN_Liaison','A.M.A.N. Liaison', ...);
-    ```
-    In this case, you would use `A.M.A.N. Liaison` in the header.
+### 3. Finding Position (X, Y, Z) in zone data
 
-### 3. Finding Position (X, Y, Z) in `sql/npc_list.sql`
+If you don't have the coordinates from an in-game capture or a retail dump, find them in the per-zone YAML:
 
-If you don't have the coordinates from an in-game capture or a retail dump, you can find them in the database:
+1.  Open `data/zones/<zone>/npcs.yaml`.
+2.  Search for the NPC's `script` or `display_name`.
+3.  The `at` value stores X, Y, Z, and direction. Append the numeric zone ID from `data/enums/zone.yaml` to form the `!pos` command.
 
-1.  Open `sql/npc_list.sql`.
-2.  Search for the NPC's name within the section for the specific zone. Note that names in SQL might be in `varbinary` or `char` formats.
-3.  The coordinates are stored in the `pos_x`, `pos_y`, and `pos_z` columns.
-
-Example SQL entry:
-```sql
-INSERT INTO `npc_list` VALUES (16781427,'Ambrosius','Ambrosius',0,65.175,-2.499,-63.231,0,40,40,0,0,0,0,0,'\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0',0,NULL,1);
+Example YAML entry:
+```yaml
+17756197:
+  script: Ambrosius
+  display_name: Ambrosius
+  at: [65.175, -2.499, -63.231, 76]
 ```
-In this example:
-*   `pos_x` = `65.175`
-*   `pos_y` = `-2.499`
-*   `pos_z` = `-63.231`
-*   Zone ID = `239` (derived from the NPC ID or the zone header in the SQL file).
+In this example, the header position is `!pos 65.175 -2.499 -63.231 239`; `76` is the NPC's direction, while `239` is Windurst Walls' zone ID.
 
 ## Maintaining the Notes Section
 

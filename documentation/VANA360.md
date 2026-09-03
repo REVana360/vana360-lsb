@@ -26,15 +26,17 @@ that later content is unreachable. SQL rows, zones, instances, missions,
 quests, global scripts, items, skills, packet writers, and dynamic loaders each
 require a tested disposition before destructive pruning.
 
-Entity IDs follow the selected client's per-zone entity-name DATs. Reconciliation
-starts from an explicit old-to-new map. Every retained static NPC and mob must
-occupy a target present in that zone's selected DAT. A static server record left
-at a target absent from the selected DAT is outside the supported client and must
-be removed with its orphaned dependencies. Empty-name DAT entries remain valid
-targets but identify a server record only through deterministic same-build or
-slot evidence. Duplicate names require anchored order, coordinates, appearance,
-type, or equivalent evidence. Rewrites must preserve mob slot membership, static
-Lua references, lookup ordering, and the player and dynamic target ranges.
+Entity IDs follow the selected client's per-zone entity-name DATs. The server-side
+static entity inventory is tracked in `data/zones/<zone>/npcs.yaml` and
+`mobs.yaml`. Reconciliation starts from an explicit old-to-new map. Every
+retained static NPC and mob must occupy a target present in that zone's selected
+DAT. A static server record left at a target absent from the selected DAT is
+outside the supported client and must be removed with its orphaned dependencies.
+Empty-name DAT entries remain valid targets but identify a server record only
+through deterministic same-build or slot evidence. Duplicate names require
+anchored order, coordinates, appearance, type, or equivalent evidence. Rewrites
+must preserve mob slot membership, static Lua references, lookup ordering, and
+the player and dynamic target ranges.
 
 ## Module and database profile
 

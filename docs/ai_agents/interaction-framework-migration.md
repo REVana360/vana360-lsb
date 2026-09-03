@@ -1,7 +1,7 @@
 # Interaction Framework Migration & Verification Guide
 
 ## 1. Overview
-The project is migrating from "Old-Style" NPC scripts (hardcoded logic in `onTrigger`) to the **Interaction Framework (IF)**. This centralizes quest/mission logic, improves readability, and reduces NPC scripts to minimal stubs.
+Use the **Interaction Framework (IF)** instead of placing quest or mission logic directly in "Old-Style" NPC `onTrigger` handlers. The framework centralizes that logic, improves readability, and keeps NPC scripts minimal.
 
 ## 2. Information Discovery
 
@@ -12,11 +12,11 @@ Retail packet captures are essential for accurate migrations. They provide the e
   - **`CEventPacket` (`0x032`/`0x034`):** The `EventPara` value is the Event ID. This directly maps to your IF `quest:progressEvent(id)` or `quest:event(id)` calls.
   - **`CMessageSpecialPacket` (`0x02A`):** The `MessageNumber` value is the Text ID. This directly maps to your IF `quest:messageSpecial(id)` calls (often used for non-standard dialogues or system messages like checking doors/sarcophagi).
   - **`CMessageNamePacket` (`0x027`):** The `MesNum` value (sometimes requiring a bitwise `& 0xFFFF` depending on the logger output) is the standard chat dialogue ID. This maps to IF `quest:messageName(id)` or standard text lookups.
-- **`npclogger/database` (NPC Data):** Use the `.lua` files here to populate or verify NPC coordinates and properties in `sql/npc_list.sql` or to format your NPC script headers correctly.
+- **`npclogger/database` (NPC Data):** Use the `.lua` files here to populate or verify NPC coordinates and properties in the per-zone `data/zones/<zone>/npcs.yaml` file or to format your NPC script headers correctly.
 - **`packetviewer` (Raw Packets):** For complex interactions that `eventview` doesn't fully capture, you can dive into the raw packets here to understand what the client is sending and receiving.
 
-### Database (SQL)
-- **NPC IDs & Positions:** Check `sql/npc_list.sql`. Use this to find the 8-digit NPC ID and their `!pos` coordinates.
+### Entity Data and Database (YAML and SQL)
+- **NPC IDs & Positions:** Check `data/zones/<zone>/npcs.yaml`. Use the numeric entity key, `display_name`, and `at` coordinates to find the selected client's static NPC and its `!pos` position.
 - **Item IDs:** Check `sql/item_basic.sql`. If an item constant is missing from Lua, find the ID here and use it directly or add it to the enum.
 
 ### Global Registries (Lua Enums)
@@ -24,12 +24,12 @@ Retail packet captures are essential for accurate migrations. They provide the e
 - **Mission IDs:** `scripts/globals/missions.lua`.
 - **Item Constants:** `scripts/enum/item.lua`.
 - **Key Item Constants:** `scripts/enum/key_item.lua`.
-- **Zone Constants:** `scripts/enum/zone.lua`.
+- **Zone Constants:** `data/enums/zone.yaml` is the source for the generated `scripts/enum/zone.codegen.lua`.
 
 ### Retail Event Dumps
 The `sruon/FFXI-EventsDump` repository is the source of truth for retail event IDs and dialogue.
 - **Nearby Repo:** If the repo is cloned next to this one, access it via `../FFXI-EventsDump/dumps/<Zone_Name>`.
-- **Remote Access:** Use `web_fetch` or `google_web_search` to find raw markdown files on GitHub if the local path is unavailable.
+- **Remote Access:** Use an authoritative web search to find raw markdown files on GitHub if the local path is unavailable.
 - **Strings:** Each zone folder has a `strings.txt` file. Map the decimal/hex IDs in the `.md` files to these strings to verify dialogue.
 
 ## 3. The Migration Workflow
@@ -69,7 +69,7 @@ quest.sections = {
 - **Trigger Areas:** Handle approach-based cutscenes via `onTriggerAreaEnter`.
 
 ### Step 3: NPC Script Cleanup
-1.  **Header:** Ensure the header includes the `!pos` from `npc_list.sql`.
+1.  **Header:** Ensure the header includes the `!pos` from the NPC record in `data/zones/<zone>/npcs.yaml`.
 2.  **Logic Removal:** Strip all `if/else` quest blocks.
 3.  **Minimal Stub:** If no non-quest logic remains, convert to:
 ```lua
@@ -101,4 +101,4 @@ QUEST_NAME = 123, -- + Partial conversion. TODO: This needs completing with reta
 - **Timers:** Use `quest:setTimedVar(player, 'Timer', JstMidnight())` for daily repeats.
 
 ## 5. Verification Golden Rule
-**Never assume existing logic is correct.** Existing scripts often skip "Reminder" dialogue or "Post-Quest" flavor text. Always cross-reference the `sruon/FFXI-EventsDump` for every NPC involved in the quest to ensure 100% dialogue coverage.
+**Never assume existing logic is correct.** Existing scripts often skip "Reminder" dialogue or "Post-Quest" flavor text. Cross-reference the `sruon/FFXI-EventsDump` for every NPC involved in the quest to cover observed dialogue and identify gaps for retail verification.
