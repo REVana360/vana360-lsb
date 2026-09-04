@@ -33,9 +33,21 @@ enum class GP_CLI_COMMAND_EQUIP_INSPECT_KIND : uint8_t
 // https://github.com/atom0s/XiPackets/tree/main/world/client/0x00DD
 // This packet is sent by the client when inspecting entities.
 // This is used for several means of inspection such as: /check, /checkname, /checkparam
-GP_CLI_PACKET(GP_CLI_COMMAND_EQUIP_INSPECT,
-              uint32_t UniqueNo;     // PS2: UniqueNo
-              uint32_t ActIndex;     // PS2: ActIndex
-              uint8_t  Kind;         // PS2: (New; did not exist.)
-              uint8_t  padding00[3]; // PS2: (New; did not exist.)
-);
+// The July 2009 client sends only the first 12 bytes. Its ActIndex is a 16-bit
+// value at offset 0x08 and the modern Kind field is not present.
+GP_CLI_PACKET_VLA(GP_CLI_COMMAND_EQUIP_INSPECT, Kind,
+                  uint32_t UniqueNo; // PS2: UniqueNo
+                  union {
+                      uint32_t ActIndex; // PS2: ActIndex
+                      struct
+                      {
+                          uint16_t ActIndex;
+                          uint16_t padding0A;
+                      } Legacy; };
+                  uint8_t Kind;         // PS2: (New; did not exist.)
+                  uint8_t padding00[3]; // PS2: (New; did not exist.)
+                  auto    isLegacy() const->bool { return this->header.size * 4U == this->getMinSize(); }
+
+                  auto getActIndex() const->uint16_t { return this->isLegacy() ? this->Legacy.ActIndex : static_cast<uint16_t>(this->ActIndex); }
+
+                  auto getKind() const->GP_CLI_COMMAND_EQUIP_INSPECT_KIND { return this->isLegacy() ? GP_CLI_COMMAND_EQUIP_INSPECT_KIND::Check : static_cast<GP_CLI_COMMAND_EQUIP_INSPECT_KIND>(this->Kind); });

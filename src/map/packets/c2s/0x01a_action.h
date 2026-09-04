@@ -141,12 +141,16 @@ GP_CLI_PACKET(GP_CLI_COMMAND_ACTION,
                   uint32_t                ActionBuf[4]; // PS2: ActionBuf
               }; // Other actions don't use the array or have fixed values only.
 
-              static constexpr bool supportsLegacyShortForm(GP_CLI_COMMAND_ACTION_ACTIONID action)
-              {
-                  return action == GP_CLI_COMMAND_ACTION_ACTIONID::Talk ||
-                         action == GP_CLI_COMMAND_ACTION_ACTIONID::Attack ||
-                         action == GP_CLI_COMMAND_ACTION_ACTIONID::HomepointMenu ||
-                         action == GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy;
-              }
+              static constexpr bool supportsLegacyShortForm(GP_CLI_COMMAND_ACTION_ACTIONID action) { return action == GP_CLI_COMMAND_ACTION_ACTIONID::Talk ||
+                                                                                                            action == GP_CLI_COMMAND_ACTION_ACTIONID::Attack ||
+                                                                                                            action == GP_CLI_COMMAND_ACTION_ACTIONID::Weaponskill ||
+                                                                                                            action == GP_CLI_COMMAND_ACTION_ACTIONID::JobAbility ||
+                                                                                                            action == GP_CLI_COMMAND_ACTION_ACTIONID::HomepointMenu ||
+                                                                                                            action == GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy; }
+
+              constexpr uint32_t primaryActionParam() const {
+                  // July short actions carry one dword, but WS and JA read only
+                  // its historical low 16 bits.
+                  return header.size * 4U == 16U ? static_cast<uint16_t>(ActionBuf[0]) : ActionBuf[0]; }
 
               static constexpr size_t getMinSize() { return 16; });

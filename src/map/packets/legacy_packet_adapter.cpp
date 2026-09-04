@@ -107,6 +107,12 @@ void adaptBattleAction(CBasicPacket& packet)
     }
 }
 
+void adaptEnterZone(CBasicPacket& packet)
+{
+    constexpr std::size_t legacySize = 0x24;
+    packet.setSize(legacySize);
+}
+
 void adaptTalkNumWork(CBasicPacket& packet)
 {
     constexpr std::size_t stringOffset = 0x1E;
@@ -158,6 +164,35 @@ void adaptCommandData(CBasicPacket& packet)
     packet.setSize(0xB0);
 }
 
+void adaptEquipInspectGeneral(CBasicPacket& packet)
+{
+    constexpr std::size_t optionOffset     = 0x0A;
+    constexpr std::size_t modernJobsOffset = 0x22;
+    constexpr std::size_t modernLvlsOffset = 0x24;
+    constexpr std::size_t legacyJobsOffset = 0x12;
+    constexpr std::size_t legacyLvlsOffset = 0x23;
+    constexpr std::size_t legacySize       = 0x50;
+
+    if (packet.ref<uint8_t>(optionOffset) != 0x01)
+    {
+        return;
+    }
+
+    const std::array<uint8_t, 2> jobs{
+        packet.ref<uint8_t>(modernJobsOffset),
+        packet.ref<uint8_t>(modernJobsOffset + 1),
+    };
+    const std::array<uint8_t, 2> levels{
+        packet.ref<uint8_t>(modernLvlsOffset),
+        packet.ref<uint8_t>(modernLvlsOffset + 1),
+    };
+
+    std::memset(packet[0x0B], 0, legacySize - 0x0B);
+    std::memcpy(packet[legacyJobsOffset], jobs.data(), jobs.size());
+    std::memcpy(packet[legacyLvlsOffset], levels.data(), levels.size());
+    packet.setSize(legacySize);
+}
+
 } // namespace
 
 namespace legacy_packet_adapter
@@ -191,11 +226,17 @@ void adaptForJuly2009Xbox(CBasicPacket& packet)
         case 0x028:
             adaptBattleAction(packet);
             break;
+        case 0x008:
+            adaptEnterZone(packet);
+            break;
         case 0x02A:
             adaptTalkNumWork(packet);
             break;
         case 0x0AC:
             adaptCommandData(packet);
+            break;
+        case 0x0C9:
+            adaptEquipInspectGeneral(packet);
             break;
         default:
             break;

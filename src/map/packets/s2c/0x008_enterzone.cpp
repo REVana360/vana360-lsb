@@ -23,9 +23,14 @@
 
 #include "entities/char_entity.h"
 
+#include <algorithm>
+
 GP_SERV_COMMAND_ENTERZONE::GP_SERV_COMMAND_ENTERZONE(const CCharEntity* PChar)
 {
     auto& packet = this->data();
 
-    std::memcpy(packet.EnterZoneTbl, PChar->m_ZonesVisitedList, sizeof(packet.EnterZoneTbl));
+    // The character-side table is shorter than the current packet table.
+    std::memcpy(packet.EnterZoneTbl,
+                PChar->m_ZonesVisitedList,
+                std::min(sizeof(packet.EnterZoneTbl), sizeof(PChar->m_ZonesVisitedList)));
 }

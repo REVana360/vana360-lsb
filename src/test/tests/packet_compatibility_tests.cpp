@@ -34,9 +34,11 @@
 #include "map/packets/c2s/0x01a_action.h"
 #include "map/packets/c2s/0x050_equip_set.h"
 #include "map/packets/c2s/0x061_clistatus.h"
+#include "map/packets/c2s/0x0dd_equip_inspect.h"
 #include "map/packets/char_update.h"
 #include "map/packets/entity_update.h"
 #include "map/packets/legacy_packet_adapter.h"
+#include "map/packets/s2c/0x008_enterzone.h"
 #include "map/packets/s2c/0x01c_item_max.h"
 #include "map/packets/s2c/0x01f_item_list.h"
 #include "map/packets/s2c/0x020_item_attr.h"
@@ -49,11 +51,13 @@
 #include "map/packets/s2c/0x050_equip_list.h"
 #include "map/packets/s2c/0x061_clistatus.h"
 #include "map/packets/s2c/0x0ac_command_data.h"
+#include "map/packets/s2c/0x0c9_equip_inspect_general.h"
 #include "map/trade_container.h"
 
 #include <catch2/catch_test_macros.hpp>
 
 static_assert(sizeof(GP_SHOP_LEGACY) == 8);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ENTERZONE::PacketData) == 0x34);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_MAX::PacketData) == 0x64);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_LIST::PacketData) == 0x10);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_ATTR::PacketData) == 0x2C);
@@ -62,6 +66,9 @@ static_assert(sizeof(GP_CLI_COMMAND_EQUIP_SET) == 8);
 static_assert(offsetof(GP_CLI_COMMAND_EQUIP_SET, Category) == 6);
 static_assert(offsetof(GP_CLI_COMMAND_ACTION, ActIndex) == 8);
 static_assert(offsetof(GP_CLI_COMMAND_ACTION, ActionID) == 10);
+static_assert(offsetof(GP_CLI_COMMAND_ACTION, Weaponskill) == 12);
+static_assert(offsetof(GP_CLI_COMMAND_EQUIP_INSPECT, Legacy.ActIndex) == 8);
+static_assert(GP_CLI_COMMAND_EQUIP_INSPECT::getMinSize() == 12);
 static_assert(offsetof(CLISTATUS, su_lv) + sizeof(GP_SERV_HEADER) == 0x52);
 static_assert(sizeof(CommandDataTbl_t) == 224);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(CommandDataTbl_t, JobAbilities) == 0x44);
@@ -81,10 +88,15 @@ TEST_CASE("Lobby client profile requires the exact July Xbox marker", "[packet][
     REQUIRE_FALSE(isLegacyXboxClientProfile("july-2009-xbox-extra"));
 }
 
-TEST_CASE("Legacy short action packets allow payload-free July actions", "[packet][vana360]")
+TEST_CASE("Legacy short action packets preserve the July action buffer", "[packet][vana360]")
 {
     GP_CLI_COMMAND_ACTION packet{};
-    packet.header.size = 16 / 4; // GP_CLI_HEADER exposes four-byte units.
+    packet.header.size  = 16 / 4; // GP_CLI_HEADER exposes four-byte units.
+    packet.ActionBuf[0] = 0x12345678;
+
+    MapSession legacySession;
+    legacySession.legacyXboxClient = true;
+    CCharEntity character;
 
     packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::CastMagic;
     REQUIRE_FALSE(packet.validate(nullptr, nullptr).valid());
@@ -99,8 +111,87 @@ TEST_CASE("Legacy short action packets allow payload-free July actions", "[packe
     packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::HomepointMenu;
     REQUIRE(GP_CLI_COMMAND_ACTION::supportsLegacyShortForm(packet.ActionID));
 
+    packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::Weaponskill;
+    REQUIRE(packet.validate(&legacySession, &character).valid());
+    REQUIRE(packet.primaryActionParam() == 0x5678);
+
+    packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::JobAbility;
+    REQUIRE(packet.validate(&legacySession, &character).valid());
+    REQUIRE(packet.primaryActionParam() == 0x5678);
+
+    packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::Mount;
+    REQUIRE_FALSE(GP_CLI_COMMAND_ACTION::supportsLegacyShortForm(packet.ActionID));
+
     packet.ActionID = GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy;
     REQUIRE(packet.validate(nullptr, nullptr).valid());
+}
+
+TEST_CASE("July 2009 Enter Zone ends after 32 zone bytes", "[packet][vana360]")
+{
+    CCharEntity character;
+    for (std::size_t index = 0; index < sizeof(character.m_ZonesVisitedList); ++index)
+    {
+        character.m_ZonesVisitedList[index] = static_cast<uint8_t>(index + 1);
+    }
+
+    GP_SERV_COMMAND_ENTERZONE packet(&character);
+    REQUIRE(packet.getType() == 0x008);
+    REQUIRE(packet.getSize() == 0x34);
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+    REQUIRE(packet.getSize() == 0x24);
+    for (std::size_t index = 0; index < 32; ++index)
+    {
+        REQUIRE(packet.ref<uint8_t>(0x04 + index) == static_cast<uint8_t>(index + 1));
+    }
+}
+
+TEST_CASE("July 2009 equip inspect accepts the short Check request", "[packet][vana360]")
+{
+    GP_CLI_COMMAND_EQUIP_INSPECT packet{};
+    packet.header.size      = 12 / 4;
+    packet.UniqueNo         = 0x01020304;
+    packet.Legacy.ActIndex  = 0x1234;
+    packet.Legacy.padding0A = 0xABCD;
+
+    CCharEntity character;
+    MapSession  modernSession;
+    REQUIRE_FALSE(packet.validate(&modernSession, &character).valid());
+
+    MapSession legacySession;
+    legacySession.legacyXboxClient = true;
+    REQUIRE(packet.validate(&legacySession, &character).valid());
+    REQUIRE(packet.getActIndex() == 0x1234);
+    REQUIRE(packet.getKind() == GP_CLI_COMMAND_EQUIP_INSPECT_KIND::Check);
+}
+
+TEST_CASE("July 2009 player Check restores historical job fields", "[packet][vana360]")
+{
+    CCharEntity viewer;
+    CCharEntity target;
+    viewer.visibleGmLevel = 3;
+    target.id             = 0x01020304;
+    target.targid         = 0x1234;
+    target.SetMJob(1);
+    target.SetSJob(3);
+    target.SetMLevel(4);
+    target.SetSLevel(2);
+
+    GP_SERV_COMMAND_EQUIP_INSPECT::GENERAL packet(&viewer, &target);
+    REQUIRE(packet.getType() == 0x0C9);
+    REQUIRE(packet.getSize() == 0x54);
+    REQUIRE(packet.ref<uint8_t>(0x0A) == 0x01);
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+    REQUIRE(packet.getSize() == 0x50);
+    REQUIRE(packet.ref<uint32_t>(0x04) == target.id);
+    REQUIRE(packet.ref<uint16_t>(0x08) == target.targid);
+    REQUIRE(packet.ref<uint8_t>(0x12) == 1);
+    REQUIRE(packet.ref<uint8_t>(0x13) == 3);
+    REQUIRE(packet.ref<uint8_t>(0x23) == 4);
+    REQUIRE(packet.ref<uint8_t>(0x24) == 2);
 }
 
 TEST_CASE("Legacy header-only clistatus skips absent fields", "[packet][vana360]")

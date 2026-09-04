@@ -26,6 +26,7 @@
 #include "entities/mob_entity.h"
 #include "enums/msg_std.h"
 #include "items/item_weapon.h"
+#include "map_session.h"
 #include "packets/s2c/0x009_message.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "packets/s2c/0x0c9_equip_inspect_equipment.h"
@@ -36,9 +37,14 @@
 
 auto GP_CLI_COMMAND_EQUIP_INSPECT::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    if (this->isLegacy() && (PSession == nullptr || !PSession->legacyXboxClient))
+    {
+        return PacketValidationResult{}.addError("Short equip inspect packet is not valid for this client.");
+    }
+
     return PacketValidator(PChar)
         .blockedBy({ BlockedState::InEvent })
-        .oneOf<GP_CLI_COMMAND_EQUIP_INSPECT_KIND>(this->Kind);
+        .oneOf<GP_CLI_COMMAND_EQUIP_INSPECT_KIND>(this->getKind());
 }
 
 void GP_CLI_COMMAND_EQUIP_INSPECT::process(MapSession* PSession, CCharEntity* PChar) const
@@ -49,7 +55,7 @@ void GP_CLI_COMMAND_EQUIP_INSPECT::process(MapSession* PSession, CCharEntity* PC
         return;
     }
 
-    CBaseEntity* PEntity     = PChar->GetEntity(this->ActIndex, TYPE_MOB | TYPE_PC);
+    CBaseEntity* PEntity     = PChar->GetEntity(this->getActIndex(), TYPE_MOB | TYPE_PC);
     auto*        PMobTarget  = dynamic_cast<CMobEntity*>(PEntity);
     auto*        PCharTarget = dynamic_cast<CCharEntity*>(PEntity);
 
@@ -66,7 +72,7 @@ void GP_CLI_COMMAND_EQUIP_INSPECT::process(MapSession* PSession, CCharEntity* PC
         ShowWarning("GP_CLI_COMMAND_EQUIP_INSPECT: {} checking mob {} from too far away", PChar->getName(), PMobTarget->getName());
     }
 
-    switch (static_cast<GP_CLI_COMMAND_EQUIP_INSPECT_KIND>(this->Kind))
+    switch (this->getKind())
     {
         case GP_CLI_COMMAND_EQUIP_INSPECT_KIND::Check:
         {
