@@ -26,6 +26,7 @@
 #include "map/entities/mob_entity.h"
 #include "map/entities/npc_entity.h"
 #include "map/enums/four_cc.h"
+#include "map/enums/msg_basic.h"
 #include "map/map_session.h"
 #include "map/packets/basic.h"
 #include "map/packets/c2s/0x01a_action.h"
@@ -35,6 +36,8 @@
 #include "map/packets/entity_update.h"
 #include "map/packets/legacy_packet_adapter.h"
 #include "map/packets/s2c/0x028_battle2.h"
+#include "map/packets/s2c/0x029_battle_message.h"
+#include "map/packets/s2c/0x02d_battle_message2.h"
 #include "map/packets/s2c/0x03c_shop_list.h"
 #include "map/packets/s2c/0x061_clistatus.h"
 #include "map/packets/s2c/0x0ac_command_data.h"
@@ -49,6 +52,12 @@ static_assert(offsetof(GP_CLI_COMMAND_ACTION, ActionID) == 10);
 static_assert(offsetof(CLISTATUS, su_lv) + sizeof(GP_SERV_HEADER) == 0x52);
 static_assert(sizeof(CommandDataTbl_t) == 224);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(CommandDataTbl_t, JobAbilities) == 0x44);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData) == 0x1C);
+static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData, Data) == 0x0C);
+static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData, MessageNum) == 0x18);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData) == 0x1C);
+static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData, Data) == 0x10);
+static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData, MessageNum) == 0x18);
 
 TEST_CASE("Lobby client profile requires the exact July Xbox marker", "[packet][vana360]")
 {
@@ -320,6 +329,82 @@ TEST_CASE("July 2009 Battle2 fixtures keep legacy result boundaries", "[packet][
             REQUIRE(unpackBitsBE(packet, secondTargetOffset, 32) == 0x05060709);
             REQUIRE(unpackBitsBE(packet, secondTargetOffset + 32, 4) == 7);
         }
+    }
+}
+
+TEST_CASE("July 2009 battle messages preserve legacy parameter layouts", "[packet][vana360]")
+{
+    CCharEntity player;
+    player.id     = 0x01000001;
+    player.targid = 0x0101;
+
+    CMobEntity target;
+    target.id     = 0x01000002;
+    target.targid = 0x0202;
+
+    struct BattleMessageFixture
+    {
+        int32_t  param;
+        int32_t  value;
+        MsgBasic message;
+    };
+
+    constexpr std::array<BattleMessageFixture, 5> battleMessages{ {
+        { 1, 7, MsgBasic::SkillGain },
+        { 1, 4, MsgBasic::SkillLevelUp },
+        { 4, 0, MsgBasic::CheckDefault },
+        { 0, 0, MsgBasic::CheckImpossibleToGauge },
+        { 10, 0, MsgBasic::Obtains },
+    } };
+
+    for (const auto& fixture : battleMessages)
+    {
+        GP_SERV_COMMAND_BATTLE_MESSAGE packet(&player, &target, fixture.param, fixture.value, fixture.message);
+        std::array<uint8_t, 0x1C>      before{};
+        std::memcpy(before.data(), packet[0], before.size());
+
+        legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+        REQUIRE(packet.getType() == 0x029);
+        REQUIRE(packet.getSize() == 0x1C);
+        REQUIRE(std::memcmp(before.data(), packet[0], before.size()) == 0);
+        REQUIRE(packet.ref<uint32_t>(0x04) == player.id);
+        REQUIRE(packet.ref<uint32_t>(0x08) == target.id);
+        REQUIRE(packet.ref<int32_t>(0x0C) == fixture.param);
+        REQUIRE(packet.ref<int32_t>(0x10) == fixture.value);
+        REQUIRE(packet.ref<uint16_t>(0x14) == player.targid);
+        REQUIRE(packet.ref<uint16_t>(0x16) == target.targid);
+        REQUIRE(packet.ref<uint16_t>(0x18) == static_cast<uint16_t>(fixture.message));
+        REQUIRE(packet.ref<uint8_t>(0x1A) == 0);
+        REQUIRE(packet.ref<uint8_t>(0x1B) == 0);
+    }
+
+    constexpr std::array<BattleMessageFixture, 3> battleMessages2{ {
+        { 42, 0, MsgBasic::ExperiencePointsGained },
+        { 42, 2, MsgBasic::ExpChain },
+        { 5, 0, MsgBasic::LevelUp },
+    } };
+
+    for (const auto& fixture : battleMessages2)
+    {
+        GP_SERV_COMMAND_BATTLE_MESSAGE2 packet(&player, &target, fixture.param, fixture.value, fixture.message);
+        std::array<uint8_t, 0x1C>       before{};
+        std::memcpy(before.data(), packet[0], before.size());
+
+        legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+        REQUIRE(packet.getType() == 0x02D);
+        REQUIRE(packet.getSize() == 0x1C);
+        REQUIRE(std::memcmp(before.data(), packet[0], before.size()) == 0);
+        REQUIRE(packet.ref<uint32_t>(0x04) == player.id);
+        REQUIRE(packet.ref<uint32_t>(0x08) == target.id);
+        REQUIRE(packet.ref<uint16_t>(0x0C) == player.targid);
+        REQUIRE(packet.ref<uint16_t>(0x0E) == target.targid);
+        REQUIRE(packet.ref<int32_t>(0x10) == fixture.param);
+        REQUIRE(packet.ref<int32_t>(0x14) == fixture.value);
+        REQUIRE(packet.ref<uint16_t>(0x18) == static_cast<uint16_t>(fixture.message));
+        REQUIRE(packet.ref<uint8_t>(0x1A) == 0);
+        REQUIRE(packet.ref<uint8_t>(0x1B) == 0);
     }
 }
 
