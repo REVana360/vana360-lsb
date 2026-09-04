@@ -21,6 +21,10 @@
 
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+#include <cstring>
+
 // Source for this entire reference is from atom0s's dump at https://github.com/atom0s/XiPackets
 // Thank you for your service to the community, atom0s!
 
@@ -141,6 +145,83 @@ struct lpkt_chr_info_sub2
     char              world_name[16];     // PS2: world_name
     TC_OPERATION_MAKE character_info;     // PS2: character_info
 };
+
+namespace loginPackets
+{
+
+inline constexpr uint32_t legacyContentId(size_t slot)
+{
+    return static_cast<uint32_t>(slot + 1) << 16;
+}
+
+inline void setLegacyCharacterIds(lpkt_chr_info_sub2& characterInfo, uint32_t contentId, uint32_t characterId)
+{
+    characterInfo.ffxi_id = contentId;
+    std::memcpy(&characterInfo.ffxi_id_world, &characterId, sizeof(characterId));
+}
+
+inline void setModernCharacterIds(lpkt_chr_info_sub2& characterInfo, uint32_t characterId)
+{
+    characterInfo.ffxi_id           = characterId;
+    characterInfo.ffxi_id_world     = characterId & 0xFFFF;
+    characterInfo.worldid           = 0;
+    characterInfo.ffxi_id_world_tbl = (characterId >> 16) & 0xFF;
+}
+
+inline void setCharacterIds(lpkt_chr_info_sub2& characterInfo, bool legacyXboxClient, uint32_t contentId, uint32_t characterId)
+{
+    if (legacyXboxClient)
+    {
+        setLegacyCharacterIds(characterInfo, contentId, characterId);
+    }
+    else
+    {
+        setModernCharacterIds(characterInfo, characterId);
+    }
+}
+
+inline uint32_t getLegacyCharacterId(const lpkt_chr_info_sub2& characterInfo)
+{
+    uint32_t characterId = 0;
+    std::memcpy(&characterId, &characterInfo.ffxi_id_world, sizeof(characterId));
+    return characterId;
+}
+
+inline uint32_t getModernCharacterId(const lpkt_chr_info_sub2& characterInfo)
+{
+    return characterInfo.ffxi_id;
+}
+
+inline uint32_t getCharacterId(const lpkt_chr_info_sub2& characterInfo, bool legacyXboxClient)
+{
+    return legacyXboxClient ? getLegacyCharacterId(characterInfo) : getModernCharacterId(characterInfo);
+}
+
+inline uint32_t getSelectedCharacterId(const uint8_t* packet, bool legacyXboxClient)
+{
+    uint32_t characterId = 0;
+    std::memcpy(&characterId, packet + (legacyXboxClient ? 32 : 28), sizeof(characterId));
+    return characterId;
+}
+
+inline void setDataCharacterIds(uint8_t* entry, bool legacyXboxClient, uint32_t contentId, uint32_t characterId)
+{
+    std::memcpy(entry, &contentId, sizeof(contentId));
+    if (legacyXboxClient)
+    {
+        std::memcpy(entry + 4, &characterId, sizeof(characterId));
+        return;
+    }
+
+    const uint16_t characterIdMain = characterId & 0xFFFF;
+    const uint8_t  worldId         = 0;
+    const uint8_t  characterIdHigh = (characterId >> 16) & 0xFF;
+    std::memcpy(entry + 4, &characterIdMain, sizeof(characterIdMain));
+    std::memcpy(entry + 6, &worldId, sizeof(worldId));
+    std::memcpy(entry + 7, &characterIdHigh, sizeof(characterIdHigh));
+}
+
+} // namespace loginPackets
 
 // PS2: lpkt_chr_info2 https://github.com/atom0s/XiPackets/blob/main/lobby/S2C_0x0020_ResponseChrInfo2.md
 struct lpkt_chr_info2 : packet_t

@@ -56,10 +56,14 @@ const auto actionToStr = [](const GP_CLI_COMMAND_ACTION_ACTIONID actionIn)
 
 auto GP_CLI_COMMAND_ACTION::validate(MapSession* PSession, const CCharEntity* PChar) const -> PacketValidationResult
 {
+    const bool isLegacyShortAction =
+        PSession != nullptr && PSession->legacyXboxClient && supportsLegacyShortForm(ActionID);
+
     if (header.size * 4U < sizeof(GP_CLI_COMMAND_ACTION) &&
-        ActionID != GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy)
+        ActionID != GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy &&
+        !isLegacyShortAction)
     {
-        return PacketValidationResult{}.addError("Legacy short action packet is only valid for SendResRdy.");
+        return PacketValidationResult{}.addError("Short action packet is not valid for this client or action.");
     }
 
     return PacketValidator(PChar)

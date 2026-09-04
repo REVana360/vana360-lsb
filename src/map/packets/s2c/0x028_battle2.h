@@ -41,5 +41,11 @@ public:
 
     GP_SERV_COMMAND_BATTLE2(action_t& action);
     void pack(action_t& action); // action_t to actual bitpacked packet
+    void useJuly2009Layout();
     auto unpack() -> sol::table; // bitpacked packet to lua tables for tests
+
+private:
+    void packJuly2009(action_t action);
+
+    std::array<uint8, PACKET_SIZE> july2009Buffer_{};
 };

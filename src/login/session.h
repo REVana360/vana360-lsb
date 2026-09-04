@@ -25,6 +25,14 @@
 
 #include "common/timer.h"
 
+#include <atomic>
+#include <string_view>
+
+inline bool isLegacyXboxClientProfile(std::string_view profile)
+{
+    return profile == "july-2009-xbox";
+}
+
 // Metadata about each session
 struct session_t
 {
@@ -34,13 +42,14 @@ struct session_t
     std::shared_ptr<handler_session> view_session;
     std::shared_ptr<handler_session> pol_session;
 
-    uint32      accountID                 = 0;
-    uint32      serverIP                  = 0;
-    uint32      requestedCharacterID      = 0;
-    std::string requestedNewCharacterName = "";
-    bool        justCreatedNewChar        = false;
-    bool        versionMismatch           = false;
-    uint8       incrementKeyValue         = 0; // Used to increment key by N in case of errors
+    uint32           accountID                 = 0;
+    uint32           serverIP                  = 0;
+    uint32           requestedCharacterID      = 0;
+    std::string      requestedNewCharacterName = "";
+    bool             justCreatedNewChar        = false;
+    bool             versionMismatch           = false;
+    std::atomic_bool legacyXboxClient{ false };
+    uint8            incrementKeyValue = 0; // Used to increment key by N in case of errors
 
     timer::time_point authorizedTime = timer::now();
 };

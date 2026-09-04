@@ -24,6 +24,7 @@
 
 #include "ai/ai_container.h"
 #include "ai/helpers/action_queue.h"
+#include "common/logging.h"
 #include "entities/char_entity.h"
 #include "lua/luautils.h"
 #include "packets/s2c/0x01c_item_max.h"
@@ -37,14 +38,26 @@
 namespace
 {
 
-auto isXboxSecondaryHandshake(const GP_CLI_COMMAND_LOGIN& packet, const MapSession* PSession, const CCharEntity* PChar) -> bool
+constexpr uint16 July2009XboxArea = 0x0F09;
+
+auto hasSecondaryHandshakeState(const GP_CLI_COMMAND_LOGIN& packet, const MapSession* PSession, const CCharEntity* PChar) -> bool
 {
     return PSession->blowfish.status == BLOWFISH_ACCEPTED &&
            PChar->status == xi::Status::Normal &&
            PSession->hasDecryptedPacket &&
            packet.unknown00 == 1 &&
-           packet.unknown01 == 0 &&
-           packet.dammyArea == UINT16_MAX;
+           packet.unknown01 == 0;
+}
+
+auto isJuly2009XboxLogin(const GP_CLI_COMMAND_LOGIN& packet) -> bool
+{
+    return packet.dammyArea == July2009XboxArea;
+}
+
+auto isXboxSecondaryHandshake(const GP_CLI_COMMAND_LOGIN& packet, const MapSession* PSession, const CCharEntity* PChar) -> bool
+{
+    return hasSecondaryHandshakeState(packet, PSession, PChar) &&
+           (isJuly2009XboxLogin(packet) || packet.dammyArea == UINT16_MAX);
 }
 
 } // namespace
@@ -73,10 +86,27 @@ void GP_CLI_COMMAND_LOGIN::process(MapSession* PSession, CCharEntity* PChar) con
     }
 
     const bool isSecondaryHandshake = isXboxSecondaryHandshake(*this, PSession, PChar);
+    const bool legacyBefore         = PSession->legacyXboxClient;
     if (isSecondaryHandshake)
     {
         PChar->clearPacketList();
     }
+
+    if (isJuly2009XboxLogin(*this) && !PSession->legacyXboxClient)
+    {
+        PSession->legacyXboxClient = true;
+        ShowInfoFmt("{} selected July 2009 Xbox 360 packet layouts", PChar->getName());
+    }
+
+    DebugPacketsFmt("vana360 entity trace stage=0x00A char={} id={} area=0x{:04X} secondary={} legacy_before={} legacy_after={} status={} decrypted={}",
+                    PChar->getName(),
+                    PChar->id,
+                    dammyArea,
+                    isSecondaryHandshake,
+                    legacyBefore,
+                    PSession->legacyXboxClient,
+                    static_cast<uint8>(PChar->status),
+                    PSession->hasDecryptedPacket);
 
     //
     // Handle out of sync zone correction..

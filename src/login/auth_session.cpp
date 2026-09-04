@@ -156,6 +156,7 @@ void auth_session::read_func()
     std::string            otp                 = loginHelpers::jsonGet<std::string>(jsonBuffer, "otp").value_or("");
     std::string            trust_token         = loginHelpers::jsonGet<std::string>(jsonBuffer, "trust_token").value_or("");
     bool                   trust_this_computer = loginHelpers::jsonGet<bool>(jsonBuffer, "trust_this_computer").value_or(false);
+    std::string            client_profile      = loginHelpers::jsonGet<std::string>(jsonBuffer, "client_profile").value_or("");
     std::array<uint8_t, 3> version             = loginHelpers::jsonGet<uint8, 3>(jsonBuffer, "version").value_or(std::array<uint8_t, 3>{ 0, 0, 0 });
 
     // Check major.minor but ignore trivial
@@ -319,11 +320,14 @@ void auth_session::read_func()
                 }
             }
 
-            sendJsonAsBuffer(loginSuccessReply);
-
-            auto& session          = loginHelpers::get_authenticated_session(ipAddress, asStringFromUntrustedSource(hash, sizeof(hash)));
-            session.accountID      = accountID;
+            auto& session     = loginHelpers::get_authenticated_session(ipAddress, asStringFromUntrustedSource(hash, sizeof(hash)));
+            session.accountID = accountID;
+            session.legacyXboxClient.store(isLegacyXboxClientProfile(client_profile), std::memory_order_release);
             session.authorizedTime = timer::now();
+
+            // The success write is asynchronous. Publish the authenticated
+            // session before the client can open its data and view sockets.
+            sendJsonAsBuffer(loginSuccessReply);
         }
         break;
         case login_cmd::LOGIN_CREATE:

@@ -35,6 +35,14 @@ struct GP_SHOP
     uint16_t GuildInfo; // PS2: (New; did not exist.)
 };
 
+struct GP_SHOP_LEGACY
+{
+    uint32_t ItemPrice;
+    uint16_t ItemNo;
+    uint8_t  ShopIndex;
+    uint8_t  padding00;
+};
+
 // https://github.com/atom0s/XiPackets/tree/main/world/server/0x003C
 // This packet is sent by the server to inform the client of a shops items.
 class GP_SERV_COMMAND_SHOP_LIST final : public GP_SERV_PACKET<PacketS2C::GP_SERV_COMMAND_SHOP_LIST, GP_SERV_COMMAND_SHOP_LIST>
@@ -45,7 +53,11 @@ public:
         uint16_t ShopItemOffsetIndex; // PS2: ShopItemOffsetIndex
         uint8_t  Flags;               // PS2: dammy
         uint8_t  padding00;           // PS2: Dammy
-        GP_SHOP  ShopItemTbl[19];     // PS2: ShopItemTbl -- Note: Variable length array.
+        union
+        {
+            GP_SHOP        ShopItemTbl[19];
+            GP_SHOP_LEGACY LegacyShopItemTbl[19];
+        };
     };
 
     GP_SERV_COMMAND_SHOP_LIST(CCharEntity* PChar);

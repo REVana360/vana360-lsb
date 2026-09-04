@@ -21,6 +21,7 @@
 
 #include "map_networking.h"
 
+#include <common/logging.h>
 #include <common/md52.h>
 #include <common/tracy.h>
 #include <common/zlib.h>
@@ -28,6 +29,7 @@
 #include "entities/char_entity.h"
 
 #include "packets/basic.h"
+#include "packets/legacy_packet_adapter.h"
 #include "packets/s2c/0x00b_logout.h"
 
 #include "utils/charutils.h"
@@ -448,6 +450,28 @@ int32 MapNetworking::parse(uint8* buff, size_t* buffsize, MapSession* PSession)
             // Reuse one CBasicPacket (parseScratchPacket_) across the loop instead of re-allocating per inbound packet.
             // We're copying in and bounding only exactly what we want, so it's safe.
             std::memcpy(&parseScratchPacket_.ref<uint8>(0), SmallPD_ptr, PACKET_SIZE);
+            if (PSession->legacyXboxClient)
+            {
+                if (SmallPD_Type == 0x01A)
+                {
+                    DebugPacketsFmt("vana360 action trace char={} size={} target_index={} action_id=0x{:02X}",
+                                    PChar->getName(),
+                                    parseScratchPacket_.getSize(),
+                                    parseScratchPacket_.ref<uint16>(0x08),
+                                    parseScratchPacket_.ref<uint16>(0x0A));
+                }
+                else if (SmallPD_Type == 0x050)
+                {
+                    DebugPacketsFmt("vana360 equip trace char={} size={} item_index={} slot={} legacy_category=0x{:02X}",
+                                    PChar->getName(),
+                                    parseScratchPacket_.getSize(),
+                                    parseScratchPacket_.ref<uint8>(0x04),
+                                    parseScratchPacket_.ref<uint8>(0x05),
+                                    parseScratchPacket_.ref<uint8>(0x06));
+                }
+
+                legacy_packet_adapter::adaptFromJuly2009Xbox(parseScratchPacket_);
+            }
             ShowTraceFmt("map::parse: Char: {} ({}): {}", PChar->getName(), PChar->id, hex16ToString(parseScratchPacket_.getType()));
             packetSystem_.dispatch(SmallPD_Type, PSession, PChar, parseScratchPacket_);
         }
@@ -532,6 +556,24 @@ int32 MapNetworking::send_parse(uint8* buff, size_t* buffsize, MapSession* PSess
             {
                 PSmallPacket = std::move(packetList.front());
                 packetList.pop_front();
+
+                const auto packetType = PSmallPacket->getType();
+
+                if (PSession->legacyXboxClient)
+                {
+                    legacy_packet_adapter::adaptForJuly2009Xbox(*PSmallPacket);
+
+                    if (packetType == 0x0AC)
+                    {
+                        constexpr std::size_t mightyStrikesByteOffset = 0x08;
+                        constexpr uint8       mightyStrikesBit        = 0x01;
+                        DebugPacketsFmt("vana360 command trace char={} id={} mighty_strikes={} abilities_byte_2=0x{:02X}",
+                                        PChar->getName(),
+                                        PChar->id,
+                                        (PSmallPacket->ref<uint8>(mightyStrikesByteOffset) & mightyStrikesBit) != 0,
+                                        PSmallPacket->ref<uint8>(mightyStrikesByteOffset));
+                    }
+                }
 
                 PSmallPacket->setSequence(PSession->server_packet_id);
                 auto type = PSmallPacket->getType();

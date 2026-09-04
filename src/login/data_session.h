@@ -45,11 +45,16 @@ public:
         DebugSockets("data_session from IP %s", ipAddress);
     }
 
-    void deleteCharFromCharInfo(uint32_t charid);
-    void addCharIntoCharInfo(const lpkt_chr_info_sub2& charInfo);
-    void renameCharInCharInfo(uint32_t charId, const std::string& newName);
+    void deleteCharFromCharInfo(uint32_t charid, bool legacyXboxClient);
+    void addCharIntoCharInfo(const lpkt_chr_info_sub2& charInfo, bool legacyXboxClient);
+    void renameCharInCharInfo(uint32_t charId, const std::string& newName, bool legacyXboxClient);
 
 protected:
+    std::size_t read_size() const override
+    {
+        return 28;
+    }
+
     void read_func() override;
 
     void write_func() override

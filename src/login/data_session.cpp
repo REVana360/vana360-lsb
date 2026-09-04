@@ -28,11 +28,13 @@
 
 #include <asio/write.hpp>
 
-void data_session::deleteCharFromCharInfo(uint32_t ffxi_id)
+#include <iterator>
+
+void data_session::deleteCharFromCharInfo(uint32_t charId, bool legacyXboxClient)
 {
     for (auto& charInfo : characterInfoResponse.character_info)
     {
-        if (ffxi_id == charInfo.ffxi_id)
+        if (charId == loginPackets::getCharacterId(charInfo, legacyXboxClient))
         {
             charInfo.status            = 0x01; // Available
             charInfo.character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
@@ -41,25 +43,29 @@ void data_session::deleteCharFromCharInfo(uint32_t ffxi_id)
     }
 }
 
-void data_session::addCharIntoCharInfo(const lpkt_chr_info_sub2& charInfo)
+void data_session::addCharIntoCharInfo(const lpkt_chr_info_sub2& charInfo, bool legacyXboxClient)
 {
     // Find the first empty slot and fill it in. The client expects this.
-    for (auto& existingCharInfo : characterInfoResponse.character_info)
+    for (size_t slot = 0; slot < std::size(characterInfoResponse.character_info); ++slot)
     {
+        auto& existingCharInfo = characterInfoResponse.character_info[slot];
         if (existingCharInfo.character_name[0] == 0x20) // empty - name is a space
         {
-            existingCharInfo = charInfo;
+            existingCharInfo       = charInfo;
+            const auto characterId = loginPackets::getCharacterId(charInfo, legacyXboxClient);
+            const auto contentId   = legacyXboxClient ? loginPackets::legacyContentId(slot) : characterId;
+            loginPackets::setCharacterIds(existingCharInfo, legacyXboxClient, contentId, characterId);
             break;
         }
     }
 }
 
 // Keep the cached lobby list in sync after a rename.
-void data_session::renameCharInCharInfo(const uint32_t charId, const std::string& newName)
+void data_session::renameCharInCharInfo(const uint32_t charId, const std::string& newName, bool legacyXboxClient)
 {
     for (auto& charInfo : characterInfoResponse.character_info)
     {
-        if (charInfo.ffxi_id == charId)
+        if (loginPackets::getCharacterId(charInfo, legacyXboxClient) == charId)
         {
             std::memset(charInfo.character_name, 0, sizeof(charInfo.character_name));
             std::memcpy(charInfo.character_name, newName.c_str(), std::min(newName.size(), sizeof(charInfo.character_name) - 1));
@@ -83,7 +89,8 @@ void data_session::read_func()
         }
     }
 
-    session_t& session = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
+    session_t& session          = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
+    const bool legacyXboxClient = session.legacyXboxClient.load(std::memory_order_acquire);
     if (!session.data_session)
     {
         session.data_session              = std::make_shared<data_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_), dealerChannel_);
@@ -171,24 +178,15 @@ void data_session::read_func()
                         int32 gmlevel = rset1->get<int32>("gmlevel");
                         if (maintMode == 0 || gmlevel > 0)
                         {
-                            uint8 worldId = 0; // Use when multiple worlds are supported.
-
                             uint32 charId    = rset1->get<uint32>("charid");
-                            uint32 contentId = charId; // Reusing the character ID as the content ID (which is also the name of character folder within the USER directory) at the moment
-
-                            // The character ID is made up of two parts totalling 24 bits:
-                            uint16 charIdMain  = charId & 0xFFFF;
-                            uint8  charIdExtra = (charId >> 16) & 0xFF;
+                            uint32 contentId = legacyXboxClient ? loginPackets::legacyContentId(i) : charId;
 
                             auto& characterInfo = characterInfoResponse.character_info[i];
 
-                            characterInfo.ffxi_id           = contentId;
-                            characterInfo.ffxi_id_world     = charIdMain;
-                            characterInfo.worldid           = worldId;
-                            characterInfo.status            = 1;                                        // 0 = Invalid/Hidden, 1 = Available, 2 = Disabled (unpaid)
-                            characterInfo.race_change       = rset1->get<uint8>("race_change") ? 1 : 0; // Shows a gold star icon if character eligible for race change
-                            characterInfo.renamef           = rset1->get<uint8>("rename") ? 1 : 0;      // Forces client to input a new name if set
-                            characterInfo.ffxi_id_world_tbl = charIdExtra;
+                            loginPackets::setCharacterIds(characterInfo, legacyXboxClient, contentId, charId);
+                            characterInfo.status      = 1;                                        // 0 = Invalid/Hidden, 1 = Available, 2 = Disabled (unpaid)
+                            characterInfo.race_change = rset1->get<uint8>("race_change") ? 1 : 0; // Shows a gold star icon if character eligible for race change
+                            characterInfo.renamef     = rset1->get<uint8>("rename") ? 1 : 0;      // Forces client to input a new name if set
 
                             std::memcpy(characterInfo.character_name, &strCharName, 16);
                             std::memcpy(characterInfo.world_name, serverName.c_str(), std::clamp<size_t>(serverName.length(), 0, 15));
@@ -222,10 +220,10 @@ void data_session::read_func()
                             // uList is sent through data socket (to xiloader)
                             uint32 uListOffset = 16 * (i + 1);
 
-                            ref<uint32>(uList, uListOffset)     = contentId;
-                            ref<uint16>(uList, uListOffset + 4) = charIdMain;
-                            ref<uint8>(uList, uListOffset + 6)  = worldId;     // Ignored in xiloader?
-                            ref<uint8>(uList, uListOffset + 7)  = charIdExtra; // Ignored in xiloader?
+                            loginPackets::setDataCharacterIds(reinterpret_cast<uint8_t*>(uList) + uListOffset,
+                                                              legacyXboxClient,
+                                                              contentId,
+                                                              charId);
 
                             ++i;
                             characterInfoResponse.characters++;
@@ -240,8 +238,16 @@ void data_session::read_func()
                         // make extra char slots available if no characters are occupying the slots and their max content IDs supports it
                         while (characterInfoResponse.characters < numContentIds)
                         {
-                            characterInfoResponse.character_info[characterInfoResponse.characters].status            = 0x01; // Available
-                            characterInfoResponse.character_info[characterInfoResponse.characters].character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
+                            const auto slot           = characterInfoResponse.characters;
+                            auto&      emptyCharacter = characterInfoResponse.character_info[slot];
+                            if (legacyXboxClient)
+                            {
+                                loginPackets::setLegacyCharacterIds(emptyCharacter,
+                                                                    loginPackets::legacyContentId(slot),
+                                                                    0);
+                            }
+                            emptyCharacter.status            = 0x01; // Available
+                            emptyCharacter.character_name[0] = 0x20; // space to display empty character slot, NULL displays a hume in a slot.
                             characterInfoResponse.characters++;
                         }
                     }
@@ -270,10 +276,10 @@ void data_session::read_func()
                         // uList is sent through data socket (to xiloader)
                         uint32 uListOffset = 16 * (i + 1);
 
-                        ref<uint32>(uList, uListOffset)     = characterInfo.ffxi_id;           // contentId
-                        ref<uint16>(uList, uListOffset + 4) = characterInfo.ffxi_id_world;     // charIdMain
-                        ref<uint8>(uList, uListOffset + 6)  = characterInfo.worldid;           // Ignored in xiloader?
-                        ref<uint8>(uList, uListOffset + 7)  = characterInfo.ffxi_id_world_tbl; // charIdExtra // Ignored in xiloader?
+                        loginPackets::setDataCharacterIds(reinterpret_cast<uint8_t*>(uList) + uListOffset,
+                                                          legacyXboxClient,
+                                                          characterInfo.ffxi_id,
+                                                          loginPackets::getCharacterId(characterInfo, legacyXboxClient));
                     }
                 }
 

@@ -21,6 +21,8 @@
 
 #include "handler_session.h"
 
+#include <asio/read.hpp>
+
 handler_session::handler_session(asio::ssl::stream<asio::ip::tcp::socket> socket)
 : socket_(std::move(socket))
 {
@@ -59,20 +61,28 @@ void handler_session::do_read()
 {
     std::memset(buffer_.data(), 0, buffer_.size());
 
-    socket_.next_layer().async_read_some(
-        asio::buffer(buffer_.data(), buffer_.size()),
-        [this, self = shared_from_this()](std::error_code ec, std::size_t length)
+    auto readComplete = [this, self = shared_from_this()](std::error_code ec, std::size_t /*length*/)
+    {
+        if (!ec)
         {
-            if (!ec)
-            {
-                read_func();
-            }
-            else
-            {
-                DebugSockets(fmt::format("async_read_some error in handler_session from IP {} ({}: {})", ipAddress, ec.value(), ec.message()));
-                handle_error(ec, self);
-            }
-        });
+            read_func();
+        }
+        else
+        {
+            DebugSockets(fmt::format("socket read error in handler_session from IP {} ({}: {})", ipAddress, ec.value(), ec.message()));
+            handle_error(ec, self);
+        }
+    };
+
+    const auto expectedSize = read_size();
+    if (expectedSize != 0)
+    {
+        asio::async_read(socket_.next_layer(), asio::buffer(buffer_.data(), expectedSize), std::move(readComplete));
+    }
+    else
+    {
+        socket_.next_layer().async_read_some(asio::buffer(buffer_.data(), buffer_.size()), std::move(readComplete));
+    }
 }
 
 void handler_session::do_write(std::size_t length)

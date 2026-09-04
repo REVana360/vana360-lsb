@@ -42,7 +42,8 @@ void view_session::read_func()
         return;
     }
 
-    session_t& session = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
+    session_t& session          = loginHelpers::get_authenticated_session(ipAddress, sessionHash);
+    const bool legacyXboxClient = session.legacyXboxClient.load(std::memory_order_acquire);
     if (!session.view_session)
     {
         session.view_session = std::make_shared<view_session>(std::forward<asio::ssl::stream<asio::ip::tcp::socket>>(socket_), dealerChannel_);
@@ -55,7 +56,7 @@ void view_session::read_func()
     {
         case 0x07: // 07: "Notifying lobby server of current selections."
         {
-            const auto requestedCharacterID                 = ref<uint32>(buffer_.data(), 28);
+            const auto requestedCharacterID                 = loginPackets::getSelectedCharacterId(buffer_.data(), legacyXboxClient);
             char       requestedCharacter[PacketNameLength] = {};
             std::memcpy(&requestedCharacter, buffer_.data() + 36, PacketNameLength - 1);
 
@@ -100,8 +101,7 @@ void view_session::read_func()
                 return;
             }
 
-            lpkt_deletechr deleteCharPacket = {};
-            std::memcpy(&deleteCharPacket, buffer_.data(), sizeof(lpkt_deletechr));
+            const auto charID = loginPackets::getSelectedCharacterId(buffer_.data(), legacyXboxClient);
 
             std::memset(buffer_.data(), 0, 0x20);
             buffer_.data()[0] = 0x20; // size
@@ -119,8 +119,6 @@ void view_session::read_func()
             std::memcpy(buffer_.data() + 12, hash, 16);
 
             do_write(0x20);
-
-            uint32 charID = deleteCharPacket.ffxi_id;
 
             ShowInfo(fmt::format("attempt to delete char:<{}> from ip:<{}>",
                                  charID,
@@ -143,7 +141,7 @@ void view_session::read_func()
 
             if (auto data = dynamic_cast<data_session*>(session.data_session.get()))
             {
-                data->deleteCharFromCharInfo(charID);
+                data->deleteCharFromCharInfo(charID, legacyXboxClient);
             }
 
             // Perform character deletion.
@@ -171,7 +169,7 @@ void view_session::read_func()
 
             if (auto data = dynamic_cast<data_session*>(session.data_session.get()))
             {
-                data->addCharIntoCharInfo(charInfo);
+                data->addCharIntoCharInfo(charInfo, legacyXboxClient);
             }
 
             session.justCreatedNewChar = true;
@@ -253,8 +251,9 @@ void view_session::read_func()
         break;
         case 0x28: // 40: Renaming a character flagged with renamef
         {
-            // Character ID is sent at offset 28. New name at offset 36
-            const auto charid = ref<uint32>(buffer_.data(), 28);
+            // Modern clients send the character ID at 28; the July Xbox client
+            // sends its content ID there and the character ID at 32.
+            const auto charid = loginPackets::getSelectedCharacterId(buffer_.data(), legacyXboxClient);
 
             char newNameRaw[PacketNameLength] = {};
             std::memcpy(newNameRaw, buffer_.data() + 36, PacketNameLength - 1);
@@ -318,7 +317,7 @@ void view_session::read_func()
             // 3. Rename the character in the stored struct
             if (auto data = dynamic_cast<data_session*>(session.data_session.get()))
             {
-                data->renameCharInCharInfo(charid, newName);
+                data->renameCharInCharInfo(charid, newName, legacyXboxClient);
             }
 
             ShowInfoFmt("charid {} renamed to <{}> on account {}", charid, newName, session.accountID);

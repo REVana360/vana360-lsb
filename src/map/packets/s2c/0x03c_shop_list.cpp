@@ -22,12 +22,28 @@
 #include "0x03c_shop_list.h"
 
 #include "entities/char_entity.h"
+#include "map_session.h"
 #include "trade_container.h"
 
 GP_SERV_COMMAND_SHOP_LIST::GP_SERV_COMMAND_SHOP_LIST(CCharEntity* PChar)
 {
     const uint8 itemsCount = PChar->Container->getItemsCount();
     auto&       packet     = this->data();
+
+    if (PChar->PSession != nullptr && PChar->PSession->legacyXboxClient)
+    {
+        const uint8 legacyItemsCount = std::min<uint8>(itemsCount, 16);
+
+        for (uint8 slotID = 0; slotID < legacyItemsCount; ++slotID)
+        {
+            packet.LegacyShopItemTbl[slotID].ItemPrice = PChar->Container->getQuantity(slotID);
+            packet.LegacyShopItemTbl[slotID].ItemNo    = PChar->Container->getItemID(slotID);
+            packet.LegacyShopItemTbl[slotID].ShopIndex = slotID;
+        }
+
+        this->setSize(0x08 + (legacyItemsCount * sizeof(GP_SHOP_LEGACY)));
+        return;
+    }
 
     uint8  i          = 0;
     uint16 itemOffset = 0;

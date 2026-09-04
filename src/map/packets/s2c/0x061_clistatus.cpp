@@ -25,6 +25,7 @@
 
 #include "entities/char_entity.h"
 #include "items/item_weapon.h"
+#include "map_session.h"
 #include "modifier.h"
 #include "roe.h"
 #include "utils/charutils.h"
@@ -32,6 +33,12 @@
 GP_SERV_COMMAND_CLISTATUS::GP_SERV_COMMAND_CLISTATUS(CCharEntity* PChar)
 {
     auto& packet = this->data();
+
+    const bool legacyXboxClient = PChar->PSession != nullptr && PChar->PSession->legacyXboxClient;
+    if (legacyXboxClient)
+    {
+        this->setSize(0x54);
+    }
 
     packet.statusdata.hpmax    = PChar->GetMaxHP();
     packet.statusdata.mpmax    = PChar->GetMaxMP();
@@ -77,6 +84,11 @@ GP_SERV_COMMAND_CLISTATUS::GP_SERV_COMMAND_CLISTATUS(CCharEntity* PChar)
     packet.statusdata.rankbar     = PChar->profile.rankpoints;
     packet.statusdata.BindZoneNo  = static_cast<uint16>(PChar->profile.home_point.destination);
     packet.statusdata.nation      = PChar->profile.nation;
+
+    if (legacyXboxClient)
+    {
+        return;
+    }
 
     packet.statusdata.su_lv        = PChar->getMod(xi::Mod::SUPERIOR_LEVEL);
     packet.statusdata.highest_ilvl = charutils::getMaxItemLevel(PChar);

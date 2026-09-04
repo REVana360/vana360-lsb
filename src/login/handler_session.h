@@ -44,6 +44,11 @@ public:
 
     void do_write(std::size_t length);
 
+    virtual std::size_t read_size() const
+    {
+        return 0;
+    }
+
     virtual void read_func()  = 0;
     virtual void write_func() = 0;
 

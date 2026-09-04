@@ -24,6 +24,14 @@
 #include "action/action.h"
 #include "common/lua.h"
 
+namespace
+{
+
+constexpr uint32_t packetHeaderBits = 32;
+constexpr uint32_t legacyMaxBits    = (UINT8_MAX + packetHeaderBits / 8) * 8;
+
+} // namespace
+
 // Packs the action into the format expected by the FFXI client
 // Use 'actionparse' by atom0s as reference when making changes.
 void GP_SERV_COMMAND_BATTLE2::pack(action_t& action)
@@ -208,7 +216,116 @@ auto GP_SERV_COMMAND_BATTLE2::unpack() -> sol::table
     return action;
 }
 
+void GP_SERV_COMMAND_BATTLE2::packJuly2009(action_t action)
+{
+    // The selected July 2009 Xbox client reads the same action header used by
+    // current LSB, but its result fields have narrower animation, info, value,
+    // and proc-value fields plus a 32-bit modifier. Keep an alternate packet
+    // while action_t is intact so recipient-side adaptation stays lossless.
+    action.normalize();
+
+    july2009Buffer_.fill(0);
+    auto* packet = july2009Buffer_.data();
+
+    uint32_t bitOffset           = 8 * 5;
+    bitOffset                    = packBitsBE(packet, action.actorId, bitOffset, 32);
+    const auto targetCountOffset = bitOffset;
+    bitOffset += 6;
+    bitOffset = packBitsBE(packet, 0, bitOffset, 4);
+    bitOffset = packBitsBE(packet, static_cast<uint8_t>(action.actiontype), bitOffset, 4);
+    bitOffset = packBitsBE(packet, action.actionid, bitOffset, 32);
+    bitOffset = packBitsBE(packet, timer::count_seconds(action.recast), bitOffset, 32);
+
+    uint8_t targetCount = 0;
+    bool    packetFull  = false;
+    action.ForEachTarget([&](const action_target_t& target)
+                         {
+                             if (packetFull || targetCount >= 15 || bitOffset + 36 > legacyMaxBits)
+                             {
+                                 return;
+                             }
+
+                             ++targetCount;
+                             bitOffset = packBitsBE(packet, target.actorId, bitOffset, 32);
+
+                             const auto resultCountOffset = bitOffset;
+                             bitOffset += 4;
+
+                             uint8_t resultIndex = 0;
+                             for (const auto& result : target.results)
+                             {
+                                 if (resultIndex >= 8)
+                                 {
+                                     break;
+                                 }
+
+                                 const bool         hasAdditionalEffect = result.hasAdditionalEffect();
+                                 const bool         hasSpikesEffect     = result.spikesEffect != ActionReactKind::None;
+                                 constexpr uint32_t baseResultBits      = 85;
+                                 constexpr uint32_t procResultBits      = 34;
+                                 const uint32_t     resultBits          = baseResultBits +
+                                                             (hasAdditionalEffect ? procResultBits : 0) +
+                                                             (hasSpikesEffect ? procResultBits : 0);
+                                 if (bitOffset + resultBits > legacyMaxBits)
+                                 {
+                                     packetFull = true;
+                                     break;
+                                 }
+
+                                 ++resultIndex;
+                                 bitOffset = packBitsBE(packet, static_cast<uint8_t>(result.resolution), bitOffset, 3);
+                                 bitOffset = packBitsBE(packet, result.kind, bitOffset, 2);
+                                 bitOffset = packBitsBE(packet, static_cast<uint16_t>(result.animation) & 0x07FF, bitOffset, 11);
+                                 bitOffset = packBitsBE(packet, static_cast<uint8_t>(result.info) & 0x0F, bitOffset, 4);
+                                 bitOffset = packBitsBE(packet, static_cast<uint8_t>(result.hitDistortion), bitOffset, 2);
+                                 bitOffset = packBitsBE(packet, static_cast<uint8_t>(result.knockback), bitOffset, 3);
+                                 bitOffset = packBitsBE(packet, std::clamp<int32_t>(result.param, 0, UINT16_MAX), bitOffset, 16);
+                                 bitOffset = packBitsBE(packet, static_cast<uint16_t>(result.messageID), bitOffset, 10);
+                                 bitOffset = packBitsBE(packet, static_cast<uint32_t>(result.modifier), bitOffset, 32);
+
+                                 bitOffset = packBitsBE(packet, hasAdditionalEffect ? 1 : 0, bitOffset, 1);
+                                 if (hasAdditionalEffect)
+                                 {
+                                     const auto effectValue = std::visit([](const auto value) -> uint8_t
+                                                                         {
+                                                                             return static_cast<uint8_t>(value);
+                                                                         },
+                                                                         result.additionalEffect);
+                                     bitOffset              = packBitsBE(packet, effectValue, bitOffset, 6);
+                                     bitOffset              = packBitsBE(packet, result.addEffectInfo, bitOffset, 4);
+                                     bitOffset              = packBitsBE(packet, std::clamp<int32_t>(result.addEffectParam, 0, 0x3FFF), bitOffset, 14);
+                                     bitOffset              = packBitsBE(packet, static_cast<uint16_t>(result.addEffectMessage), bitOffset, 10);
+                                 }
+
+                                 bitOffset = packBitsBE(packet, hasSpikesEffect ? 1 : 0, bitOffset, 1);
+                                 if (hasSpikesEffect)
+                                 {
+                                     bitOffset = packBitsBE(packet, static_cast<uint8_t>(result.spikesEffect), bitOffset, 6);
+                                     bitOffset = packBitsBE(packet, result.spikesInfo, bitOffset, 4);
+                                     bitOffset = packBitsBE(packet, std::clamp<int32_t>(result.spikesParam, 0, 0x3FFF), bitOffset, 14);
+                                     bitOffset = packBitsBE(packet, static_cast<uint16_t>(result.spikesMessage), bitOffset, 10);
+                                 }
+                             }
+
+                             packBitsBE(packet, resultIndex, resultCountOffset, 4);
+                         });
+
+    packBitsBE(packet, targetCount, targetCountOffset, 6);
+
+    const auto workSize = static_cast<uint8_t>((bitOffset >> 3) + (bitOffset % 8 != 0));
+
+    packet[0] = 0x28;
+    packet[1] = static_cast<uint8_t>((((workSize + 1) + 3) & ~3) / 2);
+    packet[4] = workSize;
+}
+
+void GP_SERV_COMMAND_BATTLE2::useJuly2009Layout()
+{
+    std::memcpy(buffer_.data(), july2009Buffer_.data(), july2009Buffer_.size());
+}
+
 GP_SERV_COMMAND_BATTLE2::GP_SERV_COMMAND_BATTLE2(action_t& action)
 {
+    packJuly2009(action);
     pack(action);
 }

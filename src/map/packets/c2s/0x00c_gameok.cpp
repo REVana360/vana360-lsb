@@ -21,8 +21,10 @@
 
 #include "0x00c_gameok.h"
 
+#include "common/logging.h"
 #include "entities/char_entity.h"
 #include "gmcall_container.h"
+#include "map_session.h"
 #include "packets/char_status.h"
 #include "packets/char_sync.h"
 #include "packets/s2c/0x008_enterzone.h"
@@ -54,6 +56,17 @@ auto GP_CLI_COMMAND_GAMEOK::validate(MapSession* PSession, const CCharEntity* PC
 
 void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) const
 {
+    const bool legacyXboxClient = PSession->legacyXboxClient;
+    const auto queuedBefore     = PChar->getPacketCount();
+
+    DebugPacketsFmt("vana360 entity trace stage=0x00C begin char={} id={} legacy={} queued={} client_state={} debug_flag={}",
+                    PChar->getName(),
+                    PChar->id,
+                    legacyXboxClient,
+                    queuedBefore,
+                    ClientState,
+                    DebugClientFlg);
+
     // This is one of the first packets sent when zoning in and causes the server
     // to start rapidly sending a lot of information to initialize the client.
     //
@@ -67,19 +80,39 @@ void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) co
     PChar->pushPacket<GP_SERV_COMMAND_CONFIG>(PChar);
     PChar->pushPacket<GP_SERV_COMMAND_GRAP_LIST>(PChar); // Already sent during LOGIN but retail sends it again
     PChar->pushPacket<GP_SERV_COMMAND_JOB_INFO>(PChar);
-    PChar->pushPacket<GP_SERV_PACKET_ALTER_EGO_POINTS>(PChar);
+
+    if (!legacyXboxClient)
+    {
+        PChar->pushPacket<GP_SERV_PACKET_ALTER_EGO_POINTS>(PChar);
+    }
+
     PChar->pushPacket<CCharStatusPacket>(PChar);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY2>(PChar);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::HOMEPOINTS>(PChar);
+
+    if (!legacyXboxClient)
+    {
+        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY2>(PChar);
+        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::HOMEPOINTS>(PChar);
+    }
+
     charutils::SendExtendedJobPackets(PChar);
-    charutils::SendUnityPackets(PChar);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::STATUS_ICONS>(PChar);
+
+    if (!legacyXboxClient)
+    {
+        charutils::SendUnityPackets(PChar);
+        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::STATUS_ICONS>(PChar);
+    }
+
     charutils::SendKeyItems(PChar);
     charutils::SendQuestMissionLog(PChar);
-    charutils::SendRecordsOfEminenceLog(PChar);
     PChar->pushPacket<GP_SERV_COMMAND_MAGIC_DATA>(PChar);
-    PChar->pushPacket<GP_SERV_COMMAND_MOUNT_DATA>(PChar);
-    PChar->pushPacket<GP_SERV_COMMAND_DUNGEON>(PChar);
+
+    if (!legacyXboxClient)
+    {
+        charutils::SendRecordsOfEminenceLog(PChar);
+        PChar->pushPacket<GP_SERV_COMMAND_MOUNT_DATA>(PChar);
+        PChar->pushPacket<GP_SERV_COMMAND_DUNGEON>(PChar);
+    }
+
     PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
     PChar->pushPacket<CCharSyncPacket>(PChar);
     PChar->pushPacket<GP_SERV_COMMAND_INSPECT_MESSAGE>(PChar);
@@ -94,6 +127,14 @@ void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) co
         PChar->PTreasurePool->updatePool(PChar);
     }
     PChar->loc.zone->SpawnTransport(PChar);
+
+    DebugPacketsFmt("vana360 entity trace stage=0x00C snapshot char={} id={} legacy={} queued_before={} queued_after={} zone={}",
+                    PChar->getName(),
+                    PChar->id,
+                    legacyXboxClient,
+                    queuedBefore,
+                    PChar->getPacketCount(),
+                    static_cast<uint16>(PChar->getZone()));
 
     // respawn any pets from last zone
     if (PChar->loc.zone->CanUseMisc(xi::ZoneMisc::Pet) && !PChar->inMogHouse())

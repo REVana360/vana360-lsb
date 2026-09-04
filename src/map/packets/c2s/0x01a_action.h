@@ -141,4 +141,12 @@ GP_CLI_PACKET(GP_CLI_COMMAND_ACTION,
                   uint32_t                ActionBuf[4]; // PS2: ActionBuf
               }; // Other actions don't use the array or have fixed values only.
 
+              static constexpr bool supportsLegacyShortForm(GP_CLI_COMMAND_ACTION_ACTIONID action)
+              {
+                  return action == GP_CLI_COMMAND_ACTION_ACTIONID::Talk ||
+                         action == GP_CLI_COMMAND_ACTION_ACTIONID::Attack ||
+                         action == GP_CLI_COMMAND_ACTION_ACTIONID::HomepointMenu ||
+                         action == GP_CLI_COMMAND_ACTION_ACTIONID::SendResRdy;
+              }
+
               static constexpr size_t getMinSize() { return 16; });
