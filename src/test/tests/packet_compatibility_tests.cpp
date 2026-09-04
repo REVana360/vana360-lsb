@@ -22,6 +22,7 @@
 #include "login/login_packets.h"
 #include "login/session.h"
 #include "map/action/action.h"
+#include "map/entities/char_entity.h"
 #include "map/enums/four_cc.h"
 #include "map/map_session.h"
 #include "map/packets/basic.h"
@@ -145,6 +146,179 @@ TEST_CASE("Modern lobby character IDs retain current LSB layout", "[packet][vana
     REQUIRE(dataEntry[7] == 0x12);
 }
 
+TEST_CASE("July 2009 command data preserves ability bit positions", "[packet][vana360]")
+{
+    struct AbilityFixture
+    {
+        uint8_t     abilityIndex;
+        std::size_t modernByte;
+        std::size_t legacyByte;
+    };
+
+    constexpr std::array<AbilityFixture, 2> fixtures{ {
+        { 16, 0x46, 0x06 }, // Mighty Strikes -> July bit 0.
+        { 32, 0x48, 0x08 }, // Warcry -> July bit 16.
+    } };
+
+    for (const auto& fixture : fixtures)
+    {
+        CCharEntity character;
+        character.m_Abilities[fixture.abilityIndex / 8] = static_cast<uint8_t>(1U << (fixture.abilityIndex % 8));
+
+        GP_SERV_COMMAND_COMMAND_DATA command(&character);
+        REQUIRE(command.getType() == 0x0AC);
+        REQUIRE(command.getSize() == 0xE4);
+        REQUIRE(command.ref<uint8_t>(fixture.modernByte) == 1);
+
+        legacy_packet_adapter::adaptForJuly2009Xbox(command);
+
+        std::array<uint8_t, 0xB0> expected{};
+        expected[0x00] = 0xAC;
+        expected[0x01] = 0x58; // setSize(0xB0).
+        // Historical pre-00d41fddca layout (a467cd067e^): canonical IDs are
+        // shifted down by 16 bits in the July command-data packet.
+        expected[fixture.legacyByte] = 1;
+
+        REQUIRE(command.getType() == 0x0AC);
+        REQUIRE(command.getSize() == 0xB0);
+        for (std::size_t offset = 0; offset < expected.size(); ++offset)
+        {
+            REQUIRE(command.ref<uint8_t>(offset) == expected[offset]);
+        }
+    }
+}
+
+TEST_CASE("July 2009 Battle2 fixtures keep legacy result boundaries", "[packet][vana360]")
+{
+    struct BattleFixture
+    {
+        bool        hasProc;
+        bool        hasReact;
+        bool        truncated;
+        std::size_t expectedSize;
+        uint8_t     expectedWorkSize;
+        uint8_t     expectedTargetCount;
+        uint8_t     expectedFirstResultCount;
+    };
+
+    constexpr std::array<BattleFixture, 4> fixtures{ {
+        { false, false, false, 0x24, 0x22, 1, 1 },
+        { true, false, false, 0x28, 0x27, 1, 1 },
+        { false, true, false, 0x28, 0x27, 1, 1 },
+        { true, false, true, 0xFC, 0xFB, 2, 8 },
+    } };
+
+    for (const auto& fixture : fixtures)
+    {
+        action_t action{
+            .actorId    = 0x01020304,
+            .actiontype = ActionCategory::BasicAttack,
+            .targets    = {
+                {
+                       .actorId = 0x05060708,
+                       .results = {
+                        {
+                               .animation     = ActionAnimation::RedTrigger,
+                               .info          = ActionInfo::CriticalHit,
+                               .hitDistortion = HitDistortion::Medium,
+                               .knockback     = Knockback::Level3,
+                               .param         = 0x1234,
+                               .messageID     = MsgBasic::AttackHits,
+                               .modifier      = ActionModifier::CriticalHit,
+                        },
+                    },
+                },
+            },
+        };
+
+        auto& result = action.targets.front().results.front();
+        if (fixture.hasProc)
+        {
+            result.additionalEffect = ActionProcAddEffect::FireDamage;
+            result.addEffectInfo    = 2;
+            result.addEffectParam   = 0x1234;
+            result.addEffectMessage = MsgBasic::AddEffectAdditionalDamage;
+        }
+        if (fixture.hasReact)
+        {
+            result.spikesEffect  = ActionReactKind::BlazeSpikes;
+            result.spikesInfo    = 3;
+            result.spikesParam   = 0x2345;
+            result.spikesMessage = MsgBasic::AddEffectAdditionalDamage;
+        }
+        if (fixture.truncated)
+        {
+            action.targets.clear();
+            for (uint32_t targetIndex = 0; targetIndex < 2; ++targetIndex)
+            {
+                auto& target = action.addTarget(0x05060708 + targetIndex);
+                for (uint32_t resultIndex = 0; resultIndex < 8; ++resultIndex)
+                {
+                    auto& truncatedResult            = target.results.emplace_back();
+                    truncatedResult.animation        = ActionAnimation::RedTrigger;
+                    truncatedResult.param            = 7;
+                    truncatedResult.messageID        = MsgBasic::AttackHits;
+                    truncatedResult.additionalEffect = ActionProcAddEffect::FireDamage;
+                    truncatedResult.addEffectParam   = 3;
+                    truncatedResult.addEffectMessage = MsgBasic::AddEffectAdditionalDamage;
+                }
+            }
+        }
+
+        GP_SERV_COMMAND_BATTLE2 packet(action);
+        legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+        REQUIRE(packet.getType() == 0x028);
+        REQUIRE(packet.getSize() == fixture.expectedSize);
+        REQUIRE(packet.ref<uint8_t>(0x04) == fixture.expectedWorkSize);
+        REQUIRE(unpackBitsBE(packet, 40, 32) == 0x01020304);
+        REQUIRE(unpackBitsBE(packet, 72, 6) == fixture.expectedTargetCount);
+        REQUIRE(unpackBitsBE(packet, 82, 4) == static_cast<uint8_t>(ActionCategory::BasicAttack));
+        REQUIRE(unpackBitsBE(packet, 86, 32) == static_cast<uint32_t>(FourCC::BasicAttack));
+        REQUIRE(unpackBitsBE(packet, 150, 32) == 0x05060708);
+        REQUIRE(unpackBitsBE(packet, 182, 4) == fixture.expectedFirstResultCount);
+
+        if (!fixture.truncated)
+        {
+            REQUIRE(unpackBitsBE(packet, 186, 3) == static_cast<uint8_t>(ActionResolution::Hit));
+            REQUIRE(unpackBitsBE(packet, 189, 2) == 1);
+            REQUIRE(unpackBitsBE(packet, 191, 11) == static_cast<uint16_t>(ActionAnimation::RedTrigger));
+            REQUIRE(unpackBitsBE(packet, 202, 4) == static_cast<uint8_t>(ActionInfo::CriticalHit));
+            REQUIRE(unpackBitsBE(packet, 206, 2) == static_cast<uint8_t>(HitDistortion::Medium));
+            REQUIRE(unpackBitsBE(packet, 208, 3) == static_cast<uint8_t>(Knockback::Level3));
+            REQUIRE(unpackBitsBE(packet, 211, 16) == 0x1234);
+            REQUIRE(unpackBitsBE(packet, 227, 10) == static_cast<uint16_t>(MsgBasic::AttackHits));
+            REQUIRE(unpackBitsBE(packet, 237, 32) == static_cast<uint32_t>(ActionModifier::CriticalHit));
+            REQUIRE(unpackBitsBE(packet, 269, 1) == (fixture.hasProc ? 1 : 0));
+            if (fixture.hasProc)
+            {
+                REQUIRE(unpackBitsBE(packet, 270, 6) == static_cast<uint8_t>(ActionProcAddEffect::FireDamage));
+                REQUIRE(unpackBitsBE(packet, 276, 4) == 2);
+                REQUIRE(unpackBitsBE(packet, 280, 14) == 0x1234);
+                REQUIRE(unpackBitsBE(packet, 294, 10) == static_cast<uint16_t>(MsgBasic::AddEffectAdditionalDamage));
+                REQUIRE(unpackBitsBE(packet, 304, 1) == 0);
+            }
+            else
+            {
+                REQUIRE(unpackBitsBE(packet, 270, 1) == (fixture.hasReact ? 1 : 0));
+                if (fixture.hasReact)
+                {
+                    REQUIRE(unpackBitsBE(packet, 271, 6) == static_cast<uint8_t>(ActionReactKind::BlazeSpikes));
+                    REQUIRE(unpackBitsBE(packet, 277, 4) == 3);
+                    REQUIRE(unpackBitsBE(packet, 281, 14) == 0x2345);
+                    REQUIRE(unpackBitsBE(packet, 295, 10) == static_cast<uint16_t>(MsgBasic::AddEffectAdditionalDamage));
+                }
+            }
+        }
+        else
+        {
+            constexpr uint32_t secondTargetOffset = 1138;
+            REQUIRE(unpackBitsBE(packet, secondTargetOffset, 32) == 0x05060709);
+            REQUIRE(unpackBitsBE(packet, secondTargetOffset + 32, 4) == 7);
+        }
+    }
+}
+
 TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[packet][vana360]")
 {
     CBasicPacket equip{};
@@ -198,102 +372,6 @@ TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[
     entity.ref<uint16_t>(0x30) = 1;
     legacy_packet_adapter::adaptForJuly2009Xbox(entity);
     REQUIRE(entity.getSize() == 0x48);
-
-    action_t action{
-        .actorId    = 0x01020304,
-        .actiontype = ActionCategory::BasicAttack,
-        .targets    = {
-            {
-                   .actorId = 0x05060708,
-                   .results = {
-                    {
-                           .animation     = static_cast<ActionAnimation>(12),
-                           .hitDistortion = HitDistortion::Light,
-                           .param         = 7,
-                           .messageID     = MsgBasic::AttackHits,
-                    },
-                },
-            },
-        },
-    };
-    GP_SERV_COMMAND_BATTLE2 battleAction(action);
-    legacy_packet_adapter::adaptForJuly2009Xbox(battleAction);
-    REQUIRE(battleAction.getSize() == 0x24);
-    REQUIRE(battleAction.ref<uint8_t>(0x04) == 0x22);
-    REQUIRE(unpackBitsBE(battleAction, 40, 32) == 0x01020304);
-    REQUIRE(unpackBitsBE(battleAction, 72, 6) == 1);
-    REQUIRE(unpackBitsBE(battleAction, 78, 4) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 82, 4) == static_cast<uint8_t>(ActionCategory::BasicAttack));
-    REQUIRE(unpackBitsBE(battleAction, 86, 32) == static_cast<uint32_t>(FourCC::BasicAttack));
-    REQUIRE(unpackBitsBE(battleAction, 118, 32) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 150, 32) == 0x05060708);
-    REQUIRE(unpackBitsBE(battleAction, 182, 4) == 1);
-    REQUIRE(unpackBitsBE(battleAction, 186, 3) == static_cast<uint8_t>(ActionResolution::Hit));
-    REQUIRE(unpackBitsBE(battleAction, 189, 2) == 1);
-    REQUIRE(unpackBitsBE(battleAction, 191, 11) == 12);
-    REQUIRE(unpackBitsBE(battleAction, 202, 4) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 206, 2) == static_cast<uint8_t>(HitDistortion::Light));
-    REQUIRE(unpackBitsBE(battleAction, 208, 3) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 211, 16) == 7);
-    REQUIRE(unpackBitsBE(battleAction, 227, 10) == static_cast<uint16_t>(MsgBasic::AttackHits));
-    REQUIRE(unpackBitsBE(battleAction, 237, 32) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 269, 1) == 0);
-    REQUIRE(unpackBitsBE(battleAction, 270, 1) == 0);
-
-    action_t oversizedAction{
-        .actorId    = 0x01020304,
-        .actiontype = ActionCategory::BasicAttack,
-    };
-    for (uint32_t index = 0; index < 15; ++index)
-    {
-        action_target_t target{ .actorId = 0x05060708 + index };
-        for (uint32_t result = 0; result < 8; ++result)
-        {
-            target.results.emplace_back(action_result_t{
-                .animation        = static_cast<ActionAnimation>(12),
-                .param            = 7,
-                .messageID        = MsgBasic::AttackHits,
-                .additionalEffect = ActionProcAddEffect::FireDamage,
-                .addEffectParam   = 3,
-                .addEffectMessage = MsgBasic::AddEffectAdditionalDamage,
-            });
-        }
-        oversizedAction.targets.emplace_back(std::move(target));
-    }
-    GP_SERV_COMMAND_BATTLE2 oversizedPacket(oversizedAction);
-    legacy_packet_adapter::adaptForJuly2009Xbox(oversizedPacket);
-    REQUIRE(unpackBitsBE(oversizedPacket, 72, 6) < 15);
-
-    action_t effectAction{
-        .actorId    = 0x01020304,
-        .actiontype = ActionCategory::BasicAttack,
-        .targets    = {
-            {
-                   .actorId = 0x05060708,
-                   .results = {
-                    {
-                           .animation        = static_cast<ActionAnimation>(12),
-                           .hitDistortion    = HitDistortion::Light,
-                           .param            = 7,
-                           .messageID        = MsgBasic::AttackHits,
-                           .additionalEffect = ActionProcAddEffect::FireDamage,
-                           .addEffectParam   = 3,
-                           .addEffectMessage = MsgBasic::AddEffectAdditionalDamage,
-                    },
-                },
-            },
-        },
-    };
-    GP_SERV_COMMAND_BATTLE2 effectPacket(effectAction);
-    legacy_packet_adapter::adaptForJuly2009Xbox(effectPacket);
-    REQUIRE(effectPacket.getSize() == 0x28);
-    REQUIRE(effectPacket.ref<uint8_t>(0x04) == 0x27);
-    REQUIRE(unpackBitsBE(effectPacket, 269, 1) == 1);
-    REQUIRE(unpackBitsBE(effectPacket, 270, 6) == static_cast<uint8_t>(ActionProcAddEffect::FireDamage));
-    REQUIRE(unpackBitsBE(effectPacket, 276, 4) == 0);
-    REQUIRE(unpackBitsBE(effectPacket, 280, 14) == 3);
-    REQUIRE(unpackBitsBE(effectPacket, 294, 10) == static_cast<uint16_t>(MsgBasic::AddEffectAdditionalDamage));
-    REQUIRE(unpackBitsBE(effectPacket, 304, 1) == 0);
 
     action_t weaponSkillStart{
         .actorId    = 0x01020304,
@@ -369,9 +447,8 @@ TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[
     commandData.ref<uint8_t>(0xD3) = 0x45;
     legacy_packet_adapter::adaptForJuly2009Xbox(commandData);
     REQUIRE(commandData.getSize() == 0xB0);
-    REQUIRE(commandData.ref<uint8_t>(0x06) == 0x22);
-    REQUIRE(commandData.ref<uint8_t>(0x08) == 0x01);
-    REQUIRE(commandData.ref<uint8_t>(0x2B) == 0x23);
+    REQUIRE(commandData.ref<uint8_t>(0x06) == 0x01);
+    REQUIRE(commandData.ref<uint8_t>(0x29) == 0x23);
     REQUIRE(commandData.ref<uint8_t>(0x34) == 0x44);
     REQUIRE(commandData.ref<uint8_t>(0x43) == 0x45);
     for (std::size_t offset = 0x44; offset < 0x64; ++offset)

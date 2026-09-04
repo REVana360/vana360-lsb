@@ -94,13 +94,16 @@ void adaptCommandData(CBasicPacket& packet)
     constexpr std::size_t abilitiesSize    = 38;
     constexpr std::size_t traitsSize       = 16;
     constexpr std::size_t headerSize       = 4;
+    constexpr std::size_t abilityBiasBytes = 2;
 
     std::array<uint8_t, weaponSkillsSize> weaponSkills{};
     std::array<uint8_t, abilitiesSize>    abilities{};
     std::array<uint8_t, traitsSize>       traits{};
 
     std::memcpy(weaponSkills.data(), packet[modernWeaponSkillsOffset], weaponSkills.size());
-    std::memcpy(abilities.data(), packet[modernAbilitiesOffset], abilities.size());
+    // The July client adds 16 to command-data ability bit positions. Modern
+    // server ability bits already use those client-facing IDs.
+    std::memcpy(abilities.data(), packet[modernAbilitiesOffset + abilityBiasBytes], abilities.size());
     std::memcpy(traits.data(), packet[modernTraitsOffset], traits.size());
 
     std::memset(packet[headerSize], 0, 0xB0 - headerSize);
