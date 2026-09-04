@@ -49,6 +49,15 @@ rewrite: duplicate names, unnamed entities, slot members, Lua references, and
 ordering assumptions require a separate dependency audit. Unplaced mob
 reservations are reported separately and excluded from name matching.
 
+## Key Item ID Audit
+
+`python tools/client/key_item_audit.py <key-items.json> scripts/enum/key_item.lua --out <report.json>`
+
+Compares the global July key-item catalog with the canonical server enum. The
+report preserves ID-zero DAT headings as structural metadata and classifies
+exact matches, same-ID name conflicts, unique-name shift candidates,
+client-only IDs, and server-only IDs. It never rewrites the enum.
+
 Setup
 ========================
 
