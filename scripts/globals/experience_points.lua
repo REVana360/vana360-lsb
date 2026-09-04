@@ -10,9 +10,9 @@ xi.experiencePoints = xi.experiencePoints or {}
 -----------------------------------
 xi.experiencePoints.perMonsterCaps =
 {
-    { maxLevel = 50,  cap = 400 },
-    { maxLevel = 60,  cap = 500 },
-    { maxLevel = 255, cap = 600 },
+    { maxLevel = 50,  cap = 200 },
+    { maxLevel = 60,  cap = 250 },
+    { maxLevel = 255, cap = 300 },
 }
 
 local function getPerMonsterCap(level)
