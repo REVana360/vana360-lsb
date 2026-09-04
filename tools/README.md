@@ -49,6 +49,14 @@ rewrite: duplicate names, unnamed entities, slot members, Lua references, and
 ordering assumptions require a separate dependency audit. Unplaced mob
 reservations are reported separately and excluded from name matching.
 
+Literal event defaults need the maintained YAML script assignment to resolve
+duplicate DAT names. Audit them with:
+
+`python -m tools.client.zone_default_action_audit <zone-events.json> <zone-id> <npcs.yaml> <DefaultActions.lua> --out <report.json>`
+
+Cutscene-only actors are excluded because they cannot receive a player trigger.
+Every normal entity sharing a script must support that script's default event.
+
 ## Key Item ID Audit
 
 `python tools/client/key_item_audit.py <key-items.json> scripts/enum/key_item.lua --out <report.json>`
@@ -70,6 +78,15 @@ candidates. Currency stack size is excluded because the DAT field, SQL field,
 and unlimited runtime currency stack have different meanings. The SQL loader
 expects the repository's canonical one-row-per-`INSERT` form. It never rewrites
 SQL.
+
+To audit the static item constants used by a zone or an explicit set of related
+scripts against the selected client catalog, run:
+
+`python -m tools.client.zone_item_reference_audit <items.json> scripts/enum/item.lua <path> [<path> ...] --out <report.json>`
+
+The command reports references whose IDs are placeholders or absent in the
+selected catalog. It never rewrites scripts or assumes that a matching ID proves
+the content itself belongs to the selected era.
 
 ## Ability and Spell Name Audits
 
