@@ -71,6 +71,20 @@ and unlimited runtime currency stack have different meanings. The SQL loader
 expects the repository's canonical one-row-per-`INSERT` form. It never rewrites
 SQL.
 
+## Ability and Spell Name Audits
+
+`python tools/client/resource_name_audit.py <client-resources.json> ability_names sql/abilities.sql --out <report.json>`
+
+`python tools/client/resource_name_audit.py <client-resources.json> spell_names sql/spell_list.sql --out <report.json>`
+
+Compares one selected English July name table with its canonical runtime SQL
+IDs. Empty and dot-named DAT entries remain placeholders. The report classifies
+same-ID names, unique-name shift candidates, and one-sided IDs without treating
+localized display names as rewrite authority. Spell `(NULL)`, `(magic N)`, and
+`dummy` labels are also structural placeholders. These client name tables cover
+broader command domains than their SQL tables, so client-only names require
+domain review rather than automatic server-row creation.
+
 Setup
 ========================
 
