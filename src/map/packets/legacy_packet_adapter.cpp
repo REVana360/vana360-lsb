@@ -32,6 +32,27 @@ void adaptEquipRequest(CBasicPacket& packet)
     packet.ref<uint8_t>(categoryOffset)  = 0; // July 2009 equips only from inventory.
 }
 
+void adaptItemMax(CBasicPacket& packet)
+{
+    constexpr std::size_t modernUsableOffset = 0x24;
+    constexpr std::size_t legacyUsableOffset = 0x14;
+    constexpr std::size_t legacySize         = 0x34;
+    constexpr std::size_t legacyContainers   = 6; // Inventory through Mog Satchel.
+
+    std::array<uint16_t, legacyContainers> usable{};
+    for (std::size_t index = 0; index < usable.size(); ++index)
+    {
+        usable[index] = packet.ref<uint16_t>(modernUsableOffset + index * sizeof(uint16_t));
+    }
+
+    std::memset(packet[0x0A], 0, legacySize - 0x0A);
+    for (std::size_t index = 0; index < usable.size(); ++index)
+    {
+        packet.ref<uint16_t>(legacyUsableOffset + index * sizeof(uint16_t)) = usable[index];
+    }
+    packet.setSize(legacySize);
+}
+
 void adaptCharUpdate(CBasicPacket& packet)
 {
     constexpr std::size_t modernGrapOffset = 0x48;
@@ -140,6 +161,9 @@ void adaptForJuly2009Xbox(CBasicPacket& packet)
 {
     switch (packet.getType())
     {
+        case 0x01C:
+            adaptItemMax(packet);
+            break;
         case 0x00D:
             adaptCharUpdate(packet);
             break;

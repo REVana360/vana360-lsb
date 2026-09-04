@@ -35,6 +35,7 @@
 #include "map/packets/char_update.h"
 #include "map/packets/entity_update.h"
 #include "map/packets/legacy_packet_adapter.h"
+#include "map/packets/s2c/0x01c_item_max.h"
 #include "map/packets/s2c/0x028_battle2.h"
 #include "map/packets/s2c/0x029_battle_message.h"
 #include "map/packets/s2c/0x02d_battle_message2.h"
@@ -45,6 +46,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 static_assert(sizeof(GP_SHOP_LEGACY) == 8);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_MAX::PacketData) == 0x64);
 static_assert(sizeof(GP_CLI_COMMAND_EQUIP_SET) == 8);
 static_assert(offsetof(GP_CLI_COMMAND_EQUIP_SET, Category) == 6);
 static_assert(offsetof(GP_CLI_COMMAND_ACTION, ActIndex) == 8);
@@ -405,6 +407,41 @@ TEST_CASE("July 2009 battle messages preserve legacy parameter layouts", "[packe
         REQUIRE(packet.ref<uint16_t>(0x18) == static_cast<uint16_t>(fixture.message));
         REQUIRE(packet.ref<uint8_t>(0x1A) == 0);
         REQUIRE(packet.ref<uint8_t>(0x1B) == 0);
+    }
+}
+
+TEST_CASE("July 2009 item capacity uses the pre-Mog Sack layout", "[packet][vana360]")
+{
+    CCharEntity                      character;
+    constexpr std::array<uint8_t, 7> capacity{ 20, 30, 40, 50, 60, 70, 80 };
+    for (std::size_t index = 0; index < capacity.size(); ++index)
+    {
+        character.getStorage(static_cast<uint8_t>(index))->AddBuff(capacity[index]);
+    }
+
+    GP_SERV_COMMAND_ITEM_MAX packet(&character);
+    REQUIRE(packet.getType() == 0x01C);
+    REQUIRE(packet.getSize() == 0x64);
+    REQUIRE(packet.ref<uint8_t>(0x0A) == 81);  // Modern Mog Sack count.
+    REQUIRE(packet.ref<uint16_t>(0x30) == 81); // Modern Mog Sack usable count.
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+    REQUIRE(packet.getType() == 0x01C);
+    REQUIRE(packet.getSize() == 0x34);
+    for (std::size_t index = 0; index < 6; ++index)
+    {
+        REQUIRE(packet.ref<uint8_t>(0x04 + index) == capacity[index] + 1);
+        const uint16_t expectedUsable = index == LOC_MOGLOCKER ? 0 : capacity[index] + 1;
+        REQUIRE(packet.ref<uint16_t>(0x14 + index * sizeof(uint16_t)) == expectedUsable);
+    }
+    for (std::size_t offset = 0x0A; offset < 0x14; ++offset)
+    {
+        REQUIRE(packet.ref<uint8_t>(offset) == 0);
+    }
+    for (std::size_t offset = 0x20; offset < 0x34; ++offset)
+    {
+        REQUIRE(packet.ref<uint8_t>(offset) == 0);
     }
 }
 
