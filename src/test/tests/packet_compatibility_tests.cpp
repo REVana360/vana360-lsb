@@ -26,7 +26,9 @@
 #include "map/entities/mob_entity.h"
 #include "map/entities/npc_entity.h"
 #include "map/enums/four_cc.h"
+#include "map/enums/item_lockflg.h"
 #include "map/enums/msg_basic.h"
+#include "map/items/item.h"
 #include "map/map_session.h"
 #include "map/packets/basic.h"
 #include "map/packets/c2s/0x01a_action.h"
@@ -36,11 +38,15 @@
 #include "map/packets/entity_update.h"
 #include "map/packets/legacy_packet_adapter.h"
 #include "map/packets/s2c/0x01c_item_max.h"
+#include "map/packets/s2c/0x01f_item_list.h"
+#include "map/packets/s2c/0x020_item_attr.h"
+#include "map/packets/s2c/0x027_talknumwork2.h"
 #include "map/packets/s2c/0x028_battle2.h"
 #include "map/packets/s2c/0x029_battle_message.h"
 #include "map/packets/s2c/0x02a_talknumwork.h"
 #include "map/packets/s2c/0x02d_battle_message2.h"
 #include "map/packets/s2c/0x03c_shop_list.h"
+#include "map/packets/s2c/0x050_equip_list.h"
 #include "map/packets/s2c/0x061_clistatus.h"
 #include "map/packets/s2c/0x0ac_command_data.h"
 
@@ -48,6 +54,9 @@
 
 static_assert(sizeof(GP_SHOP_LEGACY) == 8);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_MAX::PacketData) == 0x64);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_LIST::PacketData) == 0x10);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ITEM_ATTR::PacketData) == 0x2C);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_TALKNUMWORK2::PacketData) == 0x70);
 static_assert(sizeof(GP_CLI_COMMAND_EQUIP_SET) == 8);
 static_assert(offsetof(GP_CLI_COMMAND_EQUIP_SET, Category) == 6);
 static_assert(offsetof(GP_CLI_COMMAND_ACTION, ActIndex) == 8);
@@ -485,6 +494,88 @@ TEST_CASE("July 2009 formatted messages use conditional packet lengths", "[packe
     for (std::size_t index = 0; index < npc.name.size(); ++index)
     {
         REQUIRE(named.ref<uint8_t>(0x1E + index) == npc.name[index]);
+    }
+}
+
+TEST_CASE("July 2009 item and equip packets retain stable layouts", "[packet][vana360]")
+{
+    CItem item(16534);
+    item.setStackSize(99);
+    item.setQuantity(7);
+    item.setCharPrice(1234);
+    item.setLocationID(LOC_INVENTORY);
+    item.setSlotID(3);
+    for (std::size_t index = 0; index < sizeof(item.m_extra); ++index)
+    {
+        item.m_extra[index] = static_cast<uint8_t>(0xA0 + index);
+    }
+
+    GP_SERV_COMMAND_ITEM_LIST itemList(&item, ItemLockFlg::Normal);
+    std::array<uint8_t, 0x10> itemListBefore{};
+    std::memcpy(itemListBefore.data(), itemList[0], itemListBefore.size());
+    legacy_packet_adapter::adaptForJuly2009Xbox(itemList);
+
+    REQUIRE(itemList.getSize() == 0x10);
+    REQUIRE(std::memcmp(itemListBefore.data(), itemList[0], itemListBefore.size()) == 0);
+    REQUIRE(itemList.ref<uint32_t>(0x04) == 7);
+    REQUIRE(itemList.ref<uint16_t>(0x08) == 16534);
+    REQUIRE(itemList.ref<uint8_t>(0x0A) == LOC_INVENTORY);
+    REQUIRE(itemList.ref<uint8_t>(0x0B) == 3);
+    REQUIRE(itemList.ref<uint8_t>(0x0C) == static_cast<uint8_t>(ItemLockFlg::Normal));
+
+    GP_SERV_COMMAND_ITEM_ATTR itemAttr(&item, LOC_INVENTORY, 3);
+    std::array<uint8_t, 0x2C> itemAttrBefore{};
+    std::memcpy(itemAttrBefore.data(), itemAttr[0], itemAttrBefore.size());
+    legacy_packet_adapter::adaptForJuly2009Xbox(itemAttr);
+
+    REQUIRE(itemAttr.getSize() == 0x2C);
+    REQUIRE(std::memcmp(itemAttrBefore.data(), itemAttr[0], itemAttrBefore.size()) == 0);
+    REQUIRE(itemAttr.ref<uint32_t>(0x04) == 7);
+    REQUIRE(itemAttr.ref<uint32_t>(0x08) == 1234);
+    REQUIRE(itemAttr.ref<uint16_t>(0x0C) == 16534);
+    REQUIRE(itemAttr.ref<uint8_t>(0x0E) == LOC_INVENTORY);
+    REQUIRE(itemAttr.ref<uint8_t>(0x0F) == 3);
+    REQUIRE(itemAttr.ref<uint8_t>(0x10) == static_cast<uint8_t>(ItemLockFlg::Unknown0));
+    for (std::size_t index = 0; index < sizeof(item.m_extra); ++index)
+    {
+        REQUIRE(itemAttr.ref<uint8_t>(0x11 + index) == item.m_extra[index]);
+    }
+
+    GP_SERV_COMMAND_EQUIP_LIST equip(3, SLOT_MAIN, LOC_INVENTORY);
+    std::array<uint8_t, 0x08>  equipBefore{};
+    std::memcpy(equipBefore.data(), equip[0], equipBefore.size());
+    legacy_packet_adapter::adaptForJuly2009Xbox(equip);
+
+    REQUIRE(equip.getSize() == 0x08);
+    REQUIRE(std::memcmp(equipBefore.data(), equip[0], equipBefore.size()) == 0);
+    REQUIRE(equip.ref<uint8_t>(0x04) == 3);
+    REQUIRE(equip.ref<uint8_t>(0x05) == SLOT_MAIN);
+    REQUIRE(equip.ref<uint8_t>(0x06) == LOC_INVENTORY);
+}
+
+TEST_CASE("July 2009 fishing messages retain the legacy layout", "[packet][vana360]")
+{
+    CCharEntity player;
+    player.id     = 0x01020304;
+    player.targid = 0x0506;
+    player.name   = "Vanatest";
+
+    GP_SERV_COMMAND_TALKNUMWORK2 packet(&player, 16534, 777, 2);
+    std::array<uint8_t, 0x70>    before{};
+    std::memcpy(before.data(), packet[0], before.size());
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+    REQUIRE(packet.getSize() == 0x70);
+    REQUIRE(std::memcmp(before.data(), packet[0], before.size()) == 0);
+    REQUIRE(packet.ref<uint32_t>(0x04) == player.id);
+    REQUIRE(packet.ref<uint16_t>(0x08) == player.targid);
+    REQUIRE(packet.ref<uint16_t>(0x0A) == (777 | 0x8000));
+    REQUIRE(packet.ref<uint32_t>(0x10) == 16534);
+    REQUIRE(packet.ref<uint32_t>(0x14) == 2);
+    for (std::size_t index = 0; index < player.name.size(); ++index)
+    {
+        REQUIRE(packet.ref<uint8_t>(0x20 + index) == player.name[index]);
     }
 }
 
