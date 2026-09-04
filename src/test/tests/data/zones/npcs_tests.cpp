@@ -75,11 +75,11 @@ TEST_CASE("npcs: every npc in a zone has its own id", "[data][npc]")
 
 TEST_CASE("npcs: omitted fields fall back to their defaults", "[data][npc]")
 {
-    // deviates only in status, content and display name
-    const auto& npc = npcAt(17187483);
+    // NPC[2da] has only a script and standard look in the July catalog.
+    const auto& npc = npcAt(17187416);
 
-    REQUIRE(npc.Script == "Achieve_Master");
-    REQUIRE(npc.DisplayName == "Achieve Master");
+    REQUIRE(npc.Script == "NPC[2da]");
+    REQUIRE(npc.DisplayName.empty());
     REQUIRE(npc.Position.x == 0.0f);
     REQUIRE(npc.Position.y == 0.0f);
     REQUIRE(npc.Position.z == 0.0f);
@@ -95,7 +95,7 @@ TEST_CASE("npcs: omitted fields fall back to their defaults", "[data][npc]")
     REQUIRE(npc.Speed == 50);
     REQUIRE(npc.AnimationSpeed == 50);
     REQUIRE_FALSE(npc.Widescan);
-    REQUIRE(npc.Content == xi::Content::Soa);
+    REQUIRE(npc.Content == xi::Content::None);
 
     // look 0x0000 0x0032: standard, model 50
     REQUIRE(npc.Look[0] == 0);
@@ -105,7 +105,7 @@ TEST_CASE("npcs: omitted fields fall back to their defaults", "[data][npc]")
 TEST_CASE("npcs: an equipped look keeps every slot", "[data][npc]")
 {
     // Aaveleon: look 0100 0003 1C10 1C20 1C30 1C40 1C50 0060 0070 0000
-    const auto& npc = npcAt(17187490);
+    const auto& npc = npcAt(17187362);
 
     REQUIRE(npc.Script == "Aaveleon");
     REQUIRE(npc.Look[0] == 1);      // equipped
@@ -131,7 +131,7 @@ TEST_CASE("npcs: an equipped look keeps every slot", "[data][npc]")
 TEST_CASE("npcs: a movement flag keeps its high bit", "[data][npc]")
 {
     // 0x8001: low bits a MovTime, high bit a flag
-    const auto& npc = npcAt(17187513);
+    const auto& npc = npcAt(17187385);
 
     REQUIRE(npc.Position.moving == 0x8001);
     REQUIRE(npc.LookAt == 0);
@@ -141,7 +141,7 @@ TEST_CASE("npcs: a movement flag keeps its high bit", "[data][npc]")
 TEST_CASE("npcs: name_vis keeps bits no enum member covers", "[data][npc]")
 {
     // bit 0x4, no enum member covers it
-    REQUIRE(npcAt(17187466).NameVis == static_cast<xi::NameVis>(4));
+    REQUIRE(npcAt(17187343).NameVis == static_cast<xi::NameVis>(4));
 }
 
 TEST_CASE("npcs: an unknown look type is rejected", "[data][npc]")

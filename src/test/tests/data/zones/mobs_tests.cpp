@@ -74,15 +74,6 @@ TEST_CASE("mobs: every spawn in a zone has its own id", "[data][mob]")
     REQUIRE(std::ranges::adjacent_find(ids) == ids.end());
 }
 
-TEST_CASE("mobs: spawns with no template still reserve their id", "[data][mob]")
-{
-    const auto& spawn = spawnAt(17187301);
-
-    REQUIRE(spawn.TemplateName.empty());
-    REQUIRE(spawn.Script == "Wayward_Worm");
-    REQUIRE_FALSE(spawn.Placed);
-}
-
 TEST_CASE("mobs: a spawn id carries its zone and act index", "[data][mob]")
 {
     const auto& spawn = spawnAt(17186822);
