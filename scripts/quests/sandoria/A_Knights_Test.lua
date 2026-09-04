@@ -18,7 +18,6 @@ quest.reward =
     fame     = 20,
     fameArea = xi.fameArea.SANDORIA,
     item     = xi.item.KITE_SHIELD,
-    keyItem  = xi.ki.JOB_GESTURE_PALADIN,
     title    = xi.title.TRIED_AND_TESTED_KNIGHT,
 }
 
