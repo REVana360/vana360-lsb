@@ -45,20 +45,26 @@ are not types on the maintained branch.
 
 ## License
 
-- We operate under [GNU General Public License v3.0](https://github.com/LandSandBoat/server/blob/base/LICENSE).
+- We operate under [GNU General Public License v3.0](LICENSE).
 - We do not accept contributions that use other more restrictive licenses (such as AGPLv3).
 
 ## General Guidelines
 
-- By contributing to LandSandBoat, either through issues, pull requests, or discussions, you are expected to abide by the rules laid out here in this Contributing Guide.
-- We do not support out-of-date clients or client modification.
+- By contributing to this Vana360 fork, either through issues, pull requests, or discussions, you are expected to abide by the rules laid out here in this Contributing Guide.
+- The maintained profile supports only the selected Vana360 Xbox 360 client.
+  Other client versions and modified clients are out of scope.
 - We do not support piracy of any kind. We encourage you to maintain an active retail subscription and support the game.
 
 ## Technical Guidelines
 
-- For more specific guides on how to contribute using Git, GitHub, C++, Lua, SQL, Python, other technical changes, and how to style your code, etc. please see the [Development Guide](https://github.com/LandSandBoat/server/wiki/Development-Guide) and [Development Landing Page](https://github.com/LandSandBoat/server/wiki/Development) as well as other pages in the [Wiki](https://github.com/LandSandBoat/server/wiki).
+- For more specific guides on Git, GitHub, C++, Lua, SQL, Python, style, and
+  other technical changes, read the tracked
+  [Development Guide](docs/wiki/Development-Guide.md),
+  [Development Landing Page](docs/wiki/Development.md), and
+  [documentation index](docs/wiki/README.md).
 - If you use an AI coding agent, or if you are one, read [AI Agents](docs/ai_agents/README.md) first. It sets out what we expect from AI-assisted contributions.
-- The wiki is written in [docs/wiki](docs/wiki/README.md). Edit the pages there and open a pull request; merging to `base` publishes them.
+- Wiki source is tracked in [docs/wiki](docs/wiki/README.md). Edit the pages
+  there and open a pull request to this repository.
 
 ## Workflow Guide
 
@@ -75,7 +81,9 @@ are not types on the maintained branch.
 
 ## Pull Request Contributions
 
-All contributions must be done through pull requests to the LandSandBoat repository. We don't take fixes from Discord to apply ourselves. If you need help with making a pull request, there is a GitHub guide on how to do so.
+All contributions must be made through pull requests to
+`REVana360/vana360-lsb`. We don't take fixes from Discord to apply ourselves.
+If you need help making a pull request, GitHub provides a contribution guide.
 
 We prefer submitting early and often, over monolithic and once. If you're implementing a complex feature, please try to submit PRs as you get each smaller functional aspect working (use your best judgment on what counts as a useful PR). This way we can help make sure you're on the right track before you sink a lot of time into implementations we might want done in a different way.
 

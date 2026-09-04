@@ -14,25 +14,30 @@ An open-source server emulator for FFXI.
 </p>
 
 <p align="center">
-<a href="https://github.com/LandSandBoat/server/actions/workflows/build.yml"><img src="https://github.com/LandSandBoat/server/actions/workflows/build.yml/badge.svg?branch=base"/></a>
-<a href="https://github.com/LandSandBoat/server/actions/workflows/test.yml"><img src="https://github.com/LandSandBoat/server/actions/workflows/test.yml/badge.svg?branch=base"/></a>
+<a href="https://github.com/REVana360/vana360-lsb/actions/workflows/build.yml"><img src="https://github.com/REVana360/vana360-lsb/actions/workflows/build.yml/badge.svg?branch=main"/></a>
+<a href="https://github.com/REVana360/vana360-lsb/actions/workflows/test.yml"><img src="https://github.com/REVana360/vana360-lsb/actions/workflows/test.yml/badge.svg?branch=main"/></a>
 <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg"/></a>
-<a href="https://github.com/LandSandBoat/server/pulls"><img src="https://img.shields.io/badge/Contributions-welcome-brightgreen.svg?style=flat"/></a>
+<a href="https://github.com/REVana360/vana360-lsb/pulls"><img src="https://img.shields.io/badge/Contributions-welcome-brightgreen.svg?style=flat"/></a>
 </p>
 
 ## Getting Started
 
-A [quick start guide](https://github.com/LandSandBoat/server/wiki/Quick-Start-Guide), the [frequently asked questions](https://github.com/LandSandBoat/server/wiki/Frequently-Asked-Questions), and a table of "[what works](https://github.com/LandSandBoat/server/wiki/What-Works)" are all available on [our wiki](https://github.com/LandSandBoat/server/wiki).
+Start with the tracked [quick start guide](docs/wiki/Quick-Start-Guide.md) and
+[frequently asked questions](docs/wiki/Frequently-Asked-Questions.md).
 
 ## Interacting with LandSandBoat
 
 ### Crashes, warnings, errors, bugs, gameplay issues, visual issues, etc.
 
-Please create a new issue in the [issues tab](https://github.com/LandSandBoat/server/issues) after searching to see if your issue is already logged.
+Please create a new issue in the
+[issues tab](https://github.com/REVana360/vana360-lsb/issues) after searching
+to see if your issue is already logged.
 
 ### Balance discussion, technical discussion, meta discussions, etc.
 
-Discussions are similar to forum posts. Please open a new discussion post in the [discussions tab](https://github.com/LandSandBoat/server/discussions) for less directed and more open-ended conversation than issues.
+Discussions are similar to forum posts. Please open a new discussion post in
+the [discussions tab](https://github.com/REVana360/vana360-lsb/discussions)
+for less directed and more open-ended conversation than issues.
 
 *If you are encountering an issue, please open an issue and not a discussion!* It's much easier for us to track and you're more likely to get resolution through an issue.
 
@@ -42,7 +47,7 @@ If you're a human using AI agents or an AI agent you should go read `./docs/ai_a
 
 ## LICENSE
 
-LandSandBoat is licensed under [GNU GPL v3](https://github.com/LandSandBoat/server/blob/base/LICENSE)
+LandSandBoat is licensed under [GNU GPL v3](LICENSE).
 
 ## Thanks
 
