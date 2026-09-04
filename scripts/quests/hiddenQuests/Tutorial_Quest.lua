@@ -35,11 +35,11 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] = quest:progressEvent(3662),
+            ['Alaune'] = quest:progressEvent(934),
 
             onEventFinish =
             {
-                [3662] = function(player, csid, option, npc)
+                [934] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 1)
                 end,
             },
@@ -78,11 +78,11 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] = quest:progressEvent(3640),
+            ['Alaune'] = quest:progressEvent(916),
 
             onEventFinish =
             {
-                [3640] = function(player, csid, option, npc)
+                [916] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 2)
                 end,
             },
@@ -136,16 +136,16 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if player:hasStatusEffect(xi.effect.SIGNET) then
-                        return quest:progressEvent(3642)
+                        return quest:progressEvent(918)
                     else
-                        return quest:event(3641)
+                        return quest:event(917)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3642] = function(player, csid, option, npc)
+                [918] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, { { xi.item.STRIP_OF_MEAT_JERKY, 6 } }) then
                         quest:setVar(player, 'Prog', 3)
                     end
@@ -210,16 +210,16 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if player:hasStatusEffect(xi.effect.FOOD) then
-                        return quest:progressEvent(3644)
+                        return quest:progressEvent(920)
                     else
-                        return quest:event(3643)
+                        return quest:event(919)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3644] = function(player, csid, option, npc)
+                [920] = function(player, csid, option, npc)
                     quest:setVar(player, 'Prog', 4)
                 end,
             },
@@ -281,18 +281,19 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if hasLearntWeaponskill(player) then
-                        return quest:progressEvent(3646)
+                        return quest:progressEvent(922)
                     else
-                        return quest:event(3645)
+                        return quest:event(921)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3646] = function(player, csid, option, npc)
-                    npcUtil.giveCurrency(player, 'gil', 100 * xi.settings.main.GIL_RATE)
-                    quest:setVar(player, 'Prog', 5)
+                [922] = function(player, csid, option, npc)
+                    if npcUtil.giveItem(player, { { xi.item.CHUNK_OF_ROCK_SALT, 1 }, { xi.item.SLICE_OF_HARE_MEAT, 1 }, { xi.item.FIRE_CRYSTAL, 1 } }) then
+                        quest:setVar(player, 'Prog', 5)
+                    end
                 end,
             },
         },
@@ -351,25 +352,16 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] =
+            ['Auction_Counter'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.MEMORANDOLL) then
-                        return quest:progressEvent(3648)
-                    else
-                        return quest:event(3647)
-                    end
+                    quest:setVar(player, 'Prog', 6)
+                    player:sendMenu(xi.menuType.AUCTION)
+                    return quest:noAction()
                 end,
             },
 
-            onEventFinish =
-            {
-                [3648] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, { { xi.item.CHUNK_OF_ROCK_SALT, 1 }, { xi.item.SLICE_OF_HARE_MEAT, 1 }, { xi.item.FIRE_CRYSTAL, 1 } }) then
-                        quest:setVar(player, 'Prog', 6)
-                    end
-                end,
-            },
+            ['Alaune'] = quest:event(923),
         },
 
         [xi.zone.WINDURST_WOODS] =
@@ -496,32 +488,13 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Auction_Counter'] =
-            {
-                onTrigger = function(player, npc)
-                    quest:setVar(player, 'Option', 1)
-                    player:sendMenu(xi.menuType.AUCTION)
-                    return quest:noAction()
-                end,
-            },
-
-            ['Alaune'] =
-            {
-                onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Option') == 1 then
-                        return quest:progressEvent(3650)
-                    else
-                        return quest:event(3649)
-                    end
-                end,
-            },
+            ['Alaune'] = quest:progressEvent(924, 0, 0, 0, xi.ki.CONQUEST_PROMOTION_VOUCHER),
 
             onEventFinish =
             {
-                [3650] = function(player, csid, option, npc)
+                [924] = function(player, csid, option, npc)
                     npcUtil.giveKeyItem(player, xi.ki.CONQUEST_PROMOTION_VOUCHER)
                     quest:setVar(player, 'Prog', 7)
-                    quest:setVar(player, 'Option', 0)
                 end,
             },
         },
@@ -605,17 +578,17 @@ quest.sections =
             ['Alaune'] =
             {
                 onTrigger = function(player, npc)
-                    if player:getMainLvl() >= 5 then
-                        return quest:progressEvent(3652)
+                    if player:getMainLvl() >= 4 then
+                        return quest:progressEvent(926, 0, 0, xi.nation.SANDORIA)
                     else
-                        return quest:event(3651)
+                        return quest:event(925)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3652] = function(player, csid, option, npc)
+                [926] = function(player, csid, option, npc)
                     if npcUtil.giveItem(player, xi.item.RAISING_EARRING) then
                         quest:setVar(player, 'Prog', 8)
                     end
@@ -678,23 +651,12 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] =
-            {
-                onTrigger = function(player, npc)
-                    if player:hasKeyItem(xi.ki.SAN_DORIA_TRUST_PERMIT) then
-                        return quest:progressEvent(3654)
-                    else
-                        return quest:event(3653)
-                    end
-                end,
-            },
+            ['Alaune'] = quest:progressEvent(927, 0, 0, xi.nation.SANDORIA),
 
             onEventFinish =
             {
-                [3654] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, xi.item.WARP_RING) then
-                        quest:setVar(player, 'Prog', 9)
-                    end
+                [927] = function(player, csid, option, npc)
+                    quest:setVar(player, 'Prog', 9)
                 end,
             },
         },
@@ -807,24 +769,13 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] =
-            {
-                onTrigger = function(player, npc)
-                    if player:getCharVar('TutorialBypass') >= 2 then
-                        return quest:progressEvent(3656, xi.nation.SANDORIA)
-                    else
-                        return quest:event(3655, xi.nation.SANDORIA)
-                    end
-                end,
-            },
+            ['Alaune'] = quest:progressEvent(928, 800 * xi.settings.main.EXP_RATE, 0, xi.nation.SANDORIA),
 
             onEventFinish =
             {
-                [3656] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, { { xi.item.SALTENA, 12 } }) then
-                        quest:setVar(player, 'Prog', 10)
-                        player:setCharVar('TutorialBypass', 0)
-                    end
+                [928] = function(player, csid, option, npc)
+                    player:addExp(800 * xi.settings.main.EXP_RATE)
+                    quest:setVar(player, 'Prog', 10)
                 end,
             },
         },
@@ -914,20 +865,19 @@ quest.sections =
             ['Alaune'] =
             {
                 onTrigger = function(player, npc)
-                    if player:getMainLvl() >= 18 then
-                        return quest:progressEvent(3658, xi.nation.SANDORIA)
+                    if player:getMainLvl() >= 10 then
+                        return quest:progressEvent(930, 0, 1000 * xi.settings.main.GIL_RATE, xi.nation.SANDORIA)
                     else
-                        return quest:event(3657)
+                        return quest:event(929)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3658] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, xi.item.COPPER_AMAN_VOUCHER) then
-                        quest:setVar(player, 'Prog', 11)
-                    end
+                [930] = function(player, csid, option, npc)
+                    npcUtil.giveCurrency(player, 'gil', 1000)
+                    quest:setVar(player, 'Prog', 11)
                 end,
             },
         },
@@ -990,18 +940,19 @@ quest.sections =
             ['Alaune'] =
             {
                 onTrigger = function(player, npc)
-                    if player:getSubLvl() >= 1 then
-                        return quest:progressEvent(3660)
+                    if player:hasKeyItem(xi.ki.HOLLA_GATE_CRYSTAL) then
+                        return quest:progressEvent(932, xi.ki.HOLLA_GATE_CRYSTAL, 1000 * xi.settings.main.EXP_RATE, xi.item.FREE_CHOCOPASS, 3)
                     else
-                        return quest:event(3659, xi.nation.SANDORIA)
+                        return quest:event(931, xi.ki.HOLLA_GATE_CRYSTAL, 0, xi.nation.SANDORIA)
                     end
                 end,
             },
 
             onEventFinish =
             {
-                [3660] = function(player, csid, option, npc)
-                    if npcUtil.giveItem(player, { { xi.item.FREE_CHOCOPASS, 12 }, { xi.item.ECHAD_RING, 1 } }) then
+                [932] = function(player, csid, option, npc)
+                    if npcUtil.giveItem(player, { { xi.item.FREE_CHOCOPASS, 3 } }) then
+                        player:addExp(1000 * xi.settings.main.EXP_RATE)
                         quest:setVar(player, 'Prog', 12)
                     end
                 end,
@@ -1045,7 +996,7 @@ quest.sections =
 
         [xi.zone.SOUTHERN_SAN_DORIA] =
         {
-            ['Alaune'] = quest:event(3661),
+            ['Alaune'] = quest:event(933),
         },
 
         [xi.zone.WINDURST_WOODS] =
