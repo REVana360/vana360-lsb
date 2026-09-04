@@ -58,6 +58,19 @@ report preserves ID-zero DAT headings as structural metadata and classifies
 exact matches, same-ID name conflicts, unique-name shift candidates,
 client-only IDs, and server-only IDs. It never rewrites the enum.
 
+## Item ID Audit
+
+`python tools/client/item_audit.py <items.json> sql/item_basic.sql --out <report.json>`
+
+Compares all six July item resources with the canonical runtime item table.
+The report keeps empty and dot-named DAT slots as placeholders, separates
+server items occupying those slots from IDs outside the catalog, and classifies
+same-ID name, category, and stack-size differences plus unique-name shift
+candidates. Currency stack size is excluded because the DAT field, SQL field,
+and unlimited runtime currency stack have different meanings. The SQL loader
+expects the repository's canonical one-row-per-`INSERT` form. It never rewrites
+SQL.
+
 Setup
 ========================
 
