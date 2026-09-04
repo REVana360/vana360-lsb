@@ -14,6 +14,7 @@
 #include "legacy_packet_adapter.h"
 
 #include "basic.h"
+#include "entity_update.h"
 #include "s2c/0x028_battle2.h"
 
 #include <cstring>
@@ -64,6 +65,11 @@ void adaptCharUpdate(CBasicPacket& packet)
 
 void adaptEntityUpdate(CBasicPacket& packet)
 {
+    if (auto* entityUpdate = dynamic_cast<CEntityUpdatePacket*>(&packet))
+    {
+        entityUpdate->useJuly2009Layout();
+    }
+
     const uint8_t  flags     = packet.ref<uint8_t>(0x0A);
     const uint16_t modelType = packet.ref<uint16_t>(0x30);
     const bool     longModel =

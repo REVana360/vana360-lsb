@@ -44,7 +44,14 @@ class CEntityUpdatePacket : public CBasicPacket
 {
 public:
     CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
+    CEntityUpdatePacket(const CEntityUpdatePacket&) = default;
+
+    auto copy() const -> std::unique_ptr<CBasicPacket> override;
     void updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask);
+    void useJuly2009Layout();
+
+private:
+    bool isNpc_ = false;
 };
 
 #endif

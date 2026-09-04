@@ -257,6 +257,7 @@ std::string getTransportNPCName(CBaseEntity* PEntity)
 } // namespace
 
 CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask)
+: isNpc_(PEntity->objtype == TYPE_NPC)
 {
     this->setType(0x0E);
     this->setSize(0x58);
@@ -265,8 +266,15 @@ CEntityUpdatePacket::CEntityUpdatePacket(CBaseEntity* PEntity, ENTITYUPDATE type
     updateWith(PEntity, type, updatemask);
 }
 
+auto CEntityUpdatePacket::copy() const -> std::unique_ptr<CBasicPacket>
+{
+    return std::make_unique<CEntityUpdatePacket>(*this);
+}
+
 void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, uint8 updatemask)
 {
+    isNpc_ = PEntity->objtype == TYPE_NPC;
+
     uint32 currentId = ref<uint32>(0x04);
     if (currentId != PEntity->id)
     {
@@ -619,5 +627,24 @@ void CEntityUpdatePacket::updateWith(CBaseEntity* PEntity, ENTITYUPDATE type, ui
         // Fenced content ID
         const uint8 gateId = static_cast<CBattleEntity*>(PEntity)->StatusEffectContainer->GetConfrontationSubPower() & 0x0F;
         packet->Flags2.b   = (packet->Flags2.b & 0x0F) | (gateId << 4);
+    }
+}
+
+void CEntityUpdatePacket::useJuly2009Layout()
+{
+    // The original 0x00E handler at 7a160120a7 used 0x20 for NPC
+    // despawns and 0x07 for combat-entity despawns and door-like models.
+    auto& flags = ref<uint8>(0x0A);
+    if (flags == 0x30)
+    {
+        flags = isNpc_ ? UPDATE_DESPAWN : UPDATE_COMBAT;
+        return;
+    }
+
+    const auto modelType = ref<uint16>(0x30);
+    if (flags == UPDATE_ALL_MOB &&
+        (modelType == MODEL_DOOR || modelType == MODEL_ELEVATOR || modelType == MODEL_SHIP))
+    {
+        flags = UPDATE_COMBAT;
     }
 }

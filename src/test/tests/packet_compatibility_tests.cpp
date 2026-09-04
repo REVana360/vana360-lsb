@@ -23,6 +23,7 @@
 #include "login/session.h"
 #include "map/action/action.h"
 #include "map/entities/char_entity.h"
+#include "map/entities/mob_entity.h"
 #include "map/entities/npc_entity.h"
 #include "map/enums/four_cc.h"
 #include "map/map_session.h"
@@ -447,6 +448,53 @@ TEST_CASE("July 2009 NPC updates preserve standard and equipped models", "[packe
                 REQUIRE(packet.ref<uint16_t>(0x30 + index * sizeof(uint16_t)) == expectedLook[index]);
             }
         }
+    }
+}
+
+TEST_CASE("July 2009 NPC lifecycle masks match legacy handlers", "[packet][vana360]")
+{
+    struct LifecycleFixture
+    {
+        ENTITYUPDATE updateType;
+        bool         npc;
+        uint16_t     modelType;
+        uint8_t      modernFlags;
+        uint8_t      legacyFlags;
+        std::size_t  legacySize;
+    };
+
+    constexpr std::array<LifecycleFixture, 3> fixtures{ {
+        { ENTITY_SPAWN, true, MODEL_DOOR, UPDATE_ALL_MOB, 0x07, 0x48 },
+        { ENTITY_DESPAWN, true, MODEL_STANDARD, 0x30, UPDATE_DESPAWN, 0x38 },
+        { ENTITY_DESPAWN, false, MODEL_STANDARD, 0x30, UPDATE_COMBAT, 0x38 },
+    } };
+
+    for (const auto& fixture : fixtures)
+    {
+        std::unique_ptr<CBaseEntity> entity;
+        if (fixture.npc)
+        {
+            entity = std::make_unique<CNpcEntity>();
+        }
+        else
+        {
+            entity = std::make_unique<CMobEntity>();
+        }
+
+        entity->id        = 0x010E61B5;
+        entity->targid    = 0x01B5;
+        entity->name      = "Lifecycle";
+        entity->look.size = fixture.modelType;
+
+        CEntityUpdatePacket source(entity.get(), fixture.updateType, UPDATE_ALL_MOB);
+        REQUIRE(source.ref<uint8_t>(0x0A) == fixture.modernFlags);
+
+        auto packet = source.copy();
+        legacy_packet_adapter::adaptForJuly2009Xbox(*packet);
+
+        REQUIRE(packet->getType() == 0x00E);
+        REQUIRE(packet->getSize() == fixture.legacySize);
+        REQUIRE(packet->ref<uint8_t>(0x0A) == fixture.legacyFlags);
     }
 }
 
