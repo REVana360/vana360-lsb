@@ -23,12 +23,15 @@
 #include "login/session.h"
 #include "map/action/action.h"
 #include "map/entities/char_entity.h"
+#include "map/entities/npc_entity.h"
 #include "map/enums/four_cc.h"
 #include "map/map_session.h"
 #include "map/packets/basic.h"
 #include "map/packets/c2s/0x01a_action.h"
 #include "map/packets/c2s/0x050_equip_set.h"
 #include "map/packets/c2s/0x061_clistatus.h"
+#include "map/packets/char_update.h"
+#include "map/packets/entity_update.h"
 #include "map/packets/legacy_packet_adapter.h"
 #include "map/packets/s2c/0x028_battle2.h"
 #include "map/packets/s2c/0x03c_shop_list.h"
@@ -317,6 +320,172 @@ TEST_CASE("July 2009 Battle2 fixtures keep legacy result boundaries", "[packet][
             REQUIRE(unpackBitsBE(packet, secondTargetOffset + 32, 4) == 7);
         }
     }
+}
+
+TEST_CASE("July 2009 player updates preserve model and name fields", "[packet][vana360]")
+{
+    CCharEntity character;
+    character.id        = 0x01020304;
+    character.targid    = 0x0456;
+    character.name      = "Vanatest";
+    character.health.hp = character.health.modhp = 27;
+    character.look.size                          = MODEL_EQUIPPED;
+    character.look.face                          = 8;
+    character.look.race                          = 1;
+    character.look.head                          = 2;
+    character.look.body                          = 3;
+    character.look.hands                         = 4;
+    character.look.legs                          = 5;
+    character.look.feet                          = 6;
+    character.look.main                          = 7;
+    character.look.sub                           = 8;
+    character.look.ranged                        = 9;
+
+    CCharUpdatePacket packet(&character, ENTITY_SPAWN, UPDATE_ALL_CHAR);
+    REQUIRE(packet.getType() == 0x00D);
+    REQUIRE(packet.ref<uint16_t>(0x48) == 0x0108);
+    REQUIRE(packet.ref<uint8_t>(0x5A) == 'V');
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+    constexpr std::array<uint16_t, 9> expectedModel{
+        0x0108,
+        0x1002,
+        0x2003,
+        0x3004,
+        0x4005,
+        0x5006,
+        0x6007,
+        0x7008,
+        0x8009,
+    };
+    REQUIRE(packet.getType() == 0x00D);
+    REQUIRE(packet.getSize() == 0x60);
+    REQUIRE(packet.ref<uint32_t>(0x04) == 0x01020304);
+    REQUIRE(packet.ref<uint16_t>(0x08) == 0x0456);
+    REQUIRE(packet.ref<uint8_t>(0x0A) == UPDATE_ALL_CHAR);
+    for (std::size_t index = 0; index < expectedModel.size(); ++index)
+    {
+        REQUIRE(packet.ref<uint16_t>(0x3E + index * sizeof(uint16_t)) == expectedModel[index]);
+    }
+    for (std::size_t index = 0; index < character.name.size(); ++index)
+    {
+        REQUIRE(packet.ref<uint8_t>(0x50 + index) == character.name[index]);
+    }
+    for (std::size_t index = character.name.size(); index < 16; ++index)
+    {
+        REQUIRE(packet.ref<uint8_t>(0x50 + index) == 0);
+    }
+}
+
+TEST_CASE("July 2009 NPC updates preserve standard and equipped models", "[packet][vana360]")
+{
+    struct NpcFixture
+    {
+        uint16_t    modelType;
+        std::string name;
+        uint8_t     expectedFlags;
+    };
+
+    const std::array<NpcFixture, 2> fixtures{ {
+        { MODEL_STANDARD, "FieldManual", UPDATE_ALL_MOB },
+        { MODEL_EQUIPPED, "Cletae", 0x57 },
+    } };
+
+    for (const auto& fixture : fixtures)
+    {
+        CNpcEntity npc;
+        npc.id          = 0x010E61B5;
+        npc.targid      = 0x01B5;
+        npc.name        = fixture.name;
+        npc.look.size   = fixture.modelType;
+        npc.look.face   = 8;
+        npc.look.race   = 1;
+        npc.look.head   = 2;
+        npc.look.body   = 3;
+        npc.look.hands  = 4;
+        npc.look.legs   = 5;
+        npc.look.feet   = 6;
+        npc.look.main   = 7;
+        npc.look.sub    = 8;
+        npc.look.ranged = 9;
+
+        CEntityUpdatePacket packet(&npc, ENTITY_SPAWN, UPDATE_ALL_MOB);
+        legacy_packet_adapter::adaptForJuly2009Xbox(packet);
+
+        REQUIRE(packet.getType() == 0x00E);
+        REQUIRE(packet.getSize() == 0x48);
+        REQUIRE(packet.ref<uint32_t>(0x04) == 0x010E61B5);
+        REQUIRE(packet.ref<uint16_t>(0x08) == 0x01B5);
+        REQUIRE(packet.ref<uint8_t>(0x0A) == fixture.expectedFlags);
+        REQUIRE(packet.ref<uint16_t>(0x30) == fixture.modelType);
+
+        if (fixture.modelType == MODEL_STANDARD)
+        {
+            REQUIRE(packet.ref<uint16_t>(0x32) == 0x0108);
+            for (std::size_t index = 0; index < fixture.name.size(); ++index)
+            {
+                REQUIRE(packet.ref<uint8_t>(0x34 + index) == fixture.name[index]);
+            }
+        }
+        else
+        {
+            constexpr std::array<uint16_t, 10> expectedLook{
+                MODEL_EQUIPPED,
+                0x0108,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+            };
+            for (std::size_t index = 0; index < expectedLook.size(); ++index)
+            {
+                REQUIRE(packet.ref<uint16_t>(0x30 + index * sizeof(uint16_t)) == expectedLook[index]);
+            }
+        }
+    }
+}
+
+TEST_CASE("July 2009 client status ends before modern fields", "[packet][vana360]")
+{
+    CCharEntity character;
+    MapSession  legacySession;
+    legacySession.legacyXboxClient = true;
+    character.PSession             = &legacySession;
+    character.health.modhp         = 27;
+    character.health.modmp         = 11;
+    character.SetMJob(1);
+    character.SetSJob(0);
+    character.SetMLevel(4);
+    character.SetSLevel(0);
+    character.jobs.job[1]                    = 4;
+    character.jobs.exp[1]                    = 321;
+    character.profile.title                  = 17;
+    character.profile.rank[0]                = 1;
+    character.profile.rankpoints             = 123;
+    character.profile.home_point.destination = xi::ZoneId::SouthernSanDoria;
+    character.profile.nation                 = 0;
+
+    GP_SERV_COMMAND_CLISTATUS packet(&character);
+
+    REQUIRE(packet.getType() == 0x061);
+    REQUIRE(packet.getSize() == 0x54);
+    REQUIRE(packet.ref<int32_t>(0x04) == 27);
+    REQUIRE(packet.ref<int32_t>(0x08) == 11);
+    REQUIRE(packet.ref<uint8_t>(0x0C) == 1);
+    REQUIRE(packet.ref<uint8_t>(0x0D) == 4);
+    REQUIRE(packet.ref<uint16_t>(0x10) == 321);
+    REQUIRE(packet.ref<uint16_t>(0x44) == 17);
+    REQUIRE(packet.ref<uint16_t>(0x46) == 1);
+    REQUIRE(packet.ref<uint16_t>(0x48) == 123);
+    REQUIRE(packet.ref<uint16_t>(0x4A) == static_cast<uint16_t>(xi::ZoneId::SouthernSanDoria));
+    REQUIRE(packet.ref<uint8_t>(0x50) == 0);
+    REQUIRE(packet.ref<uint8_t>(0x52) == 0);
+    REQUIRE(packet.ref<uint8_t>(0x53) == 0);
 }
 
 TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[packet][vana360]")
