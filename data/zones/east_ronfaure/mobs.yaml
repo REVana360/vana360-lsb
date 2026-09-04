@@ -305,50 +305,6 @@ templates:
       spawn:
         type: [scripted]
 
-  Capricornus:
-    id:            6996
-    species:       pugil
-    type:          [notorious]
-    skill_list_id: 1149
-    attributes:
-      combat:
-        skill: axe
-      resists:
-        immune_status: [gravity, bind, light_sleep, dark_sleep]
-        rank_element:
-          fire:    -2
-          ice:     -3
-          wind:    -2
-          earth:   -2
-          thunder: -3
-          water:    6
-          light:   -2
-          dark:    -2
-        rank_status:
-          paralyze:    -3
-          bind:        -3
-          silence:     -2
-          slow:        -2
-          poison:       4
-          light_sleep: -2
-          dark_sleep:  -2
-          blind:       -2
-      render:
-        look:
-          type:  standard
-          model: 349
-        model_size:  2
-        hitbox:     32
-      spawn:
-        respawn: 3600
-      stats:
-        hp: 13500
-    loot:
-      drops:
-        - chance: uncommon
-          item:   fierce_belt
-    content: wotg
-
   Carrion_Worm:
     id:            656
     species:       worm
@@ -589,6 +545,7 @@ templates:
 
   Enchanted_Bones_blm:
     id:            1214
+    display_name:  Enchanted Bones
     species:       skeleton
     spell_list_id: 28
     skill_list_id: 227
@@ -638,6 +595,7 @@ templates:
 
   Enchanted_Bones_war:
     id:            6543
+    display_name:  Enchanted Bones
     species:       skeleton
     skill_list_id: 227
     attributes:
@@ -1072,213 +1030,6 @@ templates:
         chunk_of_goblin_chocolate: 0
         bowl_of_goblin_stew:       0
         goblin_mushpot:            0
-
-  Hugemaw_Harold:
-    id:            4850
-    species:       worm
-    type:          [notorious]
-    roam:          [worm]
-    spell_list_id: 9
-    skill_list_id: 258
-    attributes:
-      combat:
-        skill: scythe
-      jobs: [blm, rdm]
-      resists:
-        rank_element:
-          fire:    -2
-          ice:     -2
-          wind:    -3
-          earth:    2
-          thunder: -2
-          water:   -2
-          light:   -3
-        rank_status:
-          paralyze:    -2
-          bind:        -2
-          silence:     -3
-          slow:         2
-          poison:      -2
-          light_sleep: -3
-      render:
-        look:
-          type:  standard
-          model: 424
-        entity_flags: 133
-        name_prefix:   32
-        model_size:     2
-        hitbox:        14
-      behaviors:
-        links: true
-      spawn:
-        type: [scripted]
-
-  Krabkatoa:
-    id:            6998
-    species:       crab
-    type:          [notorious]
-    skill_list_id: 1150
-    attributes:
-      combat:
-        skill: scythe
-      jobs: [pld, war]
-      resists:
-        immune_status: [gravity, bind, paralyze, light_sleep, dark_sleep]
-        rank_element:
-          fire:    -2
-          ice:     -3
-          wind:    -2
-          earth:   -2
-          thunder: -3
-          water:    2
-          light:   -2
-          dark:    -2
-        rank_status:
-          paralyze:    -3
-          bind:        -3
-          silence:     -2
-          slow:        -2
-          poison:       2
-          light_sleep: -2
-          dark_sleep:  -2
-          blind:       -2
-      render:
-        look:
-          type:  standard
-          model: 358
-        model_size:  3
-        hitbox:     35
-      spawn:
-        respawn: 7200
-      stats:
-        hp: 39100
-    loot:
-      drops:
-        - chance: very_common
-          item:   krabkatoa_shell
-        - chance: very_common
-          item:   krabkatoa_shell
-        - chance: uncommon
-          item:   karka_ring
-        - chance: uncommon
-          item:   acubens_helm
-        - chance: common
-          item:   igneous_barnacle
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-    content: wotg
 
   Mouse_Bat_Ronf:
     id:            2757
@@ -1723,133 +1474,6 @@ templates:
         - chance: uncommon
           one_of: [kingdom_stables_collar, republic_stables_medal, federation_stables_scarf]
 
-  Quagmire_Pugil:
-    id:            6995
-    species:       pugil
-    type:          [notorious]
-    skill_list_id: 197
-    attributes:
-      combat:
-        skill: axe
-      resists:
-        immune_status: [gravity, bind, light_sleep, dark_sleep]
-        rank_element:
-          fire:    -2
-          ice:     -3
-          wind:    -2
-          earth:   -2
-          thunder: -3
-          water:    6
-          light:   -2
-          dark:    -2
-        rank_status:
-          paralyze:    -3
-          bind:        -3
-          silence:     -2
-          slow:        -2
-          poison:       4
-          light_sleep: -2
-          dark_sleep:  -2
-          blind:       -2
-      render:
-        look:
-          type:  standard
-          model: 348
-        hitbox: 23
-      spawn:
-        respawn: 300
-      stats:
-        hp: 5200
-    content: wotg
-
-  Rambukk:
-    id:            5734
-    species:       ram
-    type:          [notorious]
-    skill_list_id: 771
-    attributes:
-      combat:
-        skill: scythe
-        delay: 320
-      resists:
-        immune_status: [gravity, bind, light_sleep, dark_sleep]
-        rank_element:
-          fire:    -1
-          ice:      1
-          wind:    -1
-          earth:   -1
-          thunder: -2
-          water:   -2
-          light:   -1
-          dark:    -1
-        rank_status:
-          paralyze:     1
-          bind:         1
-          silence:     -1
-          slow:        -1
-          poison:      -2
-          light_sleep: -1
-          dark_sleep:  -1
-          blind:       -1
-      render:
-        look:
-          type:  standard
-          model: 344
-        entity_flags: 129
-        hitbox:        35
-      spawn:
-        respawn: 3600
-      stats:
-        hp: 420
-    loot:
-      drops:
-        - chance: common
-          item:   bukktooth
-    content: wotg
-
-  Sarimanok:
-    id:            5165
-    species:       puk
-    type:          [notorious]
-    spell_list_id: 21
-    skill_list_id: 198
-    attributes:
-      combat:
-        skill: dagger
-        delay: 200
-      jobs: [thf, blm]
-      resists:
-        dmg_physical:
-          piercing: 2500
-        rank_element:
-          fire:  -1
-          ice:   -2
-          wind:  11
-          earth: -1
-          water: -1
-          light: -1
-          dark:  -1
-        rank_status:
-          paralyze:    -2
-          bind:        -2
-          silence:     11
-          slow:        -1
-          poison:      -1
-          light_sleep: -1
-          dark_sleep:  -1
-          blind:       -1
-      render:
-        look:
-          type:  standard
-          model: 1745
-        entity_flags: 135
-        model_size:     3
-        hitbox:        24
-      spawn:
-        type: [scripted]
-      stats:
-        mp: 9999
-
   Scarab_Beetle:
     id:            3494
     species:       beetle
@@ -1886,47 +1510,6 @@ templates:
         insect_wing:  0
         beetle_shell: 0
         beetle_jaw:   0
-
-  Sunderclaw:
-    id:            6994
-    species:       crab
-    type:          [notorious]
-    skill_list_id: 77
-    attributes:
-      combat:
-        skill: great_sword
-      jobs: [pld, pld]
-      resists:
-        immune_status: [bind, light_sleep, dark_sleep]
-        rank_element:
-          fire:    -2
-          ice:     -3
-          wind:    -2
-          earth:   -2
-          thunder: -3
-          water:    2
-          light:   -2
-          dark:    -2
-        rank_status:
-          paralyze:    -3
-          bind:        -3
-          silence:     -2
-          slow:        -2
-          poison:       2
-          light_sleep: -2
-          dark_sleep:  -2
-          blind:       -2
-      render:
-        look:
-          type:  standard
-          model: 356
-        animation_sub:  8
-        hitbox:        11
-      spawn:
-        respawn: 300
-      stats:
-        hp: 4930
-    content: wotg
 
   Swamfisk:
     id:            3818
@@ -2194,217 +1777,6 @@ templates:
         entity_flags: 3
       spawn:
         type: [scripted]
-
-  Yacumama:
-    id:            6997
-    species:       sea_monk
-    type:          [notorious]
-    skill_list_id: 218
-    attributes:
-      combat:
-        skill: hand_to_hand
-      jobs: [mnk, mnk]
-      resists:
-        immune_status: [gravity, paralyze, slow]
-        rank_element:
-          fire:    -2
-          ice:     -3
-          wind:    -2
-          earth:   -2
-          thunder: -3
-          water:    4
-          light:   -2
-          dark:    -2
-        rank_status:
-          paralyze:    -3
-          bind:        -3
-          silence:     -2
-          slow:        -2
-          poison:       4
-          light_sleep: -2
-          dark_sleep:  -2
-          blind:       -2
-      render:
-        look:
-          type:  standard
-          model: 352
-        animation_sub: 8
-      spawn:
-        respawn: 3600
-      stats:
-        hp: 13500
-    loot:
-      drops:
-        - chance: uncommon
-          item:   backlash_torque
-    content: wotg
-
-  Yilbegan:
-    id:            6999
-    species:       zilant
-    type:          [notorious]
-    spell_list_id: 454
-    skill_list_id: 470
-    attributes:
-      combat:
-        skill: scythe
-      jobs: [blm, drk]
-      resists:
-        immune_status: [gravity, bind, light_sleep, dark_sleep]
-        rank_element:
-          fire:     2
-          ice:      4
-          wind:     2
-          earth:    4
-          thunder:  2
-          water:    4
-          dark:    11
-        rank_status:
-          paralyze:    4
-          bind:        4
-          silence:     2
-          slow:        4
-          poison:      4
-          dark_sleep: 11
-          blind:      11
-      render:
-        look:
-          type:  standard
-          model: 2174
-        model_size:  3
-        hitbox:     55
-      spawn:
-        respawn: 86400
-      stats:
-        hp: 90000
-        mp:  5000
-    loot:
-      drops:
-        - chance: uncommon
-          item:   lucky_coin
-        - chance: rare
-          item:   zilant_ring
-        - chance: rare
-          item:   galdr_ring
-        - chance: uncommon
-          item:   agronas_leggings
-        - chance: common
-          item:   square_of_scarlet_kadife
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-        - chance: uncommon
-          one_of:
-            petrified_log:             10
-            mahogany_log:               8
-            coral_fragment:           5.5
-            ebony_log:                5.5
-            chunk_of_gold_ore:          5
-            chunk_of_mythril_ore:       5
-            demon_horn:                 5
-            gold_ingot:                 5
-            handful_of_wyvern_scales:   5
-            mythril_ingot:              5
-            platinum_ingot:             5
-            ram_horn:                   5
-            chunk_of_darksteel_ore:     3
-            chunk_of_platinum_ore:      3
-            darksteel_ingot:            3
-            reraiser:                   3
-            spool_of_gold_thread:     2.5
-            square_of_raxa:           2.5
-            vile_elixir:              2.5
-            ram_skin:                   2
-            hi-reraiser:                1
-            square_of_rainbow_cloth:    1
-            vile_elixir_+1:             1
-            chunk_of_dark_ore:        0.5
-            chunk_of_earth_ore:       0.5
-            chunk_of_fire_ore:        0.5
-            chunk_of_ice_ore:         0.5
-            chunk_of_light_ore:       0.5
-            chunk_of_lightning_ore:   0.5
-            chunk_of_water_ore:       0.5
-            chunk_of_wind_ore:        0.5
-            manticore_hide:           0.5
-            philosophers_stone:       0.5
-            phoenix_feather:          0.5
-            slab_of_granite:          0.5
-            wyvern_skin:              0.5
-    content: wotg
 
 spawns:
   17190913:
@@ -3065,66 +2437,62 @@ spawns:
     at:       [355.125, -20.975, -149.927, 94]
     level:    [6, 7]
   17191044:
-    template: Rambukk
-    at:       [236.000, -20.000, -114.000, 34]
-    level:    [12, 13]
-  17191045:
     template: Pugil
     at:       [221.216, -58.155, 436.247, 127]
     level:    [2, 3]
-  17191046:
+  17191045:
     template: Pugil
     at:       [219.000, -57.000, 403.000, 80]
     level:    [2, 3]
-  17191047:
+  17191046:
     template: Pugil
     at:       [238.000, -57.000, 380.000, 127]
     level:    [2, 3]
-  17191048:
+  17191047:
     template: Pugil
     at:       [258.462, -57.974, 370.537, 28]
     level:    [2, 3]
-  17191049:
+  17191048:
     template: Forest_Hare
     at:       [275.610, -60.458, 405.042, 127]
     level:    [2, 3]
-  17191050:
+  17191049:
     template: Forest_Hare
     at:       [304.751, -58.448, 426.377, 16]
     level:    [2, 3]
-  17191051:
+  17191050:
     template: Forest_Hare
     at:       [246.419, -59.453, 386.827, 127]
     level:    [2, 3]
-  17191052:
+  17191051:
     template: Forest_Hare
     at:       [231.286, -60.028, 429.929, 113]
     level:    [2, 3]
-  17191053:
+  17191052:
     template: Forest_Hare
     at:       [294.571, -62.604, 395.085, 45]
     level:    [2, 3]
-  17191054:
+  17191053:
     template: Carrion_Worm
     at:       [295.247, -61.761, 490.655, 127]
     level:    [2, 3]
-  17191055:
+  17191054:
     template: Carrion_Worm
     at:       [309.086, -59.568, 435.499, 127]
     level:    [2, 3]
-  17191056:
+  17191055:
     template: Carrion_Worm
     at:       [433.591, -60.911, 390.574, 76]
     level:    [2, 3]
-  17191057:
+  17191056:
     template: Scarab_Beetle
     at:       [290.372, -60.281, 469.923, 127]
     level:    [4, 5]
-  17191058:
+  17191057:
     template: Goblin_Thug
     at:       [327.949, -61.729, 430.564, 127]
     level:    [3, 4]
-  17191059:
+  17191058:
     template: Ding_Bats
     at:       [286.383, -60.144, 451.346, 6]
     level:    [2, 3]
@@ -3133,7 +2501,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191060:
+  17191059:
     template: Ding_Bats
     at:       [275.225, -60.684, 392.657, 104]
     level:    [2, 3]
@@ -3142,7 +2510,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191061:
+  17191060:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [276.453, -60.349, 368.563, 115]
@@ -3152,71 +2520,71 @@ spawns:
         window:
           start: 20
           end:    6
-  17191062:
+  17191061:
     template: Forest_Hare
     at:       [561.488, -61.536, 443.483, 127]
     level:    [3, 4]
-  17191063:
+  17191062:
     template: Forest_Hare
     at:       [575.338, -62.021, 403.795, 127]
     level:    [3, 4]
-  17191064:
+  17191063:
     template: Forest_Hare
     at:       [515.515, -50.322, 345.815, 127]
     level:    [3, 4]
-  17191065:
+  17191064:
     template: Forest_Hare
     at:       [477.678, -60.594, 449.008, 127]
     level:    [3, 4]
-  17191066:
+  17191065:
     template: Forest_Hare
     at:       [557.033, -52.703, 333.883, 87]
     level:    [3, 4]
-  17191067:
+  17191066:
     template: Forest_Hare
     at:       [463.023, -51.898, 345.606, 127]
     level:    [3, 4]
-  17191068:
+  17191067:
     template: Carrion_Worm
     at:       [567.665, -51.925, 330.350, 24]
     level:    [4, 5]
-  17191069:
+  17191068:
     template: Carrion_Worm
     at:       [526.943, -60.655, 415.417, 5]
     level:    [4, 5]
-  17191070:
+  17191069:
     template: Carrion_Worm
     at:       [479.606, -60.498, 409.991, 127]
     level:    [4, 5]
-  17191071:
+  17191070:
     template: Carrion_Worm
     at:       [521.812, -60.703, 396.743, 12]
     level:    [4, 5]
-  17191072:
+  17191071:
     template: Forest_Funguar
     at:       [472.329, -50.778, 335.361, 127]
     level:    [4, 5]
-  17191073:
+  17191072:
     template: Forest_Funguar
     at:       [537.760, -50.679, 313.630, 127]
     level:    [4, 5]
-  17191074:
+  17191073:
     template: Scarab_Beetle
     at:       [516.878, -56.486, 383.029, 127]
     level:    [4, 5]
-  17191075:
+  17191074:
     template: Goblin_Thug
     at:       [557.448, -60.671, 373.980, 127]
     level:    [3, 4]
-  17191076:
+  17191075:
     template: Goblin_Thug
     at:       [505.290, -47.610, 325.669, 127]
     level:    [3, 4]
-  17191077:
+  17191076:
     template: Goblin_Weaver
     at:       [472.802, -61.855, 426.394, 127]
     level:    [4, 5]
-  17191078:
+  17191077:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -3224,7 +2592,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191079:
+  17191078:
     template: Ding_Bats
     at:       [459.510, -60.433, 398.450, 127]
     level:    [4, 5]
@@ -3233,7 +2601,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191080:
+  17191079:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     level:    [4, 5]
@@ -3242,7 +2610,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191081:
+  17191080:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [524.659, -60.630, 448.115, 112]
@@ -3252,64 +2620,64 @@ spawns:
         window:
           start: 19
           end:    5
-  17191082:
+  17191081:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     at:       [531.569, -60.721, 398.531, 11]
     level:    [4, 5]
-  17191083:
+  17191082:
     template: Forest_Hare
     at:       [697.107, -61.896, 405.046, 127]
     level:    [4, 5]
-  17191084:
+  17191083:
     template: Forest_Hare
     at:       [616.668, -57.355, 341.628, 127]
     level:    [4, 5]
-  17191085:
+  17191084:
     template: Forest_Hare
     at:       [709.552, -64.853, 430.455, 127]
     level:    [4, 5]
-  17191086:
+  17191085:
     template: Forest_Hare
     at:       [634.315, -61.037, 424.032, 127]
     level:    [4, 5]
-  17191087:
+  17191086:
     template: Forest_Hare
     at:       [630.042, -48.883, 309.281, 127]
     level:    [4, 5]
-  17191088:
+  17191087:
     template: Carrion_Worm
     at:       [691.554, -63.016, 426.718, 127]
     level:    [4, 5]
-  17191089:
+  17191088:
     template: Carrion_Worm
     at:       [620.014, -59.825, 349.651, 58]
     level:    [4, 5]
-  17191090:
+  17191089:
     template: Carrion_Worm
     at:       [625.691, -50.897, 270.652, 80]
     level:    [4, 5]
-  17191091:
+  17191090:
     template: Scarab_Beetle
     at:       [678.586, -60.975, 432.219, 127]
     level:    [5, 6]
-  17191092:
+  17191091:
     template: Scarab_Beetle
     at:       [628.103, -62.474, 412.170, 58]
     level:    [5, 6]
-  17191093:
+  17191092:
     template: Goblin_Thug
     at:       [628.722, -50.498, 257.198, 97]
     level:    [6, 7]
-  17191094:
+  17191093:
     template: Goblin_Thug
     at:       [668.199, -60.117, 424.533, 127]
     level:    [6, 7]
-  17191095:
+  17191094:
     template: Goblin_Weaver
     at:       [641.606, -60.781, 364.548, 127]
     level:    [6, 7]
-  17191096:
+  17191095:
     template: Ding_Bats
     at:       [596.422, -48.898, 306.204, 204]
     level:    [4, 5]
@@ -3318,7 +2686,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191097:
+  17191096:
     template: Ding_Bats
     at:       [663.587, -60.071, 418.189, 127]
     level:    [4, 5]
@@ -3327,7 +2695,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191098:
+  17191097:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [682.366, -60.803, 442.144, 117]
@@ -3337,7 +2705,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191099:
+  17191098:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [652.826, -47.057, 296.720, 127]
@@ -3347,54 +2715,54 @@ spawns:
         window:
           start: 19
           end:    5
-  17191100:
+  17191099:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [6, 7]
-  17191101:
+  17191100:
     template: Bomb
     level:    [8, 10]
-  17191102:
+  17191101:
     template: Goblin_Thug
     at:       [619.959, -49.581, 255.254, 125]
     level:    [4, 5]
-  17191103:
+  17191102:
     template: Goblin_Weaver
     at:       [624.772, -49.110, 252.558, 248]
     level:    [5, 6]
-  17191104:
+  17191103:
     template: Forest_Hare
     at:       [716.520, -61.957, 463.509, 109]
     level:    [5, 6]
-  17191105:
+  17191104:
     template: Forest_Hare
     at:       [754.718, -61.490, 495.185, 127]
     level:    [5, 6]
-  17191106:
+  17191105:
     template: Forest_Hare
     at:       [781.329, -61.026, 522.012, 62]
     level:    [5, 6]
-  17191107:
+  17191106:
     template: Carrion_Worm
     at:       [718.521, -60.923, 480.961, 43]
     level:    [5, 6]
-  17191108:
+  17191107:
     template: Carrion_Worm
     at:       [768.719, -60.478, 618.105, 71]
     level:    [5, 6]
-  17191109:
+  17191108:
     template: Goblin_Thug
     at:       [788.000, -60.000, 485.000, 127]
     level:    [7, 8]
-  17191110:
+  17191109:
     template: Goblin_Thug
     at:       [721.564, -62.065, 465.549, 127]
     level:    [7, 8]
-  17191111:
+  17191110:
     template: Goblin_Weaver
     at:       [738.667, -64.206, 496.091, 106]
     level:    [7, 8]
-  17191112:
+  17191111:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -3402,7 +2770,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191113:
+  17191112:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -3410,7 +2778,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191114:
+  17191113:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [765.824, -60.888, 502.530, 19]
@@ -3420,7 +2788,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191115:
+  17191114:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [697.408, -62.561, 466.032, 53]
@@ -3430,254 +2798,254 @@ spawns:
         window:
           start: 19
           end:    5
-  17191116:
+  17191115:
     template: Goblin_Thug
     at:       [784.190, -60.770, 500.722, 13]
     level:    [6, 7]
-  17191117:
+  17191116:
     template: Goblin_Weaver
     at:       [781.404, -60.886, 505.384, 127]
     level:    [6, 7]
-  17191118:
+  17191117:
     template: Pugil
     at:       [421.083, -48.095, 147.612, 127]
     level:    [3, 4]
-  17191119:
+  17191118:
     template: Pugil
     at:       [400.294, -48.798, 96.244, 127]
     level:    [3, 4]
-  17191120:
+  17191119:
     template: Pugil
     at:       [383.557, -40.789, 54.079, 127]
     level:    [3, 4]
-  17191121:
+  17191120:
     template: Forest_Hare
     at:       [414.339, -50.316, 94.081, 105]
     level:    [3, 4]
-  17191122:
+  17191121:
     template: Forest_Hare
     at:       [579.727, -52.394, 186.888, 35]
     level:    [3, 4]
-  17191123:
+  17191122:
     template: Forest_Hare
     at:       [511.026, -50.521, 191.270, 127]
     level:    [3, 4]
-  17191124:
+  17191123:
     template: Forest_Hare
     at:       [495.363, -48.254, 162.008, 127]
     level:    [3, 4]
-  17191125:
+  17191124:
     template: Carrion_Worm
     at:       [561.981, -51.030, 200.824, 127]
     level:    [3, 4]
-  17191126:
+  17191125:
     template: Carrion_Worm
     at:       [429.015, -50.732, 159.266, 117]
     level:    [3, 4]
-  17191127:
+  17191126:
     template: Scarab_Beetle
     at:       [549.797, -50.726, 149.763, 90]
     level:    [4, 5]
-  17191128:
+  17191127:
     template: Wild_Sheep
     at:       [394.093, -50.511, 76.783, 123]
     level:    [6, 7]
-  17191129:
+  17191128:
     template: Wild_Sheep
     at:       [561.571, -51.728, 189.344, 15]
     level:    [6, 7]
-  17191130:
+  17191129:
     template: Wild_Sheep
     at:       [442.913, -49.673, 128.250, 41]
     level:    [6, 7]
-  17191131:
+  17191130:
     template: Wild_Sheep
     at:       [579.946, -51.404, 167.472, 104]
     level:    [6, 7]
-  17191132:
+  17191131:
     template: Wild_Sheep
     at:       [554.904, -50.138, 98.665, 127]
     level:    [6, 7]
-  17191133:
+  17191132:
     template: Goblin_Thug
     at:       [482.065, -50.236, 167.659]
     level:    [4, 5]
-  17191134:
+  17191133:
     template: Goblin_Thug
     at:       [546.098, -50.623, 166.715, 44]
     level:    [4, 5]
-  17191135:
+  17191134:
     template: Goblin_Weaver
     at:       [475.040, -41.827, 74.369, 122]
     level:    [4, 5]
-  17191136:
+  17191135:
     template: Tainted_Hound
     at:       [499.207, -52.434, 226.130, 127]
     level:    [6, 7]
-  17191137:
+  17191136:
     template: Enchanted_Bones_war
     script:   Enchanted_Bones
     at:       [499.692, -46.731, 114.824, 127]
     level:    [5, 6]
-  17191138:
+  17191137:
     template: Forest_Hare
     at:       [507.212, -40.746, 5.111, 127]
     level:    [3, 4]
-  17191139:
+  17191138:
     template: Forest_Hare
     at:       [484.556, -34.973, -21.272, 127]
     level:    [3, 4]
-  17191140:
+  17191139:
     template: Forest_Hare
     at:       [445.536, -30.267, -79.686, 50]
     level:    [3, 4]
-  17191141:
+  17191140:
     template: Forest_Hare
     at:       [456.147, -27.775, -73.537, 101]
     level:    [3, 4]
-  17191142:
+  17191141:
     template: Carrion_Worm
     at:       [403.967, -36.822, -16.285, 127]
     level:    [3, 4]
-  17191143:
+  17191142:
     template: Carrion_Worm
     at:       [413.229, -38.467, 7.047, 10]
     level:    [3, 4]
-  17191144:
+  17191143:
     template: Scarab_Beetle
     at:       [403.331, -40.347, -1.390, 17]
     level:    [4, 5]
-  17191145:
+  17191144:
     template: Wild_Sheep
     at:       [517.978, -31.852, -31.063, 67]
     level:    [6, 7]
-  17191146:
+  17191145:
     template: Wild_Sheep
     at:       [495.985, -39.148, -6.646, 127]
     level:    [6, 7]
-  17191147:
+  17191146:
     template: Wild_Sheep
     at:       [486.619, -39.700, 59.445, 127]
     level:    [6, 7]
-  17191148:
+  17191147:
     template: Wild_Sheep
     at:       [460.108, -39.476, -9.602, 41]
     level:    [6, 7]
-  17191149:
+  17191148:
     template: Wild_Sheep
     at:       [462.854, -33.269, -25.742, 127]
     level:    [6, 7]
-  17191150:
+  17191149:
     template: Goblin_Thug
     at:       [437.399, -40.600, 0.260, 108]
     level:    [4, 5]
-  17191151:
+  17191150:
     template: Goblin_Thug
     at:       [460.847, -28.678, -56.390, 127]
     level:    [4, 5]
-  17191152:
+  17191151:
     template: Goblin_Weaver
     at:       [408.447, -39.063, -5.595, 65]
     level:    [4, 5]
-  17191153:
+  17191152:
     template: Orcish_Fodder
     at:       [480.248, -30.544, -55.194, 127]
     level:    [4, 5]
-  17191154:
+  17191153:
     template: Orcish_Mesmerizer
     at:       [485.236, -39.451, 6.472, 127]
     level:    [4, 5]
-  17191155:
+  17191154:
     template: Orcish_Grappler
     at:       [405.498, -39.522, -6.356, 18]
     level:    [4, 5]
-  17191156:
+  17191155:
     template: Bomb
     at:       [467.978, -41.702, 72.949, 127]
     level:    [8, 10]
-  17191157:
+  17191156:
     template: Tainted_Hound
     at:       [406.840, -42.245, 50.201, 32]
     level:    [6, 7]
-  17191158:
+  17191157:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     at:       [517.577, -40.488, 13.393, 73]
     level:    [5, 6]
-  17191159:
+  17191158:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     at:       [399.666, -37.235, -18.780, 127]
     level:    [5, 6]
-  17191160:
+  17191159:
     template: Forest_Hare
     at:       [404.712, -20.673, -199.010, 127]
     level:    [4, 5]
-  17191161:
+  17191160:
     template: Forest_Hare
     at:       [275.081, -18.165, -266.404, 21]
     level:    [4, 5]
-  17191162:
+  17191161:
     template: Forest_Hare
     at:       [328.741, -19.007, -250.198, 127]
     level:    [4, 5]
-  17191163:
+  17191162:
     template: Forest_Hare
     at:       [408.825, -19.633, -260.623, 12]
     level:    [4, 5]
-  17191164:
+  17191163:
     template: Forest_Hare
     at:       [283.929, -20.815, -240.951, 127]
     level:    [4, 5]
-  17191165:
+  17191164:
     template: Carrion_Worm
     at:       [319.043, -20.431, -341.646, 81]
     level:    [4, 5]
-  17191166:
+  17191165:
     template: Forest_Funguar
     at:       [354.804, -21.289, -215.870, 127]
     level:    [5, 6]
-  17191167:
+  17191166:
     template: Forest_Funguar
     at:       [312.310, -21.979, -226.885, 127]
     level:    [5, 6]
-  17191168:
+  17191167:
     template: Forest_Funguar
     at:       [326.899, -20.475, -275.411, 127]
     level:    [5, 6]
-  17191169:
+  17191168:
     template: Scarab_Beetle
     at:       [359.878, -18.440, -252.685, 9]
     level:    [5, 6]
-  17191170:
+  17191169:
     template: Scarab_Beetle
     at:       [239.850, -20.790, -260.269, 127]
     level:    [5, 6]
-  17191171:
+  17191170:
     template: Wild_Sheep
     at:       [263.047, -20.561, -268.955, 97]
     level:    [7, 8]
-  17191172:
+  17191171:
     template: Wild_Sheep
     at:       [270.649, -19.351, -264.466, 127]
     level:    [7, 8]
-  17191173:
+  17191172:
     template: Wild_Sheep
     at:       [312.077, -17.212, -258.733, 91]
     level:    [7, 8]
-  17191174:
+  17191173:
     template: Orcish_Fodder
     at:       [280.287, -20.181, -313.448, 127]
     level:    [5, 6]
-  17191175:
+  17191174:
     template: Orcish_Mesmerizer
     at:       [326.687, -20.859, -346.239, 24]
     level:    [5, 6]
-  17191176:
+  17191175:
     template: Orcish_Grappler
     at:       [369.438, -20.498, -294.390, 127]
     level:    [5, 6]
-  17191177:
+  17191176:
     template: Ding_Bats
     at:       [332.154, -22.508, -223.977, 127]
     level:    [4, 5]
@@ -3686,7 +3054,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191178:
+  17191177:
     template: Ding_Bats
     at:       [240.970, -20.375, -248.212, 127]
     level:    [4, 5]
@@ -3695,7 +3063,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191179:
+  17191178:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [369.485, -20.499, -294.462, 127]
@@ -3705,7 +3073,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191180:
+  17191179:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [263.697, -21.805, -231.649, 127]
@@ -3715,111 +3083,111 @@ spawns:
         window:
           start: 19
           end:    5
-  17191181:
+  17191180:
     template: Tainted_Hound
     level:    [7, 8]
-  17191182:
+  17191181:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [4, 5]
-  17191183:
+  17191182:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     at:       [282.476, -20.161, -313.288, 21]
     level:    [6, 7]
-  17191184:
+  17191183:
     template: Orcish_Fodder
     at:       [385.000, -19.000, -183.000, 47]
     level:    [5, 6]
-  17191185:
+  17191184:
     template: Orcish_Mesmerizer
     at:       [383.000, -19.000, -189.000, 127]
     level:    [5, 6]
-  17191186:
+  17191185:
     template: Orcish_Grappler
     at:       [379.677, -20.216, -185.262, 127]
     level:    [5, 6]
-  17191187:
+  17191186:
     template: Pugil
     at:       [379.120, -27.898, -46.436, 17]
     level:    [4, 5]
-  17191188:
+  17191187:
     template: Pugil
     at:       [417.542, -17.210, -177.883, 127]
     level:    [4, 5]
-  17191189:
+  17191188:
     template: Swamfisk
     at:       [458.000, -16.000, -316.000, 128]
     level:    [11, 15]
-  17191190:
+  17191189:
     template: Forest_Hare
     at:       [464.491, -18.989, -172.013, 127]
     level:    [4, 5]
-  17191191:
+  17191190:
     template: Forest_Hare
     at:       [452.656, -16.988, -223.546, 127]
     level:    [4, 5]
-  17191192:
+  17191191:
     template: Forest_Hare
     at:       [497.177, -20.700, -240.256, 127]
     level:    [4, 5]
-  17191193:
+  17191192:
     template: Forest_Hare
     at:       [431.256, -19.966, -181.523, 108]
     level:    [4, 5]
-  17191194:
+  17191193:
     template: Carrion_Worm
     at:       [453.625, -18.436, -127.048, 45]
     level:    [4, 5]
-  17191195:
+  17191194:
     template: Carrion_Worm
     at:       [480.384, -17.286, -265.147, 127]
     level:    [4, 5]
-  17191196:
+  17191195:
     template: Bigmouth_Billy
     at:       [476.000, -30.000, -32.000, 127]
     level:    [9, 10]
-  17191197:
+  17191196:
     template: Scarab_Beetle
     at:       [519.894, -20.768, -224.701, 50]
     level:    [5, 6]
-  17191198:
+  17191197:
     template: Wild_Sheep
     at:       [479.302, -20.744, -204.474, 127]
     level:    [7, 8]
-  17191199:
+  17191198:
     template: Wild_Sheep
     at:       [476.632, -17.204, -257.336, 127]
     level:    [7, 8]
-  17191200:
+  17191199:
     template: Wild_Sheep
     at:       [442.311, -20.365, -146.430, 71]
     level:    [7, 8]
-  17191201:
+  17191200:
     template: Goblin_Thug
     at:       [440.615, -19.760, -231.831, 127]
     level:    [5, 6]
-  17191202:
+  17191201:
     template: Goblin_Weaver
     at:       [491.947, -14.569, -337.076, 121]
     level:    [5, 6]
-  17191203:
+  17191202:
     template: Goblin_Weaver
     at:       [465.276, -16.639, -131.524, 127]
     level:    [5, 6]
-  17191204:
+  17191203:
     template: Orcish_Fodder
     at:       [467.998, -18.949, -210.121, 24]
     level:    [5, 6]
-  17191205:
+  17191204:
     template: Orcish_Mesmerizer
     at:       [466.021, -17.899, -114.728, 115]
     level:    [5, 6]
-  17191206:
+  17191205:
     template: Orcish_Grappler
     at:       [526.426, -21.177, -258.394, 127]
     level:    [5, 6]
-  17191207:
+  17191206:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -3827,7 +3195,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191208:
+  17191207:
     template: Ding_Bats
     at:       [465.871, -20.894, -279.978, 127]
     level:    [4, 5]
@@ -3836,7 +3204,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191209:
+  17191208:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [564.787, -20.629, -311.000, 127]
@@ -3846,7 +3214,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191210:
+  17191209:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [463.116, -17.666, -116.548, 127]
@@ -3856,87 +3224,87 @@ spawns:
         window:
           start: 19
           end:    5
-  17191211:
+  17191210:
     template: Tainted_Hound
     at:       [440.196, -20.709, -158.935, 127]
     level:    [7, 8]
+  17191211:
+    template: Enchanted_Bones_blm
+    script:   Enchanted_Bones
+    level:    [6, 7]
   17191212:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [6, 7]
   17191213:
-    template: Enchanted_Bones_blm
-    script:   Enchanted_Bones
-    level:    [6, 7]
-  17191214:
     template: Forest_Hare
     at:       [192.314, -20.439, -321.246, 127]
     level:    [4, 5]
-  17191215:
+  17191214:
     template: Forest_Hare
     at:       [168.333, -19.169, -329.956, 127]
     level:    [4, 5]
-  17191216:
+  17191215:
     template: Forest_Hare
     at:       [205.527, -11.189, -363.539, 60]
     level:    [4, 5]
-  17191217:
+  17191216:
     template: Forest_Hare
     at:       [259.669, -20.024, -371.511, 28]
     level:    [4, 5]
-  17191218:
+  17191217:
     template: Forest_Hare
     at:       [170.180, -13.298, -345.349, 71]
     level:    [4, 5]
-  17191219:
+  17191218:
     template: Carrion_Worm
     at:       [328.869, -6.610, -418.020, 127]
     level:    [5, 6]
-  17191220:
+  17191219:
     template: Forest_Funguar
     at:       [156.460, -10.674, -375.569, 127]
     level:    [5, 6]
-  17191221:
+  17191220:
     template: Forest_Funguar
     at:       [234.143, -20.202, -342.069, 127]
     level:    [5, 6]
-  17191222:
+  17191221:
     template: Forest_Funguar
     at:       [177.423, -8.300, -417.341, 74]
     level:    [5, 6]
-  17191223:
+  17191222:
     template: Scarab_Beetle
     at:       [266.354, -9.111, -412.385, 127]
     level:    [5, 6]
-  17191224:
+  17191223:
     template: Scarab_Beetle
     at:       [168.446, -19.924, -329.925, 25]
     level:    [5, 6]
-  17191225:
+  17191224:
     template: Wild_Sheep
     at:       [281.711, -20.583, -354.080, 127]
     level:    [7, 8]
-  17191226:
+  17191225:
     template: Wild_Sheep
     at:       [246.152, -10.816, -395.365, 30]
     level:    [7, 8]
-  17191227:
+  17191226:
     template: Wild_Sheep
     at:       [193.056, -10.595, -372.595, 127]
     level:    [7, 8]
-  17191228:
+  17191227:
     template: Orcish_Fodder
     at:       [226.858, -19.627, -335.959, 37]
     level:    [7, 8]
-  17191229:
+  17191228:
     template: Orcish_Mesmerizer
     at:       [195.507, -21.083, -319.388, 54]
     level:    [7, 8]
-  17191230:
+  17191229:
     template: Orcish_Grappler
     at:       [261.384, -11.947, -391.963, 38]
     level:    [7, 8]
-  17191231:
+  17191230:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -3944,7 +3312,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191232:
+  17191231:
     template: Ding_Bats
     at:       [266.609, -10.881, -398.952, 32]
     level:    [4, 5]
@@ -3953,7 +3321,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191233:
+  17191232:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     level:    [5, 6]
@@ -3962,7 +3330,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191234:
+  17191233:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [235.012, -3.217, -424.266, 11]
@@ -3972,38 +3340,38 @@ spawns:
         window:
           start: 19
           end:    5
-  17191235:
+  17191234:
     template: Bomb
     level:    [8, 10]
-  17191236:
+  17191235:
     template: Tainted_Hound
     at:       [333.003, -7.529, -413.435, 15]
     level:    [7, 8]
-  17191237:
+  17191236:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [6, 6]
-  17191238:
+  17191237:
     template: Forest_Hare
     at:       [140.826, -3.357, -468.523, 127]
     level:    [5, 6]
-  17191239:
+  17191238:
     template: Forest_Hare
     at:       [83.162, -2.472, -514.456, 127]
     level:    [5, 6]
-  17191240:
+  17191239:
     template: Forest_Hare
     at:       [151.578, -0.557, -484.878, 127]
     level:    [5, 6]
-  17191241:
+  17191240:
     template: Goblin_Thug
     at:       [141.636, -0.811, -531.508, 97]
     level:    [7, 8]
-  17191242:
+  17191241:
     template: Goblin_Weaver
     at:       [167.362, -0.518, -447.993, 127]
     level:    [7, 8]
-  17191243:
+  17191242:
     template: Ding_Bats
     at:       [138.388, -0.786, -497.775, 80]
     level:    [4, 5]
@@ -4012,7 +3380,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191244:
+  17191243:
     template: Ding_Bats
     at:       [106.188, -0.998, -511.451, 104]
     level:    [4, 5]
@@ -4021,47 +3389,47 @@ spawns:
         window:
           start: 19
           end:    5
-  17191245:
+  17191244:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [7, 8]
-  17191246:
+  17191245:
     template: Forest_Hare
     at:       [238.788, -0.937, -519.567, 127]
     level:    [5, 6]
-  17191247:
+  17191246:
     template: Forest_Hare
     at:       [305.663, -0.927, -493.446, 73]
     level:    [5, 6]
-  17191248:
+  17191247:
     template: Forest_Hare
     at:       [345.141, -1.002, -527.738, 124]
     level:    [5, 6]
-  17191249:
+  17191248:
     template: Wild_Sheep
     at:       [280.436, -1.533, -433.457, 127]
     level:    [7, 8]
-  17191250:
+  17191249:
     template: Wild_Sheep
     at:       [248.671, 0.986, -468.740, 19]
     level:    [7, 8]
-  17191251:
+  17191250:
     template: Wild_Sheep
     at:       [314.000, -0.010, -515.000, 127]
     level:    [7, 8]
-  17191252:
+  17191251:
     template: Goblin_Thug
     at:       [281.416, -0.010, -488.727, 38]
     level:    [7, 8]
-  17191253:
+  17191252:
     template: Goblin_Weaver
     at:       [246.861, -0.341, -488.349, 80]
     level:    [7, 8]
-  17191254:
+  17191253:
     template: Goblin_Weaver
     at:       [351.398, -0.998, -557.823, 127]
     level:    [7, 8]
-  17191255:
+  17191254:
     template: Ding_Bats
     at:       [267.012, 0.922, -473.695, 3]
     level:    [4, 5]
@@ -4070,7 +3438,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191256:
+  17191255:
     template: Ding_Bats
     at:       [261.255, -0.993, -495.776, 28]
     level:    [4, 5]
@@ -4079,82 +3447,82 @@ spawns:
         window:
           start: 19
           end:    5
-  17191257:
+  17191256:
     template: Tainted_Hound
     level:    [7, 8]
+  17191257:
+    template: Enchanted_Bones_blm
+    script:   Enchanted_Bones
+    level:    [6, 7]
   17191258:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     level:    [6, 7]
   17191259:
-    template: Enchanted_Bones_blm
-    script:   Enchanted_Bones
-    level:    [6, 7]
-  17191260:
     template: Goblin_Thug
     at:       [300.313, 0.065, -496.409, 11]
     level:    [7, 8]
-  17191261:
+  17191260:
     template: Goblin_Weaver
     at:       [297.018, 0.309, -492.617, 127]
     level:    [7, 8]
-  17191262:
+  17191261:
     template: Forest_Hare
     at:       [440.611, -10.543, -386.549, 127]
     level:    [5, 6]
-  17191263:
+  17191262:
     template: Forest_Hare
     at:       [348.801, -20.533, -327.184, 67]
     level:    [5, 6]
-  17191264:
+  17191263:
     template: Forest_Hare
     at:       [436.160, -11.247, -414.904, 127]
     level:    [5, 6]
-  17191265:
+  17191264:
     template: Forest_Funguar
     at:       [385.055, -14.983, -347.995, 127]
     level:    [5, 6]
-  17191266:
+  17191265:
     template: Forest_Funguar
     at:       [402.037, -10.510, -368.526, 86]
     level:    [5, 6]
-  17191267:
+  17191266:
     template: Forest_Funguar
     at:       [379.263, -20.763, -316.885, 127]
     level:    [5, 6]
-  17191268:
+  17191267:
     template: Scarab_Beetle
     at:       [400.181, -20.804, -299.633, 127]
     level:    [6, 7]
-  17191269:
+  17191268:
     template: Scarab_Beetle
     at:       [369.467, -19.634, -333.443, 96]
     level:    [6, 7]
-  17191270:
+  17191269:
     template: Wild_Sheep
     at:       [422.202, -19.916, -327.748, 77]
     level:    [7, 8]
-  17191271:
+  17191270:
     template: Wild_Sheep
     at:       [370.157, -20.720, -306.139, 127]
     level:    [7, 8]
-  17191272:
+  17191271:
     template: Wild_Sheep
     at:       [441.383, -10.433, -388.673, 103]
     level:    [7, 8]
-  17191273:
+  17191272:
     template: Orcish_Fodder
     at:       [392.228, -19.185, -330.174, 127]
     level:    [7, 8]
-  17191274:
+  17191273:
     template: Orcish_Mesmerizer
     at:       [381.560, -20.963, -310.741, 127]
     level:    [7, 8]
-  17191275:
+  17191274:
     template: Orcish_Grappler
     at:       [416.470, -10.948, -369.691, 127]
     level:    [7, 8]
-  17191276:
+  17191275:
     template: Ding_Bats
     level:    [4, 5]
     attributes:
@@ -4162,7 +3530,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191277:
+  17191276:
     template: Ding_Bats
     at:       [427.567, -10.161, -388.767, 107]
     level:    [4, 5]
@@ -4171,7 +3539,7 @@ spawns:
         window:
           start: 19
           end:    5
-  17191278:
+  17191277:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [448.447, -10.732, -417.660, 23]
@@ -4181,107 +3549,107 @@ spawns:
         window:
           start: 20
           end:    6
-  17191279:
+  17191278:
     template: Enchanted_Bones_war
     script:   Enchanted_Bones
     at:       [419.205, -10.778, -369.002, 134]
     level:    [7, 8]
-  17191280:
+  17191279:
     template: Forest_Hare
     at:       [463.428, -7.598, -485.614, 41]
     level:    [5, 6]
-  17191281:
+  17191280:
     template: Goblin_Thug
     at:       [461.148, -7.993, -465.875, 56]
     level:    [6, 7]
-  17191282:
+  17191281:
     template: Goblin_Weaver
     at:       [474.941, -9.779, -471.781, 3]
     level:    [6, 7]
-  17191283:
+  17191282:
     template: Goblin_Weaver
     at:       [445.066, -9.562, -447.695, 127]
     level:    [6, 7]
-  17191284:
+  17191283:
     template: Goblin_Fisher
     at:       [442.865, -10.249, -357.357, 127]
     level:    [5, 6]
-  17191285:
+  17191284:
     template: Goblin_Fisher
     at:       [447.000, -19.000, -285.000, 97]
     level:    [5, 6]
-  17191286:
+  17191285:
     template: Goblin_Fisher
     at:       [470.062, -12.166, -347.448, 127]
     level:    [5, 6]
-  17191287:
+  17191286:
     template: Pugil
     at:       [443.334, -17.000, -303.275, 127]
     level:    [4, 5]
-  17191288:
+  17191287:
     template: Pugil
     at:       [423.000, -16.000, -285.000, 20]
     level:    [4, 5]
-  17191289:
+  17191288:
     template: Pugil
     at:       [461.268, -6.674, -391.342, 55]
     level:    [4, 5]
-  17191290:
+  17191289:
     template: Pugil
     at:       [459.345, -6.686, -363.842, 127]
     level:    [4, 5]
-  17191291:
+  17191290:
     template: Swamfisk
     at:       [461.000, -6.000, -356.000, 127]
     level:    [11, 15]
-  17191292:
+  17191291:
     template: Forest_Hare
     at:       [599.111, -10.987, -440.922, 2]
     level:    [5, 6]
-  17191293:
+  17191292:
     template: Forest_Hare
     at:       [570.556, -6.544, -461.640, 58]
     level:    [5, 6]
-  17191294:
+  17191293:
     template: Forest_Hare
     at:       [508.261, -10.604, -413.391, 127]
     level:    [5, 6]
-  17191295:
+  17191294:
     template: Forest_Hare
     at:       [561.314, -10.394, -413.734, 127]
     level:    [5, 6]
-  17191296:
+  17191295:
     template: Carrion_Worm
     at:       [540.405, -7.531, -424.258, 94]
     level:    [5, 6]
-  17191297:
+  17191296:
     template: Scarab_Beetle
     at:       [586.555, -11.469, -433.392, 127]
     level:    [6, 7]
-  17191298:
+  17191297:
     template: Scarab_Beetle
     at:       [503.825, -9.165, -347.860, 120]
     level:    [6, 7]
-  17191299:
+  17191298:
     template: Wild_Sheep
     at:       [580.757, -12.062, -429.875, 127]
     level:    [7, 8]
-  17191300:
+  17191299:
     template: Wild_Sheep
     at:       [534.881, -10.381, -477.078, 102]
     level:    [7, 8]
-  17191301:
+  17191300:
     template: Orcish_Fodder
     level:    [7, 8]
-  17191302:
+  17191301:
     template: Orcish_Mesmerizer
     at:       [538.979, -11.088, -357.675, 37]
     level:    [7, 8]
-  17191303:
+  17191302:
     template: Orcish_Grappler
     at:       [521.805, -9.964, -366.619, 118]
     level:    [7, 8]
-  17191304:
+  17191303:
     template: Ding_Bats
     at:       [527.311, -12.251, -345.848, 127]
     level:    [4, 5]
@@ -4290,7 +3658,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191305:
+  17191304:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [551.047, -6.201, -452.388, 36]
@@ -4300,40 +3668,40 @@ spawns:
         window:
           start: 19
           end:    5
-  17191306:
+  17191305:
     template: Enchanted_Bones_blm
     script:   Enchanted_Bones
     at:       [520.549, -9.949, -390.652, 54]
     level:    [7, 8]
-  17191307:
+  17191306:
     template: Forest_Hare
     at:       [654.552, -14.247, -499.155, 19]
     level:    [5, 6]
-  17191308:
+  17191307:
     template: Forest_Hare
     at:       [632.629, -11.020, -474.346, 112]
     level:    [5, 6]
-  17191309:
+  17191308:
     template: Scarab_Beetle
     at:       [638.048, -10.223, -531.692, 127]
     level:    [6, 7]
-  17191310:
+  17191309:
     template: Scarab_Beetle
     at:       [635.663, -10.773, -490.983, 120]
     level:    [6, 7]
-  17191311:
+  17191310:
     template: Wild_Sheep
     at:       [632.242, -12.033, -540.019, 127]
     level:    [7, 8]
-  17191312:
+  17191311:
     template: Wild_Sheep
     at:       [648.064, -14.130, -478.684, 23]
     level:    [7, 8]
-  17191313:
+  17191312:
     template: Wild_Sheep
     at:       [592.992, -7.864, -500.549, 74]
     level:    [7, 8]
-  17191314:
+  17191313:
     template: Ding_Bats
     at:       [629.663, -10.078, -505.404, 127]
     level:    [4, 5]
@@ -4342,7 +3710,7 @@ spawns:
         window:
           start: 20
           end:    6
-  17191315:
+  17191314:
     template: Mouse_Bat_Ronf
     script:   Mouse_Bat
     at:       [570.908, -9.424, -506.854, 127]
@@ -4352,11 +3720,14 @@ spawns:
         window:
           start: 19
           end:    5
-  17191316:
+  17191315:
     template: Goblin_Digger_near
     script:   Goblin_Digger
     at:       [357.813, -10.344, -411.927, 11]
     level:    [7, 8]
+  17191316:
+    template: Pixie
+    level:    [53, 55]
   17191317:
     template: Pixie
     level:    [53, 55]
@@ -4370,370 +3741,131 @@ spawns:
     template: Pixie
     level:    [53, 55]
   17191321:
-    template: Pixie
-    level:    [53, 55]
-  17191322:
     template: Gawky_Gawain
     level:    [1, 1]
-  17191323:
-    template: Yilbegan
-    at:       [1.000, 1.000, 1.000]
-    level:    [90, 92]
-  17191324:
-    template: Krabkatoa
-    at:       [1.000, 1.000, 1.000]
-    level:    [85, 85]
-  17191325:
-    template: Yacumama
-    at:       [1.000, 1.000, 1.000]
-    level:    [82, 82]
-  17191326:
-    template: Capricornus
-    at:       [1.000, 1.000, 1.000]
-    level:    [82, 82]
-  17191327:
-    template: Quagmire_Pugil
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191328:
-    template: Quagmire_Pugil
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191329:
-    template: Quagmire_Pugil
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191330:
-    template: Quagmire_Pugil
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191331:
-    template: Sunderclaw
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191332:
-    template: Sunderclaw
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191333:
-    template: Sunderclaw
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191334:
-    template: Sunderclaw
-    at:       [1.000, 1.000, 1.000]
-    level:    [80, 80]
-  17191335:
-    template: Sarimanok
-    at:       [289.896, -62.945, 369.265, 32]
-    level:    [94, 95]
-  17191336:
-    template: Sarimanok
-    at:       [183.000, -20.601, -315.000, 141]
-    level:    [94, 95]
-  17191337:
-    template: Sarimanok
-    at:       [434.000, -51.483, 315.000, 134]
-    level:    [94, 95]
-  17191338:
-    script: Tatenashi_Armor
-  17191339:
-    script: Hizamaru_Armor
-  17191340:
-    script: Ubuginu_Armor
-  17191341:
-    script: Hachiryu_Armor
-  17191342:
-    script: Omodaka_Armor
-  17191343:
+  17191322:
     template: Bull_[Herd1]
     level:    [1, 1]
-  17191344:
+  17191323:
     template: Cow_[Herd1]
     level:    [1, 1]
-  17191345:
+  17191324:
     template: Cow_[Herd1]
     level:    [1, 1]
-  17191346:
+  17191325:
     template: Cow_[Herd1]
     level:    [1, 1]
-  17191347:
+  17191326:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191348:
+  17191327:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191349:
+  17191328:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191350:
+  17191329:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191351:
+  17191330:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191352:
+  17191331:
     template: Calf_[Herd1]
     level:    [1, 1]
-  17191353:
+  17191332:
     template: Bull_[Herd2]
     level:    [1, 1]
-  17191354:
+  17191333:
     template: Cow_[Herd2]
     level:    [1, 1]
-  17191355:
+  17191334:
     template: Cow_[Herd2]
     level:    [1, 1]
-  17191356:
+  17191335:
     template: Cow_[Herd2]
     level:    [1, 1]
-  17191357:
+  17191336:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191358:
+  17191337:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191359:
+  17191338:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191360:
+  17191339:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191361:
+  17191340:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191362:
+  17191341:
     template: Calf_[Herd2]
     level:    [1, 1]
-  17191363:
+  17191342:
     template: Bull_[Herd3]
     level:    [1, 1]
-  17191364:
+  17191343:
     template: Cow_[Herd3]
     level:    [1, 1]
-  17191365:
+  17191344:
     template: Cow_[Herd3]
     level:    [1, 1]
-  17191366:
+  17191345:
     template: Cow_[Herd3]
     level:    [1, 1]
-  17191367:
+  17191346:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191368:
+  17191347:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191369:
+  17191348:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191370:
+  17191349:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191371:
+  17191350:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191372:
+  17191351:
     template: Calf_[Herd3]
     level:    [1, 1]
-  17191383:
+  17191362:
     template: Pyracmon
     level:    [1, 1]
-  17191384:
+  17191363:
     template: Wraith_Bat
     level:    [1, 1]
-  17191385:
+  17191364:
     template: Wraith_Bat
     level:    [1, 1]
-  17191386:
+  17191365:
     template: Wraith_Bat
     level:    [1, 1]
-  17191387:
+  17191366:
     template: Wraith_Bat
     level:    [1, 1]
-  17191388:
+  17191367:
     template: Wraith_Bat
     level:    [1, 1]
-  17191389:
+  17191368:
     template: Wraith_Bat
     level:    [1, 1]
-  17191390:
+  17191369:
     template: Wraith_Bat
     level:    [1, 1]
-  17191391:
+  17191370:
     template: Wraith_Bat
     level:    [1, 1]
-  17191392:
+  17191371:
     template: Wraith_Bat
     level:    [1, 1]
-  17191393:
+  17191372:
     template: Wraith_Bat
     level:    [1, 1]
-  17191394:
-    script: Astral_Box
-  17191395:
-    script: Astral_Box
-  17191396:
-    script: Astral_Box
-  17191397:
-    script: Astral_Box
-  17191398:
-    script: Astral_Box
-  17191399:
-    script: Astral_Box
-  17191400:
-    script: Astral_Box
-  17191401:
-    script: Astral_Box
-  17191402:
-    script: Astral_Box
-  17191403:
-    script: Astral_Box
-  17191404:
-    script: Astral_Box
-  17191405:
-    script: Astral_Box
-  17191406:
-    script: Astral_Box
-  17191407:
-    script: Astral_Box
-  17191408:
-    script: Astral_Box
-  17191409:
-    script: Astral_Box
-  17191410:
-    script: Astral_Box
-  17191411:
-    script: Astral_Box
-  17191412:
-    script: Astral_Box
-  17191413:
-    script: Astral_Box
-  17191414:
-    script: Astral_Box
-  17191415:
-    script: Astral_Box
-  17191416:
-    script: Astral_Box
-  17191417:
-    script: Astral_Box
-  17191418:
-    script: Astral_Box
-  17191419:
-    script: Astral_Box
-  17191420:
-    script: Astral_Box
-  17191421:
-    script: Astral_Box
-  17191422:
-    script: Astral_Box
-  17191423:
-    script: Astral_Box
-  17191424:
-    script: Astral_Box
-  17191425:
-    script: Astral_Box
-  17191426:
-    script: Astral_Box
-  17191427:
-    script: Astral_Box
-  17191428:
-    script: Astral_Box
-  17191429:
-    script: Astral_Box
-  17191430:
-    script: Astral_Box
-  17191431:
-    script: Astral_Box
-  17191432:
-    script: Astral_Box
-  17191433:
-    script: Astral_Box
-  17191434:
-    script: Astral_Box
-  17191435:
-    script: Astral_Box
-  17191436:
-    script: Slime
-  17191437:
-    script: Slime
-  17191438:
-    script: Slime
-  17191439:
-    script: Slime
-  17191440:
-    script: Slime
-  17191441:
-    script: Slime
-  17191442:
-    script: Slime
-  17191443:
-    script: Slime
-  17191444:
-    script: Slime
-  17191445:
-    script: Slime
-  17191446:
-    script: Slime
-  17191447:
-    script: Slime
-  17191448:
-    script: Slime
-  17191449:
-    script: Slime
-  17191450:
-    script: Slime
-  17191451:
-    script: Slime
-  17191452:
-    script: Slime
-  17191453:
-    script: Slime
-  17191454:
-    script: Slime
-  17191455:
-    script: Slime
-  17191456:
-    script: She-Slime
-  17191457:
-    script: She-Slime
-  17191458:
-    script: She-Slime
-  17191459:
-    script: She-Slime
-  17191460:
-    script: She-Slime
-  17191461:
-    script: She-Slime
-  17191462:
-    script: She-Slime
-  17191463:
-    script: She-Slime
-  17191464:
-    script: She-Slime
-  17191465:
-    script: She-Slime
-  17191466:
-    script: Metal_Slime
-  17191467:
-    script: Metal_Slime
-  17191468:
-    script: Metal_Slime
-  17191469:
-    script: Metal_Slime
-  17191470:
-    script: Metal_Slime
-  17191471:
-    template: Hugemaw_Harold
-    at:       [522.229, -30.500, -41.479, 236]
-    level:    [75, 75]
-  17191472:
-    template: Hugemaw_Harold
-    at:       [237.740, -20.500, -160.000, 148]
-    level:    [75, 75]
-  17191473:
-    template: Hugemaw_Harold
-    at:       [565.270, -10.755, -378.179, 164]
-    level:    [75, 75]
 
 slots:
   - members:
@@ -4782,123 +3914,123 @@ slots:
       17191034: {} # Wild_Sheep
       17191043: {} # Tainted_Hound
   - members:
-      17191049: {} # Forest_Hare
-      17191059: {} # Ding_Bats
+      17191048: {} # Forest_Hare
+      17191058: {} # Ding_Bats
+  - members:
+      17191061: {} # Forest_Hare
+      17191077: {} # Ding_Bats
   - members:
       17191062: {} # Forest_Hare
-      17191078: {} # Ding_Bats
+      17191079: {} # Mouse_Bat
   - members:
-      17191063: {} # Forest_Hare
-      17191080: {} # Mouse_Bat
+      17191074: {} # Goblin_Thug
+      17191081: {} # Enchanted_Bones
   - members:
-      17191075: {} # Goblin_Thug
-      17191082: {} # Enchanted_Bones
+      17191082: {} # Forest_Hare
+      17191095: {} # Ding_Bats
   - members:
       17191083: {} # Forest_Hare
-      17191096: {} # Ding_Bats
+      17191097: {} # Mouse_Bat
   - members:
-      17191084: {} # Forest_Hare
-      17191098: {} # Mouse_Bat
+      17191090: {} # Scarab_Beetle
+      17191100: {} # Bomb
   - members:
-      17191091: {} # Scarab_Beetle
-      17191101: {} # Bomb
+      17191092: {} # Goblin_Thug
+      17191099: {} # Enchanted_Bones
   - members:
-      17191093: {} # Goblin_Thug
-      17191100: {} # Enchanted_Bones
+      17191103: {} # Forest_Hare
+      17191111: {} # Ding_Bats
   - members:
       17191104: {} # Forest_Hare
       17191112: {} # Ding_Bats
   - members:
-      17191105: {} # Forest_Hare
-      17191113: {} # Ding_Bats
+      17191127: {} # Wild_Sheep
+      17191135: {} # Tainted_Hound
   - members:
-      17191128: {} # Wild_Sheep
-      17191136: {} # Tainted_Hound
+      17191132: {} # Goblin_Thug
+      17191136: {} # Enchanted_Bones
   - members:
-      17191133: {} # Goblin_Thug
-      17191137: {} # Enchanted_Bones
+      17191143: {} # Scarab_Beetle
+      17191155: {} # Bomb
   - members:
-      17191144: {} # Scarab_Beetle
-      17191156: {} # Bomb
+      17191144: {} # Wild_Sheep
+      17191156: {} # Tainted_Hound
   - members:
-      17191145: {} # Wild_Sheep
-      17191157: {} # Tainted_Hound
+      17191152: {} # Orcish_Fodder
+      17191157: {} # Enchanted_Bones
   - members:
-      17191153: {} # Orcish_Fodder
+      17191153: {} # Orcish_Mesmerizer
       17191158: {} # Enchanted_Bones
   - members:
-      17191154: {} # Orcish_Mesmerizer
-      17191159: {} # Enchanted_Bones
+      17191159: {} # Forest_Hare
+      17191176: {} # Ding_Bats
   - members:
       17191160: {} # Forest_Hare
-      17191177: {} # Ding_Bats
+      17191178: {} # Mouse_Bat
   - members:
-      17191161: {} # Forest_Hare
-      17191179: {} # Mouse_Bat
+      17191170: {} # Wild_Sheep
+      17191180: {} # Tainted_Hound
   - members:
-      17191171: {} # Wild_Sheep
-      17191181: {} # Tainted_Hound
+      17191173: {} # Orcish_Fodder
+      17191181: {} # Enchanted_Bones
+      17191183: {} # Orcish_Fodder
   - members:
-      17191174: {} # Orcish_Fodder
+      17191174: {} # Orcish_Mesmerizer
       17191182: {} # Enchanted_Bones
-      17191184: {} # Orcish_Fodder
+      17191184: {} # Orcish_Mesmerizer
   - members:
-      17191175: {} # Orcish_Mesmerizer
-      17191183: {} # Enchanted_Bones
-      17191185: {} # Orcish_Mesmerizer
+      17191175: {} # Orcish_Grappler
+      17191185: {} # Orcish_Grappler
   - members:
-      17191176: {} # Orcish_Grappler
-      17191186: {} # Orcish_Grappler
+      17191189: {} # Forest_Hare
+      17191206: {} # Ding_Bats
   - members:
       17191190: {} # Forest_Hare
-      17191207: {} # Ding_Bats
+      17191208: {} # Mouse_Bat
   - members:
-      17191191: {} # Forest_Hare
-      17191209: {} # Mouse_Bat
+      17191197: {} # Wild_Sheep
+      17191210: {} # Tainted_Hound
   - members:
-      17191198: {} # Wild_Sheep
-      17191211: {} # Tainted_Hound
+      17191203: {} # Orcish_Fodder
+      17191211: {} # Enchanted_Bones
   - members:
-      17191204: {} # Orcish_Fodder
+      17191204: {} # Orcish_Mesmerizer
       17191212: {} # Enchanted_Bones
   - members:
-      17191205: {} # Orcish_Mesmerizer
-      17191213: {} # Enchanted_Bones
+      17191213: {} # Forest_Hare
+      17191230: {} # Ding_Bats
   - members:
       17191214: {} # Forest_Hare
-      17191231: {} # Ding_Bats
+      17191232: {} # Mouse_Bat
   - members:
-      17191215: {} # Forest_Hare
-      17191233: {} # Mouse_Bat
+      17191222: {} # Scarab_Beetle
+      17191234: {} # Bomb
   - members:
-      17191223: {} # Scarab_Beetle
-      17191235: {} # Bomb
+      17191224: {} # Wild_Sheep
+      17191235: {} # Tainted_Hound
   - members:
-      17191225: {} # Wild_Sheep
-      17191236: {} # Tainted_Hound
+      17191227: {} # Orcish_Fodder
+      17191236: {} # Enchanted_Bones
   - members:
-      17191228: {} # Orcish_Fodder
-      17191237: {} # Enchanted_Bones
+      17191240: {} # Goblin_Thug
+      17191244: {} # Enchanted_Bones
   - members:
-      17191241: {} # Goblin_Thug
-      17191245: {} # Enchanted_Bones
+      17191248: {} # Wild_Sheep
+      17191256: {} # Tainted_Hound
   - members:
-      17191249: {} # Wild_Sheep
-      17191257: {} # Tainted_Hound
+      17191251: {} # Goblin_Thug
+      17191257: {} # Enchanted_Bones
+      17191259: {} # Goblin_Thug
   - members:
-      17191252: {} # Goblin_Thug
+      17191252: {} # Goblin_Weaver
       17191258: {} # Enchanted_Bones
-      17191260: {} # Goblin_Thug
+      17191260: {} # Goblin_Weaver
   - members:
-      17191253: {} # Goblin_Weaver
-      17191259: {} # Enchanted_Bones
-      17191261: {} # Goblin_Weaver
+      17191261: {} # Forest_Hare
+      17191275: {} # Ding_Bats
   - members:
-      17191262: {} # Forest_Hare
-      17191276: {} # Ding_Bats
+      17191272: {} # Orcish_Fodder
+      17191278: {} # Enchanted_Bones
   - members:
-      17191273: {} # Orcish_Fodder
-      17191279: {} # Enchanted_Bones
-  - members:
-      17191301: {} # Orcish_Fodder
-      17191306: {} # Enchanted_Bones
+      17191300: {} # Orcish_Fodder
+      17191305: {} # Enchanted_Bones

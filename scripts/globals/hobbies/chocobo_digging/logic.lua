@@ -290,7 +290,9 @@ end
 
 local function handleFatigue(player, text, todayDigCount)
     if math.randomInt(1, 100) <= player:getMod(xi.mod.DIG_BYPASS_FATIGUE) then
-        player:messageSpecial(text.FOUND_ITEM_WITH_EASE)
+        if text.FOUND_ITEM_WITH_EASE then
+            player:messageSpecial(text.FOUND_ITEM_WITH_EASE)
+        end
     else
         xi.chocoboDig.updateFatigue(player, todayDigCount + 1)
     end

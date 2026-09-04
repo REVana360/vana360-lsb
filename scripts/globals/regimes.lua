@@ -1138,6 +1138,7 @@ end
 xi.regime.bookOnEventFinish = function(player, option, regimeType)
     local zoneId       = player:getZoneID()
     local msgOffset    = zones[zoneId].text.REGIME_REGISTERED
+    local noTabs       = zones[zoneId].text.NOT_ENOUGH_TABS or msgOffset + 1032
     local tabs         = player:getCurrency('valor_point')
     local regimeRepeat = bit.band(option, 0x80000000)
     local hasKI        = player:hasKeyItem(xi.ki.RHAPSODY_IN_WHITE)
@@ -1164,7 +1165,7 @@ xi.regime.bookOnEventFinish = function(player, option, regimeType)
 
     -- check player has enough tabs
     if cost and cost > tabs then
-        player:showText(player, msgOffset + 1032) -- You do not have enough tabs.
+        player:showText(player, noTabs)
         return
     end
 

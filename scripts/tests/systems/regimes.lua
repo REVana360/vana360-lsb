@@ -12,6 +12,13 @@ describe('July 2009 training regimes', function()
         xi.settings.main.REGIME_WAIT = originalRegimeWait
     end)
 
+    it('uses July East Ronfaure field manual text', function()
+        local text = zones[xi.zone.EAST_RONFAURE].text
+
+        assert(text.REGIME_REGISTERED == 1812, 'registration message does not match the July DAT')
+        assert(text.NOT_ENOUGH_TABS == 2076, 'tabs message does not match the July DAT')
+    end)
+
     it("allows only one undertaking per Vana'diel day", function()
         local vanadielDay = VanadielUniqueDay()
 

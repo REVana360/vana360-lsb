@@ -4,31 +4,6 @@ xi.voidwalker = xi.voidwalker or {}
 
 xi.voidwalker.pos =
 {
-    -- Aquan path
-    [xi.zone.EAST_RONFAURE] =
-    {
-        [1] =  { mobId = nil, pos = { 374, -45,  138 } },
-        [2] =  { mobId = nil, pos = { 466, -45,  140 } },
-        [3] =  { mobId = nil, pos = { 469, -35,   21 } },
-        [4] =  { mobId = nil, pos = { 381, -36,   14 } },
-        [5] =  { mobId = nil, pos = { 299, -39,  -23 } },
-        [6] =  { mobId = nil, pos = { 313, -29,  -98 } },
-        [7] =  { mobId = nil, pos = { 447, -26,  -69 } },
-        [8] =  { mobId = nil, pos = { 485, -20, -137 } },
-        [9] =  { mobId = nil, pos = { 495, -18, -251 } },
-        [10] = { mobId = nil, pos = { 389, -16, -337 } },
-        [11] = { mobId = nil, pos = { 348,   0, -478 } },
-        [12] = { mobId = nil, pos = { 546,  -7, -401 } },
-        [13] = { mobId = nil, pos = { 614, -10, -472 } },
-        [14] = { mobId = nil, pos = { 479, -59,  430 } },
-        [15] = { mobId = nil, pos = { 268, -59,  445 } },
-        [16] = { mobId = nil, pos = { 379, -16, -112 } },
-        [17] = { mobId = nil, pos = { 167, -20, -112 } },
-        [18] = { mobId = nil, pos = { 126, -30,  -31 } },
-        [19] = { mobId = nil, pos = {  86, -49,  111 } },
-        [20] = { mobId = nil, pos = { 266, -48,  252 } },
-    },
-
     [xi.zone.EAST_RONFAURE_S] =
     {
         [1] =  { mobId = nil, pos = { 277, -49, 210 } },

@@ -2857,22 +2857,6 @@ xi.roe.records =
         reward = { sparks = 250, exp = 500 },
     },
 
-    [217] =
-    { -- Conflict: East Ronfaure
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.EAST_RONFAURE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 10, exp = 500, accolades = 5, item = { xi.item.BRASS_HARNESS } },
-    },
-
-    [218] =
-    { -- Subjugation: Swamfisk
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        reqs = { mobID = set { 17191189, 17191291 } },
-        reward = { sparks = 250, exp = 500 },
-    },
-
     [219] =
     { -- Conflict: Ghelsba Outpost
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -4294,15 +4278,6 @@ xi.roe.records =
     -----------------------------------
     -- Harvesting - Original Areas
     -----------------------------------
-
-    [180] =
-    { -- Harvesting: East Ronfaure
-        trigger = xi.roeTrigger.HELM_SUCCESS,
-        goal = 5,
-        reqs = { zone = set { xi.zone.EAST_RONFAURE } },
-        flags = set { 'repeat' },
-        reward = { sparks = 100, exp = 500, accolades = 10, item = { { xi.item.HATCHET, 12 } } },
-    },
 
     [181] =
     { -- Harvesting: Ghelsba Outpost
@@ -6500,14 +6475,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3491] =
-    { -- Subjugation: Rambukk (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        reqs = { mobID = set { 17191044 }, unityLeader = xi.unityLeader.PIEUJE },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 1000 },
-    },
-
     [3492] =
     { -- Heal Unity Allies (UC)
         trigger = xi.roeTrigger.HEAL_UNITY_ALLY,
@@ -7927,15 +7894,6 @@ xi.roe.records =
         reward = { sparks = 100, exp = 500, accolades = 500 },
     },
 
-    [3654] =
-    { -- Conflict: East Ronfaure (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        goal = 10,
-        reqs = { zone = set { xi.zone.EAST_RONFAURE }, unityLeader = xi.unityLeader.FLAVIRIA },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 300 },
-    },
-
     [3655] =
     { -- Vanquish Beetles (UC)
         trigger = xi.roeTrigger.DEFEAT_MOB,
@@ -7943,14 +7901,6 @@ xi.roe.records =
         reqs = { mobFamily = set { xi.mobFamily.BEETLE }, mobXP = true, unityLeader = xi.unityLeader.FLAVIRIA },
         flags = set { 'unity' },
         reward = { sparks = 100, exp = 500, accolades = 500 },
-    },
-
-    [3656] =
-    { -- Subjugation: Bigmouth Billy (UC)
-        trigger = xi.roeTrigger.DEFEAT_MOB,
-        reqs = { mobID = set { 17191196 }, unityLeader = xi.unityLeader.FLAVIRIA },
-        flags = set { 'unity' },
-        reward = { sparks = 100, exp = 500, accolades = 1000 },
     },
 
     -----------------------------------
