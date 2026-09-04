@@ -96,7 +96,6 @@
 #include "monstrosity.h"
 #include "packets/s2c/0x039_mapschedulor.h"
 #include "petskill.h"
-#include "roe.h"
 #include "spell.h"
 #include "status_effect_container.h"
 #include "trade_container.h"
@@ -383,8 +382,6 @@ void init(IPP mapIPP, bool isRunningInCI)
     lua.set_function("GetItemIDByName", &luautils::GetItemIDByName);
     lua.set_function("SendItemToDeliveryBox", &luautils::SendItemToDeliveryBox);
     lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
-    lua.set_function("RoeParseRecords", &roeutils::ParseRecords);
-    lua.set_function("RoeParseTimed", &roeutils::ParseTimedSchedule);
     lua.set_function("GetSynergyRecipeByID", &luautils::GetSynergyRecipeByID);
     lua.set_function("GetSynergyRecipeByTrade", &luautils::GetSynergyRecipeByTrade);
     lua.set_function("ReloadSynthRecipes", &synthutils::LoadSynthRecipes);

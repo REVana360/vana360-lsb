@@ -49,7 +49,6 @@ xi.settings.network =
         GP_CLI_COMMAND_MOTION          = 1000, -- Emotes
         GP_CLI_COMMAND_SHOP_BUY        = 250,  -- Vendor Shop Purchase
         GP_CLI_COMMAND_GUILD_BUY       = 250,  -- Guild Shop Purchase
-        GP_CLI_COMMAND_ASSIST_CHANNEL  = 1000, -- Assist Channel
         GP_CLI_COMMAND_TRACKING_LIST   = 1000, -- Wide Scan
         GP_CLI_COMMAND_TRACKING_START  = 1000, -- Wide Scan Track
         GP_CLI_COMMAND_MASTERY_DISPLAY = 2000, -- Set Job Master Display

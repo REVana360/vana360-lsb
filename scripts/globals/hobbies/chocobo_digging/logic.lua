@@ -4,7 +4,6 @@
 -- https://www.bg-wiki.com/bg/Category:Chocobo_Digging
 -----------------------------------
 require('scripts/globals/hobbies/chocobo_digging/data')
-require('scripts/globals/roe')
 require('scripts/missions/amk/helpers')
 -----------------------------------
 xi = xi or {}
@@ -380,7 +379,6 @@ xi.chocoboDig.start = function(player)
     if trasureItemId > 0 then
         handleItemObtained(player, text, trasureItemId)
         handleFatigue(player, text, todayDigCount)
-        player:triggerRoeEvent(xi.roeTrigger.CHOCOBO_DIG_SUCCESS)
 
         return true
     end
@@ -411,7 +409,7 @@ xi.chocoboDig.start = function(player)
         handleItemObtained(player, text, boreItemId)
     end
 
-    -- Handle no item OR record of eminence.
+    -- Handle unsuccessful digging.
     if
         regularItemId == 0 and
         burrowItemId == 0 and
@@ -420,7 +418,6 @@ xi.chocoboDig.start = function(player)
         player:messageText(player, text.FIND_NOTHING)
     else
         handleFatigue(player, text, todayDigCount)
-        player:triggerRoeEvent(xi.roeTrigger.CHOCOBO_DIG_SUCCESS)
     end
 
     -- Dig ended. Send digging animation to players.

@@ -155,8 +155,6 @@ set(PACKET_S2C_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_monstrosity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_status_icons.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_status_icons.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_unity.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_unity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_unknown.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x063_miscdata_unknown.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x065_wpos2.h
@@ -273,12 +271,6 @@ set(PACKET_S2C_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10a_bazaar_sale.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10e_reqsubmapnum.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10e_reqsubmapnum.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x110_unity.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x110_unity.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x111_roe_activelog.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x111_roe_activelog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x112_roe_log.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x112_roe_log.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x113_currencies_1.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x113_currencies_1.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x115_fish.h

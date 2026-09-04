@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../schemas/zone.schema.json
 
 type: [city]
-misc: [mazurka, auction_house, yell, los_player_block, assist]
+misc: [mazurka, auction_house, yell, los_player_block]
 music:
   day:          178
   night:        178

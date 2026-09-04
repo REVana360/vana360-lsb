@@ -18,7 +18,6 @@ CREATE TABLE `char_unlocks` (
   `abyssea_conflux` blob DEFAULT NULL,
   `waypoints` blob DEFAULT NULL,
   `eschan_portals` blob DEFAULT NULL,
-  `claimed_deeds` blob DEFAULT NULL,
   `unique_event` blob DEFAULT NULL,
   `maze_vouchers` blob DEFAULT NULL,
   `maze_runes` blob DEFAULT NULL,

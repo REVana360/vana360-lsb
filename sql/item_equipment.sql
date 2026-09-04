@@ -12925,17 +12925,6 @@ INSERT INTO `item_equipment` VALUES (25730,'nzingha_cuirass',99,119,10689,202,0,
 INSERT INTO `item_equipment` VALUES (25731,'sayadios_kaftan',99,119,2593826,234,0,0,32,0,0,0);
 INSERT INTO `item_equipment` VALUES (25732,'tatena._haramaki',99,119,7171,227,0,0,32,0,0,0);
 INSERT INTO `item_equipment` VALUES (25733,'tatena._harama._+1',99,119,7171,227,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25734,'pieuje_unity_shirt',1,0,4194303,424,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25735,'ayame_unity_shirt',1,0,4194303,425,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25736,'i._shield_unity_shirt',1,0,4194303,426,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25737,'apururu_unity_shirt',1,0,4194303,427,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25738,'maat_unity_shirt',1,0,4194303,428,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25739,'aldo_unity_shirt',1,0,4194303,429,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25740,'jakoh_unity_shirt',1,0,4194303,430,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25741,'naja_unity_shirt',1,0,4194303,431,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25742,'flaviria_unity_shirt',1,0,4194303,432,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25743,'yoran_unity_shirt',1,0,4194303,433,0,0,32,0,0,0);
-INSERT INTO `item_equipment` VALUES (25744,'sylvie_unity_shirt',1,0,4194303,434,0,0,32,0,0,0);
 INSERT INTO `item_equipment` VALUES (25745,'sulevias_plate.',99,119,8385,182,0,0,32,0,0,0);
 INSERT INTO `item_equipment` VALUES (25746,'sulevias_plate._+1',99,119,8385,182,0,0,32,0,0,0);
 INSERT INTO `item_equipment` VALUES (25747,'meghanada_cuirie',99,119,2426144,183,0,0,32,0,0,0);

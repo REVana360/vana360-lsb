@@ -60,7 +60,6 @@ public:
         // Keep track of the zones, as well as a list of unique ip / port combinations.
         std::set<IPP> mapEndpointSet;
         std::set<IPP> yellMapEndpointSet;
-        std::set<IPP> assistMapEndpointSet;
 
         while (rset->next())
         {
@@ -83,17 +82,11 @@ public:
                 yellMapEndpointSet.insert(zone_settings.ipp);
             }
 
-            if (zone_settings.misc & static_cast<uint32>(xi::ZoneMisc::Assist))
-            {
-                assistMapEndpointSet.insert(zone_settings.ipp);
-            }
-
             zoneSettingsMap_[zone_settings.zoneid] = zone_settings;
         }
 
         std::ranges::copy(mapEndpointSet, std::back_inserter(mapEndpoints_));
         std::ranges::copy(yellMapEndpointSet, std::back_inserter(yellMapEndpoints_));
-        std::ranges::copy(assistMapEndpointSet, std::back_inserter(assistMapEndpoints_));
     }
 
     // TODO: Properly encapsulate this
@@ -101,5 +94,4 @@ public:
     HashMap<xi::ZoneId, ZoneSettingsEntry> zoneSettingsMap_;
     std::vector<IPP>                       mapEndpoints_;
     std::vector<IPP>                       yellMapEndpoints_;
-    std::vector<IPP>                       assistMapEndpoints_;
 };

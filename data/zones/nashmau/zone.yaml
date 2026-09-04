@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../schemas/zone.schema.json
 
 type: [outdoors]
-misc: [mazurka, mogmenu, auction_house, yell, assist]
+misc: [mazurka, mogmenu, auction_house, yell]
 music:
   day:          175
   night:        175

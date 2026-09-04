@@ -34,10 +34,6 @@ xi.conquest.bestowSignet = function(player, pNation, pRank, mOffset)
     player:delStatusEffectsByFlag(xi.effectFlag.INFLUENCE, true)
     player:addStatusEffect(xi.effect.SIGNET, { duration = duration, origin = player })
     player:messageSpecial(mOffset + 1) -- 'You've received your nation's Signet!'
-
-    if player:getEminenceProgress(3367) then
-        xi.roe.onRecordTrigger(player, 3367) -- Complete Weekly Signet, brb objective.  This might be able to move to a status effect trigger
-    end
 end
 
 -----------------------------------

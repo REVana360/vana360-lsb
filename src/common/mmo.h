@@ -99,8 +99,8 @@ struct filters2_t
     uint32_t yell : 1;
     uint32_t messages_from_alter_egos : 1;
     uint32_t unused18 : 1;
-    uint32_t assist_j : 1;
-    uint32_t assist_e : 1;
+    uint32_t unused19 : 1;
+    uint32_t unused20 : 1;
     uint32_t unused21 : 1;
     uint32_t unused22 : 1;
     uint32_t unused23 : 1;
@@ -294,20 +294,6 @@ struct campaignlog_t
 {
     uint16 current;
     bool   complete[512];
-};
-
-struct eminencelog_t
-{
-    uint16 active[31]; // slot 31 is for time-limited records
-    uint32 progress[31];
-    uint8  complete[512]; // bitmap of all 4096 possible records.
-};
-
-struct eminencecache_t
-{
-    xi::bitset<4096>  activemap;
-    timer::time_point lastWriteout;
-    bool              notifyTimedRecord;
 };
 
 struct nameflags_t

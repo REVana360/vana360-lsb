@@ -30,13 +30,6 @@
 enum CHAT_MESSAGE_TYPE : uint8_t;
 class CCharEntity;
 
-namespace ipc
-{
-
-struct ChatMessageAssist;
-
-}
-
 // https://github.com/atom0s/XiPackets/tree/main/world/server/0x0017
 // This packet is sent by the server to display chat messages to the client.
 // The contents of this packet can vary based on the message Kind.
@@ -57,7 +50,4 @@ public:
 
     // Zone-based constructor
     GP_SERV_COMMAND_CHAT_STD(const std::string& name, xi::ZoneId zone, CHAT_MESSAGE_TYPE MessageType, const std::string& message, uint8 gmLevel = 0);
-
-    // IPC assist constructor
-    GP_SERV_COMMAND_CHAT_STD(const ipc::ChatMessageAssist& payload);
 };

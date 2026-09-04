@@ -435,8 +435,6 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
             finalDamage = math.floor(finalDamage * xi.spells.damage.calculateIfMagicBurstBonus(caster, target, spellId, skillType, spellElement))
 
             spell:setMsg(spell:getMagicBurstMessage()) -- "Magic Burst!"
-
-            caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
         end
 
         caster:delStatusEffectSilent(xi.effect.BURST_AFFINITY)
@@ -501,8 +499,6 @@ xi.spells.blue.useDrainSpell = function(caster, target, spell, params, damageCap
             finalDamage = math.floor(finalDamage * xi.spells.damage.calculateIfMagicBurstBonus(caster, target, spellId, skillType, spellElement))
 
             spell:setMsg(spell:getMagicBurstMessage()) -- "Magic Burst!"
-
-            caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
         end
 
         caster:delStatusEffectSilent(xi.effect.BURST_AFFINITY)
@@ -770,7 +766,6 @@ xi.spells.blue.useEnfeeblingSpell = function(caster, target, spell, params)
         -- Add "Magic Burst!" message
         if skillchainCount > 0 then
             spell:setMsg(xi.msg.basic.MAGIC_BURST_ENFEEB_IS)
-            caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
         else
             spell:setMsg(xi.msg.basic.MAGIC_ENFEEB_IS)
         end

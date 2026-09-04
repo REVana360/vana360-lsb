@@ -22,7 +22,6 @@
 #include "zoneutils.h"
 
 #include "ai/ai_container.h"
-#include "aman.h"
 #include "battlefield.h"
 #include "campaign_system.h"
 #include "common/logging.h"
@@ -1498,7 +1497,6 @@ void AfterZoneIn(CBaseEntity* PEntity)
         GetZone(PChar->getZone())->updateCharLevelRestriction(PChar);
     }
 
-    PChar->aman().onZoneIn();
     luautils::AfterZoneIn(PChar);
 }
 

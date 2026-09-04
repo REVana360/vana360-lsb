@@ -28,6 +28,4 @@ enum class ChatMessageArea : uint8_t
     Shout  = 2, // Shout
     Party  = 3, // Party and Alliance
     Yell   = 4, // Yell zones only
-    Unity  = 5, // Currently -all- unities
-    Assist = 6, // Assist zones
 };

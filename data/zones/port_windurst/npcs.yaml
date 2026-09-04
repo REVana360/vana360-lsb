@@ -4120,17 +4120,6 @@ npcs:
     widescan: true
     content:  survival_guide
 
-  17760514:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17760515:
     script: blank
     render:
@@ -4493,27 +4482,6 @@ npcs:
       name_prefix:    32
     status:   cutscene_only
     widescan: true
-
-  17760542:
-    script:       AMAN_Liaison
-    display_name: A.M.A.N. Liaison
-    at:           [187.500, -12.000, 217.180, 206]
-    render:
-      look:
-        type:  equipped
-        race:  7
-        face:  10
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      name_vis:  1
-      moving:   14
-    status:  normal
-    content: soa
 
   17760543:
     script: blank

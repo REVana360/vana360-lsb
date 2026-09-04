@@ -78,7 +78,7 @@ public:
         uint16_t infamy;
         uint16_t prestige;
         int32_t  legion_points;
-        int32_t  sparks_of_eminence;
+        int32_t  padding74;
         int32_t  shining_stars;
         int32_t  imperial_standing;
         int32_t  assault_points_l_sanctum;
@@ -127,7 +127,7 @@ public:
         uint64_t unused : 19;
         uint16_t reclamation_marks;
         uint16_t padding00;
-        int32_t  unity_accolades;
+        int32_t  paddingE4;
         uint16_t fire_crystals_stored;
         uint16_t ice_crystals_stored;
         uint16_t wind_crystals_stored;
@@ -136,7 +136,7 @@ public:
         uint16_t water_crystals_stored;
         uint16_t light_crystals_stored;
         uint16_t dark_crystals_stored;
-        uint16_t deeds;
+        uint16_t paddingF8;
         uint16_t padding01;
     };
 

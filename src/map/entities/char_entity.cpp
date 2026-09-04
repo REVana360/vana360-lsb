@@ -62,7 +62,6 @@
 #include "ai/states/weaponskill_state.h"
 
 #include "ability.h"
-#include "aman.h"
 #include "battlefield.h"
 #include "char_recast_container.h"
 
@@ -97,7 +96,6 @@
 #include "trade_container.h"
 #include "treasure_pool.h"
 #include "trust_entity.h"
-#include "unitychat.h"
 #include "universal_container.h"
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
@@ -168,9 +166,6 @@ CCharEntity::CCharEntity()
 
     std::memset(&m_questLog, 0, sizeof(m_questLog));
     std::memset(&m_missionLog, 0, sizeof(m_missionLog));
-    m_eminenceCache.activemap.reset();
-
-    std::memset(&m_claimedDeeds, 0, sizeof(m_claimedDeeds));
 
     for (uint8 i = 0; i <= 3; ++i)
     {
@@ -220,7 +215,6 @@ CCharEntity::CCharEntity()
 
     PLinkshell1   = nullptr;
     PLinkshell2   = nullptr;
-    PUnityChat    = nullptr;
     PTreasurePool = nullptr;
 
     PClaimedMob            = nullptr;
@@ -295,11 +289,6 @@ CCharEntity::~CCharEntity()
     if (PLinkshell2 != nullptr)
     {
         PLinkshell2->DelMember(this);
-    }
-
-    if (PUnityChat != nullptr)
-    {
-        PUnityChat->DelMember(this);
     }
 
     if (isDead())
@@ -827,15 +816,6 @@ auto CCharEntity::getStorage(const uint8 locationId) const -> CItemContainer*
 
     ShowWarning("Unhandled or Invalid Location ID (%d) passed to function.", locationId);
     return nullptr;
-}
-
-auto CCharEntity::aman() -> CAMANContainer&
-{
-    if (!m_AMAN)
-    {
-        m_AMAN = CAMANContainer(this);
-    }
-    return *m_AMAN;
 }
 
 auto CCharEntity::lastProposalCloseTime() const -> timer::time_point

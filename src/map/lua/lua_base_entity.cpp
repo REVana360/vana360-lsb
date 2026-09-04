@@ -35,7 +35,6 @@
 #include "ability.h"
 #include "action/action.h"
 #include "alliance.h"
-#include "aman.h"
 #include "battlefield.h"
 #include "conquest_system.h"
 #include "data/enums/mob_mod.h"
@@ -53,7 +52,6 @@
 #include "mobskill.h"
 #include "notoriety_container.h"
 #include "recast_container.h"
-#include "roe.h"
 #include "spawn_handler.h"
 #include "spawn_slot.h"
 #include "spell.h"
@@ -412,31 +410,6 @@ void CLuaBaseEntity::printToArea(const std::string& message, const sol::object& 
             .senderId    = PChar->id,
             .senderName  = name,
             .message     = message,
-            .messageType = messageLook,
-        });
-
-        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(PChar, messageLook, message, name));
-    }
-    else if (messageRange == ChatMessageArea::Unity)
-    {
-        message::send(ipc::ChatMessageUnity{
-            .unityLeaderId = PChar->id,
-            .senderId      = PChar->id,
-            .senderName    = name,
-            .message       = message,
-            .messageType   = messageLook,
-        });
-
-        PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_CHAT_STD>(PChar, messageLook, message, name));
-    }
-    else if (messageRange == ChatMessageArea::Assist)
-    {
-        message::send(ipc::ChatMessageAssist{
-            .senderId    = PChar->id,
-            .senderName  = name,
-            .message     = message,
-            .mentorRank  = PChar->aman().isMentor() ? PChar->aman().getMentorRank() : static_cast<uint8>(0),
-            .masteryRank = PChar->aman().getMasteryRank(),
             .messageType = messageLook,
         });
 
@@ -6642,7 +6615,7 @@ auto CLuaBaseEntity::getMentor() const -> bool
     }
 
     CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return PChar->aman().hasMentorUnlocked();
+    return PChar->m_mentorUnlocked;
 }
 
 /************************************************************************
@@ -6659,8 +6632,9 @@ void CLuaBaseEntity::setMentor(bool mentor) const
         return;
     }
 
-    CCharEntity* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    PChar->aman().setMentorUnlocked(mentor);
+    CCharEntity* PChar      = static_cast<CCharEntity*>(m_PBaseEntity);
+    PChar->m_mentorUnlocked = mentor;
+    db::preparedStmt("UPDATE chars SET mentor = ? WHERE charid = ?", mentor, PChar->id);
 
     PChar->updatemask |= UPDATE_HP;
 }
@@ -8459,7 +8433,6 @@ void CLuaBaseEntity::completeQuest(QuestLog logId, uint16 questID) const
             charutils::SendPartialQuestLog(PChar, logId, false);
             charutils::SendPartialQuestLog(PChar, logId, true);
             charutils::SaveQuestsList(PChar);
-            roeutils::event(ROE_QUEST_COMPLETE, PChar, RoeDatagramList{});
         }
     }
     else
@@ -8652,7 +8625,6 @@ void CLuaBaseEntity::completeMission(MissionLog logId, const uint16 missionID) c
 
             charutils::SendPartialMissionLog(PChar, logId, false);
             charutils::SaveMissionsList(PChar);
-            roeutils::event(ROE_MISSION_COMPLETE, PChar, RoeDatagramList{});
         }
     }
     else
@@ -8778,364 +8750,6 @@ void CLuaBaseEntity::sendPartialMissionLog(MissionLog logId, bool completed) con
     {
         charutils::SendPartialMissionLog(PChar, logId, completed);
     }
-}
-
-/************************************************************************
- *  Function: setEminenceCompleted()
- *  Purpose :
- *  Example : player:setEminenceCompleted(1)
- *  Notes   : optional arg 1 flags for repeat record (1/0) (Does not remove from log)
- *            optional arg 2 can set completion state explicitly (1/0)
- ************************************************************************/
-
-void CLuaBaseEntity::setEminenceCompleted(uint16 recordID, const sol::object& arg1, const sol::object& arg2)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    bool repeat = (arg1 != sol::lua_nil) ? arg1.as<bool>() : false;
-    bool status = (arg2 != sol::lua_nil) ? arg2.as<bool>() : true;
-
-    if (repeat)
-    {
-        roeutils::SetEminenceRecordProgress(PChar, recordID, 0);
-    }
-    else
-    {
-        roeutils::DelEminenceRecord(PChar, recordID);
-    }
-
-    roeutils::SetEminenceRecordCompletion(PChar, recordID, status);
-}
-
-/************************************************************************
- *  Function: getEminenceCompleted()
- *  Purpose : Returns true if eminence is flagged complete for player
- *  Example : player:getEminenceCompleted(1)
- *  Notes   :
- ************************************************************************/
-
-bool CLuaBaseEntity::getEminenceCompleted(uint16 recordID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return false;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    return roeutils::GetEminenceRecordCompletion(PChar, recordID);
-}
-
-uint16 CLuaBaseEntity::getNumEminenceCompleted()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return 0;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    return roeutils::GetNumEminenceCompleted(PChar);
-}
-
-/************************************************************************
- *  Function: setEminenceProgress(record, progress, total)
- *  Purpose :
- *  Example : player:setEminenceProgress(12, 3, 200)
- *  Notes   : The 3rd param is optional. However, no message will be shown if not given.
- ************************************************************************/
-
-bool CLuaBaseEntity::setEminenceProgress(uint16 recordID, uint32 progress, const sol::object& arg2)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return false;
-    }
-
-    auto*  PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint32 total = arg2.get_type() == sol::type::number ? arg2.as<uint32>() : 0;
-
-    // Determine threshold for sending progress messages
-    bool progressNotify{ true };
-    if (uint32 threshold = roeutils::RoeSystem.NotifyThresholds[recordID]; threshold > 1)
-    {
-        uint32 prevStep = roeutils::GetEminenceRecordProgress(PChar, recordID) / threshold;
-        uint32 nextStep = progress / threshold;
-        progressNotify  = nextStep > prevStep;
-    }
-
-    bool result = roeutils::SetEminenceRecordProgress(PChar, recordID, progress);
-
-    if (total && progressNotify)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, recordID, 0, MsgBasic::ROERecord);
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, progress, total, MsgBasic::ROEProgress);
-    }
-
-    return result;
-}
-
-/************************************************************************
- *  Function: getEminenceProgress(record)
- *  Purpose :
- *  Example : player:getEminenceProgress(19)
- *  Notes   : returns nil if player does not have the record.
- ************************************************************************/
-
-Maybe<uint32> CLuaBaseEntity::getEminenceProgress(uint16 recordID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return std::nullopt;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    if (roeutils::HasEminenceRecord(PChar, recordID))
-    {
-        return roeutils::GetEminenceRecordProgress(PChar, recordID);
-    }
-
-    // TODO: Verify that 0-return is acceptable in previous nil-cases (Its not)
-    return std::nullopt;
-}
-
-/************************************************************************
- *  Function: hasEminenceRecord(record)
- *  Purpose : Returns true if the record is active
- *  Example : player:hasEminenceRecord(19)
- ************************************************************************/
-
-bool CLuaBaseEntity::hasEminenceRecord(uint16 recordID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return false;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return roeutils::HasEminenceRecord(PChar, recordID);
-}
-
-/************************************************************************
- *  Function: triggerRoeEvent(eventID, {["reqName"] = value})
- *  Purpose : Triggers roeutils::event()
- *  Example : player:triggerRoeEvent(19)
- *  Note    : This only supports int/string datagram events at the moment!
- ************************************************************************/
-
-void CLuaBaseEntity::triggerRoeEvent(uint8 eventNum, const sol::object& reqTable)
-{
-    RoeDatagramList roeEventData({});
-    ROE_EVENT       eventID = static_cast<ROE_EVENT>(eventNum);
-
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return;
-    }
-
-    if (reqTable.get_type() == sol::type::table)
-    {
-        for (const auto& kv : reqTable.as<sol::table>())
-        {
-            if (kv.first.get_type() == sol::type::string)
-            {
-                if (kv.second.get_type() == sol::type::number)
-                {
-                    roeEventData.emplace_back(kv.first.as<std::string>(), kv.second.as<uint32>());
-                }
-                else if (kv.second.get_type() == sol::type::string)
-                {
-                    roeEventData.emplace_back(kv.first.as<std::string>(), kv.second.as<std::string>());
-                }
-            }
-        }
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    roeutils::event(eventID, PChar, roeEventData);
-}
-
-/************************************************************************
- *  Function: setUnityLeader(leaderID)
- *  Purpose : Sets a player's Unity Leader
- *  Example : player:setUnityLeader(4)
- ************************************************************************/
-
-void CLuaBaseEntity::setUnityLeader(uint8 leaderID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    // Update Unity Trust, assumes that values have been cleared
-    if (PChar->profile.unity_leader > 0)
-    {
-        uint8 oldUnity = PChar->profile.unity_leader - 1;
-        charutils::delSpell(PChar, ROE_TRUST_ID[oldUnity]);
-        charutils::DeleteSpell(PChar, ROE_TRUST_ID[oldUnity]);
-    }
-
-    charutils::SetUnityLeader(PChar, leaderID);
-    roeutils::UpdateUnityTrust(PChar);
-}
-
-/************************************************************************
- *  Function: getUnityLeader()
- *  Purpose : Gets a player's Unity Leader
- *  Example : player:getUnityLeader()
- ************************************************************************/
-
-uint8 CLuaBaseEntity::getUnityLeader()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return 0;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    return PChar->profile.unity_leader;
-}
-
-/************************************************************************
- *  Function: getUnityRank()
- *  Purpose : Gets the current rank of the player's Unity, if a parameter
- *          : is specified, returns the rank of that unity
- *  Example : player:getUnityRank()
- ************************************************************************/
-
-Maybe<uint8> CLuaBaseEntity::getUnityRank(const sol::object& unityObj)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return std::nullopt;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint8 unity = (unityObj != sol::lua_nil) ? unityObj.as<uint8>() : PChar->profile.unity_leader;
-
-    if (unity >= 1 && unity <= 11)
-    {
-        return roeutils::RoeSystem.unityLeaderRank[unity - 1];
-    }
-
-    return std::nullopt;
-}
-
-/************************************************************************
- *  Function: getClaimedDeedMask()
- *  Purpose : Gets a table of uint32 corresponding to claimed deeds of
- *            heroism rewards.
- *  Example : player:getClaimedDeedMask()
- ************************************************************************/
-
-sol::table CLuaBaseEntity::getClaimedDeedMask()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Attempt to get claimed deed mask for Non-PC.");
-        return sol::lua_nil;
-    }
-
-    auto* PChar     = static_cast<CCharEntity*>(m_PBaseEntity);
-    auto  maskTable = lua.create_table();
-    for (uint8 i = 0; i < 5; ++i)
-    {
-        maskTable.add(PChar->m_claimedDeeds[i]);
-    }
-
-    return maskTable;
-}
-
-/************************************************************************
- *  Function: toggleReceivedDeedRewards()
- *  Purpose : Sets bit corresponding to showing or hiding received deed rewards
- *  Example : player:toggleReceivedDeedRewards()
- ************************************************************************/
-
-void CLuaBaseEntity::toggleReceivedDeedRewards()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Attempt to toggle hide/show received rewards for Non-PC.");
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-
-    // Bit0 is unused in the 1st and 5th array value.  Packing this setting into
-    // the first bit of the first array index.
-    PChar->m_claimedDeeds[0] ^= 1;
-
-    const char* query = "UPDATE char_unlocks SET claimed_deeds = ? WHERE charid = ? LIMIT 1";
-    db::preparedStmt(query, PChar->m_claimedDeeds, PChar->id);
-}
-
-/************************************************************************
- *  Function: setClaimedDeed()
- *  Purpose : Sets bit corresponding to a deed of heroism reward as claimed
- *  Example : player:setClaimedDeed(1)
- ************************************************************************/
-
-void CLuaBaseEntity::setClaimedDeed(uint16 deedBitNum)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Attempt to set claimed deed mask for Non-PC.");
-        return;
-    }
-
-    auto* PChar  = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint8 index  = deedBitNum / 32;
-    uint8 setBit = deedBitNum % 32;
-
-    PChar->m_claimedDeeds[index] |= (1 << setBit);
-
-    const char* query = "UPDATE char_unlocks SET claimed_deeds = ? WHERE charid = ? LIMIT 1";
-    db::preparedStmt(query, PChar->m_claimedDeeds, PChar->id);
-}
-
-/************************************************************************
- *  Function: resetClaimedDeeds()
- *  Purpose : Clears existing rewards that can be reset, and increments the reset
- *            value to increase future cost for the player.
- *  Example : player:resetClaimedDeeds()
- ************************************************************************/
-
-void CLuaBaseEntity::resetClaimedDeeds()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Attempt to set claimed deed mask for Non-PC.");
-        return;
-    }
-
-    auto*  PChar     = static_cast<CCharEntity*>(m_PBaseEntity);
-    uint32 numResets = (PChar->m_claimedDeeds[4] >> 18) + 1;
-
-    // First two bits of m_claimedDeeds[3] are not resettable.
-    PChar->m_claimedDeeds[3] = PChar->m_claimedDeeds[3] & 0b11;
-    PChar->m_claimedDeeds[4] = numResets << 18;
-
-    const char* query = "UPDATE char_unlocks SET claimed_deeds = ? WHERE charid = ? LIMIT 1";
-    db::preparedStmt(query, PChar->m_claimedDeeds, PChar->id);
 }
 
 /************************************************************************
@@ -9480,7 +9094,6 @@ void CLuaBaseEntity::addExp(uint32 exp)
  *  Function: addCapacityPoints()
  *  Purpose : Adds a set amount of Capacity Points to the player
  *  Example : player:addCapacity(1000)
- *  Notes   : Used for RoE rewards
  ************************************************************************/
 
 void CLuaBaseEntity::addCapacityPoints(uint32 capacity)
@@ -20645,20 +20258,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setMissionStatus", CLuaBaseEntity::setMissionStatus);
     SOL_REGISTER("getMissionStatus", CLuaBaseEntity::getMissionStatus);
     SOL_REGISTER("sendPartialMissionLog", CLuaBaseEntity::sendPartialMissionLog);
-    SOL_REGISTER("getEminenceCompleted", CLuaBaseEntity::getEminenceCompleted);
-    SOL_REGISTER("getNumEminenceCompleted", CLuaBaseEntity::getNumEminenceCompleted);
-    SOL_REGISTER("setEminenceCompleted", CLuaBaseEntity::setEminenceCompleted);
-    SOL_REGISTER("getEminenceProgress", CLuaBaseEntity::getEminenceProgress);
-    SOL_REGISTER("setEminenceProgress", CLuaBaseEntity::setEminenceProgress);
-    SOL_REGISTER("hasEminenceRecord", CLuaBaseEntity::hasEminenceRecord);
-    SOL_REGISTER("triggerRoeEvent", CLuaBaseEntity::triggerRoeEvent);
-    SOL_REGISTER("setUnityLeader", CLuaBaseEntity::setUnityLeader);
-    SOL_REGISTER("getUnityLeader", CLuaBaseEntity::getUnityLeader);
-    SOL_REGISTER("getUnityRank", CLuaBaseEntity::getUnityRank);
-    SOL_REGISTER("getClaimedDeedMask", CLuaBaseEntity::getClaimedDeedMask);
-    SOL_REGISTER("toggleReceivedDeedRewards", CLuaBaseEntity::toggleReceivedDeedRewards);
-    SOL_REGISTER("setClaimedDeed", CLuaBaseEntity::setClaimedDeed);
-    SOL_REGISTER("resetClaimedDeeds", CLuaBaseEntity::resetClaimedDeeds);
 
     SOL_REGISTER("setUniqueEvent", CLuaBaseEntity::setUniqueEvent);
     SOL_REGISTER("delUniqueEvent", CLuaBaseEntity::delUniqueEvent);

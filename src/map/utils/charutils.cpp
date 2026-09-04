@@ -84,13 +84,11 @@
 #include "map_networking.h"
 #include "nominate_manager.h"
 #include "recast_container.h"
-#include "roe.h"
 #include "spell.h"
 #include "status_effect_container.h"
 #include "trade_container.h"
 #include "trait.h"
 #include "treasure_pool.h"
-#include "unitychat.h"
 #include "universal_container.h"
 #include "weapon_skill.h"
 #include "zone.h"
@@ -129,12 +127,8 @@
 #include "packets/s2c/0x063_miscdata_job_points.h"
 #include "packets/s2c/0x063_miscdata_merits.h"
 #include "packets/s2c/0x063_miscdata_monstrosity.h"
-#include "packets/s2c/0x063_miscdata_unity.h"
 #include "packets/s2c/0x075_battlefield.h"
 #include "packets/s2c/0x0df_group_attr.h"
-#include "packets/s2c/0x110_unity.h"
-#include "packets/s2c/0x111_roe_activelog.h"
-#include "packets/s2c/0x112_roe_log.h"
 
 /************************************************************************
  *                                                                       *
@@ -473,7 +467,6 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
                            "missions, "
                            "assault, "
                            "campaign, "
-                           "eminence, "
                            "quests, "
                            "keyitems, "
                            "abilities, "
@@ -482,6 +475,7 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
                            "zones, "
                            "playtime, "
                            "gmlevel, "
+                           "mentor, "
                            "languages, "
                            "job_master, "
                            "campaign_allegiance, "
@@ -497,7 +491,8 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
     auto rset = db::preparedStmt(fmtQuery, PChar->id);
     if (rset && rset->rowsCount() && rset->next())
     {
-        PChar->targid = 0x400;
+        PChar->m_mentorUnlocked = rset->get<uint32>("mentor") > 0;
+        PChar->targid           = 0x400;
         PChar->SetName(rset->get<std::string>("charname").c_str());
 
         PChar->loc.destination  = rset->get<xi::ZoneId>("pos_zone");
@@ -529,7 +524,6 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
         db::extractFromBlob(rset, "missions", PChar->m_missionLog);
         db::extractFromBlob(rset, "assault", PChar->m_assaultLog);
         db::extractFromBlob(rset, "campaign", PChar->m_campaignLog);
-        db::extractFromBlob(rset, "eminence", PChar->m_eminenceLog);
 
         PChar->SetPlayTime(std::chrono::seconds(rset->get<uint32>("playtime")));
         PChar->profile.campaign_allegiance = rset->get<uint8>("campaign_allegiance");
@@ -572,8 +566,7 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
                "fame_aby_altepa, "
                "fame_aby_grauberg, "
                "fame_aby_uleguerand, "
-               "fame_adoulin,"
-               "unity_leader "
+               "fame_adoulin "
                "FROM char_profile "
                "WHERE charid = ?";
 
@@ -602,11 +595,7 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
             .AbysseaUleguerand = rset->get<uint16>("fame_aby_uleguerand"),
             .Adoulin           = rset->get<uint16>("fame_adoulin")
         };
-
-        PChar->profile.unity_leader = rset->get<uint8>("unity_leader");
     }
-
-    roeutils::onCharLoad(PChar);
 
     // TODO: LoadFromCharStorageSQL
     fmtQuery = "SELECT "
@@ -910,7 +899,7 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
     // LoadFromCharUnlocksSQL
     fmtQuery = "SELECT outpost_sandy, outpost_bastok, outpost_windy, runic_portal, maw, "
                "campaign_sandy, campaign_bastok, campaign_windy, homepoints, survivals, "
-               "abyssea_conflux, waypoints, eschan_portals, claimed_deeds, unique_event, "
+               "abyssea_conflux, waypoints, eschan_portals, unique_event, "
                "maze_vouchers, maze_runes "
                "FROM char_unlocks "
                "WHERE charid = ?";
@@ -932,7 +921,6 @@ auto LoadChar(const uint32 charId) -> std::unique_ptr<CCharEntity>
         db::extractFromBlob(rset, "abyssea_conflux", PChar->teleport.abysseaConflux);
         db::extractFromBlob(rset, "waypoints", PChar->teleport.waypoints);
         db::extractFromBlob(rset, "eschan_portals", PChar->teleport.eschanPortal);
-        db::extractFromBlob(rset, "claimed_deeds", PChar->m_claimedDeeds);
         db::extractFromBlob(rset, "unique_event", PChar->m_uniqueEvents);
         db::extractFromBlob(rset, "maze_vouchers", PChar->maze().vouchers);
         db::extractFromBlob(rset, "maze_runes", PChar->maze().runes);
@@ -1473,33 +1461,6 @@ void SendPartialQuestLog(CCharEntity* PChar, const QuestLog log, const bool comp
     }
 }
 
-void SendRecordsOfEminenceLog(CCharEntity* PChar)
-{
-    if (!settings::get<bool>("main.ENABLE_ROE"))
-    {
-        return;
-    }
-
-    // Send spark updates
-    PChar->pushPacket<GP_SERV_COMMAND_UNITY>(PChar);
-
-    // Current RoE quests
-    PChar->pushPacket<GP_SERV_COMMAND_ROE_ACTIVELOG>(PChar);
-
-    // Players logging in to a new timed record get one-time message
-    if (PChar->m_eminenceCache.notifyTimedRecord)
-    {
-        PChar->m_eminenceCache.notifyTimedRecord = false;
-        PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, roeutils::GetActiveTimedRecord(), 0, MsgBasic::ROETimed);
-    }
-
-    // 4-part Eminence Completion bitmap
-    for (int i = 0; i < 4; i++)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_ROE_LOG>(PChar, i);
-    }
-}
-
 /************************************************************************
  *                                                                       *
  *  Send lists of character key items                                    *
@@ -1584,78 +1545,6 @@ void SendInventory(CCharEntity* PChar)
     }
 
     PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
-}
-
-// Sends all 64 Unity ranking packets to the client (0x063 type 0x07)
-// Packet sequence:
-//   - PreviousWeek (resultSet 0x00): 32 packets (types 0x00-0x1F)
-//   - CurrentWeek  (resultSet 0x01): 32 packets (types 0x00-0x1F)
-// Client buffers all packets and marks data ready when complete.
-// Sent on zone-in and when Unity menu is opened.
-// TODO: Some of it needs further research to determine exact values.
-void SendUnityPackets(CCharEntity* PChar)
-{
-    // Query database for unity system data
-    const auto rset = db::preparedStmt("SELECT leader, members_current, points_current, members_prev, points_prev "
-                                       "FROM unity_system");
-
-    std::pair<int32, double> unity_current[11];
-    std::pair<int32, double> unity_previous[11];
-
-    FOR_DB_MULTIPLE_RESULTS(rset)
-    {
-        auto unity_leader = rset->get<int>("leader") - 1;
-        if (unity_leader >= 0 && unity_leader < 11)
-        {
-            unity_current[unity_leader].first   = rset->get<int32>("members_current");
-            unity_current[unity_leader].second  = rset->get<double>("points_current");
-            unity_previous[unity_leader].first  = rset->get<int32>("members_prev");
-            unity_previous[unity_leader].second = rset->get<double>("points_prev");
-        }
-    }
-
-    // Previous week (full results)
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::BASE>(UNITY_RESULTSET::PreviousWeek, UNITY_DATATYPE::Base);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::MEMBERS>(UNITY_RESULTSET::PreviousWeek, unity_previous);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::POINTS>(UNITY_RESULTSET::PreviousWeek, unity_previous);
-    // Types 0x03-0x0F (empty/flag packets)
-    for (int i = 3; i < 0x10; i++)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::BASE>(UNITY_RESULTSET::PreviousWeek, static_cast<UNITY_DATATYPE>(i));
-    }
-    // Types 0x10-0x1F for PreviousWeek (mostly 0x0008 flags from retail captures)
-    for (int i = 0x10; i < 0x20; i++)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::PreviousWeek, i, 0x0008);
-    }
-
-    // Current week (partial results)
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::BASE>(UNITY_RESULTSET::CurrentWeek, UNITY_DATATYPE::Base);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::MEMBERS>(UNITY_RESULTSET::CurrentWeek, unity_current);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::POINTS>(UNITY_RESULTSET::CurrentWeek, unity_current);
-    // Types 0x03-0x0F (empty/flag packets)
-    for (int i = 3; i < 0x10; i++)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::BASE>(UNITY_RESULTSET::CurrentWeek, static_cast<UNITY_DATATYPE>(i));
-    }
-    // Types 0x10-0x1F for CurrentWeek with appropriate values
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x10, 0x2007);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x11, 0x2CC2);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x12, 0x6867); // ASCII 'gh'
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x13, 0x6E6F); // ASCII 'on'
-    // Type 0x14: Personal ranking points (TODO: calculate from player's Unity contributions)
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::PERSONAL>(UNITY_RESULTSET::CurrentWeek, 0);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x15, 0x3605);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x16, 0x2007);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x17, 0x6C6C); // ASCII 'll'
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x18, 0x616E); // ASCII 'na'
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x19, 0x6767); // ASCII 'gg'
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1A, 0x0000);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1B, 0x2007);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1C, 0x2007);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1D, 0x0022);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1E, 0x0004);
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::UNITY::DATA>(UNITY_RESULTSET::CurrentWeek, 0x1F, 0x2007);
 }
 
 // Send relevant 0x044 packets for extended job information (BLU spells, Automaton, Monstrosity)
@@ -4841,22 +4730,6 @@ uint16 AddCapacityBonus(CCharEntity* PChar, uint16 capacityPoints)
     // This value is stored as uint, as a whole number percentage value
     rawBonus += PChar->getMod(xi::Mod::CAPACITY_BONUS);
 
-    // Unity Concord Ranking: 2 * (Unity Ranking - 1)
-    uint8 unity = PChar->profile.unity_leader;
-    if (unity >= 1 && unity <= 11)
-    {
-        rawBonus += 2 * (roeutils::RoeSystem.unityLeaderRank[unity - 1] - 1);
-    }
-
-    // RoE Objectives
-    for (const auto& recordValue : roeCapacityBonusRecords)
-    {
-        if (roeutils::GetEminenceRecordCompletion(PChar, recordValue.first))
-        {
-            rawBonus += recordValue.second;
-        }
-    }
-
     // RoV Key Items - Fuchsia, Puce, Ochre (30%)
     for (auto capacityBonusKeyItem : capacityBonusKeyItems)
     {
@@ -4913,11 +4786,6 @@ void AddCapacityPoints(CCharEntity* PChar, CBaseEntity* PMob, uint32 capacityPoi
             PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, std::make_unique<GP_SERV_COMMAND_BATTLE_MESSAGE2>(PChar, PMob, PChar->PJobPoints->GetJobPoints(), 0, MsgBasic::JobPointGained));
         }
         PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::JOB_POINTS>(PChar);
-
-        if (PMob != PChar) // Only mob kills count for gain EXP records
-        {
-            roeutils::event(ROE_EXPGAIN, PChar, RoeDatagram("capacity", capacityPoints));
-        }
     }
 }
 
@@ -5235,7 +5103,6 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
             PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
 
             luautils::OnPlayerLevelUp(PChar);
-            roeutils::event(ROE_EVENT::ROE_LEVELUP, PChar, RoeDatagramList{});
             PChar->updatemask |= UPDATE_HP;
             return;
         }
@@ -5251,11 +5118,6 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
         PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MERITS>(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY1>(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY2>(PChar);
-    }
-
-    if (PMob != PChar) // Only mob kills count for gain EXP records
-    {
-        roeutils::event(ROE_EXPGAIN, PChar, RoeDatagram("exp", exp));
     }
 }
 
@@ -5436,32 +5298,6 @@ void SaveMissionsList(CCharEntity* PChar)
                      PChar->profile.rank[1],
                      PChar->profile.rank[2],
                      PChar->id);
-}
-
-/************************************************************************
- *                                                                       *
- *  Save Eminence Records                                                *
- *                                                                       *
- ************************************************************************/
-
-void SaveEminenceData(CCharEntity* PChar)
-{
-    TracyZoneScoped;
-
-    if (!settings::get<bool>("main.ENABLE_ROE"))
-    {
-        return;
-    }
-
-    db::preparedStmt("UPDATE chars "
-                     "SET "
-                     "eminence = ? "
-                     "WHERE charid = ? "
-                     "LIMIT 1",
-                     PChar->m_eminenceLog,
-                     PChar->id);
-
-    PChar->m_eminenceCache.lastWriteout = timer::now();
 }
 
 void SaveCharInventoryCapacity(CCharEntity* PChar)
@@ -6234,16 +6070,6 @@ void SaveMazeUnlocks(CCharEntity* PChar)
     PChar->pushPacket<GP_SERV_COMMAND_DUNGEON>(PChar);
 }
 
-void SaveLastLogout(const CCharEntity* PChar)
-{
-    TracyZoneScoped;
-
-    db::preparedStmt("UPDATE chars "
-                     "SET last_logout = CURRENT_TIMESTAMP "
-                     "WHERE charid = ?",
-                     PChar->id);
-}
-
 auto hasMogLockerAccess(const CCharEntity* PChar) -> bool
 {
     TracyZoneScoped;
@@ -6681,19 +6507,6 @@ void AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max)
     // addCurrency) can pass a non-positive cap, which would otherwise invert the clamp bounds.
     const auto newPointsValue = static_cast<int32>(std::clamp<int64>(static_cast<int64>(currentPointsValue) + amount, 0, std::max(max, 0)));
     SetPoints(PChar, type, newPointsValue);
-
-    if (strcmp(type, "unity_accolades") == 0 && amount > 0)
-    {
-        float evalPoints = static_cast<float>(amount) / 1000;
-
-        AddPoints(PChar, "current_accolades", amount, std::numeric_limits<int32>::max()); // Do not cap current_accolades
-
-        db::preparedStmt("UPDATE unity_system SET points_current = points_current + ? WHERE leader = ?", evalPoints, PChar->profile.unity_leader);
-
-        roeutils::UpdateUnityTrust(PChar, true);
-
-        PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
-    }
 }
 
 void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
@@ -6711,11 +6524,6 @@ void SetPoints(CCharEntity* PChar, const char* type, int32 amount)
     //     : column name, so it's OK.
     const auto query = fmt::format("UPDATE char_points SET {} = ? WHERE charid = ?", type);
     db::preparedStmt(query, amount, PChar->id);
-
-    if (strcmp(type, "spark_of_eminence") == 0)
-    {
-        PChar->pushPacket<GP_SERV_COMMAND_UNITY>(PChar);
-    }
 }
 
 int32 GetPoints(CCharEntity* PChar, const char* type)
@@ -6737,25 +6545,6 @@ int32 GetPoints(CCharEntity* PChar, const char* type)
     }
 
     return 0;
-}
-
-void SetUnityLeader(CCharEntity* PChar, uint8 leaderID)
-{
-    TracyZoneScoped;
-
-    if (leaderID < 1 || leaderID > 11)
-    {
-        return;
-    }
-
-    PChar->profile.unity_leader = leaderID;
-    if (PChar->PUnityChat)
-    {
-        unitychat::DelOnlineMember(PChar, PChar->PUnityChat->getLeader());
-    }
-    unitychat::AddOnlineMember(PChar, PChar->profile.unity_leader);
-
-    db::preparedStmt("UPDATE char_profile SET unity_leader = ? WHERE charid = ?", PChar->profile.unity_leader, PChar->id);
 }
 
 std::string GetConquestPointsName(CCharEntity* PChar)
@@ -7563,8 +7352,6 @@ void removeCharFromZone(CCharEntity* PChar)
     charutils::SavePlayTime(PChar);
     charutils::SaveCharStats(PChar);
     charutils::SaveCharExp(PChar, PChar->GetMJob());
-    charutils::SaveEminenceData(PChar);
-    charutils::SaveLastLogout(PChar);
 
     PChar->status = xi::Status::Disappear;
 }

@@ -50,9 +50,7 @@
 #include "notoriety_container.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "recast_container.h"
-#include "roe.h"
 #include "status_effect_container.h"
-#include "trust_entity.h"
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
 #include "utils/fishingutils.h"
@@ -1017,15 +1015,12 @@ auto CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullpt
 
     PAI->EventHandler.triggerListener("TAKE_DAMAGE", this, amount, attacker, (uint16)attackType, (uint16)damageType);
 
-    // RoE Damage Taken Trigger
     if (this->objtype == TYPE_PC)
     {
         auto* PChar = static_cast<CCharEntity*>(this);
 
         if (amount > 0)
         {
-            roeutils::event(ROE_EVENT::ROE_DMGTAKEN, PChar, RoeDatagram("dmg", amount));
-
             // Taking 1~8 damage force fails the current synthesis.
             // Threshold varies with unknown parameters.
             if (PChar->isCrafting())
@@ -1036,11 +1031,6 @@ auto CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullpt
     }
     else if (attacker && attacker->objtype == TYPE_PC)
     {
-        if (amount > 0)
-        {
-            roeutils::event(ROE_EVENT::ROE_DMGDEALT, static_cast<CCharEntity*>(attacker), RoeDatagram("dmg", amount));
-        }
-
         // Took dmg from non ws source, so remove ws data var.  Skillchain damage
         // occurs prior to listeners being fired, so retain this data for this case.
         if (!isSkillchainDamage)
@@ -2603,40 +2593,6 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
             msg != MsgBasic::ShadowAbsorb) // If message isn't the shadow loss message, because I had to move this outside of the above check for it.
         {
             luautils::OnMagicHit(this, PTarget, PSpell);
-        }
-
-        // The entity under consideration for RoE objective credit
-        // Trusts credit their master
-        auto* PEminenceTarget = this;
-        if (const auto* PTrust = dynamic_cast<CTrustEntity*>(this))
-        {
-            if (PTrust->PMaster)
-            {
-                PEminenceTarget = static_cast<CBattleEntity*>(PTrust->PMaster);
-            }
-        }
-
-        if (PEminenceTarget == PTarget || // Casting on self or ally
-            (PEminenceTarget->PParty && PTarget->PParty &&
-             ((PEminenceTarget->PParty == PTarget->PParty) || (PEminenceTarget->PParty->m_PAlliance && PEminenceTarget->PParty->m_PAlliance == PTarget->PParty->m_PAlliance))))
-        {
-            if (auto* PCharEminence = dynamic_cast<CCharEntity*>(PEminenceTarget))
-            {
-                if (PSpell->isHeal())
-                {
-                    roeutils::event(ROE_HEALALLY, PCharEminence, RoeDatagram("heal", actionResult.param));
-
-                    if (auto* PCharTarget = dynamic_cast<CCharEntity*>(PTarget);
-                        PCharTarget && PEminenceTarget != PTarget && PCharEminence->profile.unity_leader == PCharTarget->profile.unity_leader)
-                    {
-                        roeutils::event(ROE_HEAL_UNITYALLY, PCharEminence, RoeDatagram("heal", actionResult.param));
-                    }
-                }
-                else if (PEminenceTarget != PTarget && PSpell->isBuff() && actionResult.param)
-                {
-                    roeutils::event(ROE_BUFFALLY, PCharEminence, RoeDatagramList{});
-                }
-            }
         }
 
         if (PActionTarget->id == PTarget->id)

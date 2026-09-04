@@ -27,7 +27,6 @@
 #include "items/item_weapon.h"
 #include "map_session.h"
 #include "modifier.h"
-#include "roe.h"
 #include "utils/charutils.h"
 
 GP_SERV_COMMAND_CLISTATUS::GP_SERV_COMMAND_CLISTATUS(CCharEntity* PChar)
@@ -95,12 +94,4 @@ GP_SERV_COMMAND_CLISTATUS::GP_SERV_COMMAND_CLISTATUS(CCharEntity* PChar)
     packet.statusdata.ilvl         = charutils::getItemLevelDifference(PChar);
     packet.statusdata.ilvl_mhand   = charutils::getMainhandItemLevel(PChar);
     packet.statusdata.ilvl_ranged  = charutils::getRangedItemLevel(PChar);
-
-    const uint8 unityRank                   = PChar->profile.unity_leader > 0 ? roeutils::RoeSystem.unityLeaderRank[PChar->profile.unity_leader - 1] : 0;
-    packet.statusdata.unity_info.Faction    = PChar->profile.unity_leader;
-    packet.statusdata.unity_info.Unknown    = unityRank;
-    packet.statusdata.unity_info.Points     = charutils::GetPoints(PChar, "unity_accolades");
-    packet.statusdata.unity_points1         = charutils::GetPoints(PChar, "current_accolades") / 1000;
-    packet.statusdata.unity_points2         = charutils::GetPoints(PChar, "prev_accolades") / 1000;
-    packet.statusdata.unity_chat_color_flag = PChar->PUnityChat ? 1 : 0;
 }

@@ -98,7 +98,6 @@ void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) co
 
     if (!legacyXboxClient)
     {
-        charutils::SendUnityPackets(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::STATUS_ICONS>(PChar);
     }
 
@@ -108,7 +107,6 @@ void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) co
 
     if (!legacyXboxClient)
     {
-        charutils::SendRecordsOfEminenceLog(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_MOUNT_DATA>(PChar);
         PChar->pushPacket<GP_SERV_COMMAND_DUNGEON>(PChar);
     }

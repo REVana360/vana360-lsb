@@ -10,7 +10,6 @@
 -----------------------------------
 require('scripts/globals/extravaganza')
 require('scripts/globals/npc_util')
-require('scripts/globals/roe')
 require('scripts/globals/teleports')
 -----------------------------------
 xi = xi or {}
@@ -1362,16 +1361,6 @@ xi.regime.bookOnEventFinish = function(player, option, regimeType)
 
             player:showText(player, msgOffset)
             player:showText(player, msgOffset + 1)
-
-            -- Records of Eminence: Undertake a FoV Training Regime
-            if player:getEminenceProgress(3) and regimeType == xi.regime.type.FIELDS then
-                xi.roe.onRecordTrigger(player, 3)
-            end
-
-            -- Records of Eminence: Undertake a GoV Training Regime
-            if player:getEminenceProgress(11) and regimeType == xi.regime.type.GROUNDS then
-                xi.roe.onRecordTrigger(player, 11)
-            end
         end
     end
 end

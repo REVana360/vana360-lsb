@@ -235,8 +235,8 @@ auto CDataLoader::GetPlayersList(SearchRequest sr, int* count) const -> std::vec
     }
 
     std::string fmtQuery =
-        "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, unity_leader, "
-        "rank_windurst, race, mjob, sjob, mlvl, slvl, languages, settings, seacom_type, disconnecting, gmHiddenEnabled, muted, "
+        "SELECT charid, partyid, charname, pos_zone, pos_prevzone, nation, rank_sandoria, rank_bastok, "
+        "rank_windurst, race, mjob, sjob, mlvl, slvl, languages, settings, seacom_type, disconnecting, gmHiddenEnabled, "
         "linkshellid1, linkshellid2 "
         "FROM accounts_sessions "
         "LEFT JOIN accounts_parties USING (charid) "
@@ -301,8 +301,6 @@ auto CDataLoader::GetPlayersList(SearchRequest sr, int* count) const -> std::vec
             player.seacom_type   = rset->get<uint8>("seacom_type");
             player.disconnecting = rset->get<bool>("disconnecting");
             player.gmHidden      = rset->get<bool>("gmHiddenEnabled");
-            player.muted         = rset->get<bool>("muted");
-            player.unityLeader   = rset->get<uint8>("unity_leader");
             const auto partyid   = rset->getOrDefault<uint32>("partyid", 0);
 
             if (player.mentor)
@@ -343,11 +341,6 @@ auto CDataLoader::GetPlayersList(SearchRequest sr, int* count) const -> std::vec
             if (playerSettings.InviteFlg)
             {
                 player.flags1 |= 0x8000;
-            }
-
-            if (player.muted)
-            {
-                player.flags1 |= 0x20000000;
             }
 
             player.flags2 = player.flags1;
@@ -436,17 +429,8 @@ auto CDataLoader::GetPlayersList(SearchRequest sr, int* count) const -> std::vec
             // filter by flag (away, seek party etc.)
             if (sr.flags != 0)
             {
-                // Check if unity ID is set (bits 22+)
-                if (uint32_t searchUnityId = sr.flags >> 22; searchUnityId != 0)
+                if ((sr.flags >> 22) != 0 || !(player.flags2 & sr.flags))
                 {
-                    if (player.unityLeader != searchUnityId)
-                    {
-                        continue;
-                    }
-                }
-                else if (!(player.flags2 & sr.flags))
-                {
-                    // Normal bitwise check for other flags (bits 0-21)
                     continue;
                 }
             }

@@ -62,16 +62,6 @@ effectObject.onEffectTick = function(target, effect)
                 healHP = 10 + (healtime - 2) + target:getMod(xi.mod.HPHEAL)
             end
 
-            -- Records of Eminence: Heal Without Using Magic
-            if
-                target:getObjType() == xi.objType.PC and
-                target:getEminenceProgress(4) and
-                healHP > 0 and
-                target:getHPP() < 100
-            then
-                xi.roe.onRecordTrigger(target, 4)
-            end
-
             target:addHPLeaveSleeping(healHP)
             target:updateEnmityFromCure(target, healHP)
             target:addMP(healMP)

@@ -5,7 +5,7 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    return xi.trust.canCast(caster, spell, xi.magic.spell.MAAT_UC)
+    return xi.trust.canCast(caster, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)

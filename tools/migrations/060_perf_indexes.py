@@ -14,7 +14,6 @@ INDEXES = {
         "idx_accounts_sessions_client_addr": "client_addr",
         "idx_accounts_sessions_linkshellid1": "linkshellid1",
         "idx_accounts_sessions_linkshellid2": "linkshellid2",
-        "idx_accounts_sessions_unitychat": "unitychat",
     },
 }
 

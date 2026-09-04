@@ -23,7 +23,7 @@ def migrate(cur, db):
     try:
         cur.execute(
             "ALTER TABLE `char_unlocks` \
-            ADD COLUMN `unique_event` BLOB DEFAULT NULL AFTER `claimed_deeds`;"
+            ADD COLUMN `unique_event` BLOB DEFAULT NULL;"
         )
         db.commit()
     except mariadb.Error as err:

@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "aman.h"
 #include "enums/char_persist.h"
 #include "event_info.h"
 #include "gmcall_container.h"
@@ -115,7 +114,6 @@ struct profile_t
     uint16     rankpoints;
     location_t home_point;
     uint8      campaign_allegiance;
-    uint8      unity_leader;
 };
 
 struct capacityChain_t
@@ -285,7 +283,6 @@ enum class CharFace : uint8
 
 class CBasicPacket;
 class CLinkshell;
-class CUnityChat;
 class CJobPoints;
 class CMeritPoints;
 class CCharRecastContainer;
@@ -371,8 +368,6 @@ public:
     uint8            m_WeaponSkills[32]{};
     questlog_t       m_questLog[MAX_QUESTAREA]{};     // Quest List
     missionlog_t     m_missionLog[MAX_MISSIONAREA]{}; // Mission list
-    eminencelog_t    m_eminenceLog{};                 // Record of Eminence log
-    eminencecache_t  m_eminenceCache{};               // Caching data for Eminence lookups
     assaultlog_t     m_assaultLog{};                  // Assault mission list
     campaignlog_t    m_campaignLog{};                 // Campaign mission list
     PetInfo_t        petZoningInfo{};                 // Used to repawn dragoons pets ect on zone
@@ -385,7 +380,8 @@ public:
 
     uint32 m_FieldChocobo{};
     uint8  m_mountId{}; // Do not reset to 0. Only update when the mount changes.
-    uint32 m_claimedDeeds[5]{};
+    bool   m_mentorUnlocked = false;
+
     uint32 m_uniqueEvents[5]{};
 
     // Store a copy of calculated stats to use when automaton is deactivated for the job info packet (automaton menu)
@@ -495,7 +491,6 @@ public:
 
     CLinkshell*                   PLinkshell1;
     CLinkshell*                   PLinkshell2;
-    CUnityChat*                   PUnityChat;
     CTreasurePool*                PTreasurePool;
     std::unique_ptr<CMeritPoints> PMeritPoints;
     std::unique_ptr<CJobPoints>   PJobPoints;
@@ -625,8 +620,6 @@ public:
     timer::time_point m_SaveTime;
 
     timer::time_point m_LeaderCreatedPartyTime{}; // Time that a party member joined and this player was leader.
-
-    auto aman() -> CAMANContainer&;
 
     uint8 m_GMlevel;    // Level of the GM flag assigned to this character
     bool  m_isGMHidden; // GM Hidden flag to prevent player updates from being processed.
@@ -791,10 +784,8 @@ private:
 
     std::array<CItem*, EquipSlotCount> equipped_{};
 
-    // Lazily initialized AMAN data
-    Maybe<CAMANContainer> m_AMAN;
-    GMCallContainer       gmCallContainer_;
-    timer::time_point     lastProposalCloseTime_{}; // Time last /nominate closed
+    GMCallContainer   gmCallContainer_;
+    timer::time_point lastProposalCloseTime_{}; // Time last /nominate closed
 
     std::unique_ptr<CItemContainer> m_Inventory;
     std::unique_ptr<CItemContainer> m_Mogsafe;

@@ -32,13 +32,13 @@
 #include "items.h"
 #include "items/transactions/synth.h"
 #include "itemutils.h"
+#include "lua/luautils.h"
 #include "packets/char_status.h"
 #include "packets/s2c/0x029_battle_message.h"
 #include "packets/s2c/0x030_effect.h"
 #include "packets/s2c/0x062_clistatus2.h"
 #include "packets/s2c/0x06f_combine_ans.h"
 #include "packets/s2c/0x070_combine_inf.h"
-#include "roe.h"
 #include "zone.h"
 
 #include <algorithm>
@@ -833,25 +833,6 @@ void handleSynthSuccess(CCharEntity* PChar)
 
     PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE, std::make_unique<GP_SERV_COMMAND_COMBINE_INF>(PChar, message, result));
     PChar->pushPacket<GP_SERV_COMMAND_COMBINE_ANS>(PChar, message, result);
-
-    // Calculate what craft this recipe "belongs" to based on highest skill required
-    uint32 skillType    = 0;
-    uint32 highestSkill = 0;
-    for (uint8 skillID = static_cast<uint8>(xi::SkillType::Woodworking); skillID <= static_cast<uint8>(xi::SkillType::Cooking); ++skillID)
-    {
-        uint8 skillRequired = craftState.skillRequired(skillID - static_cast<uint8>(xi::SkillType::Woodworking));
-        if (skillRequired > highestSkill)
-        {
-            skillType    = skillID;
-            highestSkill = skillRequired;
-        }
-    }
-
-    RoeDatagram     roeItemId    = RoeDatagram("itemid", result.itemId);
-    RoeDatagram     roeSkillType = RoeDatagram("skillType", skillType);
-    RoeDatagramList roeSynthResult({ roeItemId, roeSkillType });
-
-    roeutils::event(ROE_EVENT::ROE_SYNTHSUCCESS, PChar, roeSynthResult);
 }
 
 // Used in: sendSynthDone

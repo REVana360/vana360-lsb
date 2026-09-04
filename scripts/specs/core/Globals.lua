@@ -481,16 +481,6 @@ end
 function SendItemToDeliveryBox(playerName, itemId, quantity, senderText)
 end
 
----@param recordTable table
----@return nil
-function RoeParseRecords(recordTable)
-end
-
----@param timedSchedule table
----@return nil
-function RoeParseTimed(timedSchedule)
-end
-
 ---@param expToDifficultyTable table
 ---@param incrediblyEasyPreyLevel integer
 ---@param incrediblyEasyPreyMinExp integer

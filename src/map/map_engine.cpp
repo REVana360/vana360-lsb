@@ -40,7 +40,6 @@
 #include "mob_spell_list.h"
 #include "monstrosity.h"
 #include "persist_batch.h"
-#include "roe.h"
 #include "spell.h"
 #include "status_effect_container.h"
 #include "time_server.h"
@@ -199,7 +198,6 @@ auto MapEngine::init() -> Task<void>
     mobutils::LoadSqlModifiers();
     jobpointutils::LoadGifts();
     daily::LoadDailyItems();
-    roeutils::UpdateUnityRankings();
     synthutils::LoadSynthRecipes();
     synergyutils::LoadSynergyRecipes();
     CItemEquipment::LoadAugmentData(); // TODO: Move to itemutils

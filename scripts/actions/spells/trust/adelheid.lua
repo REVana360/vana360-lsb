@@ -9,11 +9,6 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    -- Records of Eminence: Alter Ego: Adelheid
-    if caster:getEminenceProgress(936) then
-        xi.roe.onRecordTrigger(caster, 936)
-    end
-
     return xi.trust.spawn(caster, spell)
 end
 

@@ -6,7 +6,6 @@ CREATE TABLE `audit_chat` (
     `type` TINYTEXT NOT NULL,
     `lsName` TINYTEXT NULL,
     `zoneid` smallint(3) unsigned NULL,
-    `unity` tinyint(4) NULL,
     `recipient` TINYTEXT NULL,
     `message` BLOB,
     `datetime` DATETIME NOT NULL,

@@ -27,7 +27,6 @@
 #include "entities/char_entity.h"
 #include "latent_effect_container.h"
 #include "lua/luautils.h"
-#include "roe.h"
 #include "spawn_handler.h"
 #include "timetriggers.h"
 #include "transport.h"
@@ -50,9 +49,8 @@ auto time_server(Scheduler& scheduler, MapConfig config) -> Task<void>
     // Uses the JST equivalent of the current timer tick. (steady_clock -> system_clock)
 
     // Earth time points
-    const auto jstTime    = earth_time::time_point(timer::to_utc(tick));
-    const auto jstHour    = earth_time::jst::get_hour(jstTime);
-    const auto jstWeekday = earth_time::jst::get_weekday(jstTime);
+    const auto jstTime = earth_time::time_point(timer::to_utc(tick));
+    const auto jstHour = earth_time::jst::get_hour(jstTime);
 
     // Static variable for the next tick
     static auto nextHourlyTick = std::chrono::ceil<std::chrono::hours>(jstTime);
@@ -64,33 +62,18 @@ auto time_server(Scheduler& scheduler, MapConfig config) -> Task<void>
         {
             // Daily tick (midnight JST)
             ShowDebugFmt("Daily tick... (current tick: {})", tickNum);
-            if (jstWeekday == 1)
-            {
-                // Weekly tick (Monday JST)
-                ShowDebugFmt("Weekly tick... (current tick: {})", tickNum);
-                roeutils::CycleWeeklyRecords();
-                roeutils::CycleUnityRankings();
-            }
-            roeutils::CycleDailyRecords();
             guildutils::UpdateGuildPointsPattern();
             luautils::OnJSTMidnight();
             luautils::UpdateSanrakusMobs();
         }
         // 1-hour tick
         ShowDebugFmt("1-hour tick... (current tick: {})", tickNum);
-        roeutils::UpdateUnityRankings();
 
         if (jstHour % 2 == 0)
         {
             // 2-hour tick
             ShowDebugFmt("2-hour tick... (current tick: {})", tickNum);
             luautils::ZNMPopPriceDecay();
-            if (jstHour % 4 == 0)
-            {
-                // 4-hour tick
-                ShowDebugFmt("4-hour tick... (current tick: {})", tickNum);
-                roeutils::CycleTimedRecords();
-            }
         }
 
         nextHourlyTick = std::chrono::ceil<std::chrono::hours>(jstTime);

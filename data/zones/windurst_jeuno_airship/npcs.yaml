@@ -322,17 +322,6 @@ npcs:
         type:  standard
         model: 50
 
-  17698840:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    widescan: true
-
   17698841:
     script: blank
     render:

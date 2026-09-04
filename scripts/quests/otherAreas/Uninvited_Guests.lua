@@ -7,7 +7,6 @@
 -----------------------------------
 
 -- TODO: Implement full rewards
--- TODO: Add ROE rewards
 
 local phase =
 {

@@ -18,11 +18,6 @@ m:addOverride(string.format('xi.actions.spells.trust.%s.onSpellCast', trustToRep
     -----------------------------------
     local trust = caster:spawnTrust(spell:getID())
 
-    -- Records of Eminence: Call Forth an Alter Ego
-    if caster:getEminenceProgress(932) then
-        xi.roe.onRecordTrigger(caster, 932)
-    end
-
     -----------------------------------
     -- New logic below
     -----------------------------------

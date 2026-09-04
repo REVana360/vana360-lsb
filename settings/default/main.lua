@@ -55,22 +55,8 @@ xi.settings.main =
     DAILY_TALLY_LIMIT  = 50000,
     GOBBIE_BOX_MIN_AGE = 45, -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 
-    -- A.M.A.N.
-    ASSIST_CHANNEL_ENABLED            = false, -- Enable Assist Channel
-    ASSIST_CHANNEL_MEMBERSHIP_LENGTH  = 240,  -- How long returnees and new players will have access to the assist channel, in playtime hours.
-    ASSIST_CHANNEL_RETURNEE_LOGIN_GAP =  48,  -- How many days must have elapsed before returnees are added to the assist channel.
-
-    -- Records of Eminence
-    ENABLE_ROE            = 0, -- Enable Records of Eminence
-    ENABLE_ROE_TIMED      = 0, -- Enable 4-hour timed records
-    ENABLE_EXCHANGE_LIMIT = 0, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
-
-    WEEKLY_EXCHANGE_LIMIT = 100000, -- Maximum amount of sparks/accolades that can be spent per week (default retail value: 100000)
-
     -- Currency Caps (Change at your own risk!)
-    CAP_CURRENCY_ACCOLADES = 99999,
     CAP_CURRENCY_BALLISTA  = 2000,
-    CAP_CURRENCY_SPARKS    = 99999,
     CAP_CURRENCY_VALOR     = 50000,
 
     -- Magian Trials
@@ -123,8 +109,6 @@ xi.settings.main =
     EXP_RATE            = 1.000, -- Multiplies exp from script (except FoV/GoV).
     BOOK_EXP_RATE       = 1.000, -- Multiplies exp from FoV/GoV book pages.
     TABS_RATE           = 1.000, -- Multiplies tabs earned from fov.
-    ROE_EXP_RATE        = 1.000, -- Multiplies exp earned from records of eminence.
-    SPARKS_RATE         = 1.000, -- Multiplies sparks earned from records of eminence.
     CURE_POWER          = 1.000, -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
     ELEMENTAL_POWER     = 1.000, -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
     DIVINE_POWER        = 1.000, -- Multiplies damage dealt by Divine Magic.

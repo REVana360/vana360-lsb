@@ -20,7 +20,6 @@ CREATE TABLE `accounts_sessions` (
   `accid` int(10) unsigned NOT NULL DEFAULT '0',
   `charid` int(10) unsigned NOT NULL DEFAULT '0',
   `targid` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `unitychat` int(10) unsigned NOT NULL DEFAULT '0',
   `linkshellid1` int(10) unsigned NOT NULL DEFAULT '0',
   `linkshellrank1` smallint(5) unsigned NOT NULL DEFAULT '0',
   `linkshellid2` int(10) unsigned NOT NULL DEFAULT '0',
@@ -38,6 +37,5 @@ CREATE TABLE `accounts_sessions` (
   UNIQUE KEY `accid` (`accid`),
   KEY `idx_accounts_sessions_client_addr` (`client_addr`),
   KEY `idx_accounts_sessions_linkshellid1` (`linkshellid1`),
-  KEY `idx_accounts_sessions_linkshellid2` (`linkshellid2`),
-  KEY `idx_accounts_sessions_unitychat` (`unitychat`)
+  KEY `idx_accounts_sessions_linkshellid2` (`linkshellid2`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

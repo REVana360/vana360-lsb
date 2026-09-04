@@ -247,7 +247,7 @@ quest.sections =
         },
     },
 
-    -- Step 4 -> Talk to NPC after learning a Weaponskill (Reward: 100 gil). Instruct to activate Records of Eminence. NOTE: Retail does NOT check for weaponskill usage.
+    -- Step 4 -> Talk to NPC after learning a Weaponskill (Reward: 100 gil). NOTE: Retail does NOT check for weaponskill usage.
     {
         check = function(player, questVars, vars)
             return questVars.Prog == 4

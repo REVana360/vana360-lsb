@@ -98,7 +98,6 @@
 #include "packets/c2s/0x0ad_guild_selllist.h"
 #include "packets/c2s/0x0b5_chat_std.h"
 #include "packets/c2s/0x0b6_chat_name.h"
-#include "packets/c2s/0x0b7_assist_channel.h"
 #include "packets/c2s/0x0be_merits.h"
 #include "packets/c2s/0x0bf_job_points_spend.h"
 #include "packets/c2s/0x0c0_job_points_req.h"
@@ -143,18 +142,12 @@
 #include "packets/c2s/0x109_bazaar_open.h"
 #include "packets/c2s/0x10a_bazaar_itemset.h"
 #include "packets/c2s/0x10b_bazaar_close.h"
-#include "packets/c2s/0x10c_roe_start.h"
-#include "packets/c2s/0x10d_roe_remove.h"
-#include "packets/c2s/0x10e_roe_claim.h"
 #include "packets/c2s/0x10f_currencies_1.h"
 #include "packets/c2s/0x110_fishing_2.h"
 #include "packets/c2s/0x112_battlefield_req.h"
 #include "packets/c2s/0x113_sitchair.h"
 #include "packets/c2s/0x114_map_markers.h"
 #include "packets/c2s/0x115_currencies_2.h"
-#include "packets/c2s/0x116_unity_menu.h"
-#include "packets/c2s/0x117_unity_quest.h"
-#include "packets/c2s/0x118_unity_toggle.h"
 #include "packets/c2s/0x119_emote_list.h"
 #include "packets/c2s/0x11b_mastery_display.h"
 #include "packets/c2s/0x11c_party_request.h"
@@ -302,7 +295,6 @@ consteval auto buildPacketHandlers() -> std::array<PacketHandler, 512>
     registerPacket<GP_CLI_COMMAND_GUILD_SELLLIST>(handlers);
     registerPacket<GP_CLI_COMMAND_CHAT_STD>(handlers);
     registerPacket<GP_CLI_COMMAND_CHAT_NAME>(handlers);
-    registerPacket<GP_CLI_COMMAND_ASSIST_CHANNEL>(handlers);
     registerPacket<GP_CLI_COMMAND_MERITS>(handlers);
     registerPacket<GP_CLI_COMMAND_JOB_POINTS_SPEND>(handlers);
     registerPacket<GP_CLI_COMMAND_JOB_POINTS_REQ>(handlers);
@@ -347,18 +339,12 @@ consteval auto buildPacketHandlers() -> std::array<PacketHandler, 512>
     registerPacket<GP_CLI_COMMAND_BAZAAR_OPEN>(handlers);
     registerPacket<GP_CLI_COMMAND_BAZAAR_ITEMSET>(handlers);
     registerPacket<GP_CLI_COMMAND_BAZAAR_CLOSE>(handlers);
-    registerPacket<GP_CLI_COMMAND_ROE_START>(handlers);
-    registerPacket<GP_CLI_COMMAND_ROE_REMOVE>(handlers);
-    registerPacket<GP_CLI_COMMAND_ROE_CLAIM>(handlers);
     registerPacket<GP_CLI_COMMAND_CURRENCIES_1>(handlers);
     registerPacket<GP_CLI_COMMAND_FISHING_2>(handlers);
     registerPacket<GP_CLI_COMMAND_BATTLEFIELD_REQ>(handlers);
     registerPacket<GP_CLI_COMMAND_SITCHAIR>(handlers);
     registerPacket<GP_CLI_COMMAND_MAP_MARKERS>(handlers);
     registerPacket<GP_CLI_COMMAND_CURRENCIES_2>(handlers);
-    registerPacket<GP_CLI_COMMAND_UNITY_MENU>(handlers);
-    registerPacket<GP_CLI_COMMAND_UNITY_QUEST>(handlers);
-    registerPacket<GP_CLI_COMMAND_UNITY_TOGGLE>(handlers);
     registerPacket<GP_CLI_COMMAND_EMOTE_LIST>(handlers);
     registerPacket<GP_CLI_COMMAND_MASTERY_DISPLAY>(handlers);
     registerPacket<GP_CLI_COMMAND_PARTY_REQUEST>(handlers);

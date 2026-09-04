@@ -12,59 +12,42 @@ import sys
 # TODO: Make this generic so you can specify an output filename, namespace name, interface name, enum name, etc.
 
 
-# Define the struct names that will be used to generate build/generated/ipc_stubs.h
-IPC_STRUCT_NAMES = [
-    "EmptyStruct",
-
-    "AccountLogin",
-    "CharZone",
-    "CharVarUpdate",
-
-    "ChatMessageTell",
-    "ChatMessageParty",
-    "ChatMessageAlliance",
-    "ChatMessageLinkshell",
-    "ChatMessageUnity",
-    "ChatMessageYell",
-    "ChatMessageAssist",
-    "ChatMessageServerMessage",
-    "ChatMessageCustom",
-
-    "PartyInvite",
-    "PartyInviteResponse",
-    "PartyReload",
-    "PartyDisband",
-
-    "AllianceReload",
-    "AllianceDissolve",
-
-    "PlayerKick",
-
-    "MessageStandard",
-    "MessageSystem",
-
-    "LinkshellRankChange",
-    "LinkshellRemove",
-    "LinkshellSetMessage",
-
-    "LuaFunction",
-
-    "KillSession",
-
-    "ConquestEvent",
-    "BesiegedEvent",
-    "CampaignEvent",
-
-    "EntityInformationRequest",
-    "EntityInformationResponse",
-
-    "SendPlayerToLocation",
-
-    "AssistChannelEvent",
-
-    "GMCallRequest",
-    "GMCallResponse",
-]
+# Explicit wire IDs preserve external clients when message types are removed.
+IPC_STRUCT_NAMES = {
+    "EmptyStruct": 1,
+    "AccountLogin": 2,
+    "CharZone": 3,
+    "CharVarUpdate": 4,
+    "ChatMessageTell": 5,
+    "ChatMessageParty": 6,
+    "ChatMessageAlliance": 7,
+    "ChatMessageLinkshell": 8,
+    "ChatMessageYell": 10,
+    "ChatMessageServerMessage": 12,
+    "ChatMessageCustom": 13,
+    "PartyInvite": 14,
+    "PartyInviteResponse": 15,
+    "PartyReload": 16,
+    "PartyDisband": 17,
+    "AllianceReload": 18,
+    "AllianceDissolve": 19,
+    "PlayerKick": 20,
+    "MessageStandard": 21,
+    "MessageSystem": 22,
+    "LinkshellRankChange": 23,
+    "LinkshellRemove": 24,
+    "LinkshellSetMessage": 25,
+    "LuaFunction": 26,
+    "KillSession": 27,
+    "ConquestEvent": 28,
+    "BesiegedEvent": 29,
+    "CampaignEvent": 30,
+    "EntityInformationRequest": 31,
+    "EntityInformationResponse": 32,
+    "SendPlayerToLocation": 33,
+    "GMCallRequest": 35,
+    "GMCallResponse": 36,
+}
 
 
 def generate_ipc_stubs(output_dir, struct_names):
@@ -130,7 +113,7 @@ def generate_message_type_enum(file, struct_names):
 
     file.write(f"    // 0 is reserved for unknown messages\n\n")
 
-    for idx, name in enumerate(struct_names, 1):
+    for name, idx in struct_names.items():
         file.write(f"    {name.ljust(max_name_length)} = {idx},\n")
 
     file.write(f"}};\n\n")
@@ -184,21 +167,12 @@ def generate_enum_to_string_templates(file, struct_names):
 def generate_enum_to_string_function(file, struct_names):
     output_header(file, "Enum to String Function")
 
-    file.write(f"constexpr std::array<const char*, {len(struct_names) + 1}> messageTypeStrings =\n")
-    file.write(f"{{\n")
+    file.write("inline std::string_view toString(MessageType type)\n{\n")
+    file.write("    switch (type)\n    {\n")
     for name in struct_names:
-        file.write(f"    \"{name}\",\n")
-    file.write(f"}};\n\n")
+        file.write(f'        case MessageType::{name}: return "{name}";\n')
+    file.write('        default: return "Unknown";\n    }\n}\n\n')
 
-    file.write(f"inline std::string_view toString(MessageType type)\n")
-    file.write(f"{{\n")
-    file.write(f"    const auto index = static_cast<uint8_t>(type);\n")
-    file.write(f"    if (index >= 1 && index <= messageTypeStrings.size())\n")
-    file.write(f"    {{\n")
-    file.write(f"        return messageTypeStrings[index - 1];\n")
-    file.write(f"    }}\n")
-    file.write(f"    return \"Unknown\";\n")
-    file.write(f"}}\n\n")
 
 def generate_message_handler_crtp_base(file, struct_names):
     output_header(file, "Message Handler CRTP Base")

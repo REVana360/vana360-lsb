@@ -129,8 +129,6 @@ set(PACKET_C2S_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0a1_switch_vote.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0a2_dice.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0a2_dice.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x0b7_assist_channel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x0b7_assist_channel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0aa_guild_buy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0aa_guild_buy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x0ab_guild_buylist.cpp
@@ -231,12 +229,6 @@ set(PACKET_C2S_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10a_bazaar_itemset.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10b_bazaar_close.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10b_bazaar_close.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10c_roe_start.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10c_roe_start.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10d_roe_remove.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10d_roe_remove.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10e_roe_claim.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x10e_roe_claim.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10f_currencies_1.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x10f_currencies_1.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x110_fishing_2.cpp
@@ -249,12 +241,6 @@ set(PACKET_C2S_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/0x114_map_markers.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x115_currencies_2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x115_currencies_2.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x116_unity_menu.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x116_unity_menu.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x117_unity_quest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x117_unity_quest.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x118_unity_toggle.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/0x118_unity_toggle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x119_emote_list.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/0x119_emote_list.h
     ${CMAKE_CURRENT_SOURCE_DIR}/0x11b_mastery_display.cpp

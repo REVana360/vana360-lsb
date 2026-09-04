@@ -1924,14 +1924,6 @@ npcs:
         type:  standard
         model: 50
 
-  17637624:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 50
-
   17637626:
     script:       Item-Test
     display_name: Item-Test

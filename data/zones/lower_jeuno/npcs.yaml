@@ -4097,47 +4097,6 @@ npcs:
     widescan: true
     content:  soa
 
-  17780985:
-    script:       Isakoth
-    display_name: Isakoth
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  9
-        head:  4096
-        body:  8215
-        hands: 12419
-        legs:  16398
-        feet:  20498
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
-
-  17780986:
-    script:       Fhelm_Jobeizat
-    display_name: Fhelm Jobeizat
-    render:
-      look:
-        type:  equipped
-        race:  7
-        face:  3
-        head:  4115
-        body:  8236
-        hands: 12309
-        legs:  16400
-        feet:  20486
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
-    content:  soa
-
   17780987:
     script:       Eternal_Flame
     display_name: Eternal Flame
@@ -4218,47 +4177,6 @@ npcs:
     status:   cutscene_only
     widescan: true
     content:  soa
-
-  17780991:
-    script:       Fhelm_Jobeizat
-    display_name: Fhelm Jobeizat
-    render:
-      look:
-        type:  equipped
-        race:  7
-        face:  3
-        head:  4115
-        body:  8226
-        hands: 12388
-        legs:  16494
-        feet:  20580
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
-    content:  soa
-
-  17780992:
-    script:       Isakoth
-    display_name: Isakoth
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  9
-        head:  4096
-        body:  8211
-        hands: 12389
-        legs:  16416
-        feet:  20499
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
 
   17780993:
     script: blank
@@ -4718,17 +4636,6 @@ npcs:
       look:
         type:  standard
         model: 50
-
-  17781024:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
 
   17781025:
     script:       Susuroon

@@ -33,9 +33,6 @@ enum class GP_CLI_COMMAND_CHAT_STD_KIND : uint8_t
     LinkshellPvp = 0x18, // Ballista
     Yell         = 0x1A,
     Linkshell2   = 0x1B,
-    Unity        = 0x21,
-    AssistJ      = 0x22,
-    AssistE      = 0x23,
 };
 
 // https://github.com/atom0s/XiPackets/tree/main/world/client/0x00B5

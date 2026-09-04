@@ -21,7 +21,6 @@
 
 #include "common/logging.h"
 #include "common/timer.h"
-#include "roe.h"
 
 #include "packets/s2c/0x0d2_trophy_list.h"
 #include "packets/s2c/0x0d3_trophy_solution.h"
@@ -266,8 +265,6 @@ uint8 CTreasurePool::addItem(uint16 ItemID, CBaseEntity* PEntity)
 
     for (const auto& member : m_Members)
     {
-        // Issue RoE event for loot item and issue treasure pool packet
-        roeutils::event(ROE_EVENT::ROE_LOOTITEM, member, RoeDatagram("itemid", m_PoolItems[FreeSlotID].ID));
         member->pushPacket<GP_SERV_COMMAND_TROPHY_LIST>(&m_PoolItems[FreeSlotID], PEntity, false);
     }
 

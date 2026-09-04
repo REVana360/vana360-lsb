@@ -18,8 +18,6 @@ set(MAP_CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ability.h
     ${CMAKE_CURRENT_SOURCE_DIR}/alliance.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/alliance.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/aman.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/aman.h
     ${CMAKE_CURRENT_SOURCE_DIR}/attack.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/attack.h
     ${CMAKE_CURRENT_SOURCE_DIR}/attackround.cpp
@@ -132,8 +130,6 @@ set(MAP_CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/petskill.h
     ${CMAKE_CURRENT_SOURCE_DIR}/recast_container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/recast_container.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/roe.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/roe.h
     ${CMAKE_CURRENT_SOURCE_DIR}/roam_region.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/roam_region.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket.h
@@ -163,8 +159,6 @@ set(MAP_CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/treasure_pool.h
     ${CMAKE_CURRENT_SOURCE_DIR}/trigger_area.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/trigger_area.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/unitychat.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/unitychat.h
     ${CMAKE_CURRENT_SOURCE_DIR}/universal_container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/universal_container.h
     ${CMAKE_CURRENT_SOURCE_DIR}/weapon_skill.cpp

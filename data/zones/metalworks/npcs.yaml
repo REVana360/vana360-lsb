@@ -3708,17 +3708,6 @@ npcs:
       entity_flags: 2075
       name_prefix:    32
 
-  17748193:
-    script:       UnityMaster
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    widescan: true
-
   17748194:
     script:       ???
     display_name: ???

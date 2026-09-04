@@ -2,7 +2,6 @@
 -- Trust
 -----------------------------------
 require('scripts/globals/magic')
-require('scripts/globals/roe')
 -----------------------------------
 xi = xi or {}
 xi.trust = xi.trust or {}
@@ -400,11 +399,6 @@ end
 
 xi.trust.spawn = function(caster, spell)
     caster:spawnTrust(spell:getID())
-
-    -- Records of Eminence: Call Forth an Alter Ego
-    if caster:getEminenceProgress(932) then
-        xi.roe.onRecordTrigger(caster, 932)
-    end
 
     return 0
 end

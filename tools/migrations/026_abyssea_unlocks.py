@@ -10,7 +10,7 @@ def check_preconditions(cur):
 
 
 def needs_to_run(cur):
-    # Ensure unity_leader column exists in char_profile
+    # Ensure traverser_start column exists in char_unlocks
     cur.execute("SHOW COLUMNS FROM char_unlocks LIKE 'traverser_start'")
     if not cur.fetchone():
         return True

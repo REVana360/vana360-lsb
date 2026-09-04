@@ -45,7 +45,6 @@
 #include "packets/s2c/0x029_battle_message.h"
 #include "recast_container.h"
 #include "roam_region.h"
-#include "roe.h"
 #include "spawn_slot.h"
 #include "status_effect_container.h"
 #include "treasure_pool.h"
@@ -880,20 +879,6 @@ void CMobEntity::DistributeRewards()
         {
             blueutils::TryLearningSpells(PChar, this);
             m_UsedSkillIds.clear();
-
-            // RoE Mob kill event for all party members
-            // clang-format off
-            PChar->ForAlliance([this, PChar](CBattleEntity* PMember)
-            {
-                if (PMember->getZone() == PChar->getZone())
-                {
-                    RoeDatagramList datagrams;
-                    datagrams.emplace_back("mob", this);
-                    datagrams.emplace_back("atkType", static_cast<uint8>(this->BattleHistory.lastHitTaken_atkType));
-                    roeutils::event(ROE_MOBKILL, (CCharEntity*)PMember, datagrams);
-                }
-            });
-            // clang-format on
 
             if (m_giveExp && !PChar->StatusEffectContainer->HasStatusEffect(xi::StatusEffect::Battlefield))
             {

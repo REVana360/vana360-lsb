@@ -249,13 +249,4 @@ xi.crafting.guildMasterOnEventFinish = function(player, csid, option, npc)
             player:setLocalVar('CompleteTrade', 0)
         end
     end
-
-    -- Handle RoE.
-    if guildId ~= xi.guild.FISHING then
-        local recordId = guildId + 99
-
-        if player:hasEminenceRecord(recordId) then
-            xi.roe.onRecordTrigger(player, recordId)
-        end
-    end
 end

@@ -10,7 +10,7 @@ def check_preconditions(cur):
 
 
 def needs_to_run(cur):
-    # Ensure unity_leader column exists in char_profile
+    # Ensure expiry column exists in char_vars
     cur.execute("SHOW COLUMNS FROM char_vars LIKE 'expiry'")
     if not cur.fetchone():
         return True

@@ -2842,17 +2842,6 @@ npcs:
         type:  standard
         model: 50
 
-  17727660:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17727661:
     script: blank
     render:
@@ -3171,27 +3160,6 @@ npcs:
     status:   normal
     widescan: true
     content:  soa
-
-  17727684:
-    script:       AMAN_Liaison
-    display_name: A.M.A.N. Liaison
-    at:           [66.770, -16.000, -132.000, 232]
-    render:
-      look:
-        type:  equipped
-        race:  4
-        face:  7
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      name_vis:  1
-      moving:   21
-    status:  normal
-    content: soa
 
   17727685:
     script: blank

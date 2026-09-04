@@ -7028,17 +7028,6 @@ npcs:
     widescan: true
     content:  survival_guide
 
-  17723825:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17723826:
     script: blank
     render:
@@ -7418,27 +7407,6 @@ npcs:
     status:   normal
     widescan: true
     content:  rov
-
-  17723852:
-    script:       AMAN_Liaison
-    display_name: A.M.A.N. Liaison
-    at:           [114.200, 0.000, -10.070, 163]
-    render:
-      look:
-        type:  equipped
-        race:  4
-        face:  1
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      name_vis: 1
-      moving:   1
-    status:  normal
-    content: soa
 
   17723853:
     script:       Linkshell_Concierge

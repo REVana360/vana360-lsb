@@ -9,7 +9,6 @@ require('scripts/globals/hobbies/helm/data')
 require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
-require('scripts/globals/roe')
 require('scripts/missions/amk/helpers')
 require('scripts/missions/wotg/helpers')
 -----------------------------------
@@ -258,9 +257,6 @@ xi.helm.result = function(player, helmType, broke, itemID)
         if xi.events and xi.events.eggHunt then
             xi.events.eggHunt.helmResult(player)
         end
-
-        -- Records of Eminence
-        player:triggerRoeEvent(xi.roeTrigger.HELM_SUCCESS, { ['skillType'] = helmType })
     end
 end
 

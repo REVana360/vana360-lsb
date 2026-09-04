@@ -120,21 +120,8 @@ entity.onMobFight = function(mob, target)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
-    local count = player:getLocalVar('prudenceCount')
     local mobId = mob:getID()
     local prudenceId = ID.mob.JAILER_OF_PRUDENCE
-
-    if
-        mobId == prudenceId or
-        mobId == prudenceId + 1
-    then
-        player:setLocalVar('prudenceCount', count + 1)
-    end
-
-    if count >= 2 and player:hasEminenceRecord(770) then
-        xi.roe.onRecordTrigger(player, 770)
-        player:setLocalVar('prudenceCount', 0)
-    end
 
     if optParams.isKiller or optParams.noKiller then
         local targetMobId = mobId == prudenceId and prudenceId + 1 or prudenceId

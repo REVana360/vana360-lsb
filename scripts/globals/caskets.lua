@@ -2,7 +2,6 @@
 -- Global Casket utility script
 -----------------------------------
 require('scripts/globals/casket_loot')
-require('scripts/globals/roe')
 -----------------------------------
 
 -----------------------------------
@@ -624,10 +623,6 @@ xi.caskets.onTrigger = function(player, npc)
         if npc:getLocalVar('[caskets]SPAWNSTATUS') == casketInfo.spawnStatus.SPAWNED_CLOSED then      -- is the chest shut?, then open it.
             npc:setAnimationSub(1)
             npc:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_OPEN)
-            -- RoE Timed Record #4019 - Crack Tresure Caskets
-            if player:getEminenceProgress(4019) then
-                xi.roe.onRecordTrigger(player, 4019)
-            end
         end
 
         if dropType == casketInfo.dropTypes.TEMP then
@@ -851,9 +846,6 @@ xi.caskets.onEventFinish = function(player, csid, option, npc)
                     if chestObj:getLocalVar('[caskets]SPAWNSTATUS') == casketInfo.spawnStatus.SPAWNED_CLOSED then  -- is the chest shut?, then open it.
                         chestObj:setAnimationSub(1)
                         chestObj:setLocalVar('[caskets]SPAWNSTATUS', casketInfo.spawnStatus.SPAWNED_OPEN)
-
-                        -- RoE Timed Record #4019 - Crack Tresure Caskets (Progress is verified in onRecordTrigger function)
-                        xi.roe.onRecordTrigger(player, 4019)
                     end
                 else
                     local isGreater = inputNumber > correctNumber and 1 or 0

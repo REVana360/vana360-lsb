@@ -10,14 +10,6 @@ npcs:
         type:  standard
         model: 50
 
-  16953347:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 50
-
   16953352:
     render:
       look:

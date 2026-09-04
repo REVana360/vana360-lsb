@@ -102,19 +102,8 @@ entity.onTrigger = function(player, npc)
     end
 
 -- *This quest, as of the time this script was written, is not yet defined.
---     if player:hasCompletedQuest(**Unknown**, RECORDS_OF_EMINENCE) then
---         otherQuests = otherQuests - 65536  -- Records of Eminence
---     end
-
--- *This quest, as of the time this script was written, is not yet defined.
 --     if player:hasCompletedQuest(**Unknown**, TRUST_MUMOR) then
 --         otherQuests = otherQuests - 131072 -- Trust (Mumor)
---     end
-
--- *This quest, as of the time this script was written, is not yet defined.
---     if player:hasCompletedQuest(**Unknown**, UNITY_CONCORD) then
---         otherQuests = otherQuests - 262144 -- Unity Concord (pt.1)
---         otherQuests = otherQuests - 524288 -- Unity Concord (pt.2)
 --     end
 
     -- Seekers of Adoulin
@@ -213,13 +202,7 @@ entity.onEventFinish = function(player, csid, option, npc)
             player:startEvent(12)
         elseif option == 79 then        -- VW Op. #126: Qufim Incursion
             player:startEvent(258)
---        elseif option == 80 then        -- Records of Eminence
---            player:startEvent(CSID)
 --        elseif option == 81 then        -- Trust (Mumor)
---            player:startEvent(CSID)
---        elseif option == 82 then        -- Unity Concord (pt.1)
---            player:startEvent(CSID)
---        elseif option == 83 then        -- Unity Concord (pt.2)
 --            player:startEvent(CSID)
 --        elseif option == 129 then        -- Rumors from the West
 --            player:startEvent(CSID)

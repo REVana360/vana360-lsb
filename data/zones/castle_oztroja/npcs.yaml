@@ -41,17 +41,6 @@ npcs:
         type:  standard
         model: 50
 
-  17396148:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17396150:
     script: NPC[1b6]
     render:
@@ -1556,46 +1545,6 @@ npcs:
     status:   cutscene_only
     widescan: true
     content:  soa
-
-  17396264:
-    script:       Isakoth
-    display_name: Isakoth
-    render:
-      look:
-        type:  equipped
-        race:  1
-        face:  9
-        head:  4096
-        body:  8215
-        hands: 12419
-        legs:  16398
-        feet:  20498
-        main:  24801
-        sub:   28897
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
-
-  17396265:
-    script:       Fhelm_Jobeizat
-    display_name: Fhelm Jobeizat
-    render:
-      look:
-        type:  equipped
-        race:  7
-        face:  3
-        head:  4115
-        body:  8236
-        hands: 12309
-        legs:  16400
-        feet:  20486
-        main:  24747
-        sub:   28835
-      entity_flags: 27
-      name_prefix:  32
-    status:   cutscene_only
-    widescan: true
 
   17396266:
     script:       Ervok

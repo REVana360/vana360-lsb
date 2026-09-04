@@ -60,18 +60,6 @@ enum class EMobDifficulty : uint8
     MAX
 };
 
-// Capacity Bonuses applied based on RoE Completion
-// TODO: Add RoV completion bonuses once implemented.
-const std::vector<std::pair<uint16, uint8>> roeCapacityBonusRecords = {
-    { 1332, 10 }, // San d'Oria Missions (10%)
-    { 1352, 10 }, // Bastok Missions (10%)
-    { 1372, 10 }, // Windurst Missions (10%)
-    { 1392, 10 }, // Zilart Missions (10%)
-    { 1400, 10 }, // Chains of Promathia Missions (10%)
-    { 1409, 10 }, // Wings of the Goddess Missions (10%)
-    { 1415, 10 }, // Treasures of Aht Urhgan Missions (10%)
-};
-
 namespace charutils
 {
 
@@ -85,10 +73,8 @@ void LoadEquip(CCharEntity* PChar);
 void SendQuestMissionLog(CCharEntity* PChar);
 void SendPartialMissionLog(CCharEntity* PChar, MissionLog log, bool completed);
 void SendPartialQuestLog(CCharEntity* PChar, QuestLog log, bool completed);
-void SendRecordsOfEminenceLog(CCharEntity* PChar);
 void SendKeyItems(CCharEntity* PChar);
 void SendInventory(CCharEntity* PChar);
-void SendUnityPackets(CCharEntity* PChar);
 void SendExtendedJobPackets(CCharEntity* PChar);
 void SendLocalPlayerPackets(CCharEntity* PChar);
 
@@ -201,7 +187,6 @@ auto BuildCharEquipSlots(const CCharEntity* PChar) -> std::vector<CharEquipSlot>
 auto BuildCharAppearance(const CCharEntity* PChar) -> CharAppearance;
 // void SaveCharLinkshells(CCharEntity* PChar);     // TODO: save the character's linkshells
 void SaveMissionsList(CCharEntity* PChar);          // save the missions list
-void SaveEminenceData(CCharEntity* PChar);          // save Eminence Record (RoE) data
 void SaveQuestsList(CCharEntity* PChar);            // save the list of quests
 void SaveFame(CCharEntity* PChar);                  // save area fame / reputation
 void SaveZonesVisited(CCharEntity* PChar);          // save visited areas
@@ -226,7 +211,6 @@ void SaveTeleport(CCharEntity* PChar, TELEPORT_TYPE type);      // save the char
 void SaveMazeUnlocks(CCharEntity* PChar);                       // save the character's learned Moblin Maze Mongers vouchers and runes
 void SaveDeathTime(CCharEntity* PChar);                         // save when this character last died
 void SavePlayTime(CCharEntity* PChar);                          // save this character's total play time
-void SaveLastLogout(const CCharEntity* PChar);                  // save the last logout time of this character
 void SavePrevZoneLineID(CCharEntity* PChar, uint32 ZoneLineID); // save the last zoneline the player crossed.
 bool hasMogLockerAccess(const CCharEntity* PChar);              // true if have access, false otherwise
 
@@ -256,7 +240,6 @@ bool IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
 void  AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
 void  SetPoints(CCharEntity* PChar, const char* type, int32 amount);
 int32 GetPoints(CCharEntity* PChar, const char* type);
-void  SetUnityLeader(CCharEntity* PChar, uint8 leaderID);
 auto  GetConquestPointsName(CCharEntity* PChar) -> std::string;
 auto  SendToZone(CCharEntity* PChar, xi::ZoneId zoneId) -> bool;
 void  SendDisconnect(CCharEntity* PChar);

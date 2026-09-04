@@ -44499,7 +44499,6 @@ INSERT INTO `item_mods` VALUES (21342,28,3);  -- MATT: 3
 -- Ghastly Tathlum
 INSERT INTO `item_mods` VALUES (21343,5,30);   -- MP: 30
 INSERT INTO `item_mods` VALUES (21343,311,10); -- MAGIC_DAMAGE: 10
--- TODO: Unity Ranking: INT: 2～6
 
 -- Ghastly Tathlum +1
 INSERT INTO `item_mods` VALUES (21344,5,35);   -- MP: 35
@@ -44514,7 +44513,6 @@ INSERT INTO `item_mods` VALUES (21345,288,2);  -- DOUBLE_ATTACK: 2
 INSERT INTO `item_mods` VALUES (21347,2,25);  -- HP: 25
 INSERT INTO `item_mods` VALUES (21347,10,2);  -- VIT: 2
 INSERT INTO `item_mods` VALUES (21347,27,1);  -- ENMITY: 1
--- TODO: Unity Ranking: INT: 2～6
 
 -- Narmar Boomerang
 INSERT INTO `item_mods` VALUES (21348,23,10); -- ATT:  10

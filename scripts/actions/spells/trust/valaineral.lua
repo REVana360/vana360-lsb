@@ -9,11 +9,6 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    -- Records of Eminence: Alter Ego: Valaineral
-    if caster:getEminenceProgress(933) then
-        xi.roe.onRecordTrigger(caster, 933)
-    end
-
     return xi.trust.spawn(caster, spell)
 end
 

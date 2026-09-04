@@ -21,7 +21,6 @@
 
 #include "0x017_chat_std.h"
 
-#include "common/ipc_structs.h"
 #include "common/utils.h"
 #include "entities/char_entity.h"
 
@@ -62,24 +61,4 @@ GP_SERV_COMMAND_CHAT_STD::GP_SERV_COMMAND_CHAT_STD(const std::string& name, cons
 
     std::memcpy(packet.sName, name.data(), std::min(name.size(), sizeof(packet.sName)));
     std::memcpy(packet.Mes, message.data(), messageSize);
-}
-
-GP_SERV_COMMAND_CHAT_STD::GP_SERV_COMMAND_CHAT_STD(const ipc::ChatMessageAssist& payload)
-{
-    auto& packet = this->data();
-
-    const auto messageSize = static_cast<uint8_t>(std::min(payload.message.size(), sizeof(packet.Mes)));
-    const auto packetSize  = sizeof(GP_SERV_HEADER) + sizeof(packet.Kind) + sizeof(packet.Attr) + sizeof(packet.Data) + sizeof(packet.sName) + messageSize;
-    this->setSize(roundUpToNearestFour(packetSize));
-
-    // Data field holds mastery rank (low byte) and mentor rank (high byte) for assist messages
-    packet.Data = (payload.mentorRank ? payload.masteryRank : 0) | (static_cast<uint16>(payload.mentorRank) << 8);
-    packet.Kind = payload.messageType;
-    if (payload.gmLevel >= 3)
-    {
-        packet.Attr = 0x01;
-    }
-
-    std::memcpy(packet.sName, payload.senderName.data(), std::min(payload.senderName.size(), sizeof(packet.sName)));
-    std::memcpy(packet.Mes, payload.message.data(), messageSize);
 }

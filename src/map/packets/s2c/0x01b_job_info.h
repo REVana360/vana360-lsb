@@ -52,12 +52,9 @@ class GP_SERV_COMMAND_JOB_INFO final : public GP_SERV_PACKET<PacketS2C::GP_SERV_
 public:
     struct PacketData
     {
-        GP_MYROOM_DANCER dancer;                   // PS2: (New; did not exist.)
-        uint32_t         encumbrance;              // PS2: (New; did not exist.)
-        uint8_t          can_thumbs_up_mentor;     // PS2: (New; did not exist.)
-        uint8_t          mentor_rank;              // PS2: (New; did not exist.)
-        uint8_t          mastery_rank;             // PS2: (New; did not exist.)
-        uint8_t          padding67;                // PS2: (New; did not exist.)
+        GP_MYROOM_DANCER dancer;      // PS2: (New; did not exist.)
+        uint32_t         encumbrance; // PS2: (New; did not exist.)
+        uint8_t          padding64[4];
         uint32_t         job_mastery_flags;        // PS2: (New; did not exist.)
         uint8_t          job_mastery_levels[0x18]; // PS2: (New; did not exist.)
     };

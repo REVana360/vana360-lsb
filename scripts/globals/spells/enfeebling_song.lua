@@ -256,7 +256,6 @@ xi.spells.enfeebling.useEnfeeblingSong = function(caster, target, spell)
     if target:addStatusEffect(spellEffect, { power = power, duration = duration, origin = caster, tick = tick, subPower = subEffect, tier = spellTier }) then
         if magicBurstTier > 0 then
             spell:setMsg(xi.msg.basic.MAGIC_BURST_ENFEEB)
-            caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
         else
             -- Lullaby has a different application message than the rest of the song debuffs.
             if spellEffect == xi.effect.SLEEP_I then

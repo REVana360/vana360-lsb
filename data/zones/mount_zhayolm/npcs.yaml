@@ -170,17 +170,6 @@ npcs:
         type:  standard
         model: 50
 
-  17027523:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17027525:
     script: NPC[1c5]
     at:     [0.000, -0.500, 0.000]

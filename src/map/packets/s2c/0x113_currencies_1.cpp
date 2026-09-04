@@ -35,7 +35,7 @@ GP_SERV_COMMAND_CURRENCIES_1::GP_SERV_COMMAND_CURRENCIES_1(CCharEntity* PChar)
                         "ice_fewell, wind_fewell, earth_fewell, lightning_fewell, water_fewell, light_fewell, "
                         "dark_fewell, ballista_point, fellow_point, chocobuck_sandoria, chocobuck_bastok, "
                         "chocobuck_windurst, daily_tally, research_mark, tunnel_worm, morion_worm, phantom_worm, "
-                        "moblin_marble, infamy, prestige, legion_point, spark_of_eminence, shining_star, "
+                        "moblin_marble, infamy, prestige, legion_point, shining_star, "
                         "imperial_standing, leujaoam_assault_point, mamool_assault_point, lebros_assault_point, "
                         "periqia_assault_point, ilrusi_assault_point, nyzul_isle_assault_point, zeni_point, jetton, "
                         "therion_ichor, allied_notes, aman_vouchers, login_points, cruor, resistance_credit, "
@@ -44,8 +44,8 @@ GP_SERV_COMMAND_CURRENCIES_1::GP_SERV_COMMAND_CURRENCIES_1(CCharEntity* PChar)
                         "voidstones, kupofried_corundums, pheromone_sacks, rems_ch1, rems_ch2, "
                         "rems_ch3, rems_ch4, rems_ch5, rems_ch6, rems_ch7, rems_ch8, rems_ch9, rems_ch10, "
                         "bloodshed_plans, umbrage_plans, ritualistic_plans, tutelary_plans, primacy_plans, "
-                        "reclamation_marks, unity_accolades, fire_crystals, ice_crystals, wind_crystals, "
-                        "earth_crystals, lightning_crystals, water_crystals, light_crystals, dark_crystals, deeds "
+                        "reclamation_marks, fire_crystals, ice_crystals, wind_crystals, "
+                        "earth_crystals, lightning_crystals, water_crystals, light_crystals, dark_crystals "
                         "FROM char_points WHERE charid = ?";
 
     auto rset = db::preparedStmt(query, PChar->id);
@@ -99,11 +99,10 @@ GP_SERV_COMMAND_CURRENCIES_1::GP_SERV_COMMAND_CURRENCIES_1(CCharEntity* PChar)
         packet.wizened_phantom_worms = rset->get<uint8_t>("phantom_worm");
         packet.moblin_marbles        = rset->get<int32_t>("moblin_marble");
 
-        packet.infamy             = rset->get<uint16_t>("infamy");
-        packet.prestige           = rset->get<uint16_t>("prestige");
-        packet.legion_points      = rset->get<int32_t>("legion_point");
-        packet.sparks_of_eminence = rset->get<int32_t>("spark_of_eminence");
-        packet.shining_stars      = rset->get<int32_t>("shining_star");
+        packet.infamy        = rset->get<uint16_t>("infamy");
+        packet.prestige      = rset->get<uint16_t>("prestige");
+        packet.legion_points = rset->get<int32_t>("legion_point");
+        packet.shining_stars = rset->get<int32_t>("shining_star");
 
         packet.imperial_standing           = rset->get<int32_t>("imperial_standing");
         packet.assault_points_l_sanctum    = rset->get<int32_t>("leujaoam_assault_point");
@@ -158,7 +157,6 @@ GP_SERV_COMMAND_CURRENCIES_1::GP_SERV_COMMAND_CURRENCIES_1(CCharEntity* PChar)
         packet.unused                   = 0;
 
         packet.reclamation_marks = rset->get<uint16_t>("reclamation_marks");
-        packet.unity_accolades   = rset->get<int32_t>("unity_accolades");
 
         packet.fire_crystals_stored      = rset->get<uint16_t>("fire_crystals");
         packet.ice_crystals_stored       = rset->get<uint16_t>("ice_crystals");
@@ -168,8 +166,6 @@ GP_SERV_COMMAND_CURRENCIES_1::GP_SERV_COMMAND_CURRENCIES_1(CCharEntity* PChar)
         packet.water_crystals_stored     = rset->get<uint16_t>("water_crystals");
         packet.light_crystals_stored     = rset->get<uint16_t>("light_crystals");
         packet.dark_crystals_stored      = rset->get<uint16_t>("dark_crystals");
-
-        packet.deeds = rset->get<uint16_t>("deeds");
     }
 
     // Contains its own query and logic

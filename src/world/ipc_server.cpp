@@ -195,44 +195,11 @@ auto IPCServer::getIPPsForLinkshell(uint32 linkshellId) -> std::vector<IPP>
     return {};
 }
 
-auto IPCServer::getIPPsForUnity(uint32 unityId) -> std::vector<IPP>
-{
-    TracyZoneScoped;
-
-    // TODO: We know when chars move, we could be caching this info
-
-    const auto query = "SELECT server_addr, server_port FROM accounts_sessions "
-                       "WHERE unitychat = ? GROUP BY server_addr, server_port";
-
-    const auto rset = db::preparedStmt(query, unityId);
-    if (rset && rset->rowsCount())
-    {
-        std::vector<IPP> ippList;
-        while (rset->next())
-        {
-            const auto ip   = rset->get<uint64>("server_addr");
-            const auto port = rset->get<uint64>("server_port");
-            ippList.emplace_back(ip, port);
-        }
-
-        return ippList;
-    }
-
-    return {};
-}
-
 auto IPCServer::getIPPsForYellZones() -> std::vector<IPP>
 {
     TracyZoneScoped;
 
     return zoneSettings_.yellMapEndpoints_;
-}
-
-auto IPCServer::getIPPsForAssistZones() -> std::vector<IPP>
-{
-    TracyZoneScoped;
-
-    return zoneSettings_.assistMapEndpoints_;
 }
 
 auto IPCServer::getIPPsForAllZones() -> std::vector<IPP>
@@ -318,17 +285,6 @@ void IPCServer::rerouteMessageToLinkshellMembers(uint32 linkshellId, const auto&
     }
 }
 
-void IPCServer::rerouteMessageToUnityMembers(uint32 unityId, const auto& message)
-{
-    TracyZoneScoped;
-
-    for (const auto& ipp : getIPPsForUnity(unityId))
-    {
-        DebugIPCFmt("Message: -> rerouting to unity<{}> on {}", unityId, ipp.toString());
-        sendMessage(ipp, message);
-    }
-}
-
 void IPCServer::rerouteMessageToYellZones(const auto& message)
 {
     TracyZoneScoped;
@@ -336,17 +292,6 @@ void IPCServer::rerouteMessageToYellZones(const auto& message)
     for (const auto& ipp : getIPPsForYellZones())
     {
         DebugIPCFmt("Message: -> rerouting to yell zone on {}", ipp.toString());
-        sendMessage(ipp, message);
-    }
-}
-
-void IPCServer::rerouteMessageToAssistZones(const auto& message)
-{
-    TracyZoneScoped;
-
-    for (const auto& ipp : getIPPsForAssistZones())
-    {
-        DebugIPCFmt("Message: -> rerouting to assist zone on {}", ipp.toString());
         sendMessage(ipp, message);
     }
 }
@@ -463,25 +408,11 @@ void IPCServer::handleMessage_ChatMessageLinkshell(const IPP& ipp, const ipc::Ch
     rerouteMessageToLinkshellMembers(message.linkshellId, message);
 }
 
-void IPCServer::handleMessage_ChatMessageUnity(const IPP& ipp, const ipc::ChatMessageUnity& message)
-{
-    TracyZoneScoped;
-
-    rerouteMessageToUnityMembers(message.unityLeaderId, message);
-}
-
 void IPCServer::handleMessage_ChatMessageYell(const IPP& ipp, const ipc::ChatMessageYell& message)
 {
     TracyZoneScoped;
 
     rerouteMessageToYellZones(message);
-}
-
-void IPCServer::handleMessage_ChatMessageAssist(const IPP& ipp, const ipc::ChatMessageAssist& message)
-{
-    TracyZoneScoped;
-
-    rerouteMessageToAssistZones(message);
 }
 
 void IPCServer::handleMessage_ChatMessageServerMessage(const IPP& ipp, const ipc::ChatMessageServerMessage& message)
@@ -697,13 +628,6 @@ void IPCServer::handleMessage_SendPlayerToLocation(const IPP& ipp, const ipc::Se
     TracyZoneScoped;
 
     rerouteMessageToCharId(message.targetId, message);
-}
-
-void IPCServer::handleMessage_AssistChannelEvent(const IPP& ipp, const ipc::AssistChannelEvent& message)
-{
-    TracyZoneScoped;
-
-    rerouteMessageToCharId(message.receiverId, message);
 }
 
 void IPCServer::handleMessage_GMCallRequest(const IPP& ipp, const ipc::GMCallRequest& message)

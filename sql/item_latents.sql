@@ -3496,10 +3496,8 @@ INSERT INTO `item_latents` VALUES (21970,355,158,13,408); -- Sekkanoki: Able to 
 -- INSERT INTO `item_latents` VALUES (22037,30,10,??,0); -- Dynamis (D): Magic Accuracy+10
 
 -- Contemplator
--- INSERT INTO `item_latents` VALUES (22057,369,1,??,0); -- Unity Ranking: "Refresh"+1
 
 -- Contemplator +1
--- INSERT INTO `item_latents` VALUES (22058,369,1,??,0); -- Unity Ranking: "Refresh"+1~2
 
 -- Sorcerer's Staff
 -- INSERT INTO `item_latents` VALUES (22091,25,10,??,0); -- Dynamis (D): Accuracy+10
@@ -3537,10 +3535,8 @@ INSERT INTO `item_latents` VALUES (22118,174,5,13,198);  -- Minuet: "Skillchain 
 INSERT INTO `item_latents` VALUES (22118,944,5,13,198);  -- Minuet: "Conserve TP"+5
 
 -- Imati
--- INSERT INTO `item_latents` VALUES (22120,24,??,??,0); -- Unity Ranking: Ranged Attack+20~30
 
 -- Imati +1
--- INSERT INTO `item_latents` VALUES (22121,24,??,??,0); -- Unity Ranking: Ranged Attack+20~30
 
 -- Fomalhaut
 -- INSERT INTO `item_latents` VALUES (22143,??,500,??,??); -- Fomalhaut: "TP Bonus"+500 (only applied to Marksmanship weapon skills)
@@ -3554,16 +3550,12 @@ INSERT INTO `item_latents` VALUES (22118,944,5,13,198);  -- Minuet: "Conserve TP
 -- INSERT INTO `item_latents` VALUES (22148,30,10,??,0); -- Dynamis (D): Magic Accuracy+10
 
 --  Seething Bomblet
--- INSERT INTO `item_latents` VALUES (22254,8,??,??,0);  -- Unity ranking: STR+1～5
 
 --  Seething Bomblet +1
--- INSERT INTO `item_latents` VALUES (22255,8,??,??,0);   -- Unity ranking: STR+1～5
 
 -- Antitail
--- INSERT INTO `item_latents` VALUES (22266,288,??,??,0); -- Unity Ranking: "Double Attack"+1~3%
 
 -- Antitail +1
--- INSERT INTO `item_latents` VALUES (22267,288,??,??,0); -- Unity Ranking: "Double Attack"+1~3%
 
 -- Kasuga Kabuto +2
 INSERT INTO `item_latents` VALUES (23096,291,16,13,354); -- EFFECT_SEIGAN: COUNTER: 16

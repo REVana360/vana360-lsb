@@ -2595,9 +2595,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Naja_Salaheem',781,169); -- Black Halo
 -- INSERT INTO `mob_skill_lists` VALUES ('Trust_NajaSalaheem',?,168); -- Hexa Strike
 -- INSERT INTO `mob_skill_lists` VALUES ('Trust_NajaSalaheem',?,169); -- Black Halo
 -- Confirmed on retail, each version of her uses a different "breaker" ws.
--- INSERT INTO `mob_skill_lists` VALUES ('UnityLeader_NajaSalaheem',?,3503); -- Justicebreaker
--- INSERT INTO `mob_skill_lists` VALUES ('UnityLeader_NajaSalaheem',?,168); -- Hexa Strike
--- INSERT INTO `mob_skill_lists` VALUES ('UnityLeader_NajaSalaheem',?,169); -- Black Halo
 INSERT INTO `mob_skill_lists` VALUES ('Amnaf_blu',782,38); -- Circle Blade
 -- Flayer version of Amnaf uses standard soulflayer skills.
 
@@ -3525,11 +3522,6 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 37); -- Seraph Blade
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 42); -- Savage Blade
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rahal', 1066, 41); -- Swift Blade
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Koru-Moru',1067,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Pieuje_UC',1068,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Invincible_Shield_UC',1069,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Apururu_UC',1070,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Jakoh_Wahcondalo_UC',1071,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Flaviria_UC',1072,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Babban',1073,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abenzio',1074,0);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Rughadjeen',1075,49);   -- Power Slash
@@ -3566,8 +3558,6 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_Mildaurion',1086,3473); -- Stellar 
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Robel-Akbel',1092,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Kupofried',1093,0);
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Selh_teus',1094,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Yoran-Oran_UC',1095,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Sylvie_UC',1096,0);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,1); -- Combo
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,4); -- Backhand Blow
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Abquhbah',1097,3541); -- Salaheem Spirit
@@ -3612,10 +3602,6 @@ INSERT INTO `mob_skill_lists` VALUES ('TRUST_AAGK',1111,3726); -- Tachi: Fudo
 -- Reserved for future Trust 6002 (ID: 1117)
 -- Reserved for future Trust 6003 (ID: 1118) (Formerly Cornelia)
 -- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Excenmille_S',1119,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Ayame_UC',1120,0);
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Maat_UC',1121,3496);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Aldo_UC',1122,0);
--- INSERT INTO `mob_skill_lists` VALUES ('TRUST_Naja_Salaheem_UC',1123,0);
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3491); -- Grapeshot
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3492); -- Pirate Pummel
 INSERT INTO `mob_skill_lists` VALUES ('TRUST_Lion_II',1124,3493); -- Powder Keg

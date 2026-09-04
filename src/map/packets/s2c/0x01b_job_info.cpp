@@ -23,7 +23,6 @@
 
 #include <cstring>
 
-#include "aman.h"
 #include "entities/char_entity.h"
 
 GP_SERV_COMMAND_JOB_INFO::GP_SERV_COMMAND_JOB_INFO(CCharEntity* PChar)
@@ -43,10 +42,7 @@ GP_SERV_COMMAND_JOB_INFO::GP_SERV_COMMAND_JOB_INFO(CCharEntity* PChar)
     packet.dancer.mpmax   = PChar->health.maxmp;
     packet.dancer.sjobflg = PChar->jobs.unlocked & 1;
 
-    packet.encumbrance          = (PChar->m_EquipBlock) | (PChar->m_StatsDebilitation << 16);
-    packet.can_thumbs_up_mentor = PChar->aman().canThumbsUp();
-    packet.mentor_rank          = PChar->aman().getMentorRank();
-    packet.mastery_rank         = PChar->aman().getMasteryRank();
+    packet.encumbrance = (PChar->m_EquipBlock) | (PChar->m_StatsDebilitation << 16);
 
     if (PChar->m_PMonstrosity != nullptr)
     {

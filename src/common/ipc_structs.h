@@ -103,17 +103,6 @@ struct ChatMessageLinkshell
     uint8       gmLevel{};
 };
 
-struct ChatMessageUnity
-{
-    uint32            unityLeaderId{};
-    uint32            senderId{};
-    std::string       senderName{};
-    std::string       message{};
-    xi::ZoneId        zoneId{};
-    uint8             gmLevel{};
-    CHAT_MESSAGE_TYPE messageType{ MESSAGE_UNITY };
-};
-
 struct ChatMessageYell
 {
     uint32            senderId{};
@@ -122,17 +111,6 @@ struct ChatMessageYell
     xi::ZoneId        zoneId{};
     uint8             gmLevel{};
     CHAT_MESSAGE_TYPE messageType{ MESSAGE_YELL };
-};
-
-struct ChatMessageAssist
-{
-    uint32            senderId{};
-    std::string       senderName{};
-    std::string       message{};
-    uint8             mentorRank{ 0 };
-    uint8             masteryRank{ 1 };
-    uint8             gmLevel{};
-    CHAT_MESSAGE_TYPE messageType{ MESSAGE_NA_ASSIST };
 };
 
 // NOTE: Remember some external tools like announce.py rely on this struct layout.
@@ -306,13 +284,6 @@ struct SendPlayerToLocation
     float      z{};
     uint8      rot{};
     uint32     moghouseId{};
-};
-
-struct AssistChannelEvent
-{
-    uint32 senderId{};
-    uint32 receiverId{};
-    uint8  action{}; // GP_CLI_COMMAND_ASSIST_CHANNEL_KIND
 };
 
 struct GMCallRequest

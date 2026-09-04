@@ -28,7 +28,6 @@
 #include "entities/battle_entity.h"
 #include "packets/s2c/0x028_battle2.h"
 #include "packets/s2c/0x029_battle_message.h"
-#include "roe.h"
 #include "status_effect_container.h"
 #include "utils/battleutils.h"
 #include "utils/zoneutils.h"
@@ -159,7 +158,7 @@ auto CWeaponSkillState::Update(const timer::time_point tick) -> bool
                 m_PEntity->delModifier(xi::Mod::ALL_WSDMG_FIRST_HIT, WSBonus);
             }
 
-            if (action.actiontype == ActionCategory::SkillFinish) // category changes upon being out of range. This does not count for RoE and delay is not increased beyond the normal delay.
+            if (action.actiontype == ActionCategory::SkillFinish) // category changes upon being out of range. Delay is not increased beyond the normal delay.
             {
                 // only send lua the WS events if we are in range
                 const uint32 weaponskillVar    = PTarget->GetLocalVar("weaponskillHit");
@@ -173,11 +172,6 @@ auto CWeaponSkillState::Update(const timer::time_point tick) -> bool
                     {
                         PActionTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", m_PEntity, PActionTarget, m_PSkill.get(), m_spent, &action);
                     }
-                }
-
-                if (m_PEntity->objtype == TYPE_PC)
-                {
-                    roeutils::event(ROE_EVENT::ROE_WSKILL_USE, static_cast<CCharEntity*>(m_PEntity), RoeDatagram("skillType", m_PSkill->getType()));
                 }
             }
         }

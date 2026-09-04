@@ -21,7 +21,6 @@
 
 #include "0x0b5_chat_std.h"
 
-#include "aman.h"
 #include "command_handler.h"
 #include "common/ipc_structs.h"
 #include "common/settings.h"
@@ -31,8 +30,6 @@
 #include "packets/s2c/0x009_message.h"
 #include "packets/s2c/0x017_chat_std.h"
 #include "packets/s2c/0x029_battle_message.h"
-#include "roe.h"
-#include "unitychat.h"
 #include "utils/jailutils.h"
 
 namespace
@@ -53,26 +50,6 @@ const auto auditChat = [](Scheduler& scheduler, CCharEntity* PChar, const std::s
                 if (!db::preparedStmt(query, name, chatType, zoneId, rawMessage))
                 {
                     ShowErrorFmt("Failed to insert {} audit_chat record for player '{}'", chatType, name);
-                }
-            });
-    }
-};
-
-const auto auditUnity = [](Scheduler& scheduler, CCharEntity* PChar, const std::string& rawMessage)
-{
-    if (settings::get<bool>("map.AUDIT_CHAT") && settings::get<uint8>("map.AUDIT_UNITY"))
-    {
-        const auto& name        = PChar->getName();
-        const auto  zoneId      = PChar->getZone();
-        const auto  unityLeader = PChar->PUnityChat->getLeader();
-
-        scheduler.postToWorkerThread(
-            [name, zoneId, unityLeader, rawMessage]()
-            {
-                const auto query = "INSERT INTO audit_chat (speaker, type, zoneid, unity, message, datetime) VALUES(?, 'UNITY', ?, ?, ?, current_timestamp())";
-                if (!db::preparedStmt(query, name, zoneId, unityLeader, rawMessage))
-                {
-                    ShowError("Failed to insert UNITY audit_chat record for player '%s'", name.c_str());
                 }
             });
     }
@@ -290,86 +267,11 @@ void GP_CLI_COMMAND_CHAT_STD::process(MapSession* PSession, CCharEntity* PChar) 
             }
         }
         break;
-        case GP_CLI_COMMAND_CHAT_STD_KIND::Unity:
-        {
-            if (!PChar->PUnityChat)
-            {
-                PChar->pushPacket<GP_SERV_COMMAND_MESSAGE>(MsgStd::UnityNotParticipating);
-                return;
-            }
-
-            message::send(ipc::ChatMessageUnity{
-                .unityLeaderId = PChar->PUnityChat->getLeader(),
-                .senderId      = PChar->id,
-                .senderName    = PChar->getName(),
-                .message       = rawMessage,
-                .zoneId        = PChar->getZone(),
-                .gmLevel       = PChar->m_GMlevel,
-            });
-
-            roeutils::event(ROE_EVENT::ROE_UNITY_CHAT, PChar, RoeDatagram("unityMessage", rawMessage));
-
-            // TODO: Don't pass around Scheduler& through PSession
-            auditUnity(*PSession->scheduler, PChar, rawMessage);
-        }
-        break;
         case GP_CLI_COMMAND_CHAT_STD_KIND::LinkshellPvp:
         {
             // Not implemented
             // TODO: Don't pass around Scheduler& through PSession
             auditChat(*PSession->scheduler, PChar, "BALLISTA", rawMessage);
-        }
-        break;
-        case GP_CLI_COMMAND_CHAT_STD_KIND::AssistJ:
-        {
-            if (!settings::get<bool>("main.ASSIST_CHANNEL_ENABLED") ||
-                !PChar->loc.zone->CanUseMisc(xi::ZoneMisc::Assist) ||
-                PChar->aman().isMuted() ||
-                !PChar->aman().isAssistChannelEligible())
-            {
-                // Silently drop the message.
-                return;
-            }
-
-            PChar->aman().recordLastMessage();
-            message::send(ipc::ChatMessageAssist{
-                .senderId    = PChar->id,
-                .senderName  = PChar->getName(),
-                .message     = rawMessage,
-                .mentorRank  = PChar->aman().isMentor() ? PChar->aman().getMentorRank() : static_cast<uint8>(0),
-                .masteryRank = PChar->aman().getMasteryRank(),
-                .gmLevel     = PChar->m_GMlevel,
-                .messageType = MESSAGE_JP_ASSIST,
-            });
-
-            // TODO: Don't pass around Scheduler& through PSession
-            auditChat(*PSession->scheduler, PChar, "ASSISTJ", rawMessage);
-        }
-        break;
-        case GP_CLI_COMMAND_CHAT_STD_KIND::AssistE:
-        {
-            if (!settings::get<bool>("main.ASSIST_CHANNEL_ENABLED") ||
-                !PChar->loc.zone->CanUseMisc(xi::ZoneMisc::Assist) ||
-                PChar->aman().isMuted() ||
-                !PChar->aman().isAssistChannelEligible())
-            {
-                // Silently drop the message.
-                return;
-            }
-
-            PChar->aman().recordLastMessage();
-            message::send(ipc::ChatMessageAssist{
-                .senderId    = PChar->id,
-                .senderName  = PChar->getName(),
-                .message     = rawMessage,
-                .mentorRank  = PChar->aman().isMentor() ? PChar->aman().getMentorRank() : static_cast<uint8>(0),
-                .masteryRank = PChar->aman().getMasteryRank(),
-                .gmLevel     = PChar->m_GMlevel,
-                .messageType = MESSAGE_NA_ASSIST,
-            });
-
-            // TODO: Don't pass around Scheduler& through PSession
-            auditChat(*PSession->scheduler, PChar, "ASSISTE", rawMessage);
         }
         break;
     }

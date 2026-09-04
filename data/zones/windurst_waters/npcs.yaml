@@ -7396,17 +7396,6 @@ npcs:
         model: 82
       moving: 1
 
-  17752551:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17752552:
     script: blank
     at:     [-46.500, -3.500, 60.200, 199]
@@ -7963,27 +7952,6 @@ npcs:
       name_vis: 128
       moving:    80
     status: cutscene_only
-
-  17752590:
-    script:       AMAN_Liaison
-    display_name: A.M.A.N. Liaison
-    at:           [146.720, -0.300, -3.300, 63]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  15
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      name_vis: 1
-      moving:   8
-    status:  normal
-    content: soa
 
   17752591:
     script: blank

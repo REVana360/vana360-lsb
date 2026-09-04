@@ -4212,29 +4212,6 @@ npcs:
     widescan: true
     content:  voidwatch
 
-  17764603:
-    script:       Fhelm_Jobeizat
-    display_name: Fhelm Jobeizat
-    at:           [89.049, -4.108, -46.195, 219]
-    render:
-      look:
-        type:  equipped
-        race:  7
-        face:  3
-        head:  4115
-        body:  8226
-        hands: 12388
-        legs:  16494
-        feet:  20580
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:        1
-    status:   normal
-    widescan: true
-    content:  soa
-
   17764604:
     script:       qm3
     display_name: ???
@@ -4298,52 +4275,6 @@ npcs:
     status:   normal
     widescan: true
     content:  daily_tally
-
-  17764608:
-    script:       Teldro-Kesdrodo
-    display_name: Teldro-Kesdrodo
-    at:           [96.900, -5.230, -25.380, 19]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  9
-        head:  4204
-        body:  8300
-        hands: 12396
-        legs:  16587
-        feet:  20714
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       21
-    status:   normal
-    widescan: true
-    content:  soa
-
-  17764609:
-    script:       Yonolala
-    display_name: Yonolala
-    at:           [97.520, -5.270, -24.070, 19]
-    render:
-      look:
-        type:  equipped
-        race:  6
-        face:  14
-        head:  4210
-        body:  8306
-        hands: 12402
-        legs:  16563
-        feet:  20696
-        main:  24576
-        sub:   28672
-      entity_flags: 27
-      name_prefix:  32
-      moving:       14
-    status:   normal
-    widescan: true
-    content:  soa
 
   17764610:
     script:       qm4
@@ -6871,17 +6802,6 @@ npcs:
         model: 52
       entity_flags: 2051
 
-  17764801:
-    script:       Unity_Master
-    display_name: Unity Master
-    render:
-      look:
-        type:  standard
-        model: 52
-      entity_flags: 2051
-      name_vis:       96
-    content: soa
-
   17764802:
     script: blank
     render:
@@ -7262,27 +7182,6 @@ npcs:
     widescan: true
     content:  rov
 
-  17764828:
-    script:       AMAN_Validator
-    display_name: A.M.A.N. Validator
-    at:           [89.900, -4.200, -47.630, 236]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  6
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      moving: 21
-    status:   normal
-    widescan: true
-    content:  soa
-
   17764829:
     script: blank
     render:
@@ -7291,27 +7190,6 @@ npcs:
         model: 52
       entity_flags: 2051
       name_vis:      112
-
-  17764830:
-    script:       AMAN_Liaison
-    display_name: A.M.A.N. Liaison
-    at:           [-83.170, -5.260, 26.280, 128]
-    render:
-      look:
-        type:  equipped
-        race:  5
-        face:  9
-        head:  4215
-        body:  8295
-        hands: 12392
-        legs:  16486
-        feet:  20584
-        main:  24576
-        sub:   28672
-      name_vis: 1
-      moving:   7
-    status:  normal
-    content: soa
 
   17764831:
     script:       RepairerMoogle

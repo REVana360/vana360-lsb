@@ -33,9 +33,7 @@ def migrate(cur, db):
         ADD COLUMN `rems_ch8` tinyint(3) unsigned NOT NULL DEFAULT 0, \
         ADD COLUMN `rems_ch9` tinyint(3) unsigned NOT NULL DEFAULT 0, \
         ADD COLUMN `rems_ch10` tinyint(3) unsigned NOT NULL DEFAULT 0, \
-        ADD COLUMN `reclamation_marks` smallint(3) unsigned NOT NULL DEFAULT 0, \
-        ADD COLUMN `unity_accolades` int(5) unsigned NOT NULL DEFAULT 0, \
-        ADD COLUMN `deeds` smallint(5) unsigned NOT NULL DEFAULT 0;"
+        ADD COLUMN `reclamation_marks` smallint(3) unsigned NOT NULL DEFAULT 0;"
         )
         db.commit()
     except mariadb.Error as err:

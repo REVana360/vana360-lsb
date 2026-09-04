@@ -19,6 +19,7 @@
 ===========================================================================
 */
 
+#include "common/ipc.h"
 #include "login/login_packets.h"
 #include "login/session.h"
 #include "map/action/action.h"
@@ -34,6 +35,7 @@
 #include "map/packets/c2s/0x01a_action.h"
 #include "map/packets/c2s/0x050_equip_set.h"
 #include "map/packets/c2s/0x061_clistatus.h"
+#include "map/packets/c2s/0x0b5_chat_std.h"
 #include "map/packets/c2s/0x0dd_equip_inspect.h"
 #include "map/packets/char_update.h"
 #include "map/packets/entity_update.h"
@@ -52,9 +54,41 @@
 #include "map/packets/s2c/0x061_clistatus.h"
 #include "map/packets/s2c/0x0ac_command_data.h"
 #include "map/packets/s2c/0x0c9_equip_inspect_general.h"
+#include "map/packets/s2c/0x113_currencies_1.h"
 #include "map/trade_container.h"
 
 #include <catch2/catch_test_macros.hpp>
+
+static_assert(sizeof(GP_SERV_COMMAND_CURRENCIES_1::PacketData) == 0xF8);
+static_assert(offsetof(GP_SERV_COMMAND_CURRENCIES_1::PacketData, shining_stars) + sizeof(GP_SERV_HEADER) == 0x78);
+static_assert(offsetof(GP_SERV_COMMAND_CURRENCIES_1::PacketData, fire_crystals_stored) + sizeof(GP_SERV_HEADER) == 0xE8);
+
+TEST_CASE("Chat requests reject unsupported channels", "[packet][vana360]")
+{
+    GP_CLI_COMMAND_CHAT_STD packet{};
+    for (uint8_t channel : { 0x21, 0x22, 0x23 })
+    {
+        packet.Kind = channel;
+        REQUIRE_FALSE(packet.validate(nullptr, nullptr).valid());
+    }
+
+    for (uint8_t channel : { 0x00, 0x01, 0x04, 0x05, 0x08, 0x18, 0x1A, 0x1B })
+    {
+        packet.Kind = channel;
+        REQUIRE(packet.validate(nullptr, nullptr).valid());
+    }
+}
+
+TEST_CASE("IPC wire identities survive removed channels", "[packet][vana360]")
+{
+    REQUIRE(static_cast<uint8_t>(ipc::MessageType::ChatMessageServerMessage) == 12);
+    REQUIRE(static_cast<uint8_t>(ipc::MessageType::ChatMessageYell) == 10);
+    REQUIRE(ipc::toString(ipc::MessageType::ChatMessageServerMessage) == "ChatMessageServerMessage");
+    for (uint8_t type : { 0, 9, 11, 34, 255 })
+    {
+        REQUIRE(ipc::toString(static_cast<ipc::MessageType>(type)) == "Unknown");
+    }
+}
 
 static_assert(sizeof(GP_SHOP_LEGACY) == 8);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_ENTERZONE::PacketData) == 0x34);
@@ -333,16 +367,16 @@ TEST_CASE("July 2009 Battle2 fixtures keep legacy result boundaries", "[packet][
             .actiontype = ActionCategory::BasicAttack,
             .targets    = {
                 {
-                       .actorId = 0x05060708,
-                       .results = {
+                    .actorId = 0x05060708,
+                    .results = {
                         {
-                               .animation     = ActionAnimation::RedTrigger,
-                               .info          = ActionInfo::CriticalHit,
-                               .hitDistortion = HitDistortion::Medium,
-                               .knockback     = Knockback::Level3,
-                               .param         = 0x1234,
-                               .messageID     = MsgBasic::AttackHits,
-                               .modifier      = ActionModifier::CriticalHit,
+                            .animation     = ActionAnimation::RedTrigger,
+                            .info          = ActionInfo::CriticalHit,
+                            .hitDistortion = HitDistortion::Medium,
+                            .knockback     = Knockback::Level3,
+                            .param         = 0x1234,
+                            .messageID     = MsgBasic::AttackHits,
+                            .modifier      = ActionModifier::CriticalHit,
                         },
                     },
                 },
@@ -1007,10 +1041,10 @@ TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[
         .actionid   = static_cast<uint32_t>(FourCC::SkillUse),
         .targets    = {
             {
-                   .actorId = 0x05060708,
-                   .results = {
+                .actorId = 0x05060708,
+                .results = {
                     {
-                           .param = 5,
+                        .param = 5,
                     },
                 },
             },
@@ -1026,11 +1060,11 @@ TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[
         .actiontype = ActionCategory::BasicAttack,
         .targets    = {
             {
-                   .actorId = 0x05060708,
-                   .results = {
+                .actorId = 0x05060708,
+                .results = {
                     {
-                           .resolution = ActionResolution::Parry,
-                           .modifier   = ActionModifier::Resist,
+                        .resolution = ActionResolution::Parry,
+                        .modifier   = ActionModifier::Resist,
                     },
                 },
             },
@@ -1046,11 +1080,11 @@ TEST_CASE("July 2009 packet adaptation is applied at the recipient boundary", "[
         .actiontype = ActionCategory::BasicAttack,
         .targets    = {
             {
-                   .actorId = 0x05060708,
-                   .results = {
+                .actorId = 0x05060708,
+                .results = {
                     {
-                           .info          = ActionInfo::CriticalHit,
-                           .hitDistortion = HitDistortion::Heavy,
+                        .info          = ActionInfo::CriticalHit,
+                        .hitDistortion = HitDistortion::Heavy,
                     },
                 },
             },
