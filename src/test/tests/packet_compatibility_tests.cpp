@@ -38,6 +38,7 @@
 #include "map/packets/s2c/0x01c_item_max.h"
 #include "map/packets/s2c/0x028_battle2.h"
 #include "map/packets/s2c/0x029_battle_message.h"
+#include "map/packets/s2c/0x02a_talknumwork.h"
 #include "map/packets/s2c/0x02d_battle_message2.h"
 #include "map/packets/s2c/0x03c_shop_list.h"
 #include "map/packets/s2c/0x061_clistatus.h"
@@ -57,6 +58,7 @@ static_assert(sizeof(GP_SERV_HEADER) + offsetof(CommandDataTbl_t, JobAbilities) 
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData) == 0x1C);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData, Data) == 0x0C);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE::PacketData, MessageNum) == 0x18);
+static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_TALKNUMWORK::PacketData) == 0x40);
 static_assert(sizeof(GP_SERV_HEADER) + sizeof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData) == 0x1C);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData, Data) == 0x10);
 static_assert(sizeof(GP_SERV_HEADER) + offsetof(GP_SERV_COMMAND_BATTLE_MESSAGE2::PacketData, MessageNum) == 0x18);
@@ -442,6 +444,47 @@ TEST_CASE("July 2009 item capacity uses the pre-Mog Sack layout", "[packet][vana
     for (std::size_t offset = 0x20; offset < 0x34; ++offset)
     {
         REQUIRE(packet.ref<uint8_t>(offset) == 0);
+    }
+}
+
+TEST_CASE("July 2009 formatted messages use conditional packet lengths", "[packet][vana360]")
+{
+    CCharEntity player;
+    player.id     = 0x01020304;
+    player.targid = 0x0506;
+    player.name   = "Vanatest";
+
+    GP_SERV_COMMAND_TALKNUMWORK unnamed(&player, 123, 16534, 2, 3, 4, false);
+    REQUIRE(unnamed.getSize() == 0x40);
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(unnamed);
+
+    REQUIRE(unnamed.getType() == 0x02A);
+    REQUIRE(unnamed.getSize() == 0x20);
+    REQUIRE(unnamed.ref<uint32_t>(0x04) == player.id);
+    REQUIRE(unnamed.ref<uint32_t>(0x08) == 16534);
+    REQUIRE(unnamed.ref<uint32_t>(0x0C) == 2);
+    REQUIRE(unnamed.ref<uint32_t>(0x10) == 3);
+    REQUIRE(unnamed.ref<uint32_t>(0x14) == 4);
+    REQUIRE(unnamed.ref<uint16_t>(0x18) == player.targid);
+    REQUIRE(unnamed.ref<uint16_t>(0x1A) == (123 | 0x8000));
+
+    CNpcEntity npc;
+    npc.id     = 0x01020305;
+    npc.targid = 0x0507;
+    npc.name   = "Cletae";
+
+    GP_SERV_COMMAND_TALKNUMWORK named(&npc, 456, 7, 8, 9, 10, true);
+    REQUIRE(named.getSize() == 0x40);
+
+    legacy_packet_adapter::adaptForJuly2009Xbox(named);
+
+    REQUIRE(named.getType() == 0x02A);
+    REQUIRE(named.getSize() == 0x30);
+    REQUIRE(named.ref<uint16_t>(0x1A) == 456);
+    for (std::size_t index = 0; index < npc.name.size(); ++index)
+    {
+        REQUIRE(named.ref<uint8_t>(0x1E + index) == npc.name[index]);
     }
 }
 

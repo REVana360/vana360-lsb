@@ -107,6 +107,24 @@ void adaptBattleAction(CBasicPacket& packet)
     }
 }
 
+void adaptTalkNumWork(CBasicPacket& packet)
+{
+    constexpr std::size_t stringOffset = 0x1E;
+    constexpr std::size_t stringSize   = 32;
+
+    bool hasName = false;
+    for (std::size_t index = 0; index < stringSize; ++index)
+    {
+        if (packet.ref<uint8_t>(stringOffset + index) != 0)
+        {
+            hasName = true;
+            break;
+        }
+    }
+
+    packet.setSize(hasName ? 0x30 : 0x20);
+}
+
 void adaptCommandData(CBasicPacket& packet)
 {
     constexpr std::size_t modernWeaponSkillsOffset = 0x04;
@@ -172,6 +190,9 @@ void adaptForJuly2009Xbox(CBasicPacket& packet)
             break;
         case 0x028:
             adaptBattleAction(packet);
+            break;
+        case 0x02A:
+            adaptTalkNumWork(packet);
             break;
         case 0x0AC:
             adaptCommandData(packet);
