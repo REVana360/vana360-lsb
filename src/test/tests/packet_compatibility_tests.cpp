@@ -49,6 +49,7 @@
 #include "map/packets/s2c/0x050_equip_list.h"
 #include "map/packets/s2c/0x061_clistatus.h"
 #include "map/packets/s2c/0x0ac_command_data.h"
+#include "map/trade_container.h"
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -494,6 +495,69 @@ TEST_CASE("July 2009 formatted messages use conditional packet lengths", "[packe
     for (std::size_t index = 0; index < npc.name.size(); ++index)
     {
         REQUIRE(named.ref<uint8_t>(0x1E + index) == npc.name[index]);
+    }
+}
+
+TEST_CASE("July 2009 shop lists use eight-byte rows", "[packet][vana360]")
+{
+    constexpr std::array<uint16_t, 14> itemIds{
+        2129,
+        505,
+        856,
+        852,
+        878,
+        858,
+        857,
+        1640,
+        859,
+        1628,
+        853,
+        2123,
+        2518,
+        854,
+    };
+    constexpr std::array<uint32_t, 14> prices{
+        75,
+        100,
+        80,
+        600,
+        600,
+        600,
+        2400,
+        2500,
+        1500,
+        16000,
+        3000,
+        2500,
+        3000,
+        3000,
+    };
+
+    CCharEntity character;
+    MapSession  session;
+    character.PSession = &session;
+    character.Container->setSize(17);
+    for (uint8_t index = 0; index < itemIds.size(); ++index)
+    {
+        character.Container->setItem(index, itemIds[index], index, prices[index]);
+        character.Container->setRestriction(index, GuildRestriction{ 5, index });
+    }
+
+    GP_SERV_COMMAND_SHOP_LIST modern(&character);
+    REQUIRE(modern.getType() == 0x03C);
+    REQUIRE(modern.getSize() == 0xB0);
+
+    session.legacyXboxClient = true;
+    GP_SERV_COMMAND_SHOP_LIST legacy(&character);
+    REQUIRE(legacy.getType() == 0x03C);
+    REQUIRE(legacy.getSize() == 0x78);
+    for (uint8_t index = 0; index < itemIds.size(); ++index)
+    {
+        const std::size_t offset = 0x08 + index * sizeof(GP_SHOP_LEGACY);
+        REQUIRE(legacy.ref<uint32_t>(offset) == prices[index]);
+        REQUIRE(legacy.ref<uint16_t>(offset + 4) == itemIds[index]);
+        REQUIRE(legacy.ref<uint8_t>(offset + 6) == index);
+        REQUIRE(legacy.ref<uint8_t>(offset + 7) == 0);
     }
 }
 
