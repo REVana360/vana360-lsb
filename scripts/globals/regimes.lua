@@ -1050,7 +1050,6 @@ xi.regime.clearRegimeVars = function(player)
     player:setCharVar('[regime]zone', 0)
     player:setCharVar('[regime]id', 0)
     player:setCharVar('[regime]repeat', 0)
-    player:setCharVar('[regime]lastReward', 0)
 
     for i = 1, 4 do
         player:setCharVar('[regime]needed' .. i, 0)
@@ -1334,7 +1333,19 @@ xi.regime.bookOnEventFinish = function(player, option, regimeType)
         local page = getPageByNum(regimeType, zoneId, opt.page)
 
         if page then
-            if regimeRepeat ~= 0 then
+            local vanadielDay = VanadielUniqueDay()
+            if
+                xi.settings.main.REGIME_WAIT == 1 and
+                (player:getCharVar('[regime]lastStart') >= vanadielDay or
+                player:getCharVar('[regime]lastReward') >= vanadielDay)
+            then
+                return
+            end
+
+            if xi.settings.main.REGIME_WAIT == 1 then
+                regimeRepeat = 0
+                player:setCharVar('[regime]lastStart', vanadielDay)
+            elseif regimeRepeat ~= 0 then
                 regimeRepeat = 1
             end
 
