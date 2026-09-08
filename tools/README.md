@@ -57,6 +57,14 @@ duplicate DAT names. Audit them with:
 Cutscene-only actors are excluded because they cannot receive a player trigger.
 Every normal entity sharing a script must support that script's default event.
 
+## Zone Event Audit Output
+
+Zone event audit reports use schema version 2. The canonical compatible-match
+fields are `matches` and `counts.matches`; dynamic calls use `dynamic_usages`,
+and unmatched server scripts use `server_scripts_absent_from_client`. The audit
+loads and normalizes event catalogs before comparing them, including removing
+the `0xFFFF` sentinel event.
+
 ## Key Item ID Audit
 
 `python tools/client/key_item_audit.py <key-items.json> scripts/enum/key_item.lua --out <report.json>`

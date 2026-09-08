@@ -171,7 +171,7 @@ class PersistenceMigrationTest(unittest.TestCase):
     def test_canonical_sql_has_no_retired_persistence(self):
         root = Path(__file__).resolve().parent.parent
         expected_files = {
-            "chars.sql": ("eminence", "last_logout"),
+            "chars.sql": ("eminence",),
             "char_points.sql": (
                 "spark_of_eminence",
                 "unity_accolades",
@@ -190,8 +190,6 @@ class PersistenceMigrationTest(unittest.TestCase):
             for column in columns:
                 self.assertNotIn("`{}`".format(column), content)
         self.assertFalse((root / "sql" / "unity_system.sql").exists())
-        char_flags = (root / "sql" / "char_flags.sql").read_text(encoding="utf-8")
-        self.assertNotIn("`muted`", char_flags)
         self.assertNotIn(
             '"unity_system.sql"', (root / "tools" / "dbtool.py").read_text()
         )

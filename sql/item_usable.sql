@@ -2120,9 +2120,6 @@ INSERT INTO `item_usable` VALUES (6265,'toolbag_ranka',1,1,55,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6266,'toolbag_furusumi',1,1,55,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6267,'aged_box_bayld',1,1,0,0,0,0,0,0); -- TODO: Not implemented
 INSERT INTO `item_usable` VALUES (6268,'komanezumi',1,1,118,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (6269,'eminent_quiver',1,1,0,0,0,0,0,0);       -- TODO: Not implemented
-INSERT INTO `item_usable` VALUES (6270,'eminent_bolt_quiver',1,1,0,0,0,0,0,0);  -- TODO: Not implemented
-INSERT INTO `item_usable` VALUES (6271,'eminent_bullet_pouch',1,1,0,0,0,0,0,0); -- TODO: Not implemented
 INSERT INTO `item_usable` VALUES (6272,'fried_popoto',1,1,28,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6273,'fried_popoto_+1',1,1,28,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (6274,'pukatrice_egg',1,1,28,0,0,0,0,0);

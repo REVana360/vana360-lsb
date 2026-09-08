@@ -31,6 +31,33 @@ UNITY_REWARD_ITEM_IDS = (
     25744,
 )
 
+EMINENT_ITEM_IDS = (6269, 6270, 6271)
+REMOVED_ITEM_IDS = UNITY_REWARD_ITEM_IDS + EMINENT_ITEM_IDS
+
+MOOGLE_STORAGE_SLIP_02 = 29313
+PORTER_SLIP_ITEM_BYTE_MASKS = ((19, 0x00), (20, 0xF8))
+
+EQUIPMENT_COLUMNS = (
+    "main",
+    "sub",
+    "ranged",
+    "ammo",
+    "head",
+    "body",
+    "hands",
+    "legs",
+    "feet",
+    "neck",
+    "waist",
+    "ear1",
+    "ear2",
+    "ring1",
+    "ring2",
+    "back",
+)
+
+STYLE_COLUMNS = ("head", "body", "hands", "legs", "feet", "main", "sub", "ranged")
+
 UNITY_TRUST_SPELL_LIST_NAMES = (
     "TRUST_Pieuje_UC",
     "TRUST_Apururu_UC",
@@ -102,6 +129,64 @@ def _column_exists(cur, table, column):
     return bool(cur.fetchone())
 
 
+def _has_char_equip_rows(cur):
+    cur.execute(
+        "SELECT 1 FROM `char_equip` AS `equip` "
+        "INNER JOIN `char_inventory` AS `inventory` "
+        "ON `inventory`.`charid` = `equip`.`charid` "
+        "AND `inventory`.`location` = `equip`.`containerid` "
+        "AND `inventory`.`slot` = `equip`.`slotid` "
+        "WHERE `inventory`.`itemId` IN ({}) LIMIT 1".format(
+            ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+        )
+    )
+    return bool(cur.fetchone())
+
+
+def _has_saved_equipment_rows(cur):
+    predicates = " OR ".join(
+        "`{}` IN ({})".format(
+            column, ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+        )
+        for column in EQUIPMENT_COLUMNS
+    )
+    cur.execute("SELECT 1 FROM `char_equip_saved` WHERE {} LIMIT 1".format(predicates))
+    return bool(cur.fetchone())
+
+
+def _has_style_rows(cur):
+    predicates = " OR ".join(
+        "`{}` IN ({})".format(
+            column, ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+        )
+        for column in STYLE_COLUMNS
+    )
+    cur.execute("SELECT 1 FROM `char_style` WHERE {} LIMIT 1".format(predicates))
+    return bool(cur.fetchone())
+
+
+def _has_porter_slip_bits(cur):
+    cur.execute(
+        "SELECT 1 FROM `char_inventory` "
+        "WHERE `itemId` = {} "
+        "AND ((ORD(SUBSTRING(`extra`, 19, 1)) & 255) <> 0 "
+        "OR (ORD(SUBSTRING(`extra`, 20, 1)) & 7) <> 0) LIMIT 1".format(
+            MOOGLE_STORAGE_SLIP_02
+        )
+    )
+    return bool(cur.fetchone())
+
+
+def _has_active_auction_rows(cur):
+    cur.execute(
+        "SELECT 1 FROM `auction_house` WHERE `itemid` IN ({}) "
+        "AND `buyer_name` IS NULL LIMIT 1".format(
+            ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+        )
+    )
+    return bool(cur.fetchone())
+
+
 def needs_to_run(cur):
     return any(
         (
@@ -111,7 +196,17 @@ def needs_to_run(cur):
             _has_rows(cur, "spell_list", "spellid", UNITY_TRUST_SPELL_IDS),
             _has_rows(cur, "mob_pools", "poolid", UNITY_TRUST_POOL_IDS),
             _has_rows(cur, "item_basic", "itemid", UNITY_REWARD_ITEM_IDS),
+            _has_rows(cur, "item_basic", "itemid", EMINENT_ITEM_IDS),
+            _has_rows(cur, "item_usable", "itemid", EMINENT_ITEM_IDS),
             _has_rows(cur, "item_equipment", "itemId", UNITY_REWARD_ITEM_IDS),
+            _has_rows(cur, "char_inventory", "itemId", REMOVED_ITEM_IDS),
+            _has_char_equip_rows(cur),
+            _has_saved_equipment_rows(cur),
+            _has_style_rows(cur),
+            _has_rows(cur, "delivery_box", "itemid", REMOVED_ITEM_IDS),
+            _has_active_auction_rows(cur),
+            _has_rows(cur, "auction_house_items", "itemid", REMOVED_ITEM_IDS),
+            _has_porter_slip_bits(cur),
             _has_rows(
                 cur,
                 "mob_spell_lists",
@@ -151,12 +246,84 @@ def migrate(cur, db):
                 ", ".join(str(value) for value in UNITY_TRUST_SPELL_IDS)
             )
         )
-        for table, column in (("item_basic", "itemid"), ("item_equipment", "itemId")):
+        # Remove retired items from every owning character location.  char_equip
+        # stores a slot reference, so reconcile it before char_inventory rows.
+        cur.execute(
+            "DELETE `equip` FROM `char_equip` AS `equip` "
+            "INNER JOIN `char_inventory` AS `inventory` "
+            "ON `inventory`.`charid` = `equip`.`charid` "
+            "AND `inventory`.`location` = `equip`.`containerid` "
+            "AND `inventory`.`slot` = `equip`.`slotid` "
+            "WHERE `inventory`.`itemId` IN ({})".format(
+                ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+            )
+        )
+        cur.execute(
+            "DELETE FROM `char_inventory` WHERE `itemId` IN ({})".format(
+                ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+            )
+        )
+        for column in EQUIPMENT_COLUMNS:
+            cur.execute(
+                "UPDATE `char_equip_saved` SET `{}` = 0 WHERE `{}` IN ({})".format(
+                    column,
+                    column,
+                    ", ".join(str(value) for value in REMOVED_ITEM_IDS),
+                )
+            )
+        for column in STYLE_COLUMNS:
+            cur.execute(
+                "UPDATE `char_style` SET `{}` = 0 WHERE `{}` IN ({})".format(
+                    column,
+                    column,
+                    ", ".join(str(value) for value in REMOVED_ITEM_IDS),
+                )
+            )
+        cur.execute(
+            "DELETE FROM `delivery_box` WHERE `itemid` IN ({})".format(
+                ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+            )
+        )
+        # Sold auction rows are historical records; only active listings own
+        # an item and are removed.  The searchable item index has no history.
+        cur.execute(
+            "DELETE FROM `auction_house` WHERE `itemid` IN ({}) "
+            "AND `buyer_name` IS NULL".format(
+                ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+            )
+        )
+        cur.execute(
+            "DELETE FROM `auction_house_items` WHERE `itemid` IN ({})".format(
+                ", ".join(str(value) for value in REMOVED_ITEM_IDS)
+            )
+        )
+
+        # Slip 02 stores the retired shirts at positions 145-155: all of byte
+        # 19 and the low three bits of byte 20. Keep later positions stable;
+        # padding handles legacy rows with short or NULL extra blobs.
+        cur.execute(
+            "UPDATE `char_inventory` SET `extra` = RPAD(COALESCE(`extra`, ''), 24, CHAR(0)) "
+            "WHERE `itemId` = {}".format(MOOGLE_STORAGE_SLIP_02)
+        )
+        for position, mask in PORTER_SLIP_ITEM_BYTE_MASKS:
+            cur.execute(
+                "UPDATE `char_inventory` SET `extra` = INSERT(`extra`, {}, 1, "
+                "CHAR(ORD(SUBSTRING(`extra`, {}, 1)) & {})) "
+                "WHERE `itemId` = {}".format(
+                    position, position, mask, MOOGLE_STORAGE_SLIP_02
+                )
+            )
+
+        for table, column in (
+            ("item_basic", "itemid"),
+            ("item_usable", "itemid"),
+            ("item_equipment", "itemId"),
+        ):
             cur.execute(
                 "DELETE FROM `{}` WHERE `{}` IN ({})".format(
                     table,
                     column,
-                    ", ".join(str(value) for value in UNITY_REWARD_ITEM_IDS),
+                    ", ".join(str(value) for value in REMOVED_ITEM_IDS),
                 )
             )
         cur.execute(

@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-REPORT_SCHEMA_VERSION = 1
+REPORT_SCHEMA_VERSION = 2
 EVENT_SENTINEL = 0xFFFF
 CALL_PATTERN = re.compile(
     r"(?<![A-Za-z0-9_])(?P<kind>startEvent|quest:event|quest:progressEvent)\s*\(",
@@ -302,23 +302,9 @@ def audit(
     scripts_dir: Path,
     zone_id: int,
 ) -> dict[str, Any]:
-    """Audit one zone using already loaded client records."""
+    """Audit one zone using normalized records from the catalog loader."""
 
-    event_blocks: dict[int, dict[str, Any]] = {}
-    for block in zone_events:
-        entity_id = block["entity_id"]
-        if entity_id in event_blocks:
-            raise ValueError(f"event records repeat entity ID {entity_id}")
-        event_blocks[entity_id] = {
-            **block,
-            "event_ids": sorted(
-                {
-                    event_id
-                    for event_id in block["event_ids"]
-                    if event_id != EVENT_SENTINEL
-                }
-            ),
-        }
+    event_blocks = {block["entity_id"]: block for block in zone_events}
     entities_by_name: dict[str, list[dict[str, Any]]] = defaultdict(list)
     entities_by_id: dict[int, dict[str, Any]] = {}
     for entity in zone_entities:
@@ -462,7 +448,6 @@ def audit(
             "server_scripts": len(scripts),
             "matched_scripts": len(entity_matches),
             "matches": len(compatible_matches),
-            "compatible_matches": len(compatible_matches),
             "exact_matches": len(exact_matches),
             "mismatches": len(mismatches),
             "missing_event_blocks": len(missing_event_blocks),
@@ -471,31 +456,24 @@ def audit(
             ),
             "dynamic_scripts": len(dynamic_usages),
             "dynamic_usages": sum(len(record["usages"]) for record in dynamic_usages),
-            "unresolved_usages": sum(
-                len(record["usages"]) for record in dynamic_usages
-            ),
             "ambiguous_entity_matches": len(ambiguous_matches),
             "client_entities_with_events_without_script": len(
                 client_entities_with_events_without_script
             ),
             "event_blocks_without_entity": len(event_blocks_without_entity),
             "server_scripts_absent_from_client": len(server_scripts_absent),
-            "server_entities_absent_from_client": len(server_scripts_absent),
         },
         "entity_matches": entity_matches,
         "matches": compatible_matches,
-        "compatible_matches": compatible_matches,
         "exact_matches": exact_matches,
         "mismatches": mismatches,
         "missing_event_blocks": missing_event_blocks,
         "incompatible_literal_event_ids": incompatible_literal_ids,
         "dynamic_usages": dynamic_usages,
-        "unresolved_usages": dynamic_usages,
         "ambiguous_entity_matches": ambiguous_matches,
         "client_entities_with_events_without_script": client_entities_with_events_without_script,
         "event_blocks_without_entity": event_blocks_without_entity,
         "server_scripts_absent_from_client": server_scripts_absent,
-        "server_entities_absent_from_client": server_scripts_absent,
     }
 
 

@@ -59,7 +59,10 @@ class ZoneEventAuditTest(unittest.TestCase):
                             {
                                 "zone_id": 100,
                                 "event_blocks": [
-                                    {"entity_id": 0x01064001, "events": [{"id": 115}]}
+                                    {
+                                        "entity_id": 0x01064001,
+                                        "events": [{"id": 115}, {"id": 65535}],
+                                    }
                                 ],
                             }
                         ],
@@ -72,6 +75,10 @@ class ZoneEventAuditTest(unittest.TestCase):
 
             self.assertEqual(report["counts"]["exact_matches"], 1)
             self.assertEqual(report["entity_matches"][0]["script"], "Field_Manual.lua")
+            self.assertEqual(report["schema_version"], 2)
+            self.assertNotIn("compatible_matches", report)
+            self.assertNotIn("unresolved_usages", report["counts"])
+            self.assertNotIn("server_entities_absent_from_client", report)
 
     def test_normalizes_entity_names_for_lua_filenames(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -166,20 +173,19 @@ class ZoneEventAuditTest(unittest.TestCase):
 
             self.assertEqual(report["entity_matches"][0]["status"], "match")
             self.assertEqual(report["counts"]["matches"], 1)
-            self.assertEqual(report["counts"]["compatible_matches"], 1)
             self.assertEqual(report["counts"]["exact_matches"], 0)
             self.assertEqual(report["counts"]["mismatches"], 0)
             self.assertEqual(
                 report["entity_matches"][0]["incompatible_literal_event_ids"], []
             )
 
-    def test_event_sentinel_is_ignored_for_compatibility(self):
+    def test_normalized_event_ids_are_used_for_compatibility(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "Adaunel.lua").write_text("", encoding="utf-8")
 
             report = audit(
-                [event_block(0x0100E001, [656, 65535])],
+                [event_block(0x0100E001, [656])],
                 [client_entity(0x0100E001, "Adaunel")],
                 root,
                 230,
@@ -222,7 +228,6 @@ class ZoneEventAuditTest(unittest.TestCase):
 
             self.assertEqual(report["counts"]["dynamic_scripts"], 1)
             self.assertEqual(report["counts"]["dynamic_usages"], 1)
-            self.assertEqual(report["counts"]["unresolved_usages"], 1)
             self.assertEqual(report["counts"]["exact_matches"], 1)
 
     def test_reports_unmatched_server_and_client_records_and_is_deterministic(self):
