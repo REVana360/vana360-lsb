@@ -1,15 +1,13 @@
 Migrating Database
 ========================
 
-This folder contains scripts to migrate your database data to a newer format. 
-For example the spells column in the chars table has been separated into 
+This folder contains scripts to migrate your database data to a newer format.
+For example the spells column in the chars table has been separated into
 a new table, so a migration script has been created to do this for you.
 
 ## Running Migrations
 
-Go into the `server/tools` directory and execute the `dbtool.py` file.
-
-From the command line: `python dbtool.py`
+From the repository root, run `python tools/dbtool.py update`.
 
 This will run all outstanding migrations and skip migrations that have already
 run. Migrations can change or remove persisted data, so create a backup before
